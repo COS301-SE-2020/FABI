@@ -1,0 +1,11 @@
+{
+  "name": "fabi-surveillance-api",
+  "version": "1.0.0",
+  "description": "The backend server for the surveillance system built for fabi by the Runtime Terrors",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Runtime Terrors",
+  "license": "ISC"
+}
