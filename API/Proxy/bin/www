@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+//This is our Proxy server that will route requests to their appropriate nodejs Instance
+/*
+    Naming convention
+    =================
+    -> Login\Register = /API-LR/.....
+    -> DiagnosticReport = /API-Report/.....
+
+*/
+
+/*       module Imports      */
+/*===========================*/ 
+
+var http = require('http');
+var httpProxy = require('http-proxy');
+var proxy = httpProxy.createProxyServer({});
+
+http.createServer(function(req, res) {
+    
+    //Get route for server and request.
+    var routeProxy = req.url.slice(0, getPosition(req.url,"/",2)) ;
+    var routeService = req.url.slice(getPosition(req.url,"/",2),req.url.length) ;
+
+
+    //Re-route request to correct nodejs instace.
+    switch(routeProxy) {
+        case "/API-LR":
+          // this code routes request to Login\Register instance
+          proxy.web(req, res, { target: 'http://127.0.0.1:3001/'});
+          break;
+        case "/API-Report":
+          // this code routes request to diagnosticReport instance
+          proxy.web(req, res, { target: 'http://127.0.0.1:3002'});
+          break;
+       
+      } 
+
+}).listen(80);
+
+
+//Function will find position of substr within string and will return the position (int)
+
+function getPosition(string, subString, index) {
+  return string.split(subString, index).join(subString).length;
+}
