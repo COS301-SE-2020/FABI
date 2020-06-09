@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AlertComponent } from './alert/alert.component';
+import { AlertComponent } from './_components/alert.component';
 
 @NgModule({
   declarations: [
