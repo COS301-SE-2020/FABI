@@ -11,6 +11,7 @@ import { appRoutingModule } from './app.routing';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
@@ -20,6 +21,7 @@ import { AlertComponent } from './_components/alert.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
+    RegisterComponent,
     AlertComponent
   ],
   imports: [
