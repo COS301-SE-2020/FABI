@@ -1,0 +1,8 @@
+type Details {
+    name: String!
+    surname: String!
+}
+
+ type Query{
+    getnames: [Details]!
+}
