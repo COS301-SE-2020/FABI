@@ -1,0 +1,16 @@
+type Response{
+    id: Int!
+    status: Int!
+    token: String!
+}
+
+input Request{
+    name:String!
+    email: String!
+    userType: String!
+    password: String!
+}
+
+type Mutation{
+    registerUser(request:Request):Response!
+}
