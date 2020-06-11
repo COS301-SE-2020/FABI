@@ -1,8 +1,17 @@
-type Details {
-    name: String!
-    surname: String!
+type LoginResponse {
+    id: Int!
+    token:String!
 }
 
- type Query{
-    getnames: [Details]!
+input LoginRequest {
+    email: String!
+    password: String!
+}
+
+type Mutation{
+    login(request:LoginRequest):LoginResponse!
+}
+
+type Query {
+  dummy: String
 }
