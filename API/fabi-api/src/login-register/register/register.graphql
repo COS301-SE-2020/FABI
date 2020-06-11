@@ -1,11 +1,11 @@
 type Response{
-    id: Int!
     status: Int!
     token: String!
 }
 
 input Request{
     name:String!
+    surname:String!
     email: String!
     userType: String!
     password: String!

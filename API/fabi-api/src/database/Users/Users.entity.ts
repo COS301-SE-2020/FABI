@@ -1,21 +1,25 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn} from 'typeorm';
  
 @Entity({database:"Users"})
 class Users {
-  @PrimaryColumn()
-  public UserID: number;
- 
+
   @Column()
   public Name: string;
  
   @Column()
   public Surname: string;
 
-  @Column()
+  @PrimaryColumn()
   public Email: string;
 
   @Column()
   public Password: string;
+
+  @Column()
+  public token: string;
+
+  @Column()
+  public userType: string;
 }
  
 export default Users;
