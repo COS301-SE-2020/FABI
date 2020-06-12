@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
+import { DiagReportComponent } from './diag-report/diag-report.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AlertComponent } from './_components/alert.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent
+    AlertComponent,
+    DiagReportComponent
   ],
   imports: [
     BrowserModule,
