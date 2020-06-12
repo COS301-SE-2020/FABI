@@ -6,6 +6,11 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class LoginRequest {
+    email: string;
+    password: string;
+}
+
 export class Request {
     name: string;
     surname: string;
@@ -14,20 +19,22 @@ export class Request {
     password: string;
 }
 
-export class Details {
-    name: string;
-    surname: string;
+export class LoginResponse {
+    id: number;
+    token: string;
+}
+
+export abstract class IMutation {
+    abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
+
+    abstract registerUser(request?: Request): Response | Promise<Response>;
 }
 
 export abstract class IQuery {
-    abstract getnames(): Details[] | Promise<Details[]>;
+    abstract dummy(): string | Promise<string>;
 }
 
 export class Response {
     status: number;
     token: string;
-}
-
-export abstract class IMutation {
-    abstract registerUser(request?: Request): Response | Promise<Response>;
 }
