@@ -10,6 +10,7 @@ export class LoginResolver {
 
     @Mutation('login')
     async login(@Args('request') reqObj: LoginRequest) : Promise<LoginResponse>{
+
         return this.loginService.login(reqObj);
     }
 }
