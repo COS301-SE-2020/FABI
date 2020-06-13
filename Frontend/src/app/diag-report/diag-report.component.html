@@ -1,7 +1,49 @@
 <form [formGroup]="diagForm">
-    <label for="Date">Date:</label><br>
+    <label for="Date">Date:</label>
     <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly><br>
-    <label for="Location">Location:</label><br>
+
+    <label for="Location">Location:</label>
     <input type="text" id="Location" name="Location" value=""><br><br>
-    <input type="submit" value="Submit">
+
+    <h4>Plant:</h4>
+    <label for="CN">Common name:</label>
+    <input type="text" id="CN" name="CN" value=""><br>
+    <label for="SN">Scientific name:</label>
+    <input type="text" id="SN" name="SN" value=""><i><small> Optional</small></i><br>
+    <label for="Cu">Cultivar:</label>
+    <input type="text" id="Cu" name="Cu" value=""><i><small> Optional</small></i><br><br>
+
+    <h4>Disease / Pest:</h4>
+    <label for="Q1">Where do you see the disease/ <br>pest on the plant? </label>
+    <select formControlName="Q1" id="Q1">
+    <option *ngFor="let Q of Q1; let i = index" [value]="Q1[i].id" [selected]="Q1[0].id">
+      {{Q1[i].name}}
+    </option>
+    </select>
+    <br>
+    <label for="Q2">Do you know what disease /<br>pest is affecting your plant?</label>
+    <input type="text" id="Q2" name="Q2" value=""><br>
+    <label for="Q3">What is its name?</label>
+    <input type="text" id="Q3" name="Q3" value=""><i><small> Sci/Common name</small></i><br>
+    <label for="Q4">How many plants are affected?</label>
+    <select formControlName="Q4" id="Q4" [(ngModel)]="selectedValue" >
+    <option *ngFor="let Q of Q4; let i = index" [value]="Q4[i].id" [selected]="Q4[0].id">
+      {{Q4[i].name}}
+    </option>
+    </select>
+    <br>
+    <div class="form-group" *ngIf="selectedValue == 'np2'">
+    <label for="Q5" >How many plants display the symptoms?</label>
+    <input type="text" id="Q5" name="Q5"><br><br>
+    </div><br><br>
+
+    <h4>Climate</h4>
+    <label for="Q6">Are you experiencing a drought?</label>
+    <select formControlName="Q6" id="Q6" [(ngModel)]="selectedValue" >
+    <option *ngFor="let Q of Q6; let i = index" [value]="Q6[i].id" [selected]="Q6[0].id">
+      {{Q6[i].name}}
+    </option>
+    </select>
+
+    <br><br><input type="submit" value="Submit">
   </form> 
