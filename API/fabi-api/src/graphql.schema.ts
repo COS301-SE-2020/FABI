@@ -22,6 +22,7 @@ export class Request {
 export class LoginResponse {
     id: number;
     token: string;
+    status: number;
 }
 
 export abstract class IMutation {

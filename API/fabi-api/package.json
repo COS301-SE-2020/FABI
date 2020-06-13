@@ -32,7 +32,7 @@
     "@types/hapi__joi": "^17.1.2",
     "apollo-server-express": "^2.14.3",
     "crypto-js": "^4.0.0",
-    "graphql": "^15.1.0",
+    "graphql": "^14.5.0",
     "graphql-tools": "^6.0.9",
     "pg": "^8.2.1",
     "reflect-metadata": "^0.1.13",

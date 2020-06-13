@@ -1,6 +1,6 @@
 import { Resolver, Mutation,Args } from '@nestjs/graphql';
 import { LoginService } from './login.service'
-import {  LoginResponse,LoginRequest }  from '../../graphql.schema';
+import {  LoginResponse,LoginRequest, }  from '../../graphql.schema';
 
 @Resolver()
 export class LoginResolver {
