@@ -20,7 +20,7 @@ export class Request {
 }
 
 export class LoginResponse {
-    id: number;
+    email: string;
     token: string;
     status: number;
 }

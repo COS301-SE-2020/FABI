@@ -2,7 +2,6 @@ import { Column, Entity, PrimaryColumn} from 'typeorm';
  
 @Entity({database:"Users"})
 class Users {
-
   @Column()
   public Name: string;
  
