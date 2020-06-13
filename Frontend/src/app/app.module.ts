@@ -17,7 +17,7 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
-
+import {FormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +32,7 @@ import { GraphQLModule } from './graphql.module';
     ReactiveFormsModule,
     HttpClientModule,
     appRoutingModule,
+    FormsModule,
     GraphQLModule,
     WebcamModule
   ],

@@ -6,6 +6,7 @@ import { User } from '@/_models/user';
 import { UserService } from '@/_services/user.service';
 import { AuthenticationService } from '@/_services/authentication.service';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
     currentUser: User;
@@ -36,8 +37,6 @@ export class HomeComponent implements OnInit {
   private trigger: Subject<void> = new Subject<void>();
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
-
-
 
     ngOnInit() {
         WebcamUtil.getAvailableVideoInputs()
