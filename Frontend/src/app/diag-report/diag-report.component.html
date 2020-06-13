@@ -1,1 +1,7 @@
-<p>diag-report works!</p>
+<form [formGroup]="diagForm">
+    <label for="Date">Date:</label><br>
+    <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly><br>
+    <label for="Location">Location:</label><br>
+    <input type="text" id="Location" name="Location" value=""><br><br>
+    <input type="submit" value="Submit">
+  </form> 
