@@ -71,15 +71,5 @@ export class LoginService {
             return this.res;
         }
 
-<<<<<<< HEAD
-    login(reqObj:LoginRequest): LoginResponse{
-        this.res.id = 123456;
-        this.res.status = 201;
-        this.res.token = "ajskdhfilsvcbni516161a6d1sc65aD";
-        return this.res;
-=======
-      
-    
->>>>>>> origin/um/Login
     }
 }
