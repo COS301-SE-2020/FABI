@@ -14,14 +14,14 @@
     <input type="text" id="Cu" name="Cu" value=""><i><small> Optional</small></i><br><br>
 
     <h4>Disease / Pest:</h4>
-    <label for="Q1">Where do you see the disease/ <br>pest on the plant? </label>
+    <label for="Q1">Where do you see the disease/ pest on the plant? </label>
     <select formControlName="Q1" id="Q1">
     <option *ngFor="let Q of Q1; let i = index" [value]="Q1[i].id" [selected]="Q1[0].id">
       {{Q1[i].name}}
     </option>
     </select>
     <br>
-    <label for="Q2">Do you know what disease /<br>pest is affecting your plant?</label>
+    <label for="Q2">Do you know what disease / pest is affecting your plant?</label>
     <input type="text" id="Q2" name="Q2" value=""><br>
     <label for="Q3">What is its name?</label>
     <input type="text" id="Q3" name="Q3" value=""><i><small> Sci/Common name</small></i><br>
@@ -39,11 +39,19 @@
 
     <h4>Climate</h4>
     <label for="Q6">Are you experiencing a drought?</label>
-    <select formControlName="Q6" id="Q6" [(ngModel)]="selectedValue" >
+    <select formControlName="Q6" id="Q6">
     <option *ngFor="let Q of Q6; let i = index" [value]="Q6[i].id" [selected]="Q6[0].id">
       {{Q6[i].name}}
     </option>
-    </select>
+    </select><br>
+    <label for="Q7">Have you experienced above average precipitation before you identified the problem?</label>
+    <select formControlName="Q7" id="Q7">
+    <option *ngFor="let Q of Q7; let i = index" [value]="Q7[i].id" [selected]="Q7[0].id">
+      {{Q7[i].name}}
+    </option>
+    </select><br>
+    <label for="Q8">Any other climatic conditions worth specifying?</label>
+    <input type="text" id="Q8" name="Q8" value=""><br>
 
     <br><br><input type="submit" value="Submit">
   </form> 

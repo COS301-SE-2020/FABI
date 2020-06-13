@@ -10,8 +10,9 @@ export class DiagReportComponent implements OnInit {
   diagForm: FormGroup;
   today : number = Date.now();
   Q1=[];
-  Q4 = [];
+  Q4=[];
   Q6=[];
+  Q7=[];
   selectedValue: string = '';
 
   constructor(private formBuilder: FormBuilder) {
@@ -20,20 +21,22 @@ export class DiagReportComponent implements OnInit {
   ngOnInit(): void {
     this.diagForm = this.formBuilder.group({
       Date: ['', Validators.required],
-      Location: ['', Validators.required],
+      Location: [''],
       CN: ['', Validators.required],
       SN: [''],
       Cu: [''],
-      Q1: [''],
-      Q2: [''],
-      Q3: [''],
-      Q4: [''],
-      Q5: [''],
-      Q6:['']
+      Q1: ['', Validators.required],
+      Q2: ['', Validators.required],
+      Q3: ['', Validators.required],
+      Q4: ['', Validators.required],
+      Q5: ['', Validators.required],
+      Q6: ['', Validators.required],
+      Q7: ['', Validators.required]
   });
   this.Q1 = this.getPlantParts();
   this.Q4 = this.getnumPlants();
   this.Q6 = this.getYNConditional();
+  this.Q7 = this.getYNConditional();
   
 
 

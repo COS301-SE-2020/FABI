@@ -1,10 +1,10 @@
 label {
-    width: 260px;
+    width: 600px;
     display: inline-block;
 }
 input {
-    width: 130px;
-    text-align: center;
+    width: 200px;
+    text-align: left;
 }
 select {
     width: 130px;
