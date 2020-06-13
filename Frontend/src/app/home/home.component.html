@@ -6,7 +6,6 @@
         {{user.username}} ({{user.firstName}} {{user.lastName}})
         - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
     </li>
-    <li>
-        <a class="text-danger" (click)="diagreport()">Diagnosis report</a>
-    </li>
+        
 </ul>
+<a class="btn btn-primary" (click)="diagreport()" style="color: white;">Submit diagnosis report</a>
