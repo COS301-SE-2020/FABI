@@ -1,9 +1,15 @@
 <form [formGroup]="diagForm">
     <label for="Date">Date:</label>
-    <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly><br>
+    <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
 
-    <label for="Location">Location:</label>
-    <input type="text" id="Location" name="Location" value=""><br><br>
+   
+    <h5>Location:</h5>
+    <label for="lt">Latitude:</label>
+    <input type="text" id="lt" name="lt" value="{{lat}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+    <label for="lng">Longitude:</label>
+    <input type="text" id="lng" name="lng" value="{{long}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+    <label for="ac">Accuracy:</label>
+    <input type="text" id="ac" name="ac" value="{{acc}}" readonly style="opacity: 0.9;pointer-events: none;"><br><br>
 
     <h4>Plant:</h4>
     <label for="CN">Common name:</label>
