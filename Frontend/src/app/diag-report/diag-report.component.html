@@ -45,7 +45,7 @@
 
 <br/>
 
-<form [formGroup]="diagForm" style="background: rgba(255,255,255, 0);">
+<form [formGroup]="diagForm" style="background: rgba(255,255,255, 0);" (ngSubmit)="onSubmit()">
     <label for="Date">Date:</label>
     <input style="margin-left: 0%;" type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
   
@@ -106,6 +106,6 @@
     <label for="Q8">Any other climatic conditions worth specifying?</label>
     <input type="text" id="Q8" name="Q8" value=""><br>
 
-    <br><br><input type="submit" style="text-align: center;" class="btn btn-success" value="Submit Report">
+    <br><br><button class="btn btn-success" style="margin-left: 5px;" >Submit Report</button>
   </form> 
   <br/>

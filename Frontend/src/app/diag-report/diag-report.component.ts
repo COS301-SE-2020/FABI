@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject, Observable} from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { LocationService } from '@/_services/location.service';
 
@@ -11,6 +12,7 @@ import { LocationService } from '@/_services/location.service';
   styleUrls: ['./diag-report.component.css']
 })
 export class DiagReportComponent implements OnInit {
+  submitted = false;
   diagForm: FormGroup;
   today : number = Date.now();
   lat;long;acc;
@@ -21,7 +23,7 @@ export class DiagReportComponent implements OnInit {
 
   selectedValue: string = '';
 
-  constructor(private formBuilder: FormBuilder, private location : LocationService) {
+  constructor(private formBuilder: FormBuilder, private location : LocationService, private router: Router) {
     
    }
   // toggle webcam on/off
@@ -132,6 +134,11 @@ getYNConditional(){
     {id:"1", name:"Yes"},
     {id:"2", name:"No"}
   ];
+}
+
+onSubmit(){
+  this.submitted = true;
+  this.router.navigate(["/"]);
 }
 
 }
