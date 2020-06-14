@@ -3,7 +3,7 @@ import {  LoginResponse,LoginRequest }  from '../../graphql.schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from '../../database/Users/users.service';
 import {createHmac} from 'crypto'
-import Users from 'src/database/Users/Users.entity';
+import Users from '../../database/Users/Users.entity';
 import { Repository } from 'typeorm';
 
 
