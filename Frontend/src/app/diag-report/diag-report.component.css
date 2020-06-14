@@ -1,11 +1,15 @@
 label {
-    width: 600px;
     display: inline-block;
 }
 input {
-    width: 200px;
     text-align: left;
+    align-items: flex-end;
 }
-select {
-    width: 130px;
+select{
+    
+    align-items: flex-end;
+}
+form{
+    display: flex;
+    flex-direction: column;
 }

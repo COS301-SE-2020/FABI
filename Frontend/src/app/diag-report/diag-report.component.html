@@ -1,7 +1,7 @@
 <form [formGroup]="diagForm">
     <label for="Date">Date:</label>
-    <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
-
+    <input style="margin-left: 0%;" type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+  
    
     <h5>Location:</h5>
     <label for="lt">Latitude:</label>
@@ -55,7 +55,7 @@
     <option *ngFor="let Q of Q7; let i = index" [value]="Q7[i].id">
       {{Q7[i].name}}
     </option>
-    </select><br>
+    </select><br><br>
     <label for="Q8">Any other climatic conditions worth specifying?</label>
     <input type="text" id="Q8" name="Q8" value=""><br>
 
