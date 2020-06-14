@@ -45,7 +45,7 @@
 
 <br/>
 
-<form [formGroup]="diagForm">
+<form [formGroup]="diagForm" style="background: rgba(255,255,255, 0);">
     <label for="Date">Date:</label>
     <input style="margin-left: 0%;" type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
   
@@ -106,5 +106,6 @@
     <label for="Q8">Any other climatic conditions worth specifying?</label>
     <input type="text" id="Q8" name="Q8" value=""><br>
 
-    <br><br><input type="submit"  class="btn btn-success" value="Submit">
+    <br><br><input type="submit" style="text-align: center;" class="btn btn-success" value="Submit Report">
   </form> 
+  <br/>
