@@ -11,7 +11,7 @@ import { User } from './_models/user';
 })
 export class AppComponent {
   currentUser: User;
-  title: 'FABI-Surveillance';
+
   constructor(
       private router: Router,
       private authenticationService: AuthenticationService

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RegisterResolver } from './register.resolver';
+import { RegisterResolver } from './register.resolver';//
 
 describe('RegisterResolver', () => {
   let resolver: RegisterResolver;
