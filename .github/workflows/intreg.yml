@@ -1,0 +1,23 @@
+name: Integration CI
+
+on:
+  push:
+    branches: [ testB ]
+#  pull_request:
+#    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test Register API
+      run: |
+        npm install
+        npm run test
+      working-directory: API/fabi-api
+#      run: npm run start
+#docker build ./API/fabi-api -t aimvector/nodejs:1.0.0
