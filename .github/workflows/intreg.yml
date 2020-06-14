@@ -2,7 +2,7 @@ name: Integration CI
 
 on:
   push:
-    branches: [ testB ]
+    branches: [ test/actions ]
 #  pull_request:
 #    branches: [ master ]
 
