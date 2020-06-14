@@ -1,13 +1,11 @@
-name: Integration CI
+name: FABI CI
 
 on:
   push:
     branches: [ implement_actions ]
 #  pull_request:
 #    branches: [ master ]
-
 jobs:
-
   build:
 
     runs-on: ubuntu-latest
@@ -17,13 +15,13 @@ jobs:
     - name: Test Frontend
       run: |
         npm install
-        npm run test
+        npm run build
       working-directory: Frontend
-      
-    - name: Test Register API
+
+    - name: Test Backend API's
       run: |
         npm install
-        npm run test
+        npm run build
       working-directory: API/fabi-api
 #      run: npm run start
 #docker build ./API/fabi-api -t aimvector/nodejs:1.0.0
