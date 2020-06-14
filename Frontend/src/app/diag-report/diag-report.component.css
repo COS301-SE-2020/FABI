@@ -1,0 +1,15 @@
+label {
+    display: inline-block;
+}
+input {
+    text-align: left;
+    align-items: flex-end;
+}
+select{
+    
+    align-items: flex-end;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,29 @@
+name: FABI CI
+
+on:
+  push:
+    branches: [ develop ]
+#  push:
+#    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test Frontend
+      run: |
+        npm install
+        npm run build
+      working-directory: Frontend
+
+    - name: Test Backend API's
+      run: |
+        npm install
+        npm run test
+      working-directory: API/fabi-api
+#      run: npm run start
+#docker build ./API/fabi-api -t aimvector/nodejs:1.0.0

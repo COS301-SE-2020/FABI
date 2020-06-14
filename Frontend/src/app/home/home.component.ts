@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import {Subject, Observable} from 'rxjs';
 import { User } from '@/_models/user';
 import { UserService } from '@/_services/user.service';
 import { AuthenticationService } from '@/_services/authentication.service';
@@ -12,24 +13,17 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private authenticationService: AuthenticationService,
-        private userService: UserService
+        private userService: UserService,
+        private router: Router
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
 
     ngOnInit() {
-        this.loadAllUsers();
+
     }
 
-    deleteUser(id: number) {
-        this.userService.delete(id)
-            .pipe(first())
-            .subscribe(() => this.loadAllUsers());
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll()
-            .pipe(first())
-            .subscribe(users => this.users = users);
+    diagreport(){
+        this.router.navigate(["./DiagReport"]);
     }
 }

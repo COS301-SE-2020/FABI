@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/fake-backend';
-
+import {WebcamModule} from 'ngx-webcam';
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
@@ -16,7 +16,8 @@ import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
-
+import { GraphQLModule } from './graphql.module';
+import {FormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,10 @@ import { DiagReportComponent } from './diag-report/diag-report.component';
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    appRoutingModule
+    appRoutingModule,
+    FormsModule,
+    GraphQLModule,
+    WebcamModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

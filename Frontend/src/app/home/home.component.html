@@ -1,9 +1,3 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
-<p>You're logged in with Angular 8!!</p>
-<h3>All registered users:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-</ul>
+<h1>Welcome to FABI-Surveillance</h1>
+<p>We are currently still under development but feel free to use the functionality we have in place</p>
+<a class="btn btn-success" (click)="diagreport()" style="color: white;">Submit diagnosis report</a>
