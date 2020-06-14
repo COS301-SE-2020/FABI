@@ -1,3 +1,50 @@
+<!-- Testing camera functionality -->
+<div class="col-12">
+  <div class="row" *ngIf="!showWebcam">
+      <div class="col-8" style="text-align: center;">
+          <div class="snapshot"  *ngIf="webcamImage">
+              <h3>Specimen Preview</h3>
+              <img style ="width: 90%;border: black solid 2px;" [src]="webcamImage.imageAsDataUrl"/>
+            </div>
+      </div>
+  <br/>
+</div>
+<div class="row">
+  <div class="col-8">
+      <webcam 
+      [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+      [videoOptions]="videoOptions"
+      [imageQuality]="1"
+      (cameraSwitched)="cameraWasSwitched($event)"
+      (initError)="handleInitError($event)">
+      </webcam>
+  </div>
+
+</div>
+<div class="row">
+  <br/>
+  <div class="col-6" *ngIf="showWebcam"><button class="btn btn-success" (click)="triggerSnapshot();toggleWebcam();"><i class="fa fa-camera"></i> Take photo</button></div>
+  <div class="col-6"*ngIf="showWebcam"><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+  <div class="col-8 offset-sm-3"*ngIf="!showWebcam"><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+</div>
+
+<div class="row">
+  <div class="col-3" *ngif="multipleWebcamsAvailable">
+      <button class="btn btn-success" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+      <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+      DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+      <button class="btn btn-success" (click)="showNextWebcam(deviceId);">Activate</button>
+  </div>
+</div>
+</div>
+<h4 *ngIf="errors.length > 0">Messages:</h4>
+<ul *ngFor="let error of errors">
+<li>{{error}}</li>
+</ul>
+
+<br/>
+
 <form [formGroup]="diagForm">
     <label for="Date">Date:</label>
     <input style="margin-left: 0%;" type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
@@ -59,5 +106,5 @@
     <label for="Q8">Any other climatic conditions worth specifying?</label>
     <input type="text" id="Q8" name="Q8" value=""><br>
 
-    <br><br><input type="submit" value="Submit">
+    <br><br><input type="submit"  class="btn btn-success" value="Submit">
   </form> 
