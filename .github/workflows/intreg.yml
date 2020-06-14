@@ -25,5 +25,7 @@ jobs:
         npm install
         npm run test
       working-directory: Frontend
-#      run: npm run start
-#docker build ./API/fabi-api -t aimvector/nodejs:1.0.0
+
+#     - name: Attempt to create the docker image
+#      run: docker build ./API/fabi-api -t aimvector/nodejs:1.0.0
+#      working-directory: API/fabi-api
