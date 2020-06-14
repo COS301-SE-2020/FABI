@@ -1,0 +1,18 @@
+type LoginResponse {
+    email:String!
+    token:String!
+    status: Int!
+}
+
+input LoginRequest {
+    email: String!
+    password: String!
+}
+
+type Mutation{
+    login(request:LoginRequest):LoginResponse!
+}
+
+type Query {
+  dummy: String
+}

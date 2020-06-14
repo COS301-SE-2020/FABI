@@ -1,0 +1,111 @@
+<!-- Testing camera functionality -->
+<div class="col-12">
+  <div class="row" *ngIf="!showWebcam">
+      <div class="col-8" style="text-align: center;">
+          <div class="snapshot"  *ngIf="webcamImage">
+              <h3>Specimen Preview</h3>
+              <img style ="width: 90%;border: black solid 2px;" [src]="webcamImage.imageAsDataUrl"/>
+            </div>
+      </div>
+  <br/>
+</div>
+<div class="row">
+  <div class="col-8">
+      <webcam 
+      [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+      [videoOptions]="videoOptions"
+      [imageQuality]="1"
+      (cameraSwitched)="cameraWasSwitched($event)"
+      (initError)="handleInitError($event)">
+      </webcam>
+  </div>
+
+</div>
+<div class="row">
+  <br/>
+  <div class="col-6" *ngIf="showWebcam"><button class="btn btn-success" (click)="triggerSnapshot();toggleWebcam();"><i class="fa fa-camera"></i> Take photo</button></div>
+  <div class="col-6"*ngIf="showWebcam"><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+  <div class="col-8 offset-sm-3"*ngIf="!showWebcam"><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+</div>
+
+<div class="row">
+  <div class="col-3" *ngif="multipleWebcamsAvailable">
+      <button class="btn btn-success" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+      <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+      DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+      <button class="btn btn-success" (click)="showNextWebcam(deviceId);">Activate</button>
+  </div>
+</div>
+</div>
+<h4 *ngIf="errors.length > 0">Messages:</h4>
+<ul *ngFor="let error of errors">
+<li>{{error}}</li>
+</ul>
+
+<br/>
+
+<form [formGroup]="diagForm" style="background: rgba(255,255,255, 0);" (ngSubmit)="onSubmit()">
+    <label for="Date">Date:</label>
+    <input style="margin-left: 0%;" type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+  
+   
+    <h5>Location:</h5>
+    <label for="lt">Latitude:</label>
+    <input type="text" id="lt" name="lt" value="{{lat}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+    <label for="lng">Longitude:</label>
+    <input type="text" id="lng" name="lng" value="{{long}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+    <label for="ac">Accuracy:</label>
+    <input type="text" id="ac" name="ac" value="{{acc}}" readonly style="opacity: 0.9;pointer-events: none;"><br><br>
+
+    <h4>Plant:</h4>
+    <label for="CN">Common name:</label>
+    <input type="text" id="CN" name="CN" value=""><br>
+    <label for="SN">Scientific name:</label>
+    <input type="text" id="SN" name="SN" value=""><i><small> Optional</small></i><br>
+    <label for="Cu">Cultivar:</label>
+    <input type="text" id="Cu" name="Cu" value=""><i><small> Optional</small></i><br><br>
+
+    <h4>Disease / Pest:</h4>
+    <label for="Q1">Where do you see the disease/ pest on the plant? </label>
+    <select formControlName="Q1" id="Q1">
+    <option *ngFor="let Q of Q1; let i = index" [value]="Q1[i].id">
+      {{Q1[i].name}}
+    </option>
+    </select>
+    <br>
+    <label for="Q2">Do you know what disease / pest is affecting your plant?</label>
+    <input type="text" id="Q2" name="Q2" value=""><br>
+    <label for="Q3">What is its name?</label>
+    <input type="text" id="Q3" name="Q3" value=""><i><small> Sci/Common name</small></i><br>
+    <label for="Q4">How many plants are affected?</label>
+    <select formControlName="Q4" id="Q4" [(ngModel)]="selectedValue" >
+    <option *ngFor="let Q of Q4; let i = index" [value]="Q4[i].id">
+      {{Q4[i].name}}
+    </option>
+    </select>
+    <br>
+    <div class="form-group" *ngIf="selectedValue == 'np2'">
+    <label for="Q5" >How many plants display the symptoms?</label>
+    <input type="text" id="Q5" name="Q5"><br><br>
+    </div><br><br>
+
+    <h4>Climate</h4>
+    <label for="Q6">Are you experiencing a drought?</label>
+    <select formControlName="Q6" id="Q6">
+    <option *ngFor="let Q of Q6; let i = index" [value]="Q6[i].id">
+      {{Q6[i].name}}
+    </option>
+    </select><br>
+    <label for="Q7">Have you experienced above average precipitation before you identified the problem?</label>
+    <select formControlName="Q7" id="Q7">
+    <option *ngFor="let Q of Q7; let i = index" [value]="Q7[i].id">
+      {{Q7[i].name}}
+    </option>
+    </select><br><br>
+    <label for="Q8">Any other climatic conditions worth specifying?</label>
+    <input type="text" id="Q8" name="Q8" value=""><br>
+
+    <br><br><button class="btn btn-success" style="margin-left: 5px;" >Submit Report</button>
+  </form> 
+  <br/>
