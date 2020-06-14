@@ -129,11 +129,12 @@ Hey I am currently a third year computer science student at the University of Pr
 | ====Demo 1====              |        X       |         X        |      X      |        X        |      X     |
 | 1. SRS                      |        X       |         X        |      X      |        X        |      X     |
 | 1.1 Introduction            |                |                  |             |                 |      X     |
-| 1.2 User Characteristics    |                |                  |             |                 |      X     |
-| 1.3 Functional Requirements |        X       |                  |             |                 |            |
-| 1.4 Domain Model            |        X       |                  |             |        X        |            |
-| 1.5 Quality Requirements    |                |         X        |      X      |                 |            |
-| 1.6 Trace-ability Matrix    |        X       |                  |             |                 |            |
+| 1.2 User Stories            |                |         X        |             |                 |            |
+| 1.3 User Characteristics    |                |                  |             |                 |      X     |
+| 1.4 Functional Requirements |        X       |                  |             |                 |            |
+| 1.5 Domain Model            |        X       |                  |             |        X        |            |
+| 1.6 Quality Requirements    |                |         X        |      X      |                 |            |
+| 1.7 Trace-ability Matrix    |        X       |                  |             |                 |            |
 | 2. System                   |        X       |         X        |      X      |        X        |      X     |
 | 2.1 Database                |                |                  |             |        X        |            |
 | 2.2 User Management         |        X       |                  |      X      |        X        |            |
