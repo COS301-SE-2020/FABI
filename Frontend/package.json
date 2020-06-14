@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:dev": "webpack-dev-server --inline --hot --progress --port 8080",
-    "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
     "coverage": "ng test --no-watch --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e --protractor-config=e2e/protractor-ci.conf.js"
