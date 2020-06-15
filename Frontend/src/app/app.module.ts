@@ -18,6 +18,7 @@ import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
 import {FormsModule} from '@angular/forms';
+import { Http,HttpModule , Response } from '@angular/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import {FormsModule} from '@angular/forms';
     appRoutingModule,
     FormsModule,
     GraphQLModule,
-    WebcamModule
+    WebcamModule,
+    HttpModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
