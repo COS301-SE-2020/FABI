@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ReportModule } from './report/report.module';
 import Users from  "./database/Users/Users.entity"
 
 
@@ -21,6 +22,7 @@ import Users from  "./database/Users/Users.entity"
     }),
         LoginRegisterModule,
         DatabaseModule,
+        ReportModule,
        ],
 
 })

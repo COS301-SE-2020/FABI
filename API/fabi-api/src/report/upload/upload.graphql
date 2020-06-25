@@ -1,0 +1,19 @@
+
+
+type UploadRequest {
+    email:String!
+    token:String!
+    report:GraphQLJSONObject!
+}
+input UploadResponse{
+    email: String!
+    status: Int!
+}
+
+type Mutation{
+    upload(upload:uploadRequest):UploadResponse!
+}
+
+type Query {
+  dummy: String
+}

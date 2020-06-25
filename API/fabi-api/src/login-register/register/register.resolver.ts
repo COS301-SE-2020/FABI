@@ -1,6 +1,7 @@
 import { Resolver, Mutation,Args } from '@nestjs/graphql';
 import { RegisterService } from './register.service'
 import {  Response,Request }  from '../../graphql.schema';
+import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
 
 @Resolver()
 export class RegisterResolver {
