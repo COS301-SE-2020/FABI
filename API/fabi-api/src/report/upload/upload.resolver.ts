@@ -5,7 +5,7 @@ import {  UploadResponse,UploadRequest }  from '../../graphql.schema';
 @Resolver('Upload')
 export class UploadResolver {
     constructor(
-        private uploadService:UploadService;
+        private uploadService:UploadService,
     ){}
 
 @Mutation('uploadReport')
