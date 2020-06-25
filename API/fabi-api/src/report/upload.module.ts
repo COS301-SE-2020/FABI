@@ -4,10 +4,11 @@ import { UsersModule } from 'src/database/Users/Users.module';
 import { UploadResolver } from './upload/upload.resolver';
 import { UsersService } from 'src/database/Users/users.service';
 import { ReportService } from 'src/database/Report/report.service';
+import { ReportModule } from 'src/database/Report/report.module';
  
 
 @Module({
   providers: [UploadService,UploadResolver,UsersService,ReportService],
   imports: [UsersModule,ReportModule]
 })
-export class ReportModule {}
+export class UploadModule {}

@@ -11,7 +11,7 @@ export class ReportService {
         private ReportsRepository: Repository<Reports>
     ){}
 
-    async getReportbyID(id : string): Promise<Reports>{
+    async getReportbyID(id : number): Promise<Reports>{
         const report = await this.ReportsRepository.findOne({reportID:id});
         return report;
     }

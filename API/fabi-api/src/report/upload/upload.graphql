@@ -1,11 +1,11 @@
 
 
-type UploadRequest {
+input UploadRequest {
     email:String!
     token:String!
     report:String!
 }
-input UploadResponse{
+type UploadResponse{
     email: String!
     status: Int!
 }

@@ -1,9 +1,10 @@
-import {Column, Entity, PrimaryColumn} from 'typeorm';
+import {Column, Entity, PrimaryColumn, Generated} from 'typeorm';
 
 @Entity({database:"Reports"})
 class Reports {
     @PrimaryColumn()
-    public reportID: string;
+    @Generated("increment")
+    public reportID: number;
 
     @Column()
     public emails: string;

@@ -19,6 +19,7 @@ export class UploadService {
     ){}
 
     async upload(reqObj:UploadRequest):Promise<UploadResponse>{
+        console.log(reqObj);
         const result = await this.userService.validateToken(reqObj.email,reqObj.token).then(function(result){
             console.log(result);
             return result;
@@ -28,8 +29,6 @@ export class UploadService {
             this.res.status = 415;
             return this.res;
         }else{
-
-            
             return this.res;
         }
         

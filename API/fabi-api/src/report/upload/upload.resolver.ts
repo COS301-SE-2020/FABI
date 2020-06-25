@@ -8,10 +8,9 @@ export class UploadResolver {
         private uploadService:UploadService,
     ){}
 
-@Mutation('uploadReport')
-async upload(@Args('uploadRequest') reqObj: UploadRequest ): Promise<UploadResponse>{
+@Mutation('upload')
+async upload(@Args('upload') reqObj: UploadRequest ): Promise<UploadResponse>{
 
     return this.uploadService.upload(reqObj);
 }
-
 }
