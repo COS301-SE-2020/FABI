@@ -7,6 +7,9 @@ import { UserService } from '@/_services/user.service';
 import { AuthenticationService } from '@/_services/authentication.service';
 import { LocationService } from '@/_services/location.service';
 
+import * as Markers from '@/Markers.json';
+import * as Styles from '@/MapStyles.json';
+
 @Component({ templateUrl: 'home.component.html',
              styleUrls: ['./home.component.css'] })
 export class HomeComponent implements AfterViewInit {
@@ -17,6 +20,9 @@ export class HomeComponent implements AfterViewInit {
     coordinates;
     infowindow;
     mapOptions : google.maps.MapOptions;
+    markers:  any=(Markers as any).default;
+    mapStyle: any=(Styles as any).default;
+    
 
     marker=[];
 
@@ -38,42 +44,72 @@ export class HomeComponent implements AfterViewInit {
             this.lat=rep.coords.latitude;
             this.lng=rep.coords.longitude;
 
-            var contentString = '<div id="content" style="width=100;height=auto;">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h3 id="firstHeading" class="firstHeading">Angular Leaf Spot</h3>'+
-            '<div id="bodyContent">'+
-            'Location accuracy: '+rep.coords.accuracy+'<br><br>'+
-            '<img src="https://extension.umn.edu/sites/extension.umn.edu/files/styles/caption_medium/public/angular-leaf-spot-1.JPG?itok=F3lIx_q2" style="width:auto;height:100px;" alt="Plant"> '+'<br><br><i><b>Specialist Approved<b><i>'+
-            '</div>'+
-            '</div>';
-            this.infowindow = new google.maps.InfoWindow({
-                content : contentString
-            });
-            
+            var icons = {
+                General: {
+                    name: 'General',
+                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenG.png"
+                },
+                Specialist: {
+                    name: 'Specialist',
+                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png"
+                },
+                Company: {
+                    name: 'Company',
+                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redC.png"
+                },
+                You: {
+                    name: 'You',
+                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
+                }
+            };
 
-            this.coordinates = new google.maps.LatLng(this.lat, this.lng);
+            // Create Map
+            this.coordinates = new google.maps.LatLng(this.lat, this.lng); // Current Location
             this.mapOptions = {
                 center: this.coordinates,
                 zoom: 15,
-                };
-
-                var iconBase =
-            'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
-
-            this.marker[0]= new google.maps.Marker({
-                position: this.coordinates,
-                map: this.map,
-                icon:"https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenD.png"
-                
-                });
-
+                styles:this.mapStyle.Normal,
+                disableDefaultUI: true,
+                zoomControl: true
+            };
             this.map = new google.maps.Map(this.gmap.nativeElement, 
             this.mapOptions);
-            this.marker[0].setMap(this.map);
-            google.maps.event.addListener(this.marker[0], 'click', () => {
-                this.infowindow.open(this.map, this.marker[0]);
-              });
+
+            // Generate markers
+            this.populateMarkers(this);
+
+            // Create legend
+            var legend = document.getElementById('legend');
+            
+            for (var key in icons) {
+            var type = icons[key];
+            var name = type.name;
+            var icon = type.icon;
+            var div = document.createElement('div');
+            div.innerHTML = '<img src="' + icon + '"> ' + name;
+            legend.appendChild(div);
+            }
+            var div = document.createElement('p');
+            div.innerHTML="<br>Location Accuracy: "+rep.coords.accuracy+"m";
+            legend.appendChild(div);
+
+            this.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+
+            
+
+            var yourLoc=new google.maps.Marker({
+                position: this.coordinates,
+                map: this.map,
+                icon:icons.You.icon
+            
+            });
+            var infowindow = new google.maps.InfoWindow();
+            google.maps.event.addListener(yourLoc, 'click', (function(marker) {
+                return function() {
+                    infowindow.setContent("You are here");
+                    infowindow.open(this.map, yourLoc);
+                }
+              })(yourLoc));
 
             
             
@@ -84,4 +120,78 @@ export class HomeComponent implements AfterViewInit {
     diagreport(){
         this.router.navigate(["./DiagReport"]);
     }
+
+    populateMarkers(Object){
+
+        
+        var infowindow = new google.maps.InfoWindow();
+
+        for(var i=0;i<Object.markers.length;i++){
+            Object.lat=Object.markers[i].Latitude;
+            Object.lng=Object.markers[i].Longitude;
+
+            var userIcon="";
+
+            switch(Object.markers[i].UserType){
+                case "General":
+                    userIcon="https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenG.png";
+                    break;
+                case "Specialist":
+                    userIcon="https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png";
+                    break;
+            }
+
+            Object.marker[i]= new google.maps.Marker({
+                position: new google.maps.LatLng(Object.markers[i].Latitude, Object.markers[i].Longitude),
+                map: Object.map,
+                icon:userIcon
+                
+                });
+
+            
+                google.maps.event.addListener(Object.marker[i], 'click', (function(marker, i) {
+                    return function() {
+                        infowindow.setContent(Object.getInfoTemplate(Object.markers[i]));
+                        infowindow.open(Object.map, Object.marker[i]);
+                    }
+                  })(Object.marker[i],i));
+        }
+    }
+
+    getInfoTemplate(Object){
+        var Maincolor="";
+        var approved=false;
+        switch(Object.UserType){
+            case "General":
+                Maincolor="color:lightgreen;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
+                break;
+            case "Specialist":
+                Maincolor="color:yellow;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;"
+
+        }
+
+
+
+
+        var footer = (approved?'<br><br><i><b>Specialist Approved</b></i>':'');
+        return '<div id="content" style="width=100;height=auto;">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading" style="'+Maincolor+'">'+Object.InflictionName+'</h3>'+
+            '<div id="bodyContent">'+
+            'Location accuracy: '+Object.Accuracy+'m'+
+            '<br><br>'+
+            'Plant affected: '+Object.PlantName+
+            '<br>'+
+            'Type of infliction: '+Object.InflictionType+
+            '<br><br>'+
+            '<img id="plantImg" src="'+Object.imageUrl+'" style="width:auto;height:100px;" alt="Plant"> '+footer+
+            '<br><a>More info</a><br>'+
+            '</div>'+
+            '</div>';
+
+    }
+
+    
+    
 }

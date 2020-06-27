@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "PlantName": "A tree",
+        "InflictionName": "Deodar weevil",
+        "InflictionType": "Pest",
+        "Latitude": -25.877158,
+        "Longitude": 28.230386,
+        "Accuracy": 2000,
+        "UserType": "General",
+        "imageUrl": "https://www.fabinet.up.ac.za/publication/featured/3351.jpg",
+        "Report":{
+            
+        }
+    },
+    {
+        "id": 2,
+        "PlantName": "Buffalo Thorn",
+        "InflictionName": "Thaumastocoris peregrinus",
+        "InflictionType": "Pest",
+        "Latitude": -25.878065,
+        "Longitude": 28.230686,
+        "Accuracy": 125,
+        "UserType": "Specialist",
+        "imageUrl": "https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg",
+        "Report":{
+            
+        }
+    },
+    {
+        "id": 3,
+        "PlantName": "Eucalyptus",
+        "InflictionName": "Puccinia psidii",
+        "InflictionType": "Disease",
+        "Latitude": -25.878538,
+        "Longitude": 28.229602,
+        "Accuracy": 11,
+        "UserType": "Specialist",
+        "imageUrl": "https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg",
+        "Report":{
+            
+        }
+    }
+]
