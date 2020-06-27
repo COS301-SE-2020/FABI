@@ -19,6 +19,7 @@ import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
 import {FormsModule} from '@angular/forms';
 import { Http,HttpModule , Response } from '@angular/http';
+import { MapReportComponent } from './map-report/map-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { Http,HttpModule , Response } from '@angular/http';
     LoginComponent,
     RegisterComponent,
     AlertComponent,
-    DiagReportComponent
+    DiagReportComponent,
+    MapReportComponent
   ],
   imports: [
     BrowserModule,

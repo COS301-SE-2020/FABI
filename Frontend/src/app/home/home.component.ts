@@ -126,6 +126,10 @@ export class HomeComponent implements AfterViewInit {
         this.router.navigate(["./DiagReport"]);
     }
 
+    navReport(id){
+        this.router.navigate(["./MapReport"],{state:{ID:id}});
+    }
+
     populateMarkers(Object){
 
         
@@ -156,8 +160,17 @@ export class HomeComponent implements AfterViewInit {
             
                 google.maps.event.addListener(Object.marker[i], 'click', (function(marker, i) {
                     return function() {
-                        infowindow.setContent(Object.getInfoTemplate(Object.markers[i]));
+                        var additionalContent ="<br><h6 id='marker_"+Object.id+"' style=\"cursor: pointer;\">Full report</h6>";
+
+                        infowindow.setContent(Object.getInfoTemplate(Object.markers[i])+additionalContent);
                         infowindow.open(Object.map, Object.marker[i]);
+                    
+                        google.maps.event.addListener(infowindow, 'domready', () => {
+                            document.getElementById(`marker_`+Object.id).addEventListener('click', () => {
+                                Object.navReport(Object.markers[i].id);                                
+                            });
+                            
+                          });
                     }
                   })(Object.marker[i],i));
         }
@@ -196,7 +209,7 @@ export class HomeComponent implements AfterViewInit {
 
 
         var footer = (approved?'<br><br><i><b>Specialist Approved</b></i>':'');
-        return '<div id="content" style="width=100;height=auto;">'+
+        return '<div id="content" style="width=100px;height=auto;">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h3 id="firstHeading" class="firstHeading" style="'+Maincolor+'">'+Object.InflictionName+'</h3>'+
@@ -206,9 +219,8 @@ export class HomeComponent implements AfterViewInit {
             'Plant affected: '+Object.PlantName+
             '<br>'+
             'Type of infliction: '+Object.InflictionType+
-            '<br><br>'+
-            '<img id="plantImg" src="'+Object.imageUrl+'" style="width:auto;height:100px;" alt="Plant"> '+footer+
-            '<br><a>More info</a><br>'+
+            '<br>'+
+            footer+
             '</div>'+
             '</div>';
 
