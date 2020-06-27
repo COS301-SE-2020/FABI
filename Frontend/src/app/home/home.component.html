@@ -2,4 +2,6 @@
 <p>We are currently still under development but feel free to use the functionality we have in place</p>
 <a class="btn btn-success" (click)="diagreport()" style="color: white;">Submit diagnosis report</a><br><br>
 <div #mapContainer id="map"></div>
-<div id="legend"></div>
+<div id="legend" style="visibility: hidden;"></div>
+<a id="showLegend" (click)="legendPopup()" ><p style="background-color: black;font-size: medium;color: white;">Show legend</p></a>
+<img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg" style="width:50px;height:auto;cursor: pointer;">

@@ -13,6 +13,7 @@ import * as Styles from '@/MapStyles.json';
 @Component({ templateUrl: 'home.component.html',
              styleUrls: ['./home.component.css'] })
 export class HomeComponent implements AfterViewInit {
+    
     @ViewChild('mapContainer') gmap: ElementRef;
     lat;
     lng;
@@ -22,6 +23,25 @@ export class HomeComponent implements AfterViewInit {
     mapOptions : google.maps.MapOptions;
     markers:  any=(Markers as any).default;
     mapStyle: any=(Styles as any).default;
+    legView=false;
+    icons = {
+        General: {
+            name: 'General',
+            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenG.png"
+        },
+        Specialist: {
+            name: 'Specialist',
+            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png"
+        },
+        Company: {
+            name: 'Company',
+            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redC.png"
+        },
+        You: {
+            name: 'You',
+            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
+        }
+    };
     
 
     marker=[];
@@ -37,6 +57,7 @@ export class HomeComponent implements AfterViewInit {
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
+    
 
     ngAfterViewInit(): void {
         this.location.getLocation().subscribe(rep=>{
@@ -44,24 +65,7 @@ export class HomeComponent implements AfterViewInit {
             this.lat=rep.coords.latitude;
             this.lng=rep.coords.longitude;
 
-            var icons = {
-                General: {
-                    name: 'General',
-                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenG.png"
-                },
-                Specialist: {
-                    name: 'Specialist',
-                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png"
-                },
-                Company: {
-                    name: 'Company',
-                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redC.png"
-                },
-                You: {
-                    name: 'You',
-                    icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
-                }
-            };
+            
 
             // Create Map
             this.coordinates = new google.maps.LatLng(this.lat, this.lng); // Current Location
@@ -78,29 +82,30 @@ export class HomeComponent implements AfterViewInit {
             // Generate markers
             this.populateMarkers(this);
 
-            // Create legend
+            // Legend
             var legend = document.getElementById('legend');
-            
-            for (var key in icons) {
-            var type = icons[key];
-            var name = type.name;
-            var icon = type.icon;
-            var div = document.createElement('div');
-            div.innerHTML = '<img src="' + icon + '"> ' + name;
-            legend.appendChild(div);
-            }
-            var div = document.createElement('p');
-            div.innerHTML="<br>Location Accuracy: "+rep.coords.accuracy+"m";
-            legend.appendChild(div);
+            for (var key in this.icons) {
+                var type = this.icons[key];
+                var name = type.name;
+                var icon = type.icon;
+                var div = document.createElement('div');
+                div.innerHTML = '<img src="' + icon + '"> ' + name;
+                legend.appendChild(div);
+                }
+            var showLegend = document.getElementById('showLegend');
+            legend.style.display="none";
+            this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(showLegend);
+            this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend);
 
-            this.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+            var centreImage= document.getElementById("centering");
+            this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centreImage);
 
             
 
             var yourLoc=new google.maps.Marker({
                 position: this.coordinates,
                 map: this.map,
-                icon:icons.You.icon
+                icon:this.icons.You.icon
             
             });
             var infowindow = new google.maps.InfoWindow();
@@ -155,6 +160,23 @@ export class HomeComponent implements AfterViewInit {
                         infowindow.open(Object.map, Object.marker[i]);
                     }
                   })(Object.marker[i],i));
+        }
+    }
+
+    centreLoc(){
+        this.map.setCenter(this.coordinates);
+    }
+
+    legendPopup(){
+        var legend = document.getElementById('legend');
+        if(this.legView){
+            legend.style.display="none";
+            this.legView=false;
+        }
+        else{
+            this.legView=true;
+            legend.style.display="block";
+            
         }
     }
 
