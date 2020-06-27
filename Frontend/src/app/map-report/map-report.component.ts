@@ -15,7 +15,7 @@ export class MapReportComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
+      document.getElementById("ID").innerHTML="Report for ID: "+this.reportID;
   }
 
 }
