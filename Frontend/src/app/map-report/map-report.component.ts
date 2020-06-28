@@ -24,11 +24,14 @@ export class MapReportComponent implements OnInit {
   Management:string;
   Images:Array<string>=[];
   Type:string;
+  containerStyle;
+
   constructor(
     private router: Router,
     private currentMarkServ:ReportDataService
     ) { 
         this.currentMark=this.currentMarkServ.currentRepValue;
+        
         
     }
 
@@ -51,6 +54,9 @@ export class MapReportComponent implements OnInit {
 
     this.Description=this.pnd["Description"];
     this.Distribution=this.pnd["Distribution"];
+    this.containerStyle=
+      {'color':this.pnd["Type"]=="Pest"?"rgb(63, 63, 191)":"rgb(191, 63, 63)"}
+    ;
    
     
     this.pnd["Images"].forEach(element => {
