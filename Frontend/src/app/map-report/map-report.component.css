@@ -1,0 +1,10 @@
+.row .col-sm-2{
+    border-bottom: solid rgb(87, 155, 87);
+    border-right: solid rgb(87, 155, 87);
+}
+.row .col-sm-10{
+    border-bottom: solid rgb(87, 155, 87);
+}
+.container{
+    background-color: rgba(129, 233, 129,0.3);
+}

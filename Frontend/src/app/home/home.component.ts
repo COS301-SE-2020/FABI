@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Subject, Observable} from 'rxjs';
 import { User } from '@/_models/user';
 import { UserService } from '@/_services/user.service';
 import { AuthenticationService } from '@/_services/authentication.service';
 import { LocationService } from '@/_services/location.service';
+
+import {Report} from '@/_models/report'
+import {ReportDataService} from '@/_services/report-data.service'
 
 import * as Markers from '@/Markers.json';
 import * as Styles from '@/MapStyles.json';
@@ -48,17 +49,33 @@ export class HomeComponent implements AfterViewInit {
 
     currentUser: User;
     users = [];
+    currentMID=null;
+    currentMark:Report;
+    pName : string;
+    iType : string;
+    img1 : string;
+    img2 : string;
+    img3 : string;
+    Active;
 
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService,
         private location : LocationService,
         private router: Router,
+        private currentMarkServ:ReportDataService
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
     
-
+    ngOnInit():void{
+        this.pName="";
+        this.iType="";
+        this.img1="";
+        this.img2="";
+        this.img3="";
+        this.Active=0;
+    }
     ngAfterViewInit(): void {
         this.location.getLocation().subscribe(rep=>{
 
@@ -126,12 +143,13 @@ export class HomeComponent implements AfterViewInit {
         this.router.navigate(["./DiagReport"]);
     }
 
-    navReport(id){
-        this.router.navigate(["./MapReport"],{state:{ID:id}});
+    navReport(){
+        this.router.navigate(["./MapReport"]);
     }
 
     populateMarkers(Object){
-
+        
+        
         
         var infowindow = new google.maps.InfoWindow();
 
@@ -160,20 +178,21 @@ export class HomeComponent implements AfterViewInit {
             
                 google.maps.event.addListener(Object.marker[i], 'click', (function(marker, i) {
                     return function() {
-                        var additionalContent ="<br><h6 id='marker_"+Object.id+"' style=\"cursor: pointer;\">Full report</h6>";
-
-                        infowindow.setContent(Object.getInfoTemplate(Object.markers[i])+additionalContent);
+                        infowindow.setContent(Object.getInfoTemplate(Object.markers[i]));
                         infowindow.open(Object.map, Object.marker[i]);
-                    
-                        google.maps.event.addListener(infowindow, 'domready', () => {
-                            document.getElementById(`marker_`+Object.id).addEventListener('click', () => {
-                                Object.navReport(Object.markers[i].id);                                
-                            });
-                            
-                          });
+
                     }
                   })(Object.marker[i],i));
+
+                  
         }
+
+        google.maps.event.addListener(infowindow,'content_changed', () => {
+            var string = infowindow.getContent()+"";
+            this.currentMID=(string.substring(string.indexOf("ID:")+3));
+            this.setDisplay();
+            
+        });
     }
 
     centreLoc(){
@@ -193,6 +212,50 @@ export class HomeComponent implements AfterViewInit {
         }
     }
 
+    setDisplay(){
+        var loc=null;
+        for(var i=0;i<this.markers.length;i++){
+            if(this.markers[i].id==this.currentMID){
+                loc=i;
+            }
+        }
+        if(loc!=null){
+        
+        
+        this.currentMarkServ.setMID(loc);
+        this.currentMark=this.currentMarkServ.currentRepValue;
+        
+        this.pName = this.currentMark.PlantName;
+        this.iType = this.currentMark.InflictionType;
+        this.img1 = this.currentMark.Images[0].Image;
+        this.img2 = this.currentMark.Images[1].Image;
+        this.img3 = this.currentMark.Images[2].Image;
+        
+
+        this.Active=1; // Button
+
+        let key = "currentMarker";
+        localStorage.setItem(key, JSON.stringify(this.currentMark));
+
+        }
+    }
+
+    /**
+     * Gets current mark
+     * @param marker 
+     */
+    getCurrentMark(marker){
+        var loc=null;
+        for(var i=0;i<this.markers.length;i++){
+            if(this.markers[i].id==marker){
+                loc=i;
+            }
+        }
+        if(loc!=null){
+
+        }
+    }
+
     getInfoTemplate(Object){
         var Maincolor="";
         var approved=false;
@@ -204,6 +267,8 @@ export class HomeComponent implements AfterViewInit {
                 Maincolor="color:yellow;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;"
 
         }
+
+    
 
 
 
@@ -222,7 +287,7 @@ export class HomeComponent implements AfterViewInit {
             '<br>'+
             footer+
             '</div>'+
-            '</div>';
+            '</div><br>ID: '+Object.id;
 
     }
 

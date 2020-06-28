@@ -5,3 +5,38 @@
 <div id="legend" style="visibility: hidden;"></div>
 <a id="showLegend" (click)="legendPopup()" ><p style="background-color: black;font-size: medium;color: white;">Show legend</p></a>
 <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg" style="width:50px;height:auto;cursor: pointer;">
+<div class="container" style="background-color: rgba(129, 233, 129,0.3);" [hidden]="Active !== 1">
+    <div class="row">
+        <div class="col-sm-5">
+            <h2>Plant Name:</h2>
+        </div>
+        <div class="col-sm-6">
+            <h3><b>{{pName}}</b></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <h2>Infliction Type:</h2>
+        </div>
+        <div class="col-sm-6">
+            <h3><b>{{iType}}</b></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+        <h2>Images:</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <img src="{{img1}}"  class="img-thumbnail">
+        </div>
+        <div class="col-sm">
+            <img src="{{img2}}"  class="img-thumbnail">
+        </div>
+        <div class="col-sm">
+            <img src="{{img2}}" class="img-thumbnail">
+        </div>
+    </div>  
+    <button  class="btn btn-success" (click)="navReport()"  [disabled]="Active !== 1">Pest or Disease Information</button>
+</div>
