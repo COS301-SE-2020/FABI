@@ -43,10 +43,14 @@ export class MapReportComponent implements OnInit {
     this.pnd= this.getPestOrDisease(this.currentMark);
     if(this.pnd==null){
         alert("That pest or disease doesn't exist yet.");
-        this.router.navigate([""]);
+        this.goBack()
     }
     this.setDisplay();
       
+  }
+
+  goBack(){
+    this.router.navigate([""]);
   }
 
   setDisplay(){

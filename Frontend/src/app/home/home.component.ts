@@ -53,6 +53,7 @@ export class HomeComponent implements AfterViewInit {
     currentMark:Report;
     pName : string;
     iType : string;
+    sName:string;
     img1 : string;
     img2 : string;
     img3 : string;
@@ -71,6 +72,7 @@ export class HomeComponent implements AfterViewInit {
     ngOnInit():void{
         this.pName="";
         this.iType="";
+        this.sName="";
         this.img1="";
         this.img2="";
         this.img3="";
@@ -227,6 +229,7 @@ export class HomeComponent implements AfterViewInit {
         
         this.pName = this.currentMark.PlantName;
         this.iType = this.currentMark.InflictionType;
+        this.sName = this.currentMark.InflictionName;
         this.img1 = this.currentMark.Images[0].Image;
         this.img2 = this.currentMark.Images[1].Image;
         this.img3 = this.currentMark.Images[2].Image;
@@ -277,17 +280,12 @@ export class HomeComponent implements AfterViewInit {
         return '<div id="content" style="width=100px;height=auto;">'+
             '<div id="siteNotice">'+
             '</div>'+
-            '<h3 id="firstHeading" class="firstHeading" style="'+Maincolor+'">'+Object.InflictionName+'</h3>'+
+            '<h3 id="firstHeading" class="firstHeading" style="'+Maincolor+'">'+Object.UserType+'</h3>'+
             '<div id="bodyContent">'+
-            'Location accuracy: '+Object.Accuracy+'m'+
-            '<br><br>'+
-            'Plant affected: '+Object.PlantName+
-            '<br>'+
-            'Type of infliction: '+Object.InflictionType+
-            '<br>'+
+            'Accuracy: '+Object.Accuracy+'m'+
             footer+
             '</div>'+
-            '</div><br>ID: '+Object.id;
+            '</div><br>Marker ID: '+Object.id;
 
     }
 
