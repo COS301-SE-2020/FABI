@@ -57,6 +57,7 @@ export class HomeComponent implements AfterViewInit {
     img1 : string;
     img2 : string;
     img3 : string;
+    markIDs : Array<number>=[];
     Active;
 
     constructor(
@@ -158,6 +159,7 @@ export class HomeComponent implements AfterViewInit {
         for(var i=0;i<Object.markers.length;i++){
             Object.lat=Object.markers[i].Latitude;
             Object.lng=Object.markers[i].Longitude;
+            this.markIDs[i]=(Object.markers[i].id);
 
             var userIcon="";
 
@@ -191,6 +193,7 @@ export class HomeComponent implements AfterViewInit {
 
         google.maps.event.addListener(infowindow,'content_changed', () => {
             var string = infowindow.getContent()+"";
+            console.log(infowindow.getPosition);
             this.currentMID=(string.substring(string.indexOf("ID:")+3));
             this.setDisplay();
             
