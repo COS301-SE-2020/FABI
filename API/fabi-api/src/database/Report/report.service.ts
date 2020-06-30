@@ -118,15 +118,29 @@ export class ReportService {
     var classNum2 = this.classify(img2Name + '.' + img2Format);
     var classNum3 = this.classify(img3Name + '.' + img3Format);
 
-    if (
-      (await classNum1) >= 3 &&
-      (await classNum2) >= 3 &&
-      (await classNum3) >= 3
-    ) {
-      flagImages = false;
+    //value that determines if the images are correct
+    var certainty = 0;
+
+    if ((await classNum1) >= 5) {
+      certainty += 5;
     } else {
-      flagImages = true;
+      certainty = (await classNum1) + certainty;
     }
+
+    if ((await classNum2) >= 5) {
+      certainty += 5;
+    } else {
+      certainty = (await classNum2) + certainty;
+    }
+
+    if ((await classNum3) >= 5) {
+      certainty += 5;
+    } else {
+      certainty = (await classNum3) + certainty;
+    }
+
+    //certainty value /100
+    certainty = Math.round((certainty / 15) * 100);
 
     try {
       unlinkSync(img1Name + '.' + img1Format);
@@ -138,15 +152,14 @@ export class ReportService {
       return false;
     }
 
-    //now i need to add stuff to the database
-
-    await this.ReportsRepository.insert({
+    //Add to database
+    /*await this.ReportsRepository.insert({
       email: obj.email,
       form: obj.report,
       IMG1: url1,
       IMG2: url2,
       IMG3: url3,
-    });
+    });*/
 
     return true;
   }
