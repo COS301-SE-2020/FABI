@@ -19,9 +19,13 @@ export class Request {
     password: string;
 }
 
-export class UploadResponse {
+export class UploadRequest {
     email: string;
-    status: number;
+    token: string;
+    report: string;
+    Img1: string;
+    Img2: string;
+    Img3: string;
 }
 
 export class LoginResponse {
@@ -47,8 +51,7 @@ export class Response {
     token: string;
 }
 
-export class UploadRequest {
+export class UploadResponse {
     email: string;
-    token: string;
-    report: string;
+    status: number;
 }

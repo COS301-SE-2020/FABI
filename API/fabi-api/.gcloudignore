@@ -1,0 +1,7 @@
+.gcloudignore
+.git
+.gitignore
+!include:ormconfig.json
+!include:fabi-surveillance-d9f5f1321793.json
+!include:vision_boi.json
+

@@ -7,7 +7,7 @@ class Reports {
     public reportID: number;
 
     @Column()
-    public emails: string;
+    public email: string;
 
     @Column()
     public form: string;

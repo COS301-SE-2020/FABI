@@ -4,6 +4,9 @@ input UploadRequest {
     email:String!
     token:String!
     report:String!
+    Img1:String!
+    Img2:String!
+    Img3:String!
 }
 type UploadResponse{
     email: String!

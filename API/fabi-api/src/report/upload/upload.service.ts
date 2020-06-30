@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UploadResponse, UploadRequest } from 'src/graphql.schema';
 import { UsersService } from 'src/database/Users/users.service';
-import { InjectRepository } from '@nestjs/typeorm';
-import Users from 'src/database/Users/Users.entity';
-import { Repository } from 'typeorm';
+import { ReportService } from 'src/database/Report/report.service';
 
 @Injectable()
 export class UploadService {
@@ -12,16 +10,12 @@ export class UploadService {
 
     constructor(
         private userService: UsersService,
-
-        @InjectRepository(Users)
-        private UsersRepository:Repository<Users>
-        
+        private reportService : ReportService,
     ){}
 
     async upload(reqObj:UploadRequest):Promise<UploadResponse>{
         console.log(reqObj);
         const result = await this.userService.validateToken(reqObj.email,reqObj.token).then(function(result){
-            console.log(result);
             return result;
         })
         if(result==false){
@@ -29,6 +23,10 @@ export class UploadService {
             this.res.status = 415;
             return this.res;
         }else{
+            //this will pass upload object to report service that will interact with db
+            this.reportService.InsertReport(reqObj);
+            this.res.email = reqObj.email;
+            this.res.status = 201;
             return this.res;
         }
         
