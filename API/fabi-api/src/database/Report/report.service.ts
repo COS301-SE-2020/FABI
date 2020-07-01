@@ -11,7 +11,7 @@ import { createHmac } from 'crypto';
 //Classifications
 const labelsAccepted =
   'Agave,azul,Aloe,Annual plant,Arecales,Banana,Banana family,Borassus,flabellifer,Botany,Cycad,Desert Palm,Fern,Flower,Flowering plant,Flowerpot,Garden,Georgia pine,Grass,Grass family,Groundcover,Herb,Houseplant,Ice plant family,Landscape,Leaf,Palm tree,Paurotis Palm,Paurotis Palm,Perennial plant,Pine,Pine family,Plant,Plant community,red pine,Sabal minor,Sabal palmetto,Saw palmetto,Sedge family,shortstraw pine,Shrub,Subshrub,Sweet grass,Taro,Terrestrial plant,Ti plant,Tree,Vascular plant,White pine,Woody plant,Xanthosoma,Yucca,Zingiberales';
-  
+
 //google cloud storage
 const gc = new Storage({
   keyFilename: join(__dirname, '../../../fabi-surveillance-d9f5f1321793.json'),
@@ -60,18 +60,27 @@ export class ReportService {
     );
 
     //slice out the base64
-    const base64Img1 = obj.Img1.slice(obj.Img1.indexOf(',') + 1, obj.Img1.length);
-    const base64Img2 = obj.Img2.slice(obj.Img2.indexOf(',') + 1, obj.Img2.length);
-    const base64Img3 = obj.Img3.slice(obj.Img3.indexOf(',') + 1, obj.Img3.length);
+    const base64Img1 = obj.Img1.slice(
+      obj.Img1.indexOf(',') + 1,
+      obj.Img1.length,
+    );
+    const base64Img2 = obj.Img2.slice(
+      obj.Img2.indexOf(',') + 1,
+      obj.Img2.length,
+    );
+    const base64Img3 = obj.Img3.slice(
+      obj.Img3.indexOf(',') + 1,
+      obj.Img3.length,
+    );
 
     //create unique name for each image
     const img1Name = createHmac('sha256', obj.email + this.makeid())
       .digest('hex')
       .substr(0, 15);
-      const img2Name = createHmac('sha256', obj.email + this.makeid())
+    const img2Name = createHmac('sha256', obj.email + this.makeid())
       .digest('hex')
       .substr(0, 15);
-      const img3Name = createHmac('sha256', obj.email + this.makeid())
+    const img3Name = createHmac('sha256', obj.email + this.makeid())
       .digest('hex')
       .substr(0, 15);
 
@@ -160,11 +169,11 @@ export class ReportService {
       IMG2: url2,
       IMG3: url3,
       Long: 127.01, //must get from obj.report
-      Lat: 132.02,  //must get from obj.report
-      Pscore:certainty,
+      Lat: 132.02, //must get from obj.report
+      Pscore: certainty,
       Accuracy: 20,
-      Pname:"sunflower", //must get from obj.report
-      Infliction:"sick" //must get from obj.report
+      Pname: 'sunflower', //must get from obj.report
+      Infliction: 'sick', //must get from obj.report
     });
 
     return true;
