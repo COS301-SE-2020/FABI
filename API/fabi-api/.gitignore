@@ -36,3 +36,7 @@ lerna-debug.log*
 
 #db connection 
 ormconfig.json
+
+#google cloud keys
+fabi-surveillance-d9f5f1321793.json
+vision_boi.json

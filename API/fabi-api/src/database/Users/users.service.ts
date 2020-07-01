@@ -22,6 +22,16 @@ export class UsersService {
         return User;
         
       }
+
+      async validateToken(email: string,token:string): Promise<boolean>{
+        const User = await this.UsersRepository.findOne({Email:email});
+        if(User.token == token){
+          return true;
+        }else{
+          return false
+        }
+        
+      }
       
       async createUser(obj:Request): Promise<Users> {
         //create token

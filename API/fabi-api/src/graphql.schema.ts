@@ -19,6 +19,15 @@ export class Request {
     password: string;
 }
 
+export class UploadRequest {
+    email: string;
+    token: string;
+    report: string;
+    Img1: string;
+    Img2: string;
+    Img3: string;
+}
+
 export class LoginResponse {
     email: string;
     token: string;
@@ -29,6 +38,8 @@ export abstract class IMutation {
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 
     abstract registerUser(request?: Request): Response | Promise<Response>;
+
+    abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
 }
 
 export abstract class IQuery {
@@ -38,4 +49,9 @@ export abstract class IQuery {
 export class Response {
     status: number;
     token: string;
+}
+
+export class UploadResponse {
+    email: string;
+    status: number;
 }
