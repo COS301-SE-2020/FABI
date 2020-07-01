@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject, Observable} from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User } from '@/_models/user';
+import { AuthenticationService } from '@/_services/authentication.service';
+
+import {Report_Questions} from "@/_models/Questions"
 
 import { LocationService } from '@/_services/location.service';
 
@@ -12,22 +16,151 @@ import { LocationService } from '@/_services/location.service';
   styleUrls: ['./diag-report.component.css']
 })
 export class DiagReportComponent implements OnInit {
-  submitted = false;
-  diagForm: FormGroup;
-  today : number = Date.now();
-  lat;long;acc;
-  Q1=[];
-  Q4=[];
-  Q6=[];
-  Q7=[];
 
-  selectedValue: string = '';
+  // Model
 
-  constructor(private formBuilder: FormBuilder, private location : LocationService, private router: Router) {
+  Answers=new Report_Questions;
+  
+
+  // TODO: Cleanup
+  public enterImage:Boolean=false;
+  public currentUser: User;
+  public submitted = false;
+  public today : number = Date.now();
+  public Lat:any;
+  public Long:any;
+  public Acc:any;
+
+  public Images:Array<any>=[];
+  public ImageDataCount:number=0;
+
+  public selectedValue: string = '';
+
+  constructor(
+    private authenticationService: AuthenticationService,
+    private formBuilder: FormBuilder, 
+    private location : LocationService, 
+    private router: Router) {
+      this.currentUser = this.authenticationService.currentUserValue;
     
    }
+   // new 01/07/2020
+
+   ImageData = new FormGroup({
+        Description:new FormControl('')
+   });
+
+   setImageData(){
+      this.Answers.Images["Image"+this.Images.length]={
+        "ImageURL":this.Images[this.Images.length-1].src,
+        "ImageDescription":this.ImageData.get("Description").value
+      };
+      this.enterImage=false;
+      this.ImageData.reset();
+      this.ImageDataCount++;
+   }
+
+   clearImages(){
+     this.ImageDataCount=0;
+     this.Answers.Images={};
+     this.Images=[];
+   }
+   
+
+   PorD_Selected:Boolean;
+   PorD_Options: Array<string> = ["Pest","Disease"];
+   YNOptions: any=["Yes","No"];
+   MultiOptions: any=["One","More than one"];
+    PestOrDiseases = new FormGroup({
+      PorD : new FormControl('')
+    });
+
+  Plant = new FormGroup({
+    Question1: new FormControl(''),
+    Question2: new FormControl(''),
+    Question3: new FormControl(''),
+  });
+
+  PorD_Questions = new FormGroup({
+    Question4: new FormControl(''),
+    Question5: new FormControl(''),
+    Question6: new FormControl(''),
+    Question7: new FormControl(''),
+    Question8: new FormControl(''),
+  });
+  Question4_Options: any = ["Root","Stem","Branch","Leaf / Leaves","Flowers"];
+
+  Climate_Questions = new FormGroup({
+    Question9: new FormControl(''),
+    Question10: new FormControl(''),
+    Question11_a: new FormControl(''),
+    Question11_b: new FormControl(''),
+  });
+
+  QuestionDesc : Array<string> = [
+    "Common name",
+    "Scientific Name",
+    "Cultivar",
+    "Where do you see the Pest/Disease on the plant?",
+    "Do you know what Pest/Disease is affecting the plant?",
+    "What is its scientific or common name?",
+    "How many plants are affected?",
+    "What percentage of plants are affected?",
+    "Are you experiencing a drought?",
+    "Have you experienced above average precipitation?",
+    "Any other climatic conditions worth specifying?",
+    "Other climatic conditions",
+    ];
+
+  changeType(){
+    this.PorD_Selected=true;
+    console.log(this.PestOrDiseases.value["PorD"]);
+    this.Answers.Questions["Pest Or Disease"]=this.PestOrDiseases.value["PorD"];
+  }
+  change(question,e){
+    this.Answers.Questions[this.QuestionDesc[question-1]]=e.target.value;
+  }
+  
+  onSubmit(){
+    this.Answers.UserToken=this.currentUser.token;
+    this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
+    this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
+    this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
+    if(this.Answers.Questions["Do you know what Pest/Disease is affecting the plant?"]=="Yes"){
+      this.Answers.Questions["What is its scientific or common name?"]=this.PorD_Questions.get("Question6").value;
+    }
+    if(this.Answers.Questions["How many plants are affected?"]=="Yes"){
+      this.Answers.Questions["What percentage of plants are affected?"]=this.PorD_Questions.get("Question8").value;
+    }
+    if(this.Answers.Questions["Any other climatic conditions worth specifying?"]=="Yes"){
+      this.Answers.Questions["Other climatic conditions"]=this.Climate_Questions.get("Question11_b").value;
+    }
+
+    
+
+    console.log(this.toJSON(this.Answers));
+
+    this.submitted = true;
+    //this.router.navigate(["/"]);
+  }
+
+  toJSON(object){
+      return {
+        "Location":object.Location,
+        "UserToken":object.UserToken,
+        "Questions":object.Questions,
+        "Images":object.Images
+      };
+  }
+
+  onCancel(){
+    this.submitted = false;
+    this.router.navigate(["/"]);
+  }
+
   // toggle webcam on/off
-  public showWebcam = true;
+  public toggleImageData=false;
+  public showWebcam = false;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
   public deviceId: string;
@@ -36,6 +169,7 @@ export class DiagReportComponent implements OnInit {
     // height: {ideal: 576}
   };
   public errors: WebcamInitError[] = [];
+
 
   // latest snapshot
   public webcamImage: WebcamImage = null;
@@ -50,32 +184,18 @@ export class DiagReportComponent implements OnInit {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
     });
     this.location.getLocation().subscribe(rep=>{
-      this.lat=rep.coords.latitude;
-      this.long=rep.coords.longitude;
-      this.acc=rep.coords.accuracy;
+
+      this.Answers.Location["Latitude"]=rep.coords.latitude;
+      this.Answers.Location["Longitude"]=rep.coords.longitude;
+      this.Answers.Location["Accuracy"]=rep.coords.accuracy;
+
+      this.Lat=(rep.coords.latitude).toPrecision(4);
+      this.Long=(rep.coords.longitude).toPrecision(4);
+      this.Lat=(this.Lat<0?0-this.Lat+" S":this.Lat+" N")
+      this.Long=(this.Long<0?0-this.Long+" E":this.Long+" W")
     });
-    this.diagForm = this.formBuilder.group({
-      Date: ['', Validators.required],
-      location:[''],
-      CN: ['', Validators.required],
-      SN: [''],
-      Cu: [''],
-      Q1: ['', Validators.required],
-      Q2: ['', Validators.required],
-      Q3: ['', Validators.required],
-      Q4: ['', Validators.required],
-      Q5: ['', Validators.required],
-      Q6: ['', Validators.required],
-      Q7: ['', Validators.required],
-  });
-  this.Q1 = this.getPlantParts();
-  this.Q4 = this.getnumPlants();
-  this.Q6 = this.getYNConditional();
-  this.Q7 = this.getYNConditional();
-  
-
-
 }
+
 
 public triggerSnapshot(): void {
   this.trigger.next();
@@ -97,7 +217,10 @@ public showNextWebcam(directionOrDeviceId: boolean|string): void {
 }
 
 public handleImage(webcamImage: WebcamImage): void {
-  console.info('received webcam image', webcamImage);
+  var image = new Image();
+  image.src = webcamImage.imageAsDataUrl;
+  this.Images.push(image);
+
   this.webcamImage = webcamImage;
 }
 
@@ -112,33 +235,6 @@ public get triggerObservable(): Observable<void> {
 
 public get nextWebcamObservable(): Observable<boolean|string> {
   return this.nextWebcam.asObservable();
-}
-
-getnumPlants() {
-  return [
-    { id: 'np1', name: 'One' },
-    { id: 'np2', name: 'More than one' }
-  ];
-}
-getPlantParts(){
-  return [
-    {id: 'pp1', name: 'Root'},
-    {id: 'pp2', name: 'Stem'},
-    {id: 'pp3', name: 'Branch'},
-    {id: 'pp4', name: 'Leaf / Leaves'},
-    {id: 'pp5', name: 'Flowers'}
-  ];
-}
-getYNConditional(){
-  return [
-    {id:"1", name:"Yes"},
-    {id:"2", name:"No"}
-  ];
-}
-
-onSubmit(){
-  this.submitted = true;
-  this.router.navigate(["/"]);
 }
 
 }

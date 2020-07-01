@@ -1,4 +1,3 @@
-
 export class Report {
     id: number;
     PlantName: string;
