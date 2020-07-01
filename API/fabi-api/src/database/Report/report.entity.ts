@@ -21,6 +21,25 @@ class Reports {
     @Column()
     public IMG3: string;
 
+    @Column()
+    public Long: number;
+
+    @Column()
+    public Lat: number;
+
+    @Column()
+    public Pname: string;
+
+    @Column()
+    public Infliction: string;
+
+    @Column()
+    public Accuracy: number;
+
+    @Column()
+    public Pscore: number;
+
+
 }
 
 export default Reports;

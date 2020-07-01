@@ -153,13 +153,19 @@ export class ReportService {
     }
 
     //Add to database
-    /*await this.ReportsRepository.insert({
+    await this.ReportsRepository.insert({
       email: obj.email,
       form: obj.report,
       IMG1: url1,
       IMG2: url2,
       IMG3: url3,
-    });*/
+      Long: 127.01, //must get from obj.report
+      Lat: 132.02,  //must get from obj.report
+      Pscore:certainty,
+      Accuracy: 20,
+      Pname:"sunflower", //must get from obj.report
+      Infliction:"sick" //must get from obj.report
+    });
 
     return true;
   }
@@ -182,7 +188,6 @@ export class ReportService {
     let values: string[] = [];
     const [result] = await client.labelDetection(imageName);
     var labels = result.labelAnnotations;
-    console.log('Labels:');
     labels.forEach((label: { description: string; score: string }) =>
       values.push(label.description),
     );
@@ -193,7 +198,6 @@ export class ReportService {
       }
     }
 
-    console.log(matchValue);
     return matchValue;
   }
 }
