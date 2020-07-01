@@ -11,8 +11,7 @@ import { createHmac } from 'crypto';
 //Classifications
 const labelsAccepted =
   'Agave,azul,Aloe,Annual plant,Arecales,Banana,Banana family,Borassus,flabellifer,Botany,Cycad,Desert Palm,Fern,Flower,Flowering plant,Flowerpot,Garden,Georgia pine,Grass,Grass family,Groundcover,Herb,Houseplant,Ice plant family,Landscape,Leaf,Palm tree,Paurotis Palm,Paurotis Palm,Perennial plant,Pine,Pine family,Plant,Plant community,red pine,Sabal minor,Sabal palmetto,Saw palmetto,Sedge family,shortstraw pine,Shrub,Subshrub,Sweet grass,Taro,Terrestrial plant,Ti plant,Tree,Vascular plant,White pine,Woody plant,Xanthosoma,Yucca,Zingiberales';
-//bool to tell if images are correct
-var flagImages = false;
+  
 //google cloud storage
 const gc = new Storage({
   keyFilename: join(__dirname, '../../../fabi-surveillance-d9f5f1321793.json'),
@@ -20,6 +19,7 @@ const gc = new Storage({
 });
 
 //google cloud Vision API
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const vision = require('@google-cloud/vision');
 
 //create storage bucket
@@ -46,32 +46,32 @@ export class ReportService {
     //if we got here the token matched
 
     //Find image formats for uploaded images
-    var img1Format = obj.Img1.slice(
+    const img1Format = obj.Img1.slice(
       obj.Img1.indexOf('/') + 1,
       obj.Img1.indexOf(';'),
     );
-    var img2Format = obj.Img2.slice(
+    const img2Format = obj.Img2.slice(
       obj.Img2.indexOf('/') + 1,
       obj.Img2.indexOf(';'),
     );
-    var img3Format = obj.Img3.slice(
+    const img3Format = obj.Img3.slice(
       obj.Img3.indexOf('/') + 1,
       obj.Img3.indexOf(';'),
     );
 
     //slice out the base64
-    var base64Img1 = obj.Img1.slice(obj.Img1.indexOf(',') + 1, obj.Img1.length);
-    var base64Img2 = obj.Img2.slice(obj.Img2.indexOf(',') + 1, obj.Img2.length);
-    var base64Img3 = obj.Img3.slice(obj.Img3.indexOf(',') + 1, obj.Img3.length);
+    const base64Img1 = obj.Img1.slice(obj.Img1.indexOf(',') + 1, obj.Img1.length);
+    const base64Img2 = obj.Img2.slice(obj.Img2.indexOf(',') + 1, obj.Img2.length);
+    const base64Img3 = obj.Img3.slice(obj.Img3.indexOf(',') + 1, obj.Img3.length);
 
     //create unique name for each image
-    var img1Name = createHmac('sha256', obj.email + this.makeid())
+    const img1Name = createHmac('sha256', obj.email + this.makeid())
       .digest('hex')
       .substr(0, 15);
-    var img2Name = createHmac('sha256', obj.email + this.makeid())
+      const img2Name = createHmac('sha256', obj.email + this.makeid())
       .digest('hex')
       .substr(0, 15);
-    var img3Name = createHmac('sha256', obj.email + this.makeid())
+      const img3Name = createHmac('sha256', obj.email + this.makeid())
       .digest('hex')
       .substr(0, 15);
 
@@ -97,29 +97,29 @@ export class ReportService {
     await Imagebucket.upload(img3Name + '.' + img3Format);
 
     //Url's for database
-    var url1 =
+    const url1 =
       'https://storage.cloud.google.com/fabi-image-storage/' +
       img1Name +
       '.' +
       img1Format;
-    var url2 =
+    const url2 =
       'https://storage.cloud.google.com/fabi-image-storage/' +
       img2Name +
       '.' +
       img2Format;
-    var url3 =
+    const url3 =
       'https://storage.cloud.google.com/fabi-image-storage/' +
       img3Name +
       '.' +
       img3Format;
 
     //vision api
-    var classNum1 = this.classify(img1Name + '.' + img1Format);
-    var classNum2 = this.classify(img2Name + '.' + img2Format);
-    var classNum3 = this.classify(img3Name + '.' + img3Format);
+    const classNum1 = this.classify(img1Name + '.' + img1Format);
+    const classNum2 = this.classify(img2Name + '.' + img2Format);
+    const classNum3 = this.classify(img3Name + '.' + img3Format);
 
     //value that determines if the images are correct
-    var certainty = 0;
+    let certainty = 0;
 
     if ((await classNum1) >= 5) {
       certainty += 5;
@@ -171,28 +171,28 @@ export class ReportService {
   }
 
   //Helper function to generate random salt for token
-  makeid() {
-    var text = '';
-    var possible =
+  makeid(): string {
+    let text = '';
+    const possible =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    for (var i = 0; i < 5; i++)
+    for (let i = 0; i < 5; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
   }
 
   //fucntion that Requests google vision API
-  async classify(imageName: string) {
-    var matchValue = 0;
-    let values: string[] = [];
+  async classify(imageName: string): Promise<number> {
+    let matchValue = 0;
+    const values: string[] = [];
     const [result] = await client.labelDetection(imageName);
-    var labels = result.labelAnnotations;
+    const labels = result.labelAnnotations;
     labels.forEach((label: { description: string; score: string }) =>
       values.push(label.description),
     );
 
-    for (var i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
       if (labelsAccepted.indexOf(values[i]) != -1) {
         matchValue++;
       }

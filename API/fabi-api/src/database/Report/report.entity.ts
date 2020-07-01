@@ -21,10 +21,10 @@ class Reports {
     @Column()
     public IMG3: string;
 
-    @Column()
+    @Column({type:"double precision"})
     public Long: number;
 
-    @Column()
+    @Column({type:"double precision"})
     public Lat: number;
 
     @Column()
