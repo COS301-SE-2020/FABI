@@ -36,7 +36,6 @@ export class UploadRequest {
 }
 
 export class GetReportsResponse {
-    email: string;
     reports: string;
     status: number;
 }

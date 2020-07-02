@@ -37,14 +37,33 @@ export class ReportService {
     private ReportsRepository: Repository<Reports>,
   ) { }
 
-  async getReportbyID(id: number): Promise<Reports> {
-    const report = await this.ReportsRepository.findOne({ reportID: id });
-    return report;
+  //Function To get Reports from DB based on location
+  async getReports(lat: number, long: number): Promise<String> {
+
+  //values for distance calculations
+    //long +-0,5057
+    //lat  +-0,453
+
+    //Lat ranges
+    let latRangePositive = (lat + 0.453);
+    let latRangeNegative = (lat - 0.453);
+
+    //Long ranges
+    let longRangePositive = (long + 0.5057);
+    let longRangeNegative = (long - 0.5057);
+
+
+
+    var results = await this.ReportsRepository.query("SELECT \"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
+      " AND " + "\"Lat\" BETWEEN " + latRangeNegative + " AND " + latRangePositive + " AND " + "reports.email = users.\"Email\";");
+
+    console.log(results);
+
+    return JSON.stringify(results);
   }
 
+  //function to Insert a new report into the DB
   async InsertReport(obj: UploadRequest): Promise<boolean> {
-    //if we got here the token matched
-
     //Find image formats for uploaded images
     const img1Format = obj.Img1.slice(
       obj.Img1.indexOf('/') + 1,
