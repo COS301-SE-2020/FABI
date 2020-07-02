@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UploadModule } from './report/upload.module';
+import { UploadModule } from './report/upload/upload.module';
 import Users from  "./database/Users/Users.entity"
 
 

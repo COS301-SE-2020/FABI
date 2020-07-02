@@ -1,0 +1,24 @@
+input getReportsRequest {
+    email:String!
+    token:String!
+    latitude: Float!
+    longitude: Float!
+}
+type getReportsResponse{
+   email: String!
+   reports: String!
+   status: Int!
+}
+
+type Mutation{
+    getReports(getReportsRequest:getReportsRequest):getReportsResponse!
+}
+
+#input UploadRequest {
+#    email:String!
+#    token:String!
+#    report:String!
+#    Img1:String!
+#    Img2:String!
+#    Img3:String!
+#}

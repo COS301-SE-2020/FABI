@@ -35,7 +35,7 @@ export class ReportService {
   constructor(
     @InjectRepository(Reports)
     private ReportsRepository: Repository<Reports>,
-  ) {}
+  ) { }
 
   async getReportbyID(id: number): Promise<Reports> {
     const report = await this.ReportsRepository.findOne({ reportID: id });
@@ -85,17 +85,17 @@ export class ReportService {
       .substr(0, 15);
 
     //convert base64 to images
-    writeFile(img1Name + '.' + img1Format, base64Img1, 'base64', function(err) {
+    writeFile(img1Name + '.' + img1Format, base64Img1, 'base64', function (err) {
       console.log(err);
       return false;
     });
 
-    writeFile(img2Name + '.' + img2Format, base64Img2, 'base64', function(err) {
+    writeFile(img2Name + '.' + img2Format, base64Img2, 'base64', function (err) {
       console.log(err);
       return false;
     });
 
-    writeFile(img3Name + '.' + img3Format, base64Img3, 'base64', function(err) {
+    writeFile(img3Name + '.' + img3Format, base64Img3, 'base64', function (err) {
       console.log(err);
       return false;
     });

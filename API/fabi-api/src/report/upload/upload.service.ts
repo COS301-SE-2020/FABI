@@ -14,7 +14,6 @@ export class UploadService {
     ){}
 
     async upload(reqObj:UploadRequest):Promise<UploadResponse>{
-        console.log(reqObj);
         const result = await this.userService.validateToken(reqObj.email,reqObj.token).then(function(result){
             return result;
         })

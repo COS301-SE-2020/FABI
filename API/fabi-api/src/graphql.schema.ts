@@ -6,6 +6,13 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class GetReportsRequest {
+    email: string;
+    token: string;
+    latitude: number;
+    longitude: number;
+}
+
 export class LoginRequest {
     email: string;
     password: string;
@@ -28,6 +35,12 @@ export class UploadRequest {
     Img3: string;
 }
 
+export class GetReportsResponse {
+    email: string;
+    reports: string;
+    status: number;
+}
+
 export class LoginResponse {
     email: string;
     token: string;
@@ -38,6 +51,8 @@ export abstract class IMutation {
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 
     abstract registerUser(request?: Request): Response | Promise<Response>;
+
+    abstract getReports(getReportsRequest?: GetReportsRequest): GetReportsResponse | Promise<GetReportsResponse>;
 
     abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
 }
