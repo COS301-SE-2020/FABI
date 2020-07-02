@@ -44,6 +44,7 @@ export class LoginResponse {
     email: string;
     token: string;
     status: number;
+    Usertype: string;
 }
 
 export abstract class IMutation {
