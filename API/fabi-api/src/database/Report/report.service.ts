@@ -54,7 +54,7 @@ export class ReportService {
 
 
 
-    var results = await this.ReportsRepository.query("SELECT \"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
       " AND " + "\"Lat\" BETWEEN " + latRangeNegative + " AND " + latRangePositive + " AND " + "reports.email = users.\"Email\";");
 
     console.log(results);
@@ -180,19 +180,22 @@ export class ReportService {
       return false;
     }
 
+    //parse string into JSON
+    let reportJson = JSON.parse(obj.report);
+
     //Add to database
     await this.ReportsRepository.insert({
       email: obj.email,
-      form: obj.report,
+      form: reportJson,
       IMG1: url1,
       IMG2: url2,
       IMG3: url3,
-      Long: 127.01, //must get from obj.report
-      Lat: 132.02, //must get from obj.report
+      Long: reportJson.Location.Longitude, //must get from obj.report
+      Lat: reportJson.Location.Latitude, //must get from obj.report
       Pscore: certainty,
-      Accuracy: 20,
-      Pname: 'sunflower', //must get from obj.report
-      Infliction: 'sick', //must get from obj.report
+      Accuracy: reportJson.Location.Accuracy,
+      Pname: reportJson.Questions["Common name"], //must get from obj.report
+      Infliction: reportJson.Questions["Pest Or Disease"], //must get from obj.report
     });
 
     return true;
