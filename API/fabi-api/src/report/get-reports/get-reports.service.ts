@@ -17,8 +17,9 @@ export class GetReportsService {
             return result;
         })
         if (result == false) {
-            console.log("herer");
-
+            //error code
+            this.res.status = 415;
+            
             return this.res;
         } else {
             //this will pass upload object to report service that will interact with db
