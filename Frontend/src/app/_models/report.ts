@@ -7,6 +7,6 @@ export class Report {
     Longitude: number;
     Accuracy: number;
     UserType: string;
-    Images: [{Image:string},{Image:string},{Image:string}];
+    Images: Object={"Image1":"Null","Image2":"Null","Image3":"Null"};
 }
 

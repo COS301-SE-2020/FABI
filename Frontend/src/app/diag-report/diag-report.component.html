@@ -1,6 +1,11 @@
 <br>
 <!-- Testing camera functionality -->
 <div class="col-sm-6" *ngIf="ImageDataCount<3&&!enterImage">
+  <div class="row">
+    <div class="col-6" ><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+    <div class="col-6" ><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="(Images.length<3&&!showWebcam)" (click)="onCancel()">Cancel</button></div>
+  </div><br>
+  <div class="row" *ngIf="!showWebcam&&ImageDataCount<3&&!enterImage"><h4>You need 3 images to proceed</h4></div><br>
   <div class="row" [style.visibility]="showWebcam?'visible':'hidden'">
       <div class="col-sm-6" style="text-align: center;max-width: 50%;">
         <webcam 
@@ -15,13 +20,11 @@
       </div>
   <br/>
 </div>
-
 <div class="row">
   <br/>
   <div class="col-6" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;"><i class="fa fa-camera"></i> Take photo</button></div>
-  <div class="col-6" ><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
 </div>
-
+<br>
 <div class="row">
   <div class="col-3" *ngIf="multipleWebcamsAvailable">
       <button class="btn btn-success" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
@@ -176,5 +179,4 @@
 </form>
 <br><button class="btn btn-success" style="margin-left: 5px;" *ngIf="PorD_Selected&&Images.length==3" (click)="onSubmit()">Submit Report</button>
 </div>
-
-<br><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="Images.length==3" (click)="onCancel()">Cancel</button>
+<br><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="Images.length==3" (click)="onCancel()">Cancel</button><br><br><br>

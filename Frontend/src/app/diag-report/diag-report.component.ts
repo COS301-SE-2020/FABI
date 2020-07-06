@@ -140,8 +140,27 @@ export class DiagReportComponent implements OnInit {
 
     console.log(this.toJSON(this.Answers));
 
+    // Debug - Download the JSON file
+    //this.download(this.toJSON(this.Answers));
+
     this.submitted = true;
     //this.router.navigate(["/"]);
+  }
+
+  // Debug - JSON
+  download(obj){
+    //Convert JSON Array to string.
+    var json:any = JSON.stringify(obj);
+    json = [json];
+    var blob1 = new Blob(json, { type: "text/plain;charset=utf-8" });
+    var url = window.URL || window.webkitURL;
+            var link = url.createObjectURL(blob1);
+            var a = document.createElement("a");
+            a.download = "ReportExample.txt";
+            a.href = link;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
   }
 
   toJSON(object){
