@@ -16,6 +16,7 @@ import * as Styles from '@/MapStyles.json';
 export class HomeComponent implements AfterViewInit {
     
     @ViewChild('mapContainer') gmap: ElementRef;
+    displayReady:Boolean=false;
     lat;
     lng;
     map: google.maps.Map;
@@ -51,12 +52,6 @@ export class HomeComponent implements AfterViewInit {
     users = [];
     currentMID=null;
     currentMark:Report;
-    pName : string;
-    iType : string;
-    sName:string;
-    img1 : string;
-    img2 : string;
-    img3 : string;
     markIDs : Array<number>=[];
     Active;
 
@@ -71,12 +66,6 @@ export class HomeComponent implements AfterViewInit {
     }
     
     ngOnInit():void{
-        this.pName="";
-        this.iType="";
-        this.sName="";
-        this.img1="";
-        this.img2="";
-        this.img3="";
         this.Active=0;
     }
     ngAfterViewInit(): void {
@@ -183,7 +172,7 @@ export class HomeComponent implements AfterViewInit {
                 google.maps.event.addListener(Object.marker[i], 'click', (function(marker, i) {
                     return function() {
                         infowindow.setContent(Object.getInfoTemplate(Object.markers[i]));
-                        infowindow.open(Object.map, Object.marker[i]);
+                        infowindow.open(Object.map, marker);
 
                     }
                   })(Object.marker[i],i));
@@ -228,22 +217,16 @@ export class HomeComponent implements AfterViewInit {
         
         
         this.currentMarkServ.setMID(loc);
-        this.currentMark=this.currentMarkServ.currentRepValue;
-        
-        this.pName = this.currentMark.PlantName;
-        this.iType = this.currentMark.InflictionType;
-        this.sName = this.currentMark.InflictionName;
-        this.img1 = this.currentMark.Images[0].Image;
-        this.img2 = this.currentMark.Images[1].Image;
-        this.img3 = this.currentMark.Images[2].Image;
-        
+        this.currentMark=this.currentMarkServ.currentRepValue;        
 
         this.Active=1; // Button
 
         let key = "currentMarker";
         localStorage.setItem(key, JSON.stringify(this.currentMark));
 
+        this.displayReady=true;
         }
+
     }
 
     /**
