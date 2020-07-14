@@ -7,6 +7,8 @@ import { PestInfoComponent } from '@/_components/pest-info/pest-info.component';
 import { SharedModule } from '@/shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { MatDividerModule } from '@angular/material/divider';
     RouterModule,
     SharedModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    FlexLayoutModule,
+    MatCardModule,
   ]
 })
 export class AdminModule { }

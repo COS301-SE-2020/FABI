@@ -1,18 +1,35 @@
 <div>
-    <app-widget-report-graph></app-widget-report-graph>
+  <app-widget-report-graph></app-widget-report-graph>
 </div>
+
+<br>
 
 <mat-divider></mat-divider>
 
-<div>
-    <div>Line chart</div>
-    <div>Line chart</div>
-    <div>Line chart</div>
-    <div>Line chart</div>
+<br>
+
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
+  <mat-card fxFlex="25">
+    <app-widget-card label="New Reports" total="120" percentage="60"></app-widget-card>
+  </mat-card>
+  <mat-card fxFlex="25">
+    <app-widget-card label="New Pathogens" total="68" percentage="58"></app-widget-card>
+</mat-card>
+  <mat-card fxFlex="25">
+    <app-widget-card label="New Pests" total="72" percentage="96"></app-widget-card>
+  </mat-card>
+  <mat-card fxFlex="25">
+    <app-widget-card label="Total Undiagnosed Reports" total="346" percentage="89"></app-widget-card>
+  </mat-card>
 </div>
+
+<br>
+
 <mat-divider></mat-divider>
 
+<br>
+
 <div>
-    <div>Table</div>
-    <div>Pie chart</div>
+  <div>Table</div>
+  <div>Pie chart</div>
 </div>

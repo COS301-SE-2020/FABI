@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import { type } from 'os';
 
 @Component({
   selector: 'app-widget-report-graph',
