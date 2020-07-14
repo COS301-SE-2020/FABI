@@ -71,14 +71,14 @@ export class CardComponent implements OnInit {
       series: [{
         data: [71, 78, 39, 66]
       }]
-    };
+    }
     HC_exporting(Highcharts)
 
     setTimeout(() => {
       window.dispatchEvent(
         new Event('resize')
       )
-    }, 100)
+    }, 300)
   }
 
 }
