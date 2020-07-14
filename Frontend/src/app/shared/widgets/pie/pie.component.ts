@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 @Component({
@@ -9,6 +9,7 @@ import HC_exporting from 'highcharts/modules/exporting';
 export class PieComponent implements OnInit {
   Highcharts = Highcharts
   chartOptions = {}
+  @Input() data: []
   constructor() { }
 
   ngOnInit(): void {
@@ -49,36 +50,7 @@ export class PieComponent implements OnInit {
       series: [{
         name: 'Afflictions',
         colorByPoint: true,
-        data: [{
-          name: 'Aphids',
-          y: 61.41,
-          sliced: true,
-          selected: true
-        }, {
-          name: 'Cicadas',
-          y: 11.84
-        }, {
-          name: 'Corn Earworms',
-          y: 10.85
-        }, {
-          name: 'Cabbage Worms',
-          y: 4.67
-        }, {
-          name: 'Sclerotinia',
-          y: 4.18
-        }, {
-          name: 'Soybean Cyst',
-          y: 1.64
-        }, {
-          name: 'Bean Pod Mottle',
-          y: 1.6
-        }, {
-          name: 'Bacterial Blight',
-          y: 1.2
-        }, {
-          name: 'Other',
-          y: 2.61
-        }]
+        data: this.data
       }]
     }
     HC_exporting(Highcharts)

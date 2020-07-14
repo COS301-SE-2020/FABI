@@ -12,7 +12,7 @@ export class CardComponent implements OnInit {
   @Input() label: string
   @Input() total: string
   @Input() percentage: string
-
+  @Input() data: []
   Highcharts = Highcharts
   chartOptions = {}
 
@@ -69,7 +69,7 @@ export class CardComponent implements OnInit {
         enabled: false
       },
       series: [{
-        data: [71, 78, 39, 66]
+        data: this.data
       }]
     }
     HC_exporting(Highcharts)

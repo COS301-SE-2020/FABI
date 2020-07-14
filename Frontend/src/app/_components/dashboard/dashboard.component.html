@@ -1,5 +1,5 @@
 <div>
-  <app-widget-report-graph></app-widget-report-graph>
+  <app-widget-report-graph [data]="bigChart"></app-widget-report-graph>
 </div>
 
 <br>
@@ -10,16 +10,16 @@
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
   <mat-card fxFlex="25">
-    <app-widget-card label="New Reports" total="120" percentage="60"></app-widget-card>
+    <app-widget-card label="New Reports" total="120" percentage="60" [data]="cards"></app-widget-card>
   </mat-card>
   <mat-card fxFlex="25">
-    <app-widget-card label="New Pathogens" total="68" percentage="58"></app-widget-card>
+    <app-widget-card label="New Pathogens" total="68" percentage="58" [data]="cards"></app-widget-card>
 </mat-card>
   <mat-card fxFlex="25">
-    <app-widget-card label="New Pests" total="72" percentage="96"></app-widget-card>
+    <app-widget-card label="New Pests" total="72" percentage="96" [data]="cards"></app-widget-card>
   </mat-card>
   <mat-card fxFlex="25">
-    <app-widget-card label="Total Undiagnosed Reports" total="346" percentage="89"></app-widget-card>
+    <app-widget-card label="Total Undiagnosed Reports" total="346" percentage="89" [data]="cards"></app-widget-card>
   </mat-card>
 </div>
 
@@ -32,6 +32,6 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
   <div fxFlex="60">Table</div>
   <div fxFlex="40">
-    <app-widget-pie></app-widget-pie>
+    <app-widget-pie [data]="pieChart"></app-widget-pie>
   </div>
 </div>

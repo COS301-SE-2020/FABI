@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 
@@ -13,7 +13,8 @@ export class ReportGraphComponent implements OnInit {
 
 
   chartOptions: {};
-
+  @Input() data: []
+  
   Highcharts = Highcharts;
 
   ngOnInit(): void {
@@ -49,22 +50,7 @@ export class ReportGraphComponent implements OnInit {
       exporting: {
         enabled: true
       },
-      series: [{
-        name: 'Free State',
-        data: [12, 14, 11, 9, 3, 1, 4]
-      }, {
-        name: 'Mpumalanga',
-        data: [24, 26, 24, 23, 11, 23, 17]
-      }, {
-        name: 'Gauteng',
-        data: [9, 4, 6, 8, 12, 15, 17]
-      }, {
-        name: 'Kwazulu-Natal',
-        data: [25, 28, 26, 24, 26, 16, 19]
-      }, {
-        name: 'Western Cape',
-        data: [2, 2, 2, 6, 13, 30, 46]
-      }]
+      series: this.data
     };
     HC_exporting(Highcharts)
 

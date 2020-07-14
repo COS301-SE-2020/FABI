@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DashboardService } from '@/_components/dashboard.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatDividerModule,
     FlexLayoutModule,
     MatCardModule,
+  ],
+  providers: [
+    DashboardService
   ]
 })
 export class AdminModule { }
