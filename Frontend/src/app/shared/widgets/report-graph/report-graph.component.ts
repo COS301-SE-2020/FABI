@@ -72,6 +72,6 @@ export class ReportGraphComponent implements OnInit {
       window.dispatchEvent(
         new Event('resize')
       )
-    }, 100)
+    }, 300)
   }
 }

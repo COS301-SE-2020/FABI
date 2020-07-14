@@ -21,6 +21,6 @@ export class HeaderComponent implements OnInit {
       window.dispatchEvent(
         new Event('resize')
       )
-    }, 100)
+    }, 300)
   }  
 }
