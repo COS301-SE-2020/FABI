@@ -11,11 +11,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { ReportGraphComponent } from './widgets/report-graph/report-graph.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    ReportGraphComponent
   ],
   imports: [
     CommonModule,
@@ -26,12 +30,14 @@ import { RouterModule } from '@angular/router';
     FlexLayoutModule,
     MatMenuModule,
     MatListModule,
-    RouterModule
+    RouterModule,
+    HighchartsChartModule
   ],
   exports: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    ReportGraphComponent
   ]
 })
 export class SharedModule { }
