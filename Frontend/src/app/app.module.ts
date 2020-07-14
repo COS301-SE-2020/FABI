@@ -20,6 +20,8 @@ import { GraphQLModule } from './graphql.module';
 import {FormsModule} from '@angular/forms';
 import { Http,HttpModule , Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminModule } from './_layouts/admin/admin.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,7 @@ import { MapReportComponent } from './map-report/map-report.component';
     RegisterComponent,
     AlertComponent,
     DiagReportComponent,
-    MapReportComponent
+    MapReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,9 @@ import { MapReportComponent } from './map-report/map-report.component';
     FormsModule,
     GraphQLModule,
     WebcamModule,
-    HttpModule
+    HttpModule,
+    BrowserAnimationsModule,
+    AdminModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

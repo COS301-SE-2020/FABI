@@ -7,6 +7,8 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { from } from 'rxjs';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
+import { AdminComponent } from './_layouts/admin/admin.component';
+import { DashboardComponent } from './_components/dashboard/dashboard.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -14,6 +16,14 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'DiagReport', component: DiagReportComponent },
     { path: 'MapReport', component: MapReportComponent},
+    {
+        path: 'admin',
+        component: AdminComponent,
+        children: [{
+            path: '',
+            component: DashboardComponent
+        }]
+    },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
