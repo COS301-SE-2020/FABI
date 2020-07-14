@@ -1,10 +1,25 @@
-<div>
-    profile
-</div>
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h2>Company Name</h2>
+      <h4>Name Surname</h4>
+    </div>
+    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Company Name">
+  </div>
 
-<mat-divider></mat-divider>
-menu
+  <mat-divider></mat-divider>
 
-<mat-divider></mat-divider>
+  <h2 matSubheader>Pages</h2>
 
-another menu
+  <a mat-list-item routerLinkActive="link-item-active" routerLink="/admin">Dashboard</a>
+  <a mat-list-item routerLinkActive="link-item-active" routerLink="/admin/pests">Pests</a>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Tools</h2>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/users">
+    <mat-icon>account_box</mat-icon>
+    Users
+</a>
+</mat-nav-list>
