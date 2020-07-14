@@ -9,7 +9,7 @@ import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
 import { AdminComponent } from './_layouts/admin/admin.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
-import { PestInfoComponent } from './_component/pest-info/pest-info.component';
+import { PestInfoComponent } from './_components/pest-info/pest-info.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
