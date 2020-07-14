@@ -14,15 +14,16 @@ const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'DiagReport', component: DiagReportComponent },
-    { path: 'MapReport', component: MapReportComponent},
+    { path: 'DiagReport', component: DiagReportComponent, canActivate: [AuthGuard] },
+    { path: 'MapReport', component: MapReportComponent, canActivate: [AuthGuard]},
     {
         path: 'admin',
         component: AdminComponent,
         children: [{
             path: '',
             component: DashboardComponent
-        }]
+        }], 
+        // canActivate: [AuthGuard]
     },
 
     // otherwise redirect to home
