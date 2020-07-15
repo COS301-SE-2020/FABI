@@ -14,6 +14,13 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * @name sideBarToggler
+   * @description Sets the sideBarOpen value to the opposite for opening
+   *              and closing the sidebar
+   *
+   * @memberof AdminComponent
+   */
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }

@@ -1,4 +1,39 @@
+/*
+ * File Name: report-graph.component.ts
+ * 
+ * The University of Pretoria
+ * Computer Science Department
+ * FABI-Surveillance
+ * Runtime Terrors
+ * 
+ * (c) Copyright 2020 University of Pretoria
+ * ALL RIGHTS RESERVED
+ * 
+ * Input                          : data
+ * Output                         : None
+ * Related Requirements           : Reporting
+ * Classes in this file           : None
+ * Related Documents              : Highcharts documentation
+ * 
+ * Notes:
+ *            Version:            : 0.1.0
+ *            Author:             : Steven Jordaan - steven.j.jordaan2000@gmail.com
+ *            Creation Date:      : Tuesday, July 14th 2020, 4:28:59 pm
+ * HISTORY:
+ * Date       	          By	Comments
+ * -----------	          ---	-----------------------------------------------------
+ * 
+ * Functional Description         : Instantiates the large line chart on the dashboard
+ * Constraints                    : None
+ * Assumptions                    : User is on desktop device, not scalable to mobile
+ */
+
+
+
+// Angular specific imports
 import { Component, OnInit, Input } from '@angular/core';
+
+// Highchart specific imports
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 
@@ -9,13 +44,12 @@ import HC_exporting from 'highcharts/modules/exporting';
 })
 export class ReportGraphComponent implements OnInit {
 
-  constructor() { }
-
-
-  chartOptions: {};
   @Input() data: []
-  
+
   Highcharts = Highcharts;
+  chartOptions: {};
+
+  constructor() { }
 
   ngOnInit(): void {
     this.chartOptions = {

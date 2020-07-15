@@ -14,8 +14,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  toggleSideBar() {
+/**
+ * @name toggleSideBar
+ * @description Emits an event to signal the side bar opening
+ *              or closing
+ *
+ * @memberof HeaderComponent
+ */
+toggleSideBar() {
     this.toggleSideBarForMe.emit();
     setTimeout(() => {
       window.dispatchEvent(

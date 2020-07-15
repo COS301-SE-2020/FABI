@@ -1,4 +1,39 @@
+/*
+ * File Name: pie.component.ts
+ * 
+ * The University of Pretoria
+ * Computer Science Department
+ * FABI-Surveillance
+ * Runtime Terrors
+ * 
+ * (c) Copyright 2020 University of Pretoria
+ * ALL RIGHTS RESERVED
+ * 
+ * Input                          : data
+ * Output                         : None
+ * Related Requirements           : Reporting
+ * Classes in this file           : None
+ * Related Documents              : Highcharts documentation
+ * 
+ * Notes:
+ *            Version:            : 0.0.0
+ *            Author:             : Steven Jordaan - steven.j.jordaan2000@gmail.com
+ *            Creation Date:      : Tuesday, July 14th 2020, 6:10:29 pm
+ * HISTORY:
+ * Date       	          By	Comments
+ * -----------	          ---	-----------------------------------------------------
+ * 
+ * Functional Description         : Instantiates the chart on the dashboard
+ * Constraints                    : None
+ * Assumptions                    : User is on a desktop device, not scalable to mobile
+ */
+
+
+
+// Angular specific imports
 import { Component, OnInit, Input } from '@angular/core';
+
+// Highcharts specific imports
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 @Component({
@@ -7,9 +42,12 @@ import HC_exporting from 'highcharts/modules/exporting';
   styleUrls: ['./pie.component.css']
 })
 export class PieComponent implements OnInit {
+
+  @Input() data: []
+
   Highcharts = Highcharts
   chartOptions = {}
-  @Input() data: []
+
   constructor() { }
 
   ngOnInit(): void {
