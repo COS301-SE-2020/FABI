@@ -1,13 +1,45 @@
+/*
+ * File Name: affliction.service.ts
+ * 
+ * The University of Pretoria
+ * Computer Science Department
+ * FABI-Surveillance
+ * Runtime Terrors
+ * 
+ * (c) Copyright 2020 University of Pretoria
+ * ALL RIGHTS RESERVED
+ * 
+ * Input                          : None
+ * Output                         : None
+ * Related Requirements           : None
+ * Classes in this file           : None
+ * Related Documents              : None
+ * 
+ * Notes:
+ *            Version:            : 0.1.0
+ *            Author:             : Steven Jordaan - steven.j.jordaan2000@gmail.com
+ *            Creation Date:      : Wednesday, July 15th 2020, 4:17:58 pm
+ * HISTORY:
+ * Date       	          By	Comments
+ * -----------	          ---	-----------------------------------------------------
+ * 
+ * Functional Description         : This service will retrieve data from the api relating to afflictions
+ * Constraints                    : None
+ * Assumptions                    : None
+ */
+
+
+
+
 import { Injectable } from '@angular/core';
-import * as afflictionsDS from '../PestAndDiseases.json'
-import { Affliction } from '../_models/affliction'
+// import { Affliction } from '../_models/affliction'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AfflictionService {
 
-  afflictions: Affliction[]
+  // afflictions: Affliction[]
 
   constructor() { }
 
