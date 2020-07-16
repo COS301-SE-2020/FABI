@@ -51,7 +51,7 @@ import { PestInfoComponent } from '@/_components/pest-info/pest-info.component';
 import { DashboardService } from '@/_components/dashboard.service';
 
 // Shared module
-import { SharedModule } from '@/shared/shared.module';
+import { SharedModule } from '@/sharedAdmin/shared.module';
 
 @NgModule({
   declarations: [
