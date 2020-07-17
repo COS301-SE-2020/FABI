@@ -71,7 +71,6 @@ export class AuthenticationService {
             if (user["data"]["login"]["status"] == "201") {
                 localStorage.setItem('currentUser', JSON.stringify(user["data"]["login"]));
 
-                console.log(user["data"]["login"]);
                 this.currentUserSubject.next(user["data"]["login"]);
                 return user;
             } else {
