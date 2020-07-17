@@ -44,6 +44,7 @@ import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './_layouts/admin/admin.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
 import { PestInfoComponent } from './_components/pest-info/pest-info.component';
+import { UpdatePestComponent } from './_components/pest-info/update-pest/update-pest.component';
 
 // Basic User imports
 import { HomeComponent } from './home/home.component';
@@ -86,7 +87,11 @@ const routes: Routes = [
         },
         {
             path: 'pests',
-            component: PestInfoComponent
+            component: PestInfoComponent,
+        },
+        {
+            path: 'updatePest/:id',
+            component: UpdatePestComponent
         }],
         // canActivate: [AuthGuard]
     },

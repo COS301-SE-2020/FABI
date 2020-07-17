@@ -47,8 +47,9 @@ import { MatTableModule } from '@angular/material/table'
 // Admin related components
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from '@/_components/dashboard/dashboard.component';
-import { PestInfoComponent } from '@/_components/pest-info/pest-info.component';
 import { DashboardService } from '@/_components/dashboard.service';
+import { PestInfoComponent } from '@/_components/pest-info/pest-info.component';
+import { UpdatePestComponent } from '../../_components/pest-info/update-pest/update-pest.component';
 
 // Shared module
 import { SharedModule } from '@/sharedAdmin/shared.module';
@@ -57,7 +58,8 @@ import { SharedModule } from '@/sharedAdmin/shared.module';
   declarations: [
     AdminComponent,
     DashboardComponent,
-    PestInfoComponent
+    PestInfoComponent,
+    UpdatePestComponent
   ],
   imports: [
     CommonModule,

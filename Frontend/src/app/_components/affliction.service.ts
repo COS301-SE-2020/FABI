@@ -32,7 +32,7 @@
 
 
 import { Injectable } from '@angular/core';
-// import { Affliction } from '../_models/affliction'
+import { Affliction } from '@/_models/affliction';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +43,34 @@ export class AfflictionService {
 
   constructor() { }
 
+  getAffliction(id: number) {
+    switch (id) {
+      case 1: 
+        return {
+          "id": "1",
+          "ScienceName": "Pissodes nemorensis",
+          "Name": "Deodar weevil",
+          "Plant": "Pinus species",
+          "Type": "Pest",
+          "Distribution": "Throughout South Africa",
+          "Status": "Pest populations are high, but don’t always cause serious damage. The exception is in stands of P. radiata where feeding on the tips can result in tip die-back.",
+          "Description": "Adults have long, curved snouts and are reddish brown in colour with two patches of light grey scales on their backs. The body length of the adults ranges from 6-8mm. The larvae are yellowish white, cylindrical and legless, with light brown heads, and they are about 6mm long when fully grown.",
+          "Symptoms": "Dying or dead pine shoots, often resulting in forking or branching of trees. Circular emergence holes on the bark of the main stem, which DO NOT penetrate the wood. These exit holes lead from the pupal chambers or ‘chip cocoons’ between the bark and the wood.",
+          "Management": "Remove dying and dead trees, as these provide host material for the population of the beetle to increase. A native parasitoid has been detected parasitising the larvae.",
+          "Images": [
+            { "Image": "https://extension.msstate.edu/sites/default/files/publication-images/P3057/DEOD2.png" },
+            { "Image": "https://extension.msstate.edu/sites/default/files/publication-images/P3057/DEOD2.png" },
+            { "Image": "https://extension.msstate.edu/sites/default/files/publication-images/P3057/DEOD2.png" }
+          ]
+  
+        }
+    }
+  }
+  // TODO: Make this return Observable
   getPests() {
     return [
       {
+        "id": "1",
         "ScienceName": "Pissodes nemorensis",
         "Name": "Deodar weevil",
         "Plant": "Pinus species",
@@ -63,6 +88,7 @@ export class AfflictionService {
 
       },
       {
+        "id": "2",
         "ScienceName": "Thaumastocoris peregrinus",
         "Name": "Bronze bug",
         "Plant": "Eucalyptus species and hybrids",
@@ -80,10 +106,11 @@ export class AfflictionService {
       }
     ]
   }
-
+  // TODO: Make this return Observable
   getPathogens() {
     return [
       {
+        "id": "3",
         "ScienceName": "Puccinia psidii",
         "Name": "rust pathogen",
         "Species": "Affects Eucalypts and native Myrtaceae",
@@ -102,4 +129,9 @@ export class AfflictionService {
       }
     ]
   }
+
+  updateAffliction (id: number, affliction: Affliction) {
+    // TODO: GraphQL connection goes here
+  }
+  // End of file
 }

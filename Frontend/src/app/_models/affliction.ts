@@ -32,6 +32,7 @@
 
 
 export class Affliction {
+    id: number                      // Used for quick identification
     type: string                    // Type of affliction ( Pest or Pathogen )
     sciName: string                 // Scientific Name
     name: string                    // Common Name
