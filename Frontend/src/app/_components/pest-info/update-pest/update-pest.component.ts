@@ -35,6 +35,10 @@ import { Component, OnInit } from '@angular/core';
 import { Affliction } from '@/_models/affliction';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfflictionService } from '@/_components/affliction.service';
+// import { MatInputModule } from '@angular/material/input'
+// import { MatSelectModule } from "@angular/material/select";
+// import { MatButtonModule } from "@angular/material/button";
+// import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: 'app-update-pest',
@@ -44,7 +48,6 @@ import { AfflictionService } from '@/_components/affliction.service';
 export class UpdatePestComponent implements OnInit {
 
   pest: Affliction // Use this when connected to API to store affliction data
-  pestTemp
   id: number
 
   constructor(
@@ -53,15 +56,14 @@ export class UpdatePestComponent implements OnInit {
     private service: AfflictionService) { }
 
   ngOnInit(): void {
-    // this.pest = new Affliction()
+    this.pest = new Affliction()
     this.id = this.route.snapshot.params['id']
-
     // TODO: Convert this to observable when API connection exists
     // this.service.getAffliction(this.id)
     // .subscribe(pestData => {
     //   this.pest = pestData
     // })
-    this.pestTemp = this.service.getAffliction(this.id)
+    this.pest = this.service.getAffliction(this.id)
   }
 
   updatePest() {

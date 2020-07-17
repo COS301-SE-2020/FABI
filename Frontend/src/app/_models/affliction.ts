@@ -34,7 +34,7 @@
 export class Affliction {
     id: number                      // Used for quick identification
     type: string                    // Type of affliction ( Pest or Pathogen )
-    sciName: string                 // Scientific Name
+    scienceName: string                 // Scientific Name
     name: string                    // Common Name
     plant: string                   // Plants commonly affected
     distribution: string            // Where it is distributed
@@ -42,5 +42,5 @@ export class Affliction {
     description: string             // General description of the affliction
     symptoms: string                // Symptoms of the plant
     management: string              // How to deal with the affliction
-    images: []                      // Links to images of the plants
+    images: string[]                      // Links to images of the plants
 }

@@ -1,1 +1,110 @@
-<p>update-pest works!</p>
+<h2> Update {{pest.name}}</h2>
+
+<form class="example-form">
+  <mat-form-field>
+    <mat-label>Affliction Type</mat-label>
+    <mat-select [(value)]="pest.type">
+      <mat-option value="Pest">Pest</mat-option>
+      <mat-option value="Pathogen">Pathogen</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <table cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Scientific Name</mat-label>
+          <input matInput [(value)]="pest.scienceName">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-label>Common Name</mat-label>
+          <input matInput [(value)]="pest.name">
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <table cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Affected species</mat-label>
+          <input matInput [(value)]="pest.plant">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-label>Geo Distribution</mat-label>
+          <input matInput [(value)]="pest.distribution">
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <table cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <textarea matInput cdkTextareaAutosize [(value)]="pest.status"></textarea>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput cdkTextareaAutosize [(value)]="pest.description"></textarea>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Symptoms</mat-label>
+          <textarea matInput cdkTextareaAutosize [(value)]="pest.symptoms"></textarea>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Management</mat-label>
+          <textarea matInput cdkTextareaAutosize [(value)]="pest.management"></textarea>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+
+  <table cellspacing="0">
+    <tr>
+      <td>
+        <mat-card>
+            <img mat-card-image [(src)]="pest.images[0]" alt="Plant image">
+            <mat-card-actions>
+                <button mat-button>Remove image</button>
+              </mat-card-actions>
+        </mat-card>
+      </td>
+      <td>
+        <mat-card>
+            <img mat-card-image [(src)]="pest.images[1]" alt="Plant image">
+            <mat-card-actions>
+                <button mat-button>Remove image</button>
+              </mat-card-actions>
+        </mat-card>
+      </td>
+      <td>
+        <mat-card>
+            <img mat-card-image [(src)]="pest.images[2]" alt="Plant image">
+            <mat-card-actions>
+                <button mat-button>Remove image</button>
+              </mat-card-actions>
+        </mat-card>
+      </td>
+    </tr>
+  </table>
+</form>

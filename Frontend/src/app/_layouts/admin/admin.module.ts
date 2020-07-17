@@ -43,6 +43,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTableModule } from '@angular/material/table'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select'
+import { MatButtonModule } from "@angular/material/button";
 
 // Admin related components
 import { AdminComponent } from './admin.component';
@@ -70,7 +74,11 @@ import { SharedModule } from '@/sharedAdmin/shared.module';
     FlexLayoutModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule
   ],
   providers: [
     DashboardService
