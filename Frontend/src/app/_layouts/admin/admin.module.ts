@@ -47,7 +47,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select'
 import { MatButtonModule } from "@angular/material/button";
-
+import {MatIconModule} from '@angular/material/icon'
 // Admin related components
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from '@/_components/dashboard/dashboard.component';
@@ -57,13 +57,16 @@ import { UpdatePestComponent } from '../../_components/pest-info/update-pest/upd
 
 // Shared module
 import { SharedModule } from '@/sharedAdmin/shared.module';
+import { AlertService } from '@/_services/alert.service';
+import { AlertComponent } from '@/_components/alert.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     DashboardComponent,
     PestInfoComponent,
-    UpdatePestComponent
+    UpdatePestComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -78,10 +81,12 @@ import { SharedModule } from '@/sharedAdmin/shared.module';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
-    DashboardService
+    DashboardService,
+    AlertService
   ]
 })
 export class AdminModule { }

@@ -35,11 +35,7 @@ import { Component, OnInit } from '@angular/core';
 import { Affliction } from '@/_models/affliction';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfflictionService } from '@/_components/affliction.service';
-// import { MatInputModule } from '@angular/material/input'
-// import { MatSelectModule } from "@angular/material/select";
-// import { MatButtonModule } from "@angular/material/button";
-// import { MatCardModule } from "@angular/material/card";
-
+import { AlertService } from "../../../_services/alert.service";
 @Component({
   selector: 'app-update-pest',
   templateUrl: './update-pest.component.html',
@@ -49,11 +45,12 @@ export class UpdatePestComponent implements OnInit {
 
   pest: Affliction // Use this when connected to API to store affliction data
   id: number
-
+  newUrl: string
   constructor(
     private route: ActivatedRoute, 
     private router: Router, 
-    private service: AfflictionService) { }
+    private service: AfflictionService,
+    private alert: AlertService) { }
 
   ngOnInit(): void {
     this.pest = new Affliction()
@@ -71,6 +68,17 @@ export class UpdatePestComponent implements OnInit {
     // this.service.updatePest(this.id, this.pest)
     // .subscribe()
     this.router.navigateByUrl(`/admin/pests`)
+  }
+
+  addImage() {
+    this.alert.success("Added Image Successfully", false)
+    this.pest.images.push(this.newUrl)
+  }
+
+  removeImage(img: string) {
+    this.alert.success("Removed Image Successfully", false)
+    var index = this.pest.images.indexOf(img)
+    this.pest.images.splice(index, 1)
   }
 
 }

@@ -29,7 +29,6 @@ import { AdminModule } from './_layouts/admin/admin.module';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent,
     DiagReportComponent,
     MapReportComponent,
   ],
