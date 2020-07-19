@@ -7,6 +7,8 @@ import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
 import { createHmac } from 'crypto';
+import { UsersService } from '../Users/users.service';
+import Users from '../Users/Users.entity';
 
 //Classifications
 const labelsAccepted =
@@ -35,12 +37,13 @@ export class ReportService {
   constructor(
     @InjectRepository(Reports)
     private ReportsRepository: Repository<Reports>,
+    private userService: UsersService,
   ) { }
 
   //Function To get Reports from DB based on location
   async getReports(lat: number, long: number): Promise<String> {
 
-  //values for distance calculations
+  //values for distance calculations (for 50km radius)
     //long +-0,5057
     //lat  +-0,453
 
@@ -93,31 +96,32 @@ export class ReportService {
     );
 
     //create unique name for each image
-    const img1Name = createHmac('sha256', obj.email + this.makeid())
+    const img1Name = createHmac('sha256', obj.token + this.makeid())
       .digest('hex')
       .substr(0, 15);
-    const img2Name = createHmac('sha256', obj.email + this.makeid())
+    const img2Name = createHmac('sha256', obj.token + this.makeid())
       .digest('hex')
       .substr(0, 15);
-    const img3Name = createHmac('sha256', obj.email + this.makeid())
+    const img3Name = createHmac('sha256', obj.token + this.makeid())
       .digest('hex')
       .substr(0, 15);
 
     //convert base64 to images
     writeFile(img1Name + '.' + img1Format, base64Img1, 'base64', function (err) {
-      console.log(err);
+      //console.log(err);
       return false;
     });
 
     writeFile(img2Name + '.' + img2Format, base64Img2, 'base64', function (err) {
-      console.log(err);
+      //console.log(err);
       return false;
     });
 
     writeFile(img3Name + '.' + img3Format, base64Img3, 'base64', function (err) {
-      console.log(err);
+      //console.log(err);
       return false;
     });
+
 
     //Upload images to storage bucket
     await Imagebucket.upload(img1Name + '.' + img1Format);
@@ -180,12 +184,15 @@ export class ReportService {
       return false;
     }
 
+    //fetch email using token
+    let email = await this.userService.getEmail(obj.token);
+
     //parse string into JSON
     let reportJson = JSON.parse(obj.report);
 
     //Add to database
     await this.ReportsRepository.insert({
-      email: obj.email,
+      email: email,
       form: reportJson,
       IMG1: url1,
       IMG2: url2,

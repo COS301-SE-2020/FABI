@@ -1,5 +1,4 @@
 input UploadRequest {
-    email:String!
     token:String!
     report:String!
     Img1:String!
@@ -7,7 +6,6 @@ input UploadRequest {
     Img3:String!
 }
 type UploadResponse{
-    email: String!
     status: Int!
 }
 

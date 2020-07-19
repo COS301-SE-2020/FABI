@@ -13,7 +13,7 @@ export class GetReportsService {
     ) { }
 
     async getReports(reqObj: GetReportsRequest): Promise<GetReportsResponse> {
-        const result = await this.userService.validateToken(reqObj.email, reqObj.token).then(function (result) {
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
         if (result == false) {
