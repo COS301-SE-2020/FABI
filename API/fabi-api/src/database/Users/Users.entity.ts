@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryColumn} from 'typeorm';
  
 @Entity({database:"Users"})
 class Users {
+  
   @Column()
   public Name: string;
  
@@ -22,3 +23,10 @@ class Users {
 }
  
 export default Users;
+
+export class UsersRepositoryFake {
+  public create(): void {}
+  public async save(): Promise<void> {}
+  public async remove(): Promise<void> {}
+  public async findOne(): Promise<void> {}
+}

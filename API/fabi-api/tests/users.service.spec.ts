@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
+import { UsersService } from '../src/database/Users/users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import Users from './Users.entity';
+import Users from '../src/database/Users/Users.entity';
 import { Repository } from 'typeorm';
 
 describe('UsersService', () => {
@@ -18,7 +18,7 @@ describe('UsersService', () => {
         useValue: Repository,
       }],
     }).compile();
-
+    
     service = module.get<UsersService>(UsersService);
   });
 
@@ -26,3 +26,4 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 });
+ 
