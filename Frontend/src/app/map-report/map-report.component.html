@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+        <h1 [ngStyle]="containerStyle">{{Type}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+        <h2><i>{{ScienceName}}</i></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+        <h2>{{Name}}</h2>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-sm-12">
+        <h2>{{Plant}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><b><u>Distribution</u></b></div><div class="col-sm-10"><b>{{Distribution}}</b></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><b><u>Status</u></b></div><div class="col-sm-10"><b>{{Status}}</b></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><b><u>Description</u></b></div><div class="col-sm-10"><b>{{Description}}</b></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><b><u>Symptoms</u></b></div><div class="col-sm-10"><b>{{Symptoms}}</b></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><b><u>Management</u></b></div><div class="col-sm-10"><b>{{Management}}</b></div>
+    </div>    
+</div>
+
+<div *ngFor="let image of Images; let i = index" class="container">
+    <b *ngIf="i==0">Images:</b>
+    <div *ngIf="i % 2 == 0" class="row">
+        <img src="{{image}}" style="height: 100%;width: 50%;" alt="hello">
+        <img *ngIf="i + 1 < Images.length" src="{{ Images[i + 1] }}" style="height: 100%;width: 50%;" alt="hello">
+    </div>
+</div>

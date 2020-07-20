@@ -1,0 +1,14 @@
+input getReportsRequest {
+    token:String!
+    latitude: Float!
+    longitude: Float!
+}
+type getReportsResponse{
+   reports: String!
+   status: Int!
+}
+
+type Mutation{
+    getReports(getReportsRequest:getReportsRequest):getReportsResponse!
+}
+

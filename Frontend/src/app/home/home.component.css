@@ -1,0 +1,26 @@
+#map {
+    height: 350px;
+    width: 100%;
+    margin-bottom: 10px;
+   }
+#legend {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    padding: 10px;
+    margin: 10px;
+    border: 3px solid #000;
+}
+#DisplayArea{
+    background-color: white;
+}
+#displayTbl img{
+    width: 100%;
+}
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

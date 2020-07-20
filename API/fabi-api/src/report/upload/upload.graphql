@@ -1,0 +1,18 @@
+input UploadRequest {
+    token:String!
+    report:String!
+    Img1:String!
+    Img2:String!
+    Img3:String!
+}
+type UploadResponse{
+    status: Int!
+}
+
+type Mutation{
+    upload(upload:UploadRequest):UploadResponse!
+}
+
+type Query {
+  dummy: String
+}

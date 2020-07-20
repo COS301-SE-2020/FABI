@@ -1,0 +1,62 @@
+{
+  "steps": [
+  {
+    "name": "gcr.io/cloud-builders/gcloud",
+    "entrypoint": "bash",
+    "args": [
+      "-c",
+      "gcloud secrets versions access latest --secret=my-DB-secret --format='get(payload.data)' | tr '_-' '/+' | base64 -d > omrconfig.json"
+    ]
+  },
+  {
+    "name": "gcr.io/cloud-builders/gcloud",
+    "entrypoint": "bash",
+    "args": [
+      "-c",
+      "gcloud secrets versions access latest --secret=storage-secret --format='get(payload.data)' | tr '_-' '/+' | base64 -d > fabi-surveillance-d9f5f1321793.json"
+    ]
+  },
+  {
+    "name": "gcr.io/cloud-builders/gcloud",
+    "entrypoint": "bash",
+    "args": [
+      "-c",
+      "gcloud secrets versions access latest --secret=vision-secret --format='get(payload.data)' | tr '_-' '/+' | base64 -d > vision_boi.json"
+    ]
+  },
+  {
+    "name": "gcr.io/cloud-builders/docker",
+    "args": [
+      "build",
+      "-t",
+      "gcr.io/fabi-surveillance/api",
+      "."
+    ]
+  },
+  {
+    "name": "gcr.io/cloud-builders/docker",
+    "args": [
+    "push",
+    "gcr.io/fabi-surveillance/api"
+    ]
+  },
+  {
+    "name": "gcr.io/cloud-builders/gcloud",
+    "args": [
+      "run",
+      "deploy",
+      "api",
+      "--image",
+      "gcr.io/fabi-surveillance/api",
+      "--memory",
+      "1G",
+      "--region",
+      "europe-west1",
+      "--platform",
+      "managed"
+    ]
+  }],
+  "images": [
+    "gcr.io/fabi-surveillance/api"
+  ]
+}
