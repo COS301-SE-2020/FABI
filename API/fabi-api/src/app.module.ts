@@ -7,6 +7,7 @@ import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UploadModule } from './report/upload/upload.module';
 import Users from  "./database/Users/Users.entity"
+import { AfflictionRequestsModule } from './afflictionInfo/affliction-requests.module';
 
 
 
@@ -23,6 +24,7 @@ import Users from  "./database/Users/Users.entity"
         LoginRegisterModule,
         DatabaseModule,
         UploadModule,
+        AfflictionRequestsModule,
        ],
 
 })

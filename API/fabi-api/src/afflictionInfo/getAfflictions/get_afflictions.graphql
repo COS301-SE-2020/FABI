@@ -1,0 +1,18 @@
+type  All_afflictions{
+    id: Int
+    type: String
+    scientificName: String
+    name: String
+    plant: String
+    status: Int
+}
+
+input All_afflictions_request {
+    affliction_type: String!
+    token: String!
+}
+
+type Mutation{
+    get_afflictions(request:All_afflictions_request):[All_afflictions]!
+}
+

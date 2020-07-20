@@ -6,6 +6,11 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class All_afflictions_request {
+    affliction_type: string;
+    token: string;
+}
+
 export class GetReportsRequest {
     token: string;
     latitude: number;
@@ -33,6 +38,15 @@ export class UploadRequest {
     Img3: string;
 }
 
+export class All_afflictions {
+    id?: number;
+    type?: string;
+    scientificName?: string;
+    name?: string;
+    plant?: string;
+    status?: number;
+}
+
 export class GetReportsResponse {
     reports: string;
     status: number;
@@ -46,6 +60,8 @@ export class LoginResponse {
 }
 
 export abstract class IMutation {
+    abstract get_afflictions(request?: All_afflictions_request): All_afflictions[] | Promise<All_afflictions[]>;
+
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 
     abstract registerUser(request?: Request): Response | Promise<Response>;

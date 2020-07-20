@@ -1,5 +1,5 @@
 /*
- * File Name: get-reports.module.ts
+ * File Name: affliction.entity.ts
  * 
  * The University of Pretoria
  * Computer Science Department
@@ -18,12 +18,12 @@
  * Notes:
  *            Version:            :0.0.1
  *            Author:             :Shaun Naude - shaunnaude20@gmail.com
- *            Creation Date:      :Sunday, July 19th 2020, 2:21:40 pm
+ *            Creation Date:      :Monday, July 20th 2020, 10:28:41 am
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
  * 
- * Functional Description         : <Provide a brief explanation of the file's purpose>
+ * Functional Description         : This file depicts/models our tabel within the database
  * Constraints                    : <Explain constraints if any, otherwise state None>
  * Assumptions                    : <Explain assumptions if any, otherwise state None>
  */
@@ -32,16 +32,51 @@
 
 
 
-import { Module } from '@nestjs/common';
-import { GetReportsService } from './get-reports.service';
-import { GetReportsResolver } from './get-reports.resolver';
-import { UsersService } from '../../database/Users/users.service';
-import { ReportService } from '../../database/Report/report.service';
-import { UsersModule } from '../../database/Users/Users.module';
-import { ReportModule } from '../../database/Report/report.module';
+import {Column, Entity, PrimaryColumn, Generated} from 'typeorm';
 
-@Module({
-  providers: [GetReportsService, GetReportsResolver,UsersService,ReportService],
-  imports: [UsersModule,ReportModule, GetReportsModule]
-})
-export class GetReportsModule {}
+@Entity({database:"Afflictions"})
+class Afflictions {
+    @PrimaryColumn()
+    @Generated("increment")
+    public id: number;
+
+    @Column()
+    public type: string;
+
+    @Column()
+    public SciName: string;
+
+    @Column()
+    public CommonName: string;
+
+    @Column()
+    public plant: string;
+
+    @Column()
+    public distribution: string;
+
+    @Column()
+    public status: string;
+
+    @Column()
+    public description: string;
+
+    @Column()
+    public symptoms: string;
+
+    @Column()
+    public management: string;
+
+    @Column()
+    public img1: string;
+
+    @Column()
+    public img2: string;
+
+    @Column()
+    public img3: string;
+
+
+}
+
+export default Afflictions;
