@@ -3,6 +3,7 @@ import { UsersService } from '../src/database/Users/users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import Users, { UsersRepositoryFake } from '../src/database/Users/Users.entity';
 import { Repository } from 'typeorm';
+import { NotFoundException } from '@nestjs/common';
 
 describe('UsersService', () => {
   let userService: UsersService;
@@ -28,8 +29,24 @@ describe('UsersService', () => {
   });
 
   describe('Finding a User', ()=>{
-    it('', async () => {
+    it('User not in repo', async () => {
 
+      const testEmail = "test@test.com"
+      const userRepositoryFindUserEmailSpy = jest
+        .spyOn(userRepository, 'findOne')
+        .mockResolvedValue(null);
+
+      expect.assertions(1);
+
+      try {
+        await userService.getUsersbyEmail(testEmail);
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+        expect(e.message).toBe('No User with that email found.');
+      }
+      expect(userRepositoryFindUserEmailSpy).toHaveBeenCalledWith({
+        Email: testEmail,
+      });
  
     });
   });
