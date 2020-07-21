@@ -55,7 +55,9 @@ export class PathogenInfoComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort
 
   ngOnInit(): void {
-    this.pathogens = this.afflictionService.getPathogens()
+    this.afflictionService.getPathogens().subscribe(data => {
+      this.pathogens = data
+    })
     this.dataSource = new MatTableDataSource(this.pathogens)
     this.dataSource.sort = this.sort
   }

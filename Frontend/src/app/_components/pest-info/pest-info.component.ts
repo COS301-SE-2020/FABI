@@ -57,7 +57,6 @@ export class PestInfoComponent implements OnInit {
   ngOnInit(): void {
     this.afflictionService.getPests().subscribe(data => {
       this.pests = data
-      console.log(data)
     })
     this.dataSource = new MatTableDataSource(this.pests)
     this.dataSource.sort = this.sort

@@ -55,12 +55,22 @@ export class UpdatePestComponent implements OnInit {
   ngOnInit(): void {
     this.pest = new Affliction()
     this.id = this.route.snapshot.params['id']
-    // TODO: Convert this to observable when API connection exists
-    // this.service.getAffliction(this.id)
-    // .subscribe(pestData => {
-    //   this.pest = pestData
-    // })
-    this.pest = this.service.getAffliction(this.id)
+    this.service.getAffliction(this.id)
+    .subscribe(pestData => {
+      this.pest.id = pestData["id"]
+      this.pest.type = pestData["type"]
+      this.pest.scienceName = pestData["scienceName"]
+      this.pest.name = pestData["name"]
+      this.pest.plant = pestData["plant"]
+      this.pest.distribution = pestData["distribution"]
+      this.pest.status = pestData["status"]
+      this.pest.description = pestData["description"]
+      this.pest.symptoms = pestData["symptoms"]
+      this.pest.management = pestData["management"]
+      this.pest.images.push(pestData["img1"])
+      this.pest.images.push(pestData["img2"])
+      this.pest.images.push(pestData["img3"])
+    })
   }
 
   updatePest() {

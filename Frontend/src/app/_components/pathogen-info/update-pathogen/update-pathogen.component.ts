@@ -55,12 +55,23 @@ export class UpdatePathogenComponent implements OnInit {
   ngOnInit(): void {
     this.pathogen = new Affliction()
     this.id = this.route.snapshot.params['id']
-    // TODO: Convert this to observable when API connection exists
-    // this.service.getAffliction(this.id)
-    // .subscribe(pestData => {
-    //   this.pest = pestData
-    // })
-    this.pathogen = this.service.getAffliction(this.id)
+    this.service.getAffliction(this.id)
+    .subscribe(pathogenData => {
+      this.pathogen.id = pathogenData["id"]
+      this.pathogen.type = pathogenData["type"]
+      this.pathogen.scienceName = pathogenData["scienceName"]
+      this.pathogen.name = pathogenData["name"]
+      this.pathogen.plant = pathogenData["plant"]
+      this.pathogen.distribution = pathogenData["distribution"]
+      this.pathogen.status = pathogenData["status"]
+      this.pathogen.description = pathogenData["description"]
+      this.pathogen.symptoms = pathogenData["symptoms"]
+      this.pathogen.management = pathogenData["management"]
+      this.pathogen.images.push(pathogenData["img1"])
+      this.pathogen.images.push(pathogenData["img2"])
+      this.pathogen.images.push(pathogenData["img3"])
+      console.log(this.pathogen)
+    })
   }
 
   updatePathogen() {
