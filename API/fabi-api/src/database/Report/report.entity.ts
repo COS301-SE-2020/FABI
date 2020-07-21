@@ -39,6 +39,15 @@ class Reports {
     @Column()
     public Pscore: number;
 
+    @Column()
+    public date: number;
+
+    @Column()
+    public urgency: number;
+
+    @Column()
+    public diagnosis: string;
+
 
 }
 
