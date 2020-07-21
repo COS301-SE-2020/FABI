@@ -57,10 +57,10 @@ export class ReportGraphComponent implements OnInit {
         type: 'spline'
       },
       title: {
-        text: 'Diagnostic Report Count by Region'
+        text: 'Diagnostic Report Count'
       },
       subtitle: {
-        text: 'For Specific Company'
+        text: 'For Your Company'
       },
       yAxis: {
         title: {

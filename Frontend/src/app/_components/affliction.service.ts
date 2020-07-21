@@ -22,6 +22,7 @@
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
+ * 2020-07-21-10-55-am	  SJ	Add delete affliction
  * 
  * Functional Description         : This service will retrieve data from the api relating to afflictions
  * Constraints                    : None
@@ -129,6 +130,10 @@ export class AfflictionService {
   }
 
   updateAffliction(id: number, affliction: Affliction) {
+    // TODO: GraphQL connection goes here
+  }
+
+  deleteAffliction(id: number) {
     // TODO: GraphQL connection goes here
   }
   // End of file

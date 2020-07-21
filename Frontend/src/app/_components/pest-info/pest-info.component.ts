@@ -22,6 +22,7 @@
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
+ * 2020-07-21-10-55-am	  SJ	Add delete affliction
  * 2020-07-21-09-36-am	  SJ	Add coding standards
  * 
  * Functional Description         : Handles the functionality for updating information about stored pests
@@ -61,5 +62,9 @@ export class PestInfoComponent implements OnInit {
 
   updatePest(id: number) {
     this.router.navigateByUrl(`admin/updatePest/${id}`)
+  }
+
+  deletePest(id: number) {
+    this.afflictionService.deleteAffliction(id)
   }
 }

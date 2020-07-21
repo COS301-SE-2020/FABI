@@ -22,6 +22,7 @@
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
+ * 2020-07-21-10-55-am	  SJ	Add delete affliction
  * 2020-07-21-09-51-am	  SJ	Add coding standards
  * 
  * Functional Description         : Functionality for admin user to view pathogens
@@ -61,6 +62,10 @@ export class PathogenInfoComponent implements OnInit {
 
   updatePathogen(id: number) {
     this.router.navigateByUrl(`admin/updatePathogen/${id}`)
+  }
+
+  deletePathogen(id: number) {
+    this.afflictionService.deleteAffliction(id)
   }
 
 }

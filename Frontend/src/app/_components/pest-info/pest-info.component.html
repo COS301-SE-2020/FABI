@@ -21,11 +21,14 @@
   <!-- Symbol Column -->
   <ng-container matColumnDef="Actions">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      <button mat-raised-button color="primary">Add</button>
+      Add pest &nbsp;
+      <button mat-mini-fab type="button" mat-button>
+        <mat-icon>add</mat-icon>
+      </button>
     </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button color="primary" (click)="updatePest(element.id)">Update</button>
-      <button mat-raised-button color="warn">Delete</button>
+      <button mat-raised-button color="primary" (click)="updatePest(element.id)">Update</button>&nbsp;
+      <button mat-raised-button color="warn" (click)="deletePest(element.id)">Delete</button>
     </td>
   </ng-container>
 
