@@ -36,9 +36,17 @@ import { UsersService } from '../database/Users/users.service';
 import { UsersModule } from '../database/Users/Users.module';
 import { AfflictionsModule } from '../database/Afflictions/afflictions.module';
 import { AfflictionService } from '../database/Afflictions/affliction.service';
+import {UpdateAfflictionsService} from "./updateAfflictions/update-afflictions.service";
+import { UpdateAfflictionsResolver } from './updateAfflictions/update-afflictions.resolver';
 
 @Module({
-    providers: [GetAfflictionsService,GetAfflictionsResolver,UsersService,AfflictionService,],
+    providers: [
+        GetAfflictionsService,
+        GetAfflictionsResolver,
+        UsersService,
+        AfflictionService,
+        UpdateAfflictionsService,
+        UpdateAfflictionsResolver],
     imports: [UsersModule,AfflictionsModule]
 })
 export class AfflictionRequestsModule {}
