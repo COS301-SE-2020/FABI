@@ -68,7 +68,7 @@ export class GetAfflictionsService {
             this.res = [{ status: 415 }];
             return this.res;
         } else {
-            
+            this.res = [{}];
             const result = await this.afflictionDbService.getAfflictions(reqObj.affliction_type);
 
             for (var i = 0; i < Object.keys(result).length; i++) {
