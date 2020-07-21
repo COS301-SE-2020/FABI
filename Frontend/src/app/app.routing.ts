@@ -58,7 +58,7 @@ const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        canActivate: [AuthGuard] 
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',
@@ -71,7 +71,7 @@ const routes: Routes = [
     {
         path: 'DiagReport',
         component: DiagReportComponent,
-        canActivate: [AuthGuard] 
+        canActivate: [AuthGuard]
     },
     {
         path: 'MapReport',

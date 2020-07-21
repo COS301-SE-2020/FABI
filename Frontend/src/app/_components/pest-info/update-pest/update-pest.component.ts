@@ -47,8 +47,8 @@ export class UpdatePestComponent implements OnInit {
   id: number
   newUrl: string
   constructor(
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private route: ActivatedRoute,
+    private router: Router,
     private service: AfflictionService,
     private alert: AlertService) { }
 

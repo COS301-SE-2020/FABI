@@ -1,3 +1,37 @@
+/*
+ * File Name: pest-info.component.ts
+ * 
+ * The University of Pretoria
+ * Computer Science Department
+ * FABI-Surveillance
+ * Runtime Terrors
+ * 
+ * (c) Copyright 2020 University of Pretoria
+ * ALL RIGHTS RESERVED
+ * 
+ * Input                          : None
+ * Output                         : None
+ * Related Requirements           : None
+ * Classes in this file           : None
+ * Related Documents              : SRS Document
+ * 
+ * Notes:
+ *            Version:            : 0.1.0
+ *            Author:             : Steven Jordaan - steven.j.jordaan2000@gmail.com
+ *            Creation Date:      : Thursday, July 16th 2020, 6:25:12 pm
+ * HISTORY:
+ * Date       	          By	Comments
+ * -----------	          ---	-----------------------------------------------------
+ * 2020-07-21-09-36-am	  SJ	Add coding standards
+ * 
+ * Functional Description         : Handles the functionality for updating information about stored pests
+ * Constraints                    : User must be an admin
+ * Assumptions                    : None
+ */
+
+
+
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AfflictionService } from '../affliction.service'
 import { MatSort } from '@angular/material/sort'
@@ -25,7 +59,7 @@ export class PestInfoComponent implements OnInit {
     this.dataSource.sort = this.sort
   }
 
-  updatePest(id : number) {
+  updatePest(id: number) {
     this.router.navigateByUrl(`admin/updatePest/${id}`)
   }
 }
