@@ -33,7 +33,7 @@ import { Injectable } from '@nestjs/common';
 import Afflictions from './affliction.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Update_afflictions_request, Update_afflictions_response } from '../../graphql.schema';
+import { Update_afflictions_request,Single_affliction_response } from '../../graphql.schema';
 
 
 @Injectable()
@@ -93,6 +93,16 @@ export class AfflictionService {
     //return code 
     return 201;
   }
+
+  async getSingleAffliction(givenID : number): Promise<Single_affliction_response> {
+    
+    const result = await this.AfflictionsRepository.query("SELECT * " + "FROM public." + "\"" + "Afflictions" + "\"" + "WHERE id =" + "\'" + givenID + "\'" + "  ;");
+
+   const returnObject : Single_affliction_response = {id:result[0].id , description:result[0].description , distribution:result[0].distribution ,img1:result[0].img1 , img2:result[0].img2 , img3:result[0].img3 , management:result[0].management , name:result[0].CommonName , plant:result[0].plant , scienceName:result[0].SciName , symptoms:result[0].symptoms , status:result[0].status , type:result[0].type , statusCode:201};
+
+    return returnObject;
+  }
+
 
 
 }

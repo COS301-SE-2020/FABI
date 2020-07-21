@@ -35,7 +35,7 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { All_afflictions_request, All_afflictions } from '../../graphql.schema';
+import { All_afflictions_request, All_afflictions,Single_affliction_request,Single_affliction_response }  from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { AfflictionService } from '../../database/Afflictions/affliction.service';
 import { object } from '@hapi/joi';
@@ -46,6 +46,7 @@ export class GetAfflictionsService {
 
     //Define our response data-type
     res: All_afflictions[] = [];
+    res2: Single_affliction_response = {id:0,description:"/",distribution:"/",img1:"/",img2:"/",img3:"/",management:"/",name:"/",plant:"/",scienceName:"/",status:"/",symptoms:"/",type:"/",statusCode:0} ;
 
     //Define the External services used in this service
     constructor(
@@ -81,4 +82,27 @@ export class GetAfflictionsService {
         }
 
     }
+
+
+    async getSingleAffliction(reqObj:Single_affliction_request ):Promise<Single_affliction_response>{
+
+         //here we validate our token
+         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+
+        //here we return the return the respective object based on token
+        if (result == false) {
+            //user token invalid
+            this.res2.statusCode = 415;
+        } else {
+            return this.afflictionDbService.getSingleAffliction(reqObj.id);
+        }
+    }
+
+
+
+
+
+
 }

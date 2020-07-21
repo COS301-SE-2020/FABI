@@ -30,6 +30,11 @@ export class Request {
     password: string;
 }
 
+export class Single_affliction_request {
+    id: number;
+    token: string;
+}
+
 export class Update_afflictions_request {
     id: number;
     token: string;
@@ -79,6 +84,8 @@ export class LoginResponse {
 export abstract class IMutation {
     abstract get_afflictions(request?: All_afflictions_request): All_afflictions[] | Promise<All_afflictions[]>;
 
+    abstract get_Single_affliction(request?: Single_affliction_request): Single_affliction_response | Promise<Single_affliction_response>;
+
     abstract update_afflictions(request?: Update_afflictions_request): Update_afflictions_response | Promise<Update_afflictions_response>;
 
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
@@ -97,6 +104,23 @@ export abstract class IQuery {
 export class Response {
     status: number;
     token: string;
+}
+
+export class Single_affliction_response {
+    id: number;
+    type?: string;
+    scienceName?: string;
+    name?: string;
+    plant?: string;
+    distribution?: string;
+    status?: string;
+    description?: string;
+    symptoms?: string;
+    management?: string;
+    img1?: string;
+    img2?: string;
+    img3?: string;
+    statusCode: number;
 }
 
 export class Update_afflictions_response {
