@@ -1,34 +1,34 @@
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="Scientific Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Scientific Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.ScienceName}} </td>
-    </ng-container>
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="Common Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Common Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
-    </ng-container>
-  
-    <!-- Weight Column -->
-    <ng-container matColumnDef="Affected Plant">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Affected Plant </th>
-      <td mat-cell *matCellDef="let element"> {{element.Plant}} </td>
-    </ng-container>
-  
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        <button mat-raised-button color="primary">Add</button>
-      </th>
-      <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="updatePest(element.id)">Update</button>
-          <button mat-raised-button color="warn">Delete</button>
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <!-- Position Column -->
+  <ng-container matColumnDef="Scientific Name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Scientific Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.ScienceName}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Common Name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Common Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="Affected Plant">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Affected Plant </th>
+    <td mat-cell *matCellDef="let element"> {{element.Plant}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <button mat-raised-button color="primary">Add</button>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" (click)="updatePest(element.id)">Update</button>
+      <button mat-raised-button color="warn">Delete</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
