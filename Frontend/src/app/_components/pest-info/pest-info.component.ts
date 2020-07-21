@@ -55,7 +55,10 @@ export class PestInfoComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort
 
   ngOnInit(): void {
-    this.pests = this.afflictionService.getPests()
+    this.afflictionService.getPests().subscribe(data => {
+      this.pests = data
+      console.log(data)
+    })
     this.dataSource = new MatTableDataSource(this.pests)
     this.dataSource.sort = this.sort
   }
