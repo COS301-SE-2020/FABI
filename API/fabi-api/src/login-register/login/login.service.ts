@@ -37,7 +37,7 @@ export class LoginService {
     async  login(reqObj:LoginRequest):Promise<LoginResponse> {
      
         const result = await this.userService.getUsersbyEmail(reqObj.email).then(function(result){
-            console.log();
+            
             return result;
         })
 

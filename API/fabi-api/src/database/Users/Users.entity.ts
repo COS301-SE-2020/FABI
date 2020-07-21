@@ -20,6 +20,16 @@ class Users {
 
   @Column()
   public userType: string;
+
+
+  public static of(params: Partial<Users>): Users {
+    const user = new Users();
+
+    Object.assign(user, params);
+
+    return user;
+  }
+
 }
  
 export default Users;
@@ -30,4 +40,5 @@ export class UsersRepositoryFake {
   public async insert(): Promise<void> {}
   public async remove(): Promise<void> {}
   public async findOne(): Promise<void> {}
+  public async update(): Promise<void> {}
 }
