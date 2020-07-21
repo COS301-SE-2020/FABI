@@ -81,39 +81,49 @@
   <alert></alert>
   <table cellspacing="0">
     <tr>
-        <td *ngIf="pest.images.length < 3">{{ pest.images.length }}/3 images</td>
-        <td *ngIf="pest.images.length < 3">
-            <button mat-mini-fab type="button" mat-button (click)="addImage()"><mat-icon>add</mat-icon></button>&nbsp;
-            <mat-form-field>
-                <mat-label>Image URL</mat-label>
-                <input matInput (input)="newUrl=$event.target.value">
-              </mat-form-field>
-        </td>
-        <td *ngIf="pest.images.length == 3"><h3>Maximum images uploaded</h3></td>
+      <td *ngIf="pest.images.length < 3">{{ pest.images.length }}/3 images</td>
+      <td *ngIf="pest.images.length < 3">
+        <button mat-mini-fab type="button" mat-button (click)="addImage()">
+          <mat-icon>add</mat-icon>
+        </button>&nbsp;
+        <mat-form-field>
+          <mat-label>Image URL</mat-label>
+          <input matInput (input)="newUrl=$event.target.value">
+        </mat-form-field>
+      </td>
+      <td *ngIf="pest.images.length == 3">
+        <h3>Maximum images uploaded</h3>
+      </td>
     </tr>
     <tr>
       <td>
         <mat-card *ngIf="pest.images[0]">
-            <img mat-card-image [(src)]="pest.images[0]" alt="Plant image">
-            <mat-card-actions>
-                <button mat-mini-fab type="button" (click)="removeImage(pest.images[0])"><mat-icon>delete</mat-icon></button>
-              </mat-card-actions>
+          <img mat-card-image [(src)]="pest.images[0]" alt="Plant image">
+          <mat-card-actions>
+            <button mat-mini-fab type="button" (click)="removeImage(pest.images[0])">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
         </mat-card>
       </td>
       <td>
         <mat-card *ngIf="pest.images[1]">
-            <img mat-card-image [(src)]="pest.images[1]" alt="Plant image">
-            <mat-card-actions>
-                <button mat-mini-fab type="button" (click)="removeImage(pest.images[1])"><mat-icon>delete</mat-icon></button>
-              </mat-card-actions>
+          <img mat-card-image [(src)]="pest.images[1]" alt="Plant image">
+          <mat-card-actions>
+            <button mat-mini-fab type="button" (click)="removeImage(pest.images[1])">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
         </mat-card>
       </td>
       <td>
         <mat-card *ngIf="pest.images[2]">
-            <img mat-card-image [(src)]="pest.images[2]" alt="Plant image">
-            <mat-card-actions>
-                <button mat-mini-fab type="button" (click)="removeImage(pest.images[2])"><mat-icon>delete</mat-icon></button>
-              </mat-card-actions>
+          <img mat-card-image [(src)]="pest.images[2]" alt="Plant image">
+          <mat-card-actions>
+            <button mat-mini-fab type="button" (click)="removeImage(pest.images[2])">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
         </mat-card>
       </td>
     </tr>
