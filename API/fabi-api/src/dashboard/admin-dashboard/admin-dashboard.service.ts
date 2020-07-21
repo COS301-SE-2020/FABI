@@ -34,6 +34,8 @@
 import { Injectable } from '@nestjs/common';
 import {Admin_Dashboard_request,Admin_Dashboard_response}  from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
+import { GetAdminDashService } from '../../database/admin-dashboard/get-admin-dash.service';
+
 
 
 @Injectable()
@@ -41,7 +43,8 @@ export class AdminDashboardService {
 
     //Define the External services used in this service
     constructor(
-        private userService: UsersService,
+        private userService : UsersService,
+        private getAdminDashService : GetAdminDashService,  
     ) {}
 
     //Define our response data-type
@@ -62,7 +65,7 @@ export class AdminDashboardService {
         } else {
             //call other service.
             
-            return this.res;
+            return this.getAdminDashService.getLineGraphInfo(reqObj);
 
         }
 

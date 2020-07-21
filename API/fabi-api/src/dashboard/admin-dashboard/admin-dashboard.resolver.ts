@@ -32,12 +32,13 @@
 
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import {Admin_Dashboard_request,Admin_Dashboard_response}  from '../../graphql.schema';
+import { AdminDashboardService } from './admin-dashboard.service';
 
 @Resolver('AdminDashboard')
 export class AdminDashboardResolver {
     //Here we define the service that handels the requested object
     constructor(
-        //must still create database services
+        private getAdminDashboardService : AdminDashboardService
     ){}
 
     //This is the mutation that is exposed to the front-end 
@@ -45,6 +46,7 @@ export class AdminDashboardResolver {
     async get_GraphInfo(@Args('request') reqObj: Admin_Dashboard_request) : Promise<Admin_Dashboard_response>{
         
         //Pass our request to service which will validate token and build response
-        return 
+
+        return this.getAdminDashboardService.getGraphInfo_Service(reqObj);
     }
 }

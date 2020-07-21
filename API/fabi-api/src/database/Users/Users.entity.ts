@@ -21,7 +21,7 @@ class Users {
   public userType: string;
 
   @Column()
-  public comapny_id: number;
+  public company_id: number;
 
   @Column()
   public company_role: string;
