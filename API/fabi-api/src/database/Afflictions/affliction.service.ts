@@ -46,7 +46,7 @@ export class AfflictionService {
   ) { }
   //This is the main funtion where query the database
   async getAfflictions(typeInput: string): Promise<JSON> {
-    const Info = await this.AfflictionsRepository.query("SELECT * FROM public." + "\"" + "Afflictions" + "\"" + "WHERE type =" + "\'" + typeInput + "\'" + "  ;");
+    const Info = await this.AfflictionsRepository.query("SELECT * FROM public." + "\"" + "Afflictions" + "\"" + "WHERE type =" + "\'" + typeInput + "\'" + " order by id ;");
 
     return Info;
   }
