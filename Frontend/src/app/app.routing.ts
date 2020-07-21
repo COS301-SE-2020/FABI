@@ -22,6 +22,7 @@
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
+ * 2020-07-21-09-47-am	  SJ	Added admin pathogen routes
  * 2020-07-15-11-08-am	  SJ	Added coding standards
  * 
  * Functional Description         : Routing is handled, if path is routed to, a component is displayed
@@ -50,6 +51,8 @@ import { UpdatePestComponent } from './_components/pest-info/update-pest/update-
 import { HomeComponent } from './home/home.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
+import { PathogenInfoComponent } from './_components/pathogen-info/pathogen-info.component';
+import { UpdatePathogenComponent } from './_components/pathogen-info/update-pathogen/update-pathogen.component';
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -92,6 +95,14 @@ const routes: Routes = [
         {
             path: 'updatePest/:id',
             component: UpdatePestComponent
+        },
+        {
+            path: 'pathogens',
+            component: PathogenInfoComponent,
+        },
+        {
+            path: 'updatePathogen/:id',
+            component: UpdatePathogenComponent
         }],
         canActivate: [AuthGuard]
     },

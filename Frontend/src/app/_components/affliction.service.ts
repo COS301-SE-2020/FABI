@@ -111,7 +111,7 @@ export class AfflictionService {
         "id": "3",
         "ScienceName": "Puccinia psidii",
         "Name": "rust pathogen",
-        "Species": "Affects Eucalypts and native Myrtaceae",
+        "Plant": "Affects Eucalypts and native Myrtaceae",
         "Type": "Disease",
         "Distribution": "Currently known from KZN south coast, Gauteng and Limpopo (New Agatha, Wolkberg) on native Myrtaceae",
         "Status": "",
