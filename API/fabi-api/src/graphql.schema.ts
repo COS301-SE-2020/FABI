@@ -7,7 +7,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export class GetReportsRequest {
-    email: string;
     token: string;
     latitude: number;
     longitude: number;
@@ -27,7 +26,6 @@ export class Request {
 }
 
 export class UploadRequest {
-    email: string;
     token: string;
     report: string;
     Img1: string;
@@ -44,6 +42,7 @@ export class LoginResponse {
     email: string;
     token: string;
     status: number;
+    Usertype: string;
 }
 
 export abstract class IMutation {
@@ -66,6 +65,5 @@ export class Response {
 }
 
 export class UploadResponse {
-    email: string;
     status: number;
 }

@@ -13,12 +13,13 @@ export class GetReportsService {
     ) { }
 
     async getReports(reqObj: GetReportsRequest): Promise<GetReportsResponse> {
-        const result = await this.userService.validateToken(reqObj.email, reqObj.token).then(function (result) {
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
         if (result == false) {
-            console.log("herer");
-
+            //error code
+            this.res.status = 415;
+            
             return this.res;
         } else {
             //this will pass upload object to report service that will interact with db

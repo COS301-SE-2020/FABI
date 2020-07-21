@@ -8,11 +8,11 @@
         "Longitude": 28.230386,
         "Accuracy": 2000,
         "UserType": "General",
-        "Images": [
-            {"Image":"https://www.fabinet.up.ac.za/publication/featured/3351.jpg"},
-            {"Image":"https://www.fabinet.up.ac.za/publication/featured/3351.jpg"},
-            {"Image":"https://www.fabinet.up.ac.za/publication/featured/3351.jpg"}
-        ]
+        "Images": {
+            "Image1":"https://www.fabinet.up.ac.za/publication/featured/3351.jpg",
+            "Image2":"https://www.fabinet.up.ac.za/publication/featured/3351.jpg",
+            "Image3":"https://www.fabinet.up.ac.za/publication/featured/3351.jpg"
+        }
     },
     {
         "id": 2,
@@ -23,11 +23,11 @@
         "Longitude": 28.230686,
         "Accuracy": 125,
         "UserType": "Specialist",
-        "Images": [
-            {"Image":"https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg"},
-            {"Image":"https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg"},
-            {"Image":"https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg"}
-        ]
+        "Images": {
+            "Image1":"https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg",
+            "Image2":"https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg",
+            "Image3":"https://bicep.net.au/wp-content/uploads/2019/03/T.-peregrinus.jpg"
+        }
     },
     {
         "id": 3,
@@ -38,10 +38,10 @@
         "Longitude": 28.229602,
         "Accuracy": 11,
         "UserType": "Specialist",
-        "Images":[
-            {"Image":"https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg"},
-            {"Image":"https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg"},
-            {"Image":"https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg"}
-        ]
+        "Images":{
+            "Image1":"https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg",
+            "Image2":"https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg",
+            "Image3":"https://www.agriculture.gov.au/sites/default/files/sitecollectionimages/pests-diseases-weeds/guava-rust-2.jpg"
+    }
     }
 ]

@@ -1,5 +1,4 @@
 input getReportsRequest {
-    email:String!
     token:String!
     latitude: Float!
     longitude: Float!

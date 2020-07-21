@@ -6,7 +6,7 @@ import { ReportService } from 'src/database/Report/report.service';
 @Injectable()
 export class UploadService {
 
-    res: UploadResponse = {email:"", status:0}
+    res: UploadResponse = {status:0}
 
     constructor(
         private userService: UsersService,
@@ -14,17 +14,15 @@ export class UploadService {
     ){}
 
     async upload(reqObj:UploadRequest):Promise<UploadResponse>{
-        const result = await this.userService.validateToken(reqObj.email,reqObj.token).then(function(result){
+        const result = await this.userService.validateToken(reqObj.token).then(function(result){
             return result;
         })
         if(result==false){
-            this.res.email = reqObj.email;
             this.res.status = 415;
             return this.res;
         }else{
             //this will pass upload object to report service that will interact with db
             this.reportService.InsertReport(reqObj);
-            this.res.email = reqObj.email;
             this.res.status = 201;
             return this.res;
         }

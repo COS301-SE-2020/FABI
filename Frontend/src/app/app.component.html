@@ -1,17 +1,18 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-success" *ngIf="currentUser">
+<!-- <nav class="navbar navbar-expand navbar-dark bg-success" *ngIf="currentUser">
   <div class="navbar-nav ">
       <a class="nav-item nav-link" routerLink="/">Home</a>
       <a class="nav-item nav-link" (click)="logout()">Logout</a>
   </div>
-</nav>
+</nav> -->
 
 <!-- main app container -->
-  <div class="container">
+  <!-- <div class="container">
       <div class="row">
           <div class="col-sm-8 offset-sm-2">
               <alert></alert>
               <router-outlet></router-outlet>
           </div>
       </div>
-  </div>
+  </div> -->
+  <router-outlet></router-outlet>

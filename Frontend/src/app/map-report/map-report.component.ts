@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {Report} from '@/_models/report'
 import {ReportDataService} from '@/_services/report-data.service'
 
+// TODO: Import affliction model
 import * as pnds from '@/PestAndDiseases.json'
 
 @Component({
@@ -11,6 +12,9 @@ import * as pnds from '@/PestAndDiseases.json'
   styleUrls: ['./map-report.component.css']
 })
 export class MapReportComponent implements OnInit {
+
+  // TODO: Please clean this up by using my Affliction model
+
   currentMark:Report;
   pestsAndDiseases:  any=(pnds as any).default;
   pnd:Object;
