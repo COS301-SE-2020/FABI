@@ -61,7 +61,7 @@ const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',
@@ -74,12 +74,12 @@ const routes: Routes = [
     {
         path: 'DiagReport',
         component: DiagReportComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: 'MapReport',
         component: MapReportComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: 'admin',
@@ -104,7 +104,7 @@ const routes: Routes = [
             path: 'updatePathogen/:id',
             component: UpdatePathogenComponent
         }],
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     // otherwise redirect to home
     {

@@ -3,10 +3,10 @@
     padding: 0px 20px 20px 20px;
 }
 .profile-card img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    /* border-radius: 50%; */
 }
 
 .mat-icon {
