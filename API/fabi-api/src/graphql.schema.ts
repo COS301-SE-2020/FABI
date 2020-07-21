@@ -6,6 +6,10 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class Admin_Dashboard_request {
+    token: string;
+}
+
 export class All_afflictions_request {
     affliction_type: string;
     token: string;
@@ -55,6 +59,10 @@ export class UploadRequest {
     Img3: string;
 }
 
+export class Admin_Dashboard_response {
+    data: string;
+}
+
 export class All_afflictions {
     id?: number;
     type?: string;
@@ -80,6 +88,8 @@ export abstract class IMutation {
     abstract get_afflictions(request?: All_afflictions_request): All_afflictions[] | Promise<All_afflictions[]>;
 
     abstract update_afflictions(request?: Update_afflictions_request): Update_afflictions_response | Promise<Update_afflictions_response>;
+
+    abstract get_GraphInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 

@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UploadModule } from './report/upload/upload.module';
 import Users from  "./database/Users/Users.entity"
 import { AfflictionRequestsModule } from './afflictionInfo/affliction-requests.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 
@@ -25,6 +26,7 @@ import { AfflictionRequestsModule } from './afflictionInfo/affliction-requests.m
         DatabaseModule,
         UploadModule,
         AfflictionRequestsModule,
+        DashboardModule,
        ],
 
 })
