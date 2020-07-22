@@ -1,1 +1,9 @@
-<p>basic works!</p>
+<nav class="navbar navbar-expand navbar-dark bg-success" *ngIf="currentUser">
+    <div class="navbar-nav ">
+        <a class="nav-item nav-link" routerLink="/basic">Home</a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+  </nav>
+<div class="container" style="align-self: center;">
+    <router-outlet></router-outlet>
+</div>

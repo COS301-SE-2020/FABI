@@ -22,6 +22,7 @@ import { Http,HttpModule , Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
+import { BasicModule } from './_layouts/basic/basic.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AdminModule } from './_layouts/admin/admin.module';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    BasicModule,
     HttpClientModule,
     appRoutingModule,
     FormsModule,

@@ -46,6 +46,7 @@ import { DashboardComponent } from './_components/dashboard/dashboard.component'
 import { PestInfoComponent } from './_components/pest-info/pest-info.component';
 
 // Basic User imports
+import { BasicComponent } from './_layouts/basic/basic.component';
 import { HomeComponent } from './home/home.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
@@ -55,27 +56,12 @@ import { MapReportComponent } from './map-report/map-report.component';
 */
 const routes: Routes = [
     {
-        path: '',
-        component: HomeComponent,
-        // canActivate: [AuthGuard] 
-    },
-    {
         path: 'login',
         component: LoginComponent
     },
     {
         path: 'register',
         component: RegisterComponent
-    },
-    {
-        path: 'DiagReport',
-        component: DiagReportComponent,
-        // canActivate: [AuthGuard] 
-    },
-    {
-        path: 'MapReport',
-        component: MapReportComponent,
-        // canActivate: [AuthGuard]
     },
     {
         path: 'admin',
@@ -87,6 +73,23 @@ const routes: Routes = [
         {
             path: 'pests',
             component: PestInfoComponent
+        }],
+        // canActivate: [AuthGuard]
+    },
+    {
+        path: 'basic',
+        component: BasicComponent,
+        children: [{
+            path: '',
+            component: HomeComponent
+        },
+        {
+            path: 'DiagReport',
+            component: DiagReportComponent
+        },
+        {
+            path: 'MapReport',
+            component: MapReportComponent
         }],
         // canActivate: [AuthGuard]
     },

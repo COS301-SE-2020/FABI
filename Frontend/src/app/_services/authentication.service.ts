@@ -69,10 +69,10 @@ export class AuthenticationService {
                 }`
         }).pipe(map(user => {
             if (user["data"]["login"]["status"] == "201") {
-                localStorage.setItem('currentUser', JSON.stringify(user["data"]["login"]));
+                localStorage.setItem('currentUser', JSON.stringify(user["data"]["login"]["token"]));
 
-                console.log(user["data"]["login"]);
-                this.currentUserSubject.next(user["data"]["login"]);
+                console.log(user["data"]["login"]["token"]);
+                this.currentUserSubject.next(user["data"]["login"]["token"]);
                 return user;
             } else {
                 throw new Error(`Error status code ${user["data"]["login"]["status"]}`);

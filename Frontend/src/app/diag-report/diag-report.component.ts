@@ -4,7 +4,9 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject, Observable} from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
+
 import { AuthenticationService } from '@/_services/authentication.service';
+import { ReportDataService } from '@/_services/report-data.service'
 
 import {Report_Questions} from "@/_models/Questions"
 
@@ -40,7 +42,8 @@ export class DiagReportComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder, 
     private location : LocationService, 
-    private router: Router) {
+    private router: Router,    
+    private Report: ReportDataService) {
       this.currentUser = this.authenticationService.currentUserValue;
     
    }
@@ -51,10 +54,7 @@ export class DiagReportComponent implements OnInit {
    });
 
    setImageData(){
-      this.Answers.Images["Image"+this.Images.length]={
-        "ImageURL":this.Images[this.Images.length-1].src,
-        "ImageDescription":this.ImageData.get("Description").value
-      };
+      this.Answers.Images["Image"+this.Images.length]=this.Images[this.Images.length-1].src;
       this.enterImage=false;
       this.ImageData.reset();
       this.ImageDataCount++;
@@ -114,7 +114,6 @@ export class DiagReportComponent implements OnInit {
 
   changeType(){
     this.PorD_Selected=true;
-    console.log(this.PestOrDiseases.value["PorD"]);
     this.Answers.Questions["Pest Or Disease"]=this.PestOrDiseases.value["PorD"];
   }
   change(question,e){
@@ -122,7 +121,7 @@ export class DiagReportComponent implements OnInit {
   }
   
   onSubmit(){
-    this.Answers.UserToken=this.currentUser.token;
+    this.Answers.UserToken=this.currentUser;
     this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
     this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
     this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
@@ -138,13 +137,17 @@ export class DiagReportComponent implements OnInit {
 
     
 
-    console.log(this.toJSON(this.Answers));
+    this.Report.sendReport(this.Answers.UserToken,{"Location":this.Answers.Location,"UserToken":this.Answers.UserToken,"Questions":this.Answers.Questions},this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"]).subscribe(data=>{
+      console.log(data);
+    });
+
+
 
     // Debug - Download the JSON file
     //this.download(this.toJSON(this.Answers));
 
     this.submitted = true;
-    //this.router.navigate(["/"]);
+    this.router.navigate(["/basic"]);
   }
 
   // Debug - JSON
@@ -174,7 +177,7 @@ export class DiagReportComponent implements OnInit {
 
   onCancel(){
     this.submitted = false;
-    this.router.navigate(["/"]);
+    this.router.navigate(["/basic"]);
   }
 
   // toggle webcam on/off
@@ -244,7 +247,6 @@ public handleImage(webcamImage: WebcamImage): void {
 }
 
 public cameraWasSwitched(deviceId: string): void {
-  console.log('active device: ' + deviceId);
   this.deviceId = deviceId;
 }
 

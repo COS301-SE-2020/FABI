@@ -4,21 +4,21 @@
 <div id="legend" style="visibility: hidden;"></div>
 <a id="showLegend" (click)="legendPopup()" ><p style="background-color: black;font-size: medium;color: white;">Show legend</p></a>
 <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg" style="width:50px;height:auto;cursor: pointer;">
-<div class="container" style="background-color: rgba(129, 233, 129,0.3);" [hidden]="Active !== 1" *ngIf="displayReady">
+<div class="container" style="background-color: rgba(129, 233, 129,0.3);" [style.visibility]="Active !== 1" *ngIf="displayReady">
     <div class="row">
         <div class="col-sm-4">
             <h2 class="unselectable">Plant:</h2>
         </div>
         <div class="col-sm-8">
-            <h3 class="unselectable"><b>{{currentMark.PlantName}}</b></h3>
+            <h3 class="unselectable"><b>{{currentMark["Pname"]}}</b></h3>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <h2 class="unselectable">{{currentMark.InflictionType}} Name:</h2>
+            <!-- <h2 class="unselectable">{{currentMark["Infliction"]}} Name:</h2> -->
         </div>
         <div class="col-sm-8">
-            <h3 class="unselectable"><b>{{currentMark.InflictionName}}</b></h3>
+            <!-- <h3 class="unselectable"><b>{{currentMark["Infliction name"]}}</b></h3>  for later-->
         </div>
     </div>
     <div class="row">
@@ -28,15 +28,15 @@
     </div>
     <div class="row" style="min-height: 150px;">
         <div class="col-sm-4">
-            <img src="{{currentMark.Images['Image1']}}" class="img-thumbnail" style="max-height: 150px;">
+            <img src="{{currentMark['IMG1']}}" class="img-thumbnail" style="max-height: 150px;">
         </div>
         <div class="col-sm-4">
-            <img src="{{currentMark.Images['Image2']}}" class="img-thumbnail" style="max-height: 150px;">
+            <img src="{{currentMark['IMG2']}}" class="img-thumbnail" style="max-height: 150px;">
         </div>
         <div class="col-sm-4">
-            <img src="{{currentMark.Images['Image3']}}" class="img-thumbnail" style="max-height: 150px;">
+            <img src="{{currentMark['IMG3']}}" class="img-thumbnail" style="max-height: 150px;">
         </div>
     </div><br>
-    <button class="btn btn-primary btn-lg btn-block" (click)="navReport()"  [disabled]="Active !== 1">{{currentMark.InflictionType}} Information</button>
+    <button class="btn btn-primary btn-lg btn-block" (click)="navReport()"  [disabled]="Active !== 1">{{currentMark["Infliction"]}} Information</button>
     <br>
 </div>
