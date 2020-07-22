@@ -42,7 +42,7 @@ export class UsersService {
         //create token
         let hashtoken = createHmac("sha256",(obj.email+this.makeid())).digest('base64');
         //Insert user new User
-        this.UsersRepository.insert({Email:obj.email,Name:obj.name,userType:obj.userType,Surname:obj.surname,token:hashtoken,Password:obj.password});
+        this.UsersRepository.insert({Email:obj.email,Name:obj.name,userType:obj.userType,Surname:obj.surname,token:hashtoken,Password:obj.password,company_id:1,registered:"no"});
         //Return newly inserted user
         return this.UsersRepository.findOne({Email:obj.email});
       } 

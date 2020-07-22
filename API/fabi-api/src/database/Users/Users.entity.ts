@@ -21,13 +21,13 @@ class Users {
   @Column()
   public userType: string;
 
-  @Column()
+  @Column({nullable:true})
   public company_id: number;
 
-  @Column()
+  @Column({nullable:true})
   public company_role: string;
 
-  @Column()
+  @Column({nullable:true})
   public registered: string;
 
   public static of(params: Partial<Users>): Users {
