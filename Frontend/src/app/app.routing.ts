@@ -22,6 +22,7 @@
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
+ * 2020-07-21-09-47-am	  SJ	Added admin pathogen routes
  * 2020-07-15-11-08-am	  SJ	Added coding standards
  * 
  * Functional Description         : Routing is handled, if path is routed to, a component is displayed
@@ -44,11 +45,14 @@ import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './_layouts/admin/admin.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
 import { PestInfoComponent } from './_components/pest-info/pest-info.component';
+import { UpdatePestComponent } from './_components/pest-info/update-pest/update-pest.component';
 
 // Basic User imports
 import { HomeComponent } from './home/home.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
+import { PathogenInfoComponent } from './_components/pathogen-info/pathogen-info.component';
+import { UpdatePathogenComponent } from './_components/pathogen-info/update-pathogen/update-pathogen.component';
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -57,7 +61,7 @@ const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        // canActivate: [AuthGuard] 
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',
@@ -70,12 +74,12 @@ const routes: Routes = [
     {
         path: 'DiagReport',
         component: DiagReportComponent,
-        // canActivate: [AuthGuard] 
+        canActivate: [AuthGuard]
     },
     {
         path: 'MapReport',
         component: MapReportComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: 'admin',
@@ -86,9 +90,21 @@ const routes: Routes = [
         },
         {
             path: 'pests',
-            component: PestInfoComponent
+            component: PestInfoComponent,
+        },
+        {
+            path: 'updatePest/:id',
+            component: UpdatePestComponent
+        },
+        {
+            path: 'pathogens',
+            component: PathogenInfoComponent,
+        },
+        {
+            path: 'updatePathogen/:id',
+            component: UpdatePathogenComponent
         }],
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     // otherwise redirect to home
     {

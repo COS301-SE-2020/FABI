@@ -1,29 +1,28 @@
 import { Injectable } from '@angular/core';
-
+import { AuthenticationService } from "../_services/authentication.service";
+// API specific imports
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
 
-  constructor() { }
+  constructor(private apollo: Apollo, private authentication: AuthenticationService) { }
 
   bigChart() {
-    return [{
-      name: 'Free State',
-      data: [12, 14, 11, 9, 3, 1, 4]
-    }, {
-      name: 'Mpumalanga',
-      data: [24, 26, 24, 23, 11, 23, 17]
-    }, {
-      name: 'Gauteng',
-      data: [9, 4, 6, 8, 12, 15, 17]
-    }, {
-      name: 'Kwazulu-Natal',
-      data: [25, 28, 26, 24, 26, 16, 19]
-    }, {
-      name: 'Western Cape',
-      data: [2, 2, 2, 6, 13, 30, 46]
-    }]
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        get_GraphInfo( request: { token: "${this.authentication.currentUserValue}" } )
+        {
+          data,
+          status
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["get_GraphInfo"]["data"]
+    }))
   }
 
   cards() {

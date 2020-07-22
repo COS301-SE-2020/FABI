@@ -39,7 +39,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardComponent implements OnInit {
 
-  bigChart = []
   cards = []
   pieChart = []
   pageSizeOptions = []
@@ -51,7 +50,6 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    this.bigChart = this.dashboardService.bigChart()
     this.cards = this.dashboardService.cards()
     this.pieChart = this.dashboardService.pieChart()
     this.dataSource.paginator = this.paginator;

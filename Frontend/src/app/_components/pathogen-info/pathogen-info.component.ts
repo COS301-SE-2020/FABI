@@ -1,5 +1,5 @@
 /*
- * File Name: pest-info.component.ts
+ * File Name: pathogen-info.component.ts
  * 
  * The University of Pretoria
  * Computer Science Department
@@ -18,14 +18,14 @@
  * Notes:
  *            Version:            : 0.1.0
  *            Author:             : Steven Jordaan - steven.j.jordaan2000@gmail.com
- *            Creation Date:      : Thursday, July 16th 2020, 6:25:12 pm
+ *            Creation Date:      : Friday, July 17th 2020, 9:34:29 pm
  * HISTORY:
  * Date       	          By	Comments
  * -----------	          ---	-----------------------------------------------------
  * 2020-07-21-10-55-am	  SJ	Add delete affliction
- * 2020-07-21-09-36-am	  SJ	Add coding standards
+ * 2020-07-21-09-51-am	  SJ	Add coding standards
  * 
- * Functional Description         : Handles the functionality for updating information about stored pests
+ * Functional Description         : Functionality for admin user to view pathogens
  * Constraints                    : User must be an admin
  * Assumptions                    : None
  */
@@ -40,33 +40,34 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'apollo-link';
 import { Affliction } from '@/_models/affliction';
 import { Router, ActivatedRoute } from '@angular/router'
-@Component({
-  selector: 'app-pest-info',
-  templateUrl: './pest-info.component.html',
-  styleUrls: ['./pest-info.component.css']
-})
-export class PestInfoComponent implements OnInit {
 
+@Component({
+  selector: 'app-pathogen-info',
+  templateUrl: './pathogen-info.component.html',
+  styleUrls: ['./pathogen-info.component.css']
+})
+export class PathogenInfoComponent implements OnInit {
   displayedColumns: string[] = ["Scientific Name", "Common Name", "Affected Plant", "Actions"]
-  pests
+  pathogens
   dataSource
   constructor(private afflictionService: AfflictionService, private router: Router) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort
 
   ngOnInit(): void {
-    this.afflictionService.getPests().subscribe(data => {
-      this.pests = data
+    this.afflictionService.getPathogens().subscribe(data => {
+      this.pathogens = data
     })
-    this.dataSource = new MatTableDataSource(this.pests)
+    this.dataSource = new MatTableDataSource(this.pathogens)
     this.dataSource.sort = this.sort
   }
 
-  updatePest(id: number) {
-    this.router.navigateByUrl(`admin/updatePest/${id}`)
+  updatePathogen(id: number) {
+    this.router.navigateByUrl(`admin/updatePathogen/${id}`)
   }
 
-  deletePest(id: number) {
+  deletePathogen(id: number) {
     this.afflictionService.deleteAffliction(id)
   }
+
 }
