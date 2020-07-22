@@ -74,9 +74,10 @@ export class UpdatePestComponent implements OnInit {
   }
 
   updatePest() {
-    // TODO: Uncomment this when API connection exists
-    // this.service.updatePest(this.id, this.pest)
-    // .subscribe()
+    this.service.updateAffliction(this.id, this.pest)
+    .subscribe(data => {
+      console.log(data)
+    })
     this.router.navigateByUrl(`/admin/pests`)
   }
 

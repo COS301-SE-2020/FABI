@@ -125,8 +125,8 @@ export class AfflictionService {
           symptoms: "${affliction.symptoms}",
           management: "${affliction.management}",
           img1: "${affliction.images[0]}",
-          img1: "${affliction.images[1]}",
-          img1: "${affliction.images[2]}"
+          img2: "${affliction.images[1]}",
+          img3: "${affliction.images[2]}"
          } )
         {
           status

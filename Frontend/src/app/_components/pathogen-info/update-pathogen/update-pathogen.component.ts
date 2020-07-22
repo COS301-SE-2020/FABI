@@ -36,7 +36,7 @@ import { Affliction } from '@/_models/affliction';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfflictionService } from '@/_components/affliction.service';
 import { AlertService } from "../../../_services/alert.service";
-
+import { FormsModule } from '@angular/forms'
 @Component({
   selector: 'app-update-pathogen',
   templateUrl: './update-pathogen.component.html',
@@ -75,9 +75,10 @@ export class UpdatePathogenComponent implements OnInit {
   }
 
   updatePathogen() {
-    // TODO: Uncomment this when API connection exists
-    // this.service.updatePathogen(this.id, this.pathogen)
-    // .subscribe()
+    this.service.updateAffliction(this.id, this.pathogen)
+    .subscribe(data => {
+      console.log(data)
+    })
     this.router.navigateByUrl(`/admin/pathogens`)
   }
 
