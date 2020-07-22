@@ -99,6 +99,8 @@ export abstract class IMutation {
 
     abstract get_GraphInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
+    abstract get_TableInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
+
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 
     abstract registerUser(request?: Request): Response | Promise<Response>;

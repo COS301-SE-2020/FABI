@@ -50,4 +50,14 @@ export class AdminDashboardResolver {
 
         return this.getAdminDashboardService.getGraphInfo_Service(reqObj);
     }
+
+    //This is the mutation that is exposed to the front-end 
+    @Mutation('get_TableInfo')
+    async get_TableInfo(@Args('request') reqObj: Admin_Dashboard_request) : Promise<Admin_Dashboard_response>{
+        
+        
+        //Pass our request to service which will validate token and build response
+
+        return this.getAdminDashboardService.getTableInfo_Service(reqObj);
+    }
 }

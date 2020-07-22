@@ -93,5 +93,12 @@ export class GetAdminDashService {
     return res;
   }
 
+  async getTableInfo(reqObj: Admin_Dashboard_request): Promise<Admin_Dashboard_response> {
+
+    const res: Admin_Dashboard_response = { data: "howdy", status:201 };
+
+    return res;
+  }
+
 
 }

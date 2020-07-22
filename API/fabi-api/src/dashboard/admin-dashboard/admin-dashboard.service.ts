@@ -47,11 +47,13 @@ export class AdminDashboardService {
         private getAdminDashService : GetAdminDashService,  
     ) {}
 
-    //Define our response data-type
-    res: Admin_Dashboard_response = {data:"",status:0};
+    
 
 
     async getGraphInfo_Service(reqObj: Admin_Dashboard_request): Promise<Admin_Dashboard_response> {
+
+        //Define our response data-type
+    const res: Admin_Dashboard_response = {data:"",status:0};
 
         //here we validate our token
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
@@ -60,9 +62,9 @@ export class AdminDashboardService {
 
         //here we return the return the respective object based 
         if (result == false) {
-            this.res.status = 415;
-            this.res.data = "null";
-            return this.res;
+            res.status = 415;
+            res.data = "null";
+            return res;
             
         } else {
             //call other service.
@@ -71,4 +73,32 @@ export class AdminDashboardService {
         }
 
     }
+
+
+    async getTableInfo_Service(reqObj:Admin_Dashboard_request): Promise<Admin_Dashboard_response>{
+
+           //Define our response data-type
+        const res: Admin_Dashboard_response = {data:"",status:0};
+
+        //here we validate our token
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+
+        //here we return the return the respective object based 
+        if (result == false) {
+            res.status = 415;
+            res.data = "null";
+            return res;
+            
+        } else {
+            //call other service.
+            return this.getAdminDashService.getTableInfo(reqObj);
+
+        }
+
+    }
+
+
+
 }
