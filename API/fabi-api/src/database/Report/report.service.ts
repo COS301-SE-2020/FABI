@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest } from 'src/graphql.schema';
+import { UploadRequest } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
