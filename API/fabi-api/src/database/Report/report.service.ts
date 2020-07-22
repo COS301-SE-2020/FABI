@@ -94,7 +94,7 @@ export class ReportService {
       obj.Img3.indexOf(',') + 1,
       obj.Img3.length,
     );
-
+      console.log("bonfire1");
     //create unique name for each image
     const img1Name = createHmac('sha256', obj.token + this.makeid())
       .digest('hex')
@@ -122,6 +122,7 @@ export class ReportService {
       return false;
     });
 
+    console.log("bonfire2");
 
     //Upload images to storage bucket
     await Imagebucket.upload(img1Name + '.' + img1Format);
@@ -145,10 +146,12 @@ export class ReportService {
       '.' +
       img3Format;
 
+      console.log("bonfire3");
     //vision api
     const classNum1 = this.classify(img1Name + '.' + img1Format);
     const classNum2 = this.classify(img2Name + '.' + img2Format);
     const classNum3 = this.classify(img3Name + '.' + img3Format);
+
 
     //value that determines if the images are correct
     let certainty = 0;
@@ -200,7 +203,7 @@ export class ReportService {
 
     //create Int for today's date
     let todayInt: number = parseInt(year + mm + dd);
-
+    console.log("bonfire1");
     //Add to database
     await this.ReportsRepository.insert({
       email: email,
