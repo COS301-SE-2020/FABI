@@ -70,6 +70,7 @@ export class UpdatePestComponent implements OnInit {
       this.pest.images.push(pestData["img1"])
       this.pest.images.push(pestData["img2"])
       this.pest.images.push(pestData["img3"])
+      this.pest.images = this.pest.images.filter(img => img != 'undefined')
     })
   }
 

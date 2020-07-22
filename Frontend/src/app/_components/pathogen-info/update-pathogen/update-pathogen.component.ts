@@ -70,7 +70,7 @@ export class UpdatePathogenComponent implements OnInit {
       this.pathogen.images.push(pathogenData["img1"])
       this.pathogen.images.push(pathogenData["img2"])
       this.pathogen.images.push(pathogenData["img3"])
-      console.log(this.pathogen)
+      this.pathogen.images = this.pathogen.images.filter(img => img != 'undefined')
     })
   }
 
