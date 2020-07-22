@@ -22,13 +22,18 @@
   <ng-container matColumnDef="Actions">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       Add pathogen &nbsp;
-      <button mat-mini-fab type="button" mat-button>
+      <button mat-mini-fab type="button" color="primary" mat-button>
         <mat-icon>add</mat-icon>
       </button>
     </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button color="primary" (click)="updatePathogen(element.id)">Update</button>&nbsp;
-      <button mat-raised-button color="warn">Delete</button>
+      <button mat-mini-fab type="button" color="accent" mat-button (click)="updatePathogen(element.id)">
+        <mat-icon>input</mat-icon>
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-mini-fab type="button" color="warn" class="delButton" mat-button (click)="deletePathogen(element.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 

@@ -22,13 +22,18 @@
   <ng-container matColumnDef="Actions">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       Add pest &nbsp;
-      <button mat-mini-fab type="button" mat-button>
+      <button mat-mini-fab type="button" color="primary" mat-button>
         <mat-icon>add</mat-icon>
       </button>
     </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button color="primary" (click)="updatePest(element.id)">Update</button>&nbsp;
-      <button mat-raised-button color="warn" (click)="deletePest(element.id)">Delete</button>
+      <button mat-mini-fab type="button" color="accent" mat-button (click)="updatePest(element.id)">
+        <mat-icon>input</mat-icon>
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-mini-fab type="button" color="warn" class="delButton" mat-button (click)="deletePest(element.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 

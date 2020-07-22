@@ -5,3 +5,7 @@ table {
   th.mat-sort-header-sorted {
     color: black;
   }
+
+  .delButton {
+    justify-self: right;
+  }
