@@ -43,21 +43,34 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTableModule } from '@angular/material/table'
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select'
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from '@angular/material/icon'
 // Admin related components
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from '@/_components/dashboard/dashboard.component';
-import { PestInfoComponent } from '@/_components/pest-info/pest-info.component';
 import { DashboardService } from '@/_components/dashboard.service';
+import { PestInfoComponent } from '@/_components/pest-info/pest-info.component';
+import { UpdatePestComponent } from '../../_components/pest-info/update-pest/update-pest.component';
 
 // Shared module
 import { SharedModule } from '@/sharedAdmin/shared.module';
+import { AlertService } from '@/_services/alert.service';
+import { AlertComponent } from '@/_components/alert.component';
+import { PathogenInfoComponent } from '../../_components/pathogen-info/pathogen-info.component';
+import { UpdatePathogenComponent } from '../../_components/pathogen-info/update-pathogen/update-pathogen.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     DashboardComponent,
-    PestInfoComponent
+    PestInfoComponent,
+    UpdatePestComponent,
+    AlertComponent,
+    PathogenInfoComponent,
+    UpdatePathogenComponent
   ],
   imports: [
     CommonModule,
@@ -68,10 +81,16 @@ import { SharedModule } from '@/sharedAdmin/shared.module';
     FlexLayoutModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
-    DashboardService
+    DashboardService,
+    AlertService
   ]
 })
 export class AdminModule { }

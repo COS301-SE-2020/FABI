@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '@/_services/authentication.service';
 // import { EventEmitter } from 'protractor';
 
 @Component({
@@ -10,7 +12,8 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private router: Router,
+    private service: AuthenticationService) { }
 
   ngOnInit(): void {
   }
@@ -28,5 +31,14 @@ toggleSideBar() {
         new Event('resize')
       )
     }, 300)
-  }  
+  }
+  
+  logout() {
+    // TODO: Implement logout
+    this.service.logout()
+    this.router.navigateByUrl('')
+  }
+  goBasic() {
+    this.router.navigateByUrl('')
+  }
 }
