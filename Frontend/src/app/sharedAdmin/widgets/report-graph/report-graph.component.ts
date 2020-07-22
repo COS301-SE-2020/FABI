@@ -36,6 +36,7 @@ import { Component, OnInit, Input } from '@angular/core';
 // Highchart specific imports
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
+import { DashboardService } from '@/_components/dashboard.service';
 
 @Component({
   selector: 'app-widget-report-graph',
@@ -44,23 +45,42 @@ import HC_exporting from 'highcharts/modules/exporting';
 })
 export class ReportGraphComponent implements OnInit {
 
-  @Input() data: []
-
+  categoriesData = []
+  seriesData = []
   Highcharts = Highcharts;
   chartOptions: {};
 
-  constructor() { }
+  constructor(private service: DashboardService) { }
 
   ngOnInit(): void {
+    this.service.bigChart().subscribe(data => {
+      data = JSON.parse(data)
+      for (let prop in data){
+        if (!data.hasOwnProperty(prop)){
+          continue
+        }
+        this.categoriesData.push(prop)
+        this.seriesData.push(data[prop])
+      }
+      let seriesObj = [{
+        name: 'FABI',
+        data: this.seriesData
+      }]
+      this.populateGraph(seriesObj, this.categoriesData)
+      
+    })
+  }
+
+  populateGraph(seriesData, categoriesData) {
     this.chartOptions = {
       chart: {
         type: 'spline'
       },
       title: {
-        text: 'Diagnostic Report Count'
+        text: 'Diagnostic Report Count within FABI'
       },
       subtitle: {
-        text: 'For Your Company'
+        text: 'For the last 7 days'
       },
       yAxis: {
         title: {
@@ -71,7 +91,7 @@ export class ReportGraphComponent implements OnInit {
         accessibility: {
           rangeDescription: 'Range: last 7 days'
         },
-        categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        categories: categoriesData
 
       },
       tooltip: {
@@ -84,7 +104,7 @@ export class ReportGraphComponent implements OnInit {
       exporting: {
         enabled: true
       },
-      series: this.data
+      series: seriesData
     };
     HC_exporting(Highcharts)
 
