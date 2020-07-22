@@ -16,7 +16,7 @@ export class GetAdminDashService {
   async getLineGraphInfo(reqObj: Admin_Dashboard_request): Promise<Admin_Dashboard_response> {
 
     //response
-    const res: Admin_Dashboard_response = { data: "", status:0 };
+    const res: Admin_Dashboard_response = { data: "", status: 0 };
 
     //two date variables that have today's date
     var today = new Date();
@@ -95,8 +95,14 @@ export class GetAdminDashService {
 
   async getTableInfo(reqObj: Admin_Dashboard_request): Promise<Admin_Dashboard_response> {
 
-    const res: Admin_Dashboard_response = { data: "howdy", status:201 };
+    //create response object
+    const res: Admin_Dashboard_response = { data: "howdy", status: 201 };
+    //query db
+    const result = await this.ReportsRepository.query("select \"CommName\", \"SciName\", management, count(*) from \"Afflictions\", reports, users where company_id=" + 1 + "and \"Email\"=email and diagnosis=\"Afflictions\".id group by \"CommName\", \"SciName\", management order by count DESC;");
 
+    //stringify datat
+    res.data = JSON.stringify(result);
+    //return data
     return res;
   }
 
