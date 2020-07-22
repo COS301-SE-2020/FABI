@@ -1,6 +1,11 @@
-<h2 *ngIf="pathogen.scienceName">Update {{pathogen.scienceName}}</h2>
-<h2 *ngIf="!pathogen.scienceName">Update {{pathogen.name}}</h2>
-
+<div class="saveButton">
+  <h2 *ngIf="pathogen.scienceName">Update {{pathogen.scienceName}}</h2>
+  <h2 *ngIf="!pathogen.scienceName">Update {{pathogen.name}}</h2>
+  <button mat-fab type="button" (click)="updatePathogen()">
+    <mat-icon>save</mat-icon>
+  </button>
+  <h3>Save Changes</h3>
+</div>
 <form class="example-form">
   <mat-form-field>
     <mat-label>Affliction Type</mat-label>
@@ -49,7 +54,8 @@
       <td>
         <mat-form-field class="custMatField">
           <mat-label>Status</mat-label>
-          <textarea matInput cdkTextareaAutosize (change)="pathogen.status = $event.target.value" [value]="pathogen.status"></textarea>
+          <textarea matInput cdkTextareaAutosize (change)="pathogen.status = $event.target.value"
+            [value]="pathogen.status"></textarea>
         </mat-form-field>
       </td>
     </tr>
@@ -57,7 +63,8 @@
       <td>
         <mat-form-field class="custMatField">
           <mat-label>Description</mat-label>
-          <textarea matInput cdkTextareaAutosize (change)="pathogen.description = $event.target.value" [value]="pathogen.description"></textarea>
+          <textarea matInput cdkTextareaAutosize (change)="pathogen.description = $event.target.value"
+            [value]="pathogen.description"></textarea>
         </mat-form-field>
       </td>
     </tr>
@@ -65,7 +72,8 @@
       <td>
         <mat-form-field class="custMatField">
           <mat-label>Symptoms</mat-label>
-          <textarea matInput cdkTextareaAutosize (change)="pathogen.symptoms = $event.target.value" [value]="pathogen.symptoms"></textarea>
+          <textarea matInput cdkTextareaAutosize (change)="pathogen.symptoms = $event.target.value"
+            [value]="pathogen.symptoms"></textarea>
         </mat-form-field>
       </td>
     </tr>
@@ -73,7 +81,8 @@
       <td>
         <mat-form-field class="custMatField">
           <mat-label>Management</mat-label>
-          <textarea matInput cdkTextareaAutosize (change)="pathogen.management = $event.target.value" [value]="pathogen.management"></textarea>
+          <textarea matInput cdkTextareaAutosize (change)="pathogen.management = $event.target.value"
+            [value]="pathogen.management"></textarea>
         </mat-form-field>
       </td>
     </tr>
@@ -98,30 +107,33 @@
     </tr>
     <tr>
       <td>
-        <mat-card *ngIf="pathogen.images[0] != '' && pathogen.images[0] != 'undefined' && pathogen.images[0] != undefined">
+        <mat-card
+          *ngIf="pathogen.images[0] != '' && pathogen.images[0] != 'undefined' && pathogen.images[0] != undefined">
           <img mat-card-image [(src)]="pathogen.images[0]" alt="Plant image">
           <mat-card-actions>
-            <button mat-mini-fab type="button" (click)="removeImage(pathogen.images[0])">
+            <button mat-mini-fab type="button" color="warn" (click)="removeImage(pathogen.images[0])">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-card-actions>
         </mat-card>
       </td>
       <td>
-        <mat-card *ngIf="pathogen.images[1] != '' && pathogen.images[1] != 'undefined' && pathogen.images[1] != undefined">
+        <mat-card
+          *ngIf="pathogen.images[1] != '' && pathogen.images[1] != 'undefined' && pathogen.images[1] != undefined">
           <img mat-card-image [(src)]="pathogen.images[1]" alt="Plant image">
           <mat-card-actions>
-            <button mat-mini-fab type="button" (click)="removeImage(pathogen.images[1])">
+            <button mat-mini-fab type="button" color="warn" (click)="removeImage(pathogen.images[1])">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-card-actions>
         </mat-card>
       </td>
       <td>
-        <mat-card *ngIf="pathogen.images[2] != '' && pathogen.images[2] != 'undefined' && pathogen.images[2] != undefined">
+        <mat-card
+          *ngIf="pathogen.images[2] != '' && pathogen.images[2] != 'undefined' && pathogen.images[2] != undefined">
           <img mat-card-image [(src)]="pathogen.images[2]" alt="Plant image">
           <mat-card-actions>
-            <button mat-mini-fab type="button" (click)="removeImage(pathogen.images[2])">
+            <button mat-mini-fab type="button" color="warn" (click)="removeImage(pathogen.images[2])">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-card-actions>
@@ -129,5 +141,7 @@
       </td>
     </tr>
   </table>
-  <button (click)="updatePathogen()">Update</button>
+  <br>
+  <br>
+
 </form>
