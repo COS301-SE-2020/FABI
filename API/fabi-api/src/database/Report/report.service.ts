@@ -190,6 +190,17 @@ export class ReportService {
     //parse string into JSON
     let reportJson = JSON.parse(obj.report);
 
+    //get date 
+    var today = new Date();
+
+    //todays date 
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var year = today.getFullYear();
+
+    //create Int for today's date
+    let todayInt: number = parseInt(year + mm + dd);
+
     //Add to database
     await this.ReportsRepository.insert({
       email: email,
@@ -203,6 +214,9 @@ export class ReportService {
       Accuracy: reportJson.Location.Accuracy,
       Pname: reportJson.Questions["Common name"], //must get from obj.report
       Infliction: reportJson.Questions["Pest Or Disease"], //must get from obj.report
+      date:todayInt,
+      diagnosis:2,
+      urgency:10
     });
 
     return true;

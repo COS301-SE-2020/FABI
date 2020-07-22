@@ -39,13 +39,13 @@ class Reports {
     @Column()
     public Pscore: number;
 
-    @Column()
+    @Column({nullable:true})
     public date: number;
 
-    @Column()
+    @Column({nullable:true})
     public urgency: number;
 
-    @Column()
+    @Column({nullable:true})
     public diagnosis: number;
 
 
