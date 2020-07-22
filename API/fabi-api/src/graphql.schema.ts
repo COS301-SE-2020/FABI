@@ -61,6 +61,7 @@ export class UploadRequest {
 
 export class Admin_Dashboard_response {
     data: string;
+    status: number;
 }
 
 export class All_afflictions {

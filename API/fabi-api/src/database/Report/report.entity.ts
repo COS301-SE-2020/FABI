@@ -46,7 +46,7 @@ class Reports {
     public urgency: number;
 
     @Column()
-    public diagnosis: string;
+    public diagnosis: number;
 
 
 }

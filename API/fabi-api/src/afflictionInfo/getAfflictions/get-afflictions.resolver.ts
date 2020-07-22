@@ -42,7 +42,7 @@ export class GetAfflictionsResolver {
 
     //This is the mutation that is exposed to the front-end 
     @Mutation('get_afflictions')
-    async login(@Args('request') reqObj: All_afflictions_request) : Promise<All_afflictions[]>{
+    async get_afflictions(@Args('request') reqObj: All_afflictions_request) : Promise<All_afflictions[]>{
         
         //Pass our request to service which will validate token and build response
         return this.getAfflictionService.getAllAflictions(reqObj);

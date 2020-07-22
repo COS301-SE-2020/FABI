@@ -48,7 +48,7 @@ export class AdminDashboardService {
     ) {}
 
     //Define our response data-type
-    res: Admin_Dashboard_response = {data:""};
+    res: Admin_Dashboard_response = {data:"",status:0};
 
 
     async getGraphInfo_Service(reqObj: Admin_Dashboard_request): Promise<Admin_Dashboard_response> {
@@ -60,11 +60,12 @@ export class AdminDashboardService {
 
         //here we return the return the respective object based 
         if (result == false) {
-            //return 415
+            this.res.status = 415;
+            this.res.data = "null";
+            return this.res;
             
         } else {
             //call other service.
-            
             return this.getAdminDashService.getLineGraphInfo(reqObj);
 
         }

@@ -1,5 +1,6 @@
-type  Admin_Dashboard_response{
+type Admin_Dashboard_response{
     data: String!
+    status: Int!
 }
 
 input Admin_Dashboard_request {
@@ -7,5 +8,5 @@ input Admin_Dashboard_request {
 }
 
 type Mutation{
-    get_GraphInfo(request:Admin_Dashboard_request):Admin_Dashboard_response
+    get_GraphInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
 }

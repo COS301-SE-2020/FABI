@@ -45,6 +45,7 @@ export class AdminDashboardResolver {
     @Mutation('get_GraphInfo')
     async get_GraphInfo(@Args('request') reqObj: Admin_Dashboard_request) : Promise<Admin_Dashboard_response>{
         
+        
         //Pass our request to service which will validate token and build response
 
         return this.getAdminDashboardService.getGraphInfo_Service(reqObj);
