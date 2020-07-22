@@ -77,6 +77,9 @@ export class UpdatePathogenComponent implements OnInit {
   updatePathogen() {
     this.service.updateAffliction(this.id, this.pathogen)
     .subscribe(data => {
+      if (data == 201 || data == "201") {
+        this.alert.success("Successfully Updated Pathogen", true)
+      }
       console.log(data)
     })
     this.router.navigateByUrl(`/admin/pathogens`)
