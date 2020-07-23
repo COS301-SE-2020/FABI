@@ -48,6 +48,7 @@ import { PestInfoComponent } from './_components/pest-info/pest-info.component';
 import { UpdatePestComponent } from './_components/pest-info/update-pest/update-pest.component';
 
 // Basic User imports
+import { BasicComponent } from './_layouts/basic/basic.component';
 import { HomeComponent } from './home/home.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
@@ -105,6 +106,23 @@ const routes: Routes = [
             component: UpdatePathogenComponent
         }],
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'basic',
+        component: BasicComponent,
+        children: [{
+            path: '',
+            component: HomeComponent
+        },
+        {
+            path: 'DiagReport',
+            component: DiagReportComponent
+        },
+        {
+            path: 'MapReport',
+            component: MapReportComponent
+        }],
+        // canActivate: [AuthGuard]
     },
     // otherwise redirect to home
     {

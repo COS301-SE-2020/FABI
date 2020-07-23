@@ -63,7 +63,6 @@ export class AppComponent {
     private reportDataService: ReportDataService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.reportDataService.currentMark.subscribe(x => this.currentReport = x);
 
   }
 

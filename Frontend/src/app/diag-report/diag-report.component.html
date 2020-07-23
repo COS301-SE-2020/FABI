@@ -1,15 +1,16 @@
 <br>
 <!-- Testing camera functionality -->
-<div class="col-sm-6" *ngIf="ImageDataCount<3&&!enterImage">
+<div class="col-sm" *ngIf="ImageDataCount<3&&!enterImage">
   <div class="row">
-    <div class="col-6" ><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
-    <div class="col-6" ><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="(Images.length<3&&!showWebcam)" (click)="onCancel()">Cancel</button></div>
+    <div class="col" ><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+    <div class="col" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;"><i class="fa fa-camera"></i> Take photo</button></div>
+    <div class="col" ><button type="button" class="btn btn-danger" *ngIf="(Images.length<3&&!showWebcam)" (click)="onCancel()">Cancel</button></div>
   </div><br>
-  <div class="row" *ngIf="!showWebcam&&ImageDataCount<3&&!enterImage"><h4>You need 3 images to proceed</h4></div><br>
+  <div class="row" *ngIf="!showWebcam&&ImageDataCount<3&&!enterImage" style="text-align: center;"><h4>You need 3 images to proceed</h4></div><br>
+  
   <div class="row" [style.visibility]="showWebcam?'visible':'hidden'">
-      <div class="col-sm-6" style="text-align: center;max-width: 50%;">
         <webcam 
-        [width]="300"
+        [width]="350"
         [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
         [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
         [videoOptions]="videoOptions"
@@ -17,12 +18,7 @@
         (cameraSwitched)="cameraWasSwitched($event)"
         (initError)="handleInitError($event)">
         </webcam>
-      </div>
   <br/>
-</div>
-<div class="row">
-  <br/>
-  <div class="col-6" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;"><i class="fa fa-camera"></i> Take photo</button></div>
 </div>
 <br>
 <div class="row">
@@ -44,25 +40,25 @@
     <div class="thumbnail">
         <img src="{{Image.src}}" alt="Lights" style="width:100%">
         <div class="caption">
-          <p>Description: {{Answers.Images["Image"+(i+1)].ImageDescription}}</p>
+          <p>Image: {{i+1}}</p>
         </div>
     </div>
   </div>
 </div>
 
 <button class="btn btn-danger" (click)="clearImages();" *ngIf="ImageDataCount==3&&!enterImage">Reset Images</button>
-
-<form [formGroup]="ImageData" *ngIf="ImageDataCount<3&&enterImage">
-  <img src="{{Images[Images.length-1].src}}" alt="Lights" style="width:100%">
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Please enter a short description for this image: </span>
+<div class="row" *ngIf="ImageDataCount<3&&enterImage" style="align-items: center;">
+  <div class="col-md-4">
+    <div class="thumbnail">
+        <img src="{{Images[Images.length-1].src}}" alt="Lights" style="width:100%"><br>
+        <div class="caption">
+          <button class="btn btn-primary" (click)="setImageData();" style="width: 100%;">Confirm</button>
+        </div>
     </div>
-    <textarea class="form-control" formControlName="Description" maxlength="25"></textarea>
   </div>
+</div>
 
-<button class="btn btn-primary" (click)="setImageData();">Confirm</button>
-</form>   
+ 
 
 <div *ngIf="ImageDataCount==3&&!enterImage">
 <br/>
@@ -70,7 +66,7 @@
       <div class="input-group" style="opacity: 0.9;pointer-events: none;">
       <input type="text" aria-label="Latitude" class="form-control" value="{{Lat}}">
       <input type="text" aria-label="Longitude" class="form-control" value="{{Long}}">
-      <input type="text" aria-label="Accuracy" class="form-control" value="Within {{Answers.Location['Accuracy']}}m">
+      <input type="text" aria-label="Accuracy" class="form-control" value="Within {{Answers.Questions['Accuracy']}}m">
     </div>
 
     
@@ -179,4 +175,4 @@
 </form>
 <br><button class="btn btn-success" style="margin-left: 5px;" *ngIf="PorD_Selected&&Images.length==3" (click)="onSubmit()">Submit Report</button>
 </div>
-<br><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="Images.length==3" (click)="onCancel()">Cancel</button><br><br><br>
+<br><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="Images.length==3" (click)="onCancel()">Cancel</button>
