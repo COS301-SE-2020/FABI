@@ -92,7 +92,7 @@ Please find all appropriate documentation below
 
 - [Coding Standards](https://www.overleaf.com/read/yrpxbnszxygv)
 
-- [User Manual]()
+- [User Manual](https://drive.google.com/file/d/1xjXP-E-hgNv_y6v0DLQFvcEbPjD--MJk/view?usp=sharing)
 
 ## Project Management Tool
 
