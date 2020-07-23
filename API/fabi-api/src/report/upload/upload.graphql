@@ -1,6 +1,11 @@
 input UploadRequest {
     token:String!
-    report:String!
+    report:String
+    Latitude: Float!
+    Longitude: Float!
+    Accuracy: Int!
+    Pname: String!
+    Infliction:String!
     Img1:String!
     Img2:String!
     Img3:String!

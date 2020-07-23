@@ -191,7 +191,7 @@ export class ReportService {
     let email = await this.userService.getEmail(obj.token);
 
     //parse string into JSON
-    let reportJson = JSON.parse(obj.report);
+    //let reportJson = JSON.parse(obj.report);
 
     //get date 
     var today = new Date();
@@ -204,19 +204,29 @@ export class ReportService {
     //create Int for today's date
     let todayInt: number = parseInt(year + mm + dd);
     console.log("bonfire1");
+
+    //
+    var report = obj.report;
+    var long = obj.Longitude;
+    var lat = obj.Latitude;
+    var pname = obj.Pname;
+    var infliction = obj.Infliction;
+    var accuracy = obj.Accuracy;
+
+
     //Add to database
     await this.ReportsRepository.insert({
       email: email,
-      form: reportJson,
+      form: report,
       IMG1: url1,
       IMG2: url2,
       IMG3: url3,
-      Long: reportJson.Location.Longitude, //must get from obj.report
-      Lat: reportJson.Location.Latitude, //must get from obj.report
+      Long: long, //must get from obj.report
+      Lat: lat, //must get from obj.report
       Pscore: certainty,
-      Accuracy: reportJson.Location.Accuracy,
-      Pname: reportJson.Questions["Common name"], //must get from obj.report
-      Infliction: reportJson.Questions["Pest Or Disease"], //must get from obj.report
+      Accuracy: accuracy,
+      Pname: pname, //must get from obj.report
+      Infliction: infliction, //must get from obj.report
       date:todayInt,
       diagnosis:2,
       urgency:10
