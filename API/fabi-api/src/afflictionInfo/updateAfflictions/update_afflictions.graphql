@@ -1,0 +1,26 @@
+type  Update_afflictions_response{
+    status: Int
+}
+
+input Update_afflictions_request {
+    id:Int!
+    token: String!
+    type: String
+    scienceName: String
+    name: String
+    plant: String
+    distribution: String
+    status: String  
+    description: String
+    symptoms: String
+    management: String
+    img1: String
+    img2: String
+    img3: String
+
+}
+
+type Mutation{
+    update_afflictions(request:Update_afflictions_request): Update_afflictions_response!
+}
+

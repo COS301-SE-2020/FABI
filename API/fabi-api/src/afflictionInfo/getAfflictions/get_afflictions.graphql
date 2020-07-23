@@ -1,0 +1,47 @@
+type  All_afflictions{
+    id: Int
+    type: String
+    scientificName: String
+    name: String
+    plant: String
+    status: Int
+}
+
+type Single_affliction_response{
+    id:Int!
+    type: String
+    scienceName: String
+    name: String
+    plant: String
+    distribution: String
+    status: String  
+    description: String
+    symptoms: String
+    management: String
+    img1: String
+    img2: String
+    img3: String
+    statusCode: Int!
+
+}
+
+input All_afflictions_request {
+    affliction_type: String!
+    token: String!
+}
+
+input Single_affliction_request{
+    id:Int!
+    token:String!
+}
+
+type Mutation{
+    get_afflictions(request:All_afflictions_request):[All_afflictions]!
+    get_Single_affliction(request:Single_affliction_request): Single_affliction_response
+}
+
+
+type Mutation{
+    get_Single_affliction(request:Single_affliction_request): Single_affliction_response
+}
+

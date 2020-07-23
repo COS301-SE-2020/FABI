@@ -1,0 +1,16 @@
+type Admin_Dashboard_response{
+    data: String!
+    status: Int!
+}
+
+input Admin_Dashboard_request {
+    token: String!
+}
+
+type Mutation{
+    get_GraphInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
+}
+
+type Mutation{
+    get_TableInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
+}

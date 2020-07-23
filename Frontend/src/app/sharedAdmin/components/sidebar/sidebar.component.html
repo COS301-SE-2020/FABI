@@ -1,0 +1,26 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h2>{{ user.company }}</h2>
+      <h4>{{ user.firstName }} {{ user.lastName }}</h4>
+    </div>
+    <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png" alt="Company Name">
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Pages</h2>
+
+  <a mat-list-item routerLinkActive="link-item-active" routerLink="/admin">Dashboard</a>
+  <a mat-list-item routerLinkActive="link-item-active" routerLink="/admin/pests">Pests</a>
+  <a mat-list-item routerLinkActive="link-item-active" routerLink="/admin/pathogens">Pathogens</a>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Tools</h2>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="admin/users">
+    <mat-icon>account_box</mat-icon>
+    Manage users
+</a>
+</mat-nav-list>

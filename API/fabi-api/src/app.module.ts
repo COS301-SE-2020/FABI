@@ -5,7 +5,10 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UploadModule } from './report/upload/upload.module';
 import Users from  "./database/Users/Users.entity"
+import { AfflictionRequestsModule } from './afflictionInfo/affliction-requests.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 
@@ -21,6 +24,9 @@ import Users from  "./database/Users/Users.entity"
     }),
         LoginRegisterModule,
         DatabaseModule,
+        UploadModule,
+        AfflictionRequestsModule,
+        DashboardModule,
        ],
 
 })

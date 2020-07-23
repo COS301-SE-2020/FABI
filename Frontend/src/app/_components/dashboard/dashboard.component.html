@@ -1,0 +1,72 @@
+<div>
+  <app-widget-report-graph></app-widget-report-graph>
+</div>
+
+<br>
+
+<mat-divider></mat-divider>
+
+<br>
+
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
+  <mat-card fxFlex="25">
+    <app-widget-card label="New Reports" total="120" percentage="60" [data]="cards"></app-widget-card>
+  </mat-card>
+  <mat-card fxFlex="25">
+    <app-widget-card label="New Pathogens" total="68" percentage="58" [data]="cards"></app-widget-card>
+</mat-card>
+  <mat-card fxFlex="25">
+    <app-widget-card label="New Pests" total="72" percentage="96" [data]="cards"></app-widget-card>
+  </mat-card>
+  <mat-card fxFlex="25">
+    <app-widget-card label="Total Undiagnosed Reports" total="346" percentage="89" [data]="cards"></app-widget-card>
+  </mat-card>
+</div>
+
+<br>
+
+<mat-divider></mat-divider>
+
+<br>
+<h2>Priority Afflictions</h2>
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+  <div fxFlex="60">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+    
+        <!-- Position Column -->
+        <ng-container matColumnDef="scienceName">
+          <th mat-header-cell *matHeaderCellDef> Scientific Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.SciName}} </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Common Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.CommName}} </td>
+        </ng-container>
+    
+        <!-- Weight Column -->
+        <ng-container matColumnDef="management">
+          <th mat-header-cell *matHeaderCellDef> Management </th>
+          <td mat-cell *matCellDef="let element"> {{element.management}} </td>
+        </ng-container>
+    
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef> Occurences </th>
+          <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    
+  </div>
+  <div fxFlex="40">
+    <app-widget-pie [data]="pieChart"></app-widget-pie>
+  </div>
+</div>

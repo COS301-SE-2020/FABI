@@ -1,36 +1,28 @@
+<br>
 <!-- Testing camera functionality -->
-<div class="col-12">
-  <div class="row" *ngIf="!showWebcam">
-      <div class="col-8" style="text-align: center;">
-          <div class="snapshot"  *ngIf="webcamImage">
-              <h3>Specimen Preview</h3>
-              <img style ="width: 90%;border: black solid 2px;" [src]="webcamImage.imageAsDataUrl"/>
-            </div>
-      </div>
+<div class="col-sm" *ngIf="ImageDataCount<3&&!enterImage">
+  <div class="row">
+    <div class="col" ><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
+    <div class="col" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;"><i class="fa fa-camera"></i> Take photo</button></div>
+    <div class="col" ><button type="button" class="btn btn-danger" *ngIf="(Images.length<3&&!showWebcam)" (click)="onCancel()">Cancel</button></div>
+  </div><br>
+  <div class="row" *ngIf="!showWebcam&&ImageDataCount<3&&!enterImage" style="text-align: center;"><h4>You need 3 images to proceed</h4></div><br>
+  
+  <div class="row" [style.visibility]="showWebcam?'visible':'hidden'">
+        <webcam 
+        [width]="350"
+        [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+        [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+        [videoOptions]="videoOptions"
+        [imageQuality]="1"
+        (cameraSwitched)="cameraWasSwitched($event)"
+        (initError)="handleInitError($event)">
+        </webcam>
   <br/>
 </div>
+<br>
 <div class="row">
-  <div class="col-8">
-      <webcam 
-      [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-      [videoOptions]="videoOptions"
-      [imageQuality]="1"
-      (cameraSwitched)="cameraWasSwitched($event)"
-      (initError)="handleInitError($event)">
-      </webcam>
-  </div>
-
-</div>
-<div class="row">
-  <br/>
-  <div class="col-6" *ngIf="showWebcam"><button class="btn btn-success" (click)="triggerSnapshot();toggleWebcam();"><i class="fa fa-camera"></i> Take photo</button></div>
-  <div class="col-6"*ngIf="showWebcam"><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
-  <div class="col-8 offset-sm-3"*ngIf="!showWebcam"><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
-</div>
-
-<div class="row">
-  <div class="col-3" *ngif="multipleWebcamsAvailable">
+  <div class="col-3" *ngIf="multipleWebcamsAvailable">
       <button class="btn btn-success" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
       <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
       DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
@@ -40,72 +32,147 @@
 </div>
 <h4 *ngIf="errors.length > 0">Messages:</h4>
 <ul *ngFor="let error of errors">
-<li>{{error}}</li>
+<li>{{error.message}}</li>
 </ul>
 
+<div class="row" *ngIf="!enterImage">
+  <div class="col-md-4" *ngFor="let Image of Images;let i = index;">
+    <div class="thumbnail">
+        <img src="{{Image.src}}" alt="Lights" style="width:100%">
+        <div class="caption">
+          <p>Image: {{i+1}}</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-danger" (click)="clearImages();" *ngIf="ImageDataCount==3&&!enterImage">Reset Images</button>
+<div class="row" *ngIf="ImageDataCount<3&&enterImage" style="align-items: center;">
+  <div class="col-md-4">
+    <div class="thumbnail">
+        <img src="{{Images[Images.length-1].src}}" alt="Lights" style="width:100%"><br>
+        <div class="caption">
+          <button class="btn btn-primary" (click)="setImageData();" style="width: 100%;">Confirm</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+ 
+
+<div *ngIf="ImageDataCount==3&&!enterImage">
 <br/>
+      <h5 class="unselectable">Location:</h5>
+      <div class="input-group" style="opacity: 0.9;pointer-events: none;">
+      <input type="text" aria-label="Latitude" class="form-control" value="{{Lat}}">
+      <input type="text" aria-label="Longitude" class="form-control" value="{{Long}}">
+      <input type="text" aria-label="Accuracy" class="form-control" value="Within {{Answers.Questions['Accuracy']}}m">
+    </div>
 
-<form [formGroup]="diagForm" style="background: rgba(255,255,255, 0);" (ngSubmit)="onSubmit()">
-    <label for="Date">Date:</label>
-    <input style="margin-left: 0%;" type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
+    
+
+<form [formGroup]="Plant">
+  <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" style="visibility: hidden;"><br>
   
-   
-    <h5>Location:</h5>
-    <label for="lt">Latitude:</label>
-    <input type="text" id="lt" name="lt" value="{{lat}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
-    <label for="lng">Longitude:</label>
-    <input type="text" id="lng" name="lng" value="{{long}}" readonly style="opacity: 0.9;pointer-events: none;"><br>
-    <label for="ac">Accuracy:</label>
-    <input type="text" id="ac" name="ac" value="{{acc}}" readonly style="opacity: 0.9;pointer-events: none;"><br><br>
+  <h5 class="unselectable">Plant information:</h5>
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Common name:</span>
+      </div>
+      <input type="text" class="form-control" formControlName="Question1">
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Scientific Name: </span>
+      </div>
+      <input type="text" class="form-control" formControlName="Question2">
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Cultivar: </span>
+      </div>
+      <input type="text" class="form-control" formControlName="Question3">
+    </div>
+</form>
 
-    <h4>Plant:</h4>
-    <label for="CN">Common name:</label>
-    <input type="text" id="CN" name="CN" value=""><br>
-    <label for="SN">Scientific name:</label>
-    <input type="text" id="SN" name="SN" value=""><i><small> Optional</small></i><br>
-    <label for="Cu">Cultivar:</label>
-    <input type="text" id="Cu" name="Cu" value=""><i><small> Optional</small></i><br><br>
-
-    <h4>Disease / Pest:</h4>
-    <label for="Q1">Where do you see the disease/ pest on the plant? </label>
-    <select formControlName="Q1" id="Q1">
-    <option *ngFor="let Q of Q1; let i = index" [value]="Q1[i].id">
-      {{Q1[i].name}}
-    </option>
+<form [formGroup]="PestOrDiseases">
+  <div class="form-group">
+    <label class="unselectable" for="PorD">My plant is affected by a: *</label>
+    <select class="form-control" id="PorD" (change)="changeType()" formControlName="PorD">
+      <option *ngFor="let option of PorD_Options" [ngValue]="option">{{option}}</option>
     </select>
-    <br>
-    <label for="Q2">Do you know what disease / pest is affecting your plant?</label>
-    <input type="text" id="Q2" name="Q2" value=""><br>
-    <label for="Q3">What is its name?</label>
-    <input type="text" id="Q3" name="Q3" value=""><i><small> Sci/Common name</small></i><br>
-    <label for="Q4">How many plants are affected?</label>
-    <select formControlName="Q4" id="Q4" [(ngModel)]="selectedValue" >
-    <option *ngFor="let Q of Q4; let i = index" [value]="Q4[i].id">
-      {{Q4[i].name}}
-    </option>
+  </div>
+</form>
+
+<form [formGroup]="PorD_Questions" *ngIf="PorD_Selected">
+  <h4 class="unselectable">{{Answers.Questions["Pest Or Disease"]}} Questions:</h4>
+  <div class="input-group input-group-sm mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Where do you see the {{Answers.Questions["Pest Or Disease"]}} on the plant?</span>
+    </div>
+    <select class="form-control" (change)="change(4,$event)" formControlName="Question4">
+      <option *ngFor="let option of Question4_Options" value="{{option}}">{{option}}</option>
     </select>
-    <br>
-    <div class="form-group" *ngIf="selectedValue == 'np2'">
-    <label for="Q5" >How many plants display the symptoms?</label>
-    <input type="text" id="Q5" name="Q5"><br><br>
-    </div><br><br>
+  </div>
+  <div class="input-group input-group-sm mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Do you know what {{Answers.Questions["Pest Or Disease"]}} is affecting the plant?</span>
+    </div>
+    <select class="form-control" (change)="change(5,$event)" formControlName="Question5">
+      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
+    </select>
+  </div>
+  <div class="input-group input-group-sm mb-4" [style.visibility]="Answers.Questions[QuestionDesc[4]]=='Yes'?'visible':'hidden'">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">What is its scientific or common name?</span>
+    </div>
+    <input type="text" class="form-control" formControlName="Question6">
+  </div>
+  <div class="input-group input-group-sm mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">How many plants are affected?</span>
+    </div>
+    <select class="form-control" (change)="change(7,$event)" formControlName="Question7">
+      <option *ngFor="let option of MultiOptions" value="{{option}}">{{option}}</option>
+    </select>
+  </div>
+  <div class="input-group input-group-sm mb-4" [style.visibility]="Answers.Questions[QuestionDesc[6]]=='More than one'?'visible':'hidden'">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">What percentage of plants are affected?</span>
+    </div>
+    <input type="text" class="form-control" formControlName="Question8">
+  </div>
+</form>
 
-    <h4>Climate</h4>
-    <label for="Q6">Are you experiencing a drought?</label>
-    <select formControlName="Q6" id="Q6">
-    <option *ngFor="let Q of Q6; let i = index" [value]="Q6[i].id">
-      {{Q6[i].name}}
-    </option>
-    </select><br>
-    <label for="Q7">Have you experienced above average precipitation before you identified the problem?</label>
-    <select formControlName="Q7" id="Q7">
-    <option *ngFor="let Q of Q7; let i = index" [value]="Q7[i].id">
-      {{Q7[i].name}}
-    </option>
-    </select><br><br>
-    <label for="Q8">Any other climatic conditions worth specifying?</label>
-    <input type="text" id="Q8" name="Q8" value=""><br>
-
-    <br><br><button class="btn btn-success" style="margin-left: 5px;" >Submit Report</button>
-  </form> 
-  <br/>
+<form [formGroup]="Climate_Questions" *ngIf="PorD_Selected">
+  <h4 class="unselectable">Climate Questions:</h4>
+  <div class="input-group input-group-sm mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Are you experiencing a drought?</span>
+    </div>
+    <select class="form-control" (change)="change(9,$event)" formControlName="Question9">
+      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
+    </select>
+  </div>
+  <div class="input-group input-group-sm mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Have you experienced above average precipitation?</span>
+    </div>
+    <select class="form-control" (change)="change(10,$event)" formControlName="Question10">
+      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
+    </select>
+  </div>
+  <div class="input-group input-group-sm mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Any other climatic conditions worth specifying?</span>
+    </div>
+    <select class="form-control" (change)="change(11,$event)" formControlName="Question11_a">
+      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
+    </select>
+    
+  </div>
+  <textarea class="form-control" style="resize: none;" formControlName="Question11_b" [style.visibility]="Answers.Questions[QuestionDesc[10]]=='Yes'?'visible':'hidden'"></textarea>
+</form>
+<br><button class="btn btn-success" style="margin-left: 5px;" *ngIf="PorD_Selected&&Images.length==3" (click)="onSubmit()">Submit Report</button>
+</div>
+<br><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="Images.length==3" (click)="onCancel()">Cancel</button>

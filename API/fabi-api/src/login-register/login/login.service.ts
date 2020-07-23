@@ -12,7 +12,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class LoginService {
 
-    res: LoginResponse = {email:"", token:"",status: 1};
+    res: LoginResponse = {email:"", token:"",status: 1, Usertype: ""};
 
     constructor(
         private userService: UsersService,
@@ -37,7 +37,7 @@ export class LoginService {
     async  login(reqObj:LoginRequest):Promise<LoginResponse> {
      
         const result = await this.userService.getUsersbyEmail(reqObj.email).then(function(result){
-            console.log();
+            
             return result;
         })
 
@@ -52,6 +52,7 @@ export class LoginService {
                 this.res.email = result.Email;
                 this.res.status = 201;
                 this.res.token = hashtoken;
+                this.res.Usertype = result.userType;
 
                 return this.res;
             }else{

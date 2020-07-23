@@ -84,11 +84,15 @@ npm test
 
 Please find all appropriate documentation below
 
-- [System Requirements Specification](https://www.overleaf.com/read/kwbmcxbbfrtj) (Current version)
+- [System Requirements Specification](https://www.overleaf.com/read/kwbmcxbbfrtj) (Currently version 2)
 
   > SRS Documentation is regularly updated due to Agile Methodology
 
-- [API Documentation](https://api-hzg6vf4a2a-ew.a.run.app/graphql)
+- [API Documentation](https://api4-hzg6vf4a2a-ez.a.run.app/graphql)
+
+- [Coding Standards](https://www.overleaf.com/read/yrpxbnszxygv)
+
+- [User Manual]()
 
 ## Project Management Tool
 
@@ -122,33 +126,6 @@ I'm a computer science student in my final year at the University of Pretoria. I
 
 ### Daniel Nel
 Hey I am currently a third year computer science student at the University of Pretoria. I am a tech and coffee enthusiast. I love working on projects and challenging myself to learn more about the wonderful world of software development.
-
-## Contributions
-|                             | Steven Jordaan | Bradley Mapstone | Shaun Naude | Matthew Kershaw | Daniel Nel |
-|-----------------------------|:--------------:|:----------------:|:-----------:|:---------------:|:----------:|
-| ====Demo 1====              |        X       |         X        |      X      |        X        |      X     |
-| 1. SRS                      |        X       |         X        |      X      |        X        |      X     |
-| 1.1 Introduction            |                |                  |             |                 |      X     |
-| 1.2 User Stories            |                |         X        |             |                 |            |
-| 1.3 User Characteristics    |                |                  |             |                 |      X     |
-| 1.4 Functional Requirements |        X       |                  |             |                 |            |
-| 1.5 Domain Model            |        X       |                  |             |        X        |            |
-| 1.6 Quality Requirements    |                |         X        |      X      |                 |            |
-| 1.7 Trace-ability Matrix    |        X       |                  |             |                 |            |
-| 2. System                   |        X       |         X        |      X      |        X        |      X     |
-| 2.1 Database                |                |                  |             |        X        |            |
-| 2.2 User Management         |        X       |                  |      X      |        X        |            |
-| 2.2.1 Login                 |        X       |                  |             |                 |      X     |
-| 2.2.2 Register              |        X       |                  |      X      |                 |            |
-| 2.3 Data Capture            |        X       |         X        |             |                 |            |
-| 2.3.1 Question data         |                |         X        |             |                 |            |
-| 2.3.2 Location              |                |         X        |             |                 |            |
-| 2.3.3 Photo capture         |        X       |                  |             |                 |            |
-| 3. Testing                  |        X       |                  |      X      |        X        |      X     |
-| 3.1 API unit tests          |                |                  |      X      |                 |      X     |
-| 3.2 Frontend unit tests     |        X       |                  |             |                 |            |
-| 3.3 Integration pipeline    |                |                  |             |        X        |            |
-
 
 ## Git Standards
 
