@@ -54,6 +54,8 @@ export class HomeComponent implements AfterViewInit {
     currentMark: Report;
     markIDs: Array<number> = [];
     Active;
+    DarkMode = true;
+    curmapStyle = "Night mode";
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -68,7 +70,8 @@ export class HomeComponent implements AfterViewInit {
     ngOnInit(): void {
         this.Active = 0;
     }
-    ngAfterViewInit(): void {
+
+    loadMap() {
         this.location.getLocation().subscribe(rep => {
 
             this.lat = rep.coords.latitude;
@@ -81,7 +84,7 @@ export class HomeComponent implements AfterViewInit {
             this.mapOptions = {
                 center: this.coordinates,
                 zoom: 15,
-                styles: this.mapStyle.Normal,
+                styles: (this.DarkMode ? this.mapStyle.NightMode : this.mapStyle.Normal),
                 disableDefaultUI: true,
                 zoomControl: true
             };
@@ -130,6 +133,10 @@ export class HomeComponent implements AfterViewInit {
         });
     }
 
+    ngAfterViewInit(): void {
+        this.loadMap();
+    }
+
 
     diagreport() {
         this.router.navigate(["./basic/DiagReport"]);
@@ -140,7 +147,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     populateMarkers(Object) {
-        
+
         this.currentMarkServ.getMarkers(this.currentUser, this.lat, this.lng).subscribe(data => {
 
             for (var i = 0; i < data.length; i++) {
@@ -159,6 +166,9 @@ export class HomeComponent implements AfterViewInit {
                     case "special":
                         userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png";
                         break;
+                    case "advanced":
+                        userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redC.png";
+                        break;
                 }
 
                 Object.marker[i] = new google.maps.Marker({
@@ -172,7 +182,7 @@ export class HomeComponent implements AfterViewInit {
                     return function () {
                         infowindow.setContent(Object.getInfoTemplate(data[i]));
                         infowindow.open(Object.map, marker);
-    
+
                     }
                 })(Object.marker[i], i));
 
@@ -184,7 +194,6 @@ export class HomeComponent implements AfterViewInit {
 
         google.maps.event.addListener(infowindow, 'content_changed', () => {
             var string = infowindow.getContent() + "";
-            this.currentMID = (string.substring(string.indexOf("ID:") + 3));
             this.setDisplay();
 
         });
@@ -208,56 +217,72 @@ export class HomeComponent implements AfterViewInit {
     }
 
     setDisplay() {
-        this.displayReady=false;
+        this.displayReady = false;
         var loc = null;
         this.currentMarkServ.getMarkers(this.currentUser, this.lat, this.lng).subscribe(data => {
             for (var i = 0; i < data.length; i++) {
-            if (data[i]["reportID"] == this.currentMID) {
-                loc = i;
+                if (data[i]["reportID"] == this.currentMID) {
+                    loc = i;
+                }
             }
-        }
-        
-        
-        if (loc != null) {
-            this.currentMark = data[loc];
 
-            this.Active = 0; // Button set to 1, disabled due to dummy data
 
-            let key = "currentMarker";
-            localStorage.setItem(key, JSON.stringify(this.currentMark));
+            if (loc != null) {
+                this.currentMark = data[loc];
 
-            this.displayReady = true;
-        }});
+                this.Active = 0; // Button set to 1, disabled due to dummy data
 
+                let key = "currentMarker";
+                localStorage.setItem(key, JSON.stringify(this.currentMark));
+
+                this.displayReady = true;
+            }
+        });
+
+    }
+
+    toggleMapStyle() {
+        this.DarkMode = !this.DarkMode;
+        (this.DarkMode ? this.curmapStyle = "Dark mode" : this.curmapStyle = "Light mode");
+        this.map.setOptions({
+            styles: (this.DarkMode ? this.mapStyle.NightMode : this.mapStyle.Normal)
+        })
     }
 
     getInfoTemplate(Object) {
         var Maincolor = "";
         var approved = false;
+        var usertype = "Unknown";
         switch (Object["userType"]) {
             case "basic":
+                usertype = "General";
                 Maincolor = "color:lightgreen;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
                 break;
             case "special":
-                Maincolor = "color:yellow;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;"
+                usertype = "Specialist";
+                Maincolor = "color:yellow;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
+                break;
+            case "advanced":
+                usertype = "Company";
+                Maincolor = "color:red;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
+                break;
 
         }
 
 
-
-
+        this.currentMID=Object["reportID"];
 
 
         var footer = (approved ? '<br><br><i><b>Specialist Approved</b></i>' : '');
         return '<div id="content" style="width=100px;height=auto;">' +
             '<div id="siteNotice">' +
             '</div>' +
-            '<h3 id="firstHeading" class="firstHeading" style="' + Maincolor + '">' + Object["userType"]+ " User" + '</h3>' +
+            '<h3 id="firstHeading" class="firstHeading" style="' + Maincolor + '">' + usertype + " User" + '</h3>' +
             '<div id="bodyContent">' +
             'Accuracy: ' + Object["Accuracy"] + 'm' +
             footer +
             '</div>' +
-            '</div><br>Marker ID: ' + Object["reportID"];
+            '</div>';
 
     }
 

@@ -119,12 +119,19 @@ export class DiagReportComponent implements OnInit {
   change(question,e){
     this.Answers.Questions[this.QuestionDesc[question-1]]=e.target.value;
   }
+  toStr(object){
+    var string:String="";
+    this.QuestionDesc.forEach(element => {
+      string+=element+","+object[element]+",";
+    });
+    return string;
+  }
   
   onSubmit(){
     this.Answers.UserToken=this.currentUser;
-    this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
-    this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
-    this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
+    if(this.Plant.get("Question1").value!="")this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
+    if(this.Plant.get("Question2").value!="")this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
+    if(this.Plant.get("Question3").value!="")this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
     if(this.Answers.Questions["Do you know what Pest/Disease is affecting the plant?"]=="Yes"){
       this.Answers.Questions["What is its scientific or common name?"]=this.PorD_Questions.get("Question6").value;
     }
@@ -135,9 +142,10 @@ export class DiagReportComponent implements OnInit {
       this.Answers.Questions["Other climatic conditions"]=this.Climate_Questions.get("Question11_b").value;
     }
 
-    
-
-    this.Report.sendReport(this.Answers.UserToken,{"Location":this.Answers.Location,"UserToken":this.Answers.UserToken,"Questions":this.Answers.Questions},this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"]).subscribe(data=>{
+    this.Answers.Questions["UserToken"]=this.Answers.UserToken;
+    console.log(this.toStr(this.Answers.Questions));
+    this.Report.sendReport(this.Answers.UserToken,this.toStr(this.Answers.Questions),this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"],this.Answers.Questions["Longitude"],
+    this.Answers.Questions["Latitude"],this.Answers.Questions["Accuracy"],this.Answers.Questions["Common name"],this.Answers.Questions["Pest Or Disease"],).subscribe(data=>{
       console.log(data);
     });
 
@@ -150,21 +158,7 @@ export class DiagReportComponent implements OnInit {
     this.router.navigate(["/basic"]);
   }
 
-  // Debug - JSON
-  download(obj){
-    //Convert JSON Array to string.
-    var json:any = JSON.stringify(obj);
-    json = [json];
-    var blob1 = new Blob(json, { type: "text/plain;charset=utf-8" });
-    var url = window.URL || window.webkitURL;
-            var link = url.createObjectURL(blob1);
-            var a = document.createElement("a");
-            a.download = "ReportExample.txt";
-            a.href = link;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-  }
+  
 
   toJSON(object){
       return {
@@ -206,10 +200,9 @@ export class DiagReportComponent implements OnInit {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
     });
     this.location.getLocation().subscribe(rep=>{
-
-      this.Answers.Location["Latitude"]=rep.coords.latitude;
-      this.Answers.Location["Longitude"]=rep.coords.longitude;
-      this.Answers.Location["Accuracy"]=rep.coords.accuracy;
+      this.Answers.Questions["Latitude"]=rep.coords.latitude;
+      this.Answers.Questions["Longitude"]=rep.coords.longitude;
+      this.Answers.Questions["Accuracy"]=rep.coords.accuracy;
 
       this.Lat=(rep.coords.latitude).toPrecision(4);
       this.Long=(rep.coords.longitude).toPrecision(4);

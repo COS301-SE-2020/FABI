@@ -1,11 +1,10 @@
 export class Report_Questions{
-    Location:Object={
+    UserToken:any;
+    Questions:Object={
       "Latitude":0,
       "Longitude":0,
       "Accuracy":0,
-    };
-    UserToken:any;
-    Questions:Object={
+      "UserToken":"",
       "Common name":"Null",
       "Scientific Name":"Null",
       "Cultivar":"Null",

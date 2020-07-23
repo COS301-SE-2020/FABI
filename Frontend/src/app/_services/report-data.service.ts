@@ -41,10 +41,10 @@ export class ReportDataService {
     }))
   }
 
-  sendReport(token, report, Img1,Img2,Img3) {
+  sendReport(token, report, Img1, Img2, Img3, long, lat, acc, plant, infliction) {
     return this.apollo.mutate({
       mutation: gql`mutation {
-                  upload( upload: {token: "${token}", report: "${report}",Img1:"${Img1}",Img2:"${Img2}",Img3:"${Img3}"})
+                  upload( upload: {token: "${token}", report: "${report}",Img1:"${Img1}",Img2:"${Img2}",Img3:"${Img3}",Longitude:${long},Latitude:${lat},Accuracy:${acc},Pname:"${plant}",Infliction:"${infliction}"})
                   {
                       status
                   }
@@ -55,7 +55,7 @@ export class ReportDataService {
     }))
   }
 
-  
+
 
 
 }

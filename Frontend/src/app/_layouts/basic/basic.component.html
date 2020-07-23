@@ -1,9 +1,15 @@
-<nav class="navbar navbar-expand navbar-dark bg-success" *ngIf="currentUser">
-    <div class="navbar-nav ">
-        <a class="nav-item nav-link" routerLink="/basic">Home</a>
-        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+<div style="background-image: url(https://wallpaperplay.com/walls/full/1/6/f/141477.jpg);height: 100%;">
+    <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+        <div class="navbar-nav ">
+            <a class="nav-item nav-link" routerLink="/basic">Home</a>
+            <a class="nav-item nav-link" routerLink="/Settings">Settings</a>
+            <a class="nav-item nav-link" (click)="logout()">Logout</a>
+        </div>
+    </nav>
+    <br>
+    <div class="container" style="align-self: center;background-color: darkgray;">
+        <br>
+        <router-outlet></router-outlet>
+        <br><br>
     </div>
-  </nav>
-<div class="container" style="align-self: center;">
-    <router-outlet></router-outlet>
 </div>

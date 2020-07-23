@@ -20,6 +20,7 @@ export class BasicComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
 
   logout() {
     this.authenticationService.logout();
