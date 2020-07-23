@@ -36,7 +36,7 @@ import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-const uri = 'https://api-hzg6vf4a2a-ez.a.run.app/graphql'; // <-- add the URL of the GraphQL server here
+const uri = 'https://api4-hzg6vf4a2a-ez.a.run.app/graphql'; // <-- add the URL of the GraphQL server here
 export function createApollo(httpLink: HttpLink) {
   return {
     link: httpLink.create({ uri }),

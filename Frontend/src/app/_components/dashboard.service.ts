@@ -11,6 +11,20 @@ export class DashboardService {
 
   constructor(private apollo: Apollo, private authentication: AuthenticationService) { }
 
+  adminTable() {
+    console.log(this.authentication.currentUserValue)
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        get_TableInfo( request: { token: "${this.authentication.currentUserValue}" } ) {
+          data,
+          status
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["get_TableInfo"]["data"]
+    }))
+  }
+
   bigChart() {
     return this.apollo.mutate({
       mutation: gql `mutation {
