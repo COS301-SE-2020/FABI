@@ -102,6 +102,8 @@ export class GetAdminDashService {
 
     //stringify datat
     res.data = JSON.stringify(result);
+
+    console.log(result);
     //return data
     return res;
   }
