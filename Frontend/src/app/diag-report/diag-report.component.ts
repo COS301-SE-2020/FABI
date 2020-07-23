@@ -143,7 +143,6 @@ export class DiagReportComponent implements OnInit {
     }
 
     this.Answers.Questions["UserToken"]=this.Answers.UserToken;
-    console.log(this.toStr(this.Answers.Questions));
     this.Report.sendReport(this.Answers.UserToken,this.toStr(this.Answers.Questions),this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"],this.Answers.Questions["Longitude"],
     this.Answers.Questions["Latitude"],this.Answers.Questions["Accuracy"],this.Answers.Questions["Common name"],this.Answers.Questions["Pest Or Disease"],).subscribe(data=>{
       console.log(data);

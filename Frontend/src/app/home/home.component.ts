@@ -274,7 +274,7 @@ export class HomeComponent implements AfterViewInit {
 
 
         var footer = (approved ? '<br><br><i><b>Specialist Approved</b></i>' : '');
-        return '<div id="content" style="width=100px;height=auto;">' +
+        return '<div id="content" style="width=200px;height=auto;">' +
             '<div id="siteNotice">' +
             '</div>' +
             '<h3 id="firstHeading" class="firstHeading" style="' + Maincolor + '">' + usertype + " User" + '</h3>' +
