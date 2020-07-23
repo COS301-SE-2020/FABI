@@ -60,27 +60,12 @@ import { UpdatePathogenComponent } from './_components/pathogen-info/update-path
 */
 const routes: Routes = [
     {
-        path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
         path: 'login',
         component: LoginComponent
     },
     {
         path: 'register',
         component: RegisterComponent
-    },
-    {
-        path: 'DiagReport',
-        component: DiagReportComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'MapReport',
-        component: MapReportComponent,
-        canActivate: [AuthGuard]
     },
     {
         path: 'admin',
