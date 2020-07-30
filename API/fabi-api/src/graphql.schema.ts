@@ -21,6 +21,11 @@ export class GetReportsRequest {
     longitude: number;
 }
 
+export class GetSingleReportRequest {
+    token: string;
+    reportID: number;
+}
+
 export class LoginRequest {
     email: string;
     password: string;
@@ -111,6 +116,8 @@ export abstract class IMutation {
     abstract registerUser(request?: Request): Response | Promise<Response>;
 
     abstract getReports(getReportsRequest?: GetReportsRequest): GetReportsResponse | Promise<GetReportsResponse>;
+
+    abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetReportsResponse | Promise<GetReportsResponse>;
 
     abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
 }

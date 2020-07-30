@@ -65,6 +65,15 @@ export class ReportService {
     return JSON.stringify(results);
   }
 
+  //Function To get Single report from the DB when given an ID
+  async getSingleReport(ID:number): Promise<String>{
+
+
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE reports.email = users.\"Email\" AND \"reportID\" = " + ID +";");
+
+    return JSON.stringify(results);
+  }
+
   //function to Insert a new report into the DB
   async InsertReport(obj: UploadRequest): Promise<boolean> {
     //Find image formats for uploaded images
@@ -228,7 +237,7 @@ export class ReportService {
       Pname: pname, //must get from obj.report
       Infliction: infliction, //must get from obj.report
       date:todayInt,
-      diagnosis:2,
+      diagnosis:-1,
       urgency:10
     });
 
