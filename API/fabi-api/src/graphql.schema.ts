@@ -63,7 +63,8 @@ export class Update_afflictions_request {
 
 export class UploadRequest {
     token: string;
-    report?: string;
+    Urgency: number;
+    report: string;
     Latitude: number;
     Longitude: number;
     Accuracy: number;
