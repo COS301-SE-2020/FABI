@@ -1,4 +1,4 @@
-<div style="background-image: url(https://wallpaperplay.com/walls/full/1/6/f/141477.jpg);height: 100%;">
+<div style="background-color: #1d1d47;height: auto;">
     <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
         <div class="navbar-nav ">
             <a class="nav-item nav-link" routerLink="/basic">Home</a>
@@ -6,9 +6,15 @@
         </div>
     </nav>
     <br>
-    <div class="container" style="align-self: center;background-color: darkgray;">
-        <br>
+    <div *ngIf="isDesktop" style="margin: 1%;">
         <router-outlet></router-outlet>
-        <br><br>
     </div>
+    <div *ngIf="isMobile">
+        <router-outlet></router-outlet>
+    </div>
+    <div *ngIf="isTablet">
+
+    </div>
+
+    <br><br>
 </div>

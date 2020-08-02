@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasicComponent } from './basic.component';
+import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 
 // Material imports
@@ -10,12 +10,16 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {LayoutModule} from '@angular/cdk/layout';
 import { MatButtonModule } from "@angular/material/button";
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {OverlayModule} from '@angular/cdk/overlay';
+import {MatTableModule} from '@angular/material/table';
+
 
 
 
 @NgModule({
   declarations: [
-    BasicComponent
+    HomeComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +28,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     FlexLayoutModule,
     LayoutModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    NgbModule,
+    OverlayModule,
+    MatTableModule
   ]
 })
-export class BasicModule { }
+export class HomeModule { }

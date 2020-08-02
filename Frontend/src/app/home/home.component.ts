@@ -8,7 +8,31 @@ import { LocationService } from '@/_services/location.service';
 import { Report } from '@/_models/report'
 import { ReportDataService } from '@/_services/report-data.service'
 
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 import * as Styles from '@/MapStyles.json';
+
+// Material Imports
+
+import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+// Purely for example
+
+export interface PeriodicElement {
+    name: string;
+    position: number;
+    weight: number;
+    symbol: string;
+  }
+
+const ELEMENT_DATA: PeriodicElement[] = [
+    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'}
+  ];
 
 @Component({
     templateUrl: 'home.component.html',
@@ -16,8 +40,17 @@ import * as Styles from '@/MapStyles.json';
 })
 export class HomeComponent implements AfterViewInit {
 
+    // Purely for example
+
+
+    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+    dataSource = ELEMENT_DATA;
+
     @ViewChild('mapContainer') gmap: ElementRef;
     displayReady: Boolean = false;
+    isMobile: boolean;
+    isTablet: boolean;
+    isDesktop: boolean;
     lat;
     lng;
     map: google.maps.Map;
@@ -56,19 +89,24 @@ export class HomeComponent implements AfterViewInit {
     Active;
     DarkMode = true;
     curmapStyle = "Night mode";
+    showMap = true;
 
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService,
         private location: LocationService,
         private router: Router,
-        private currentMarkServ: ReportDataService
+        private currentMarkServ: ReportDataService,
+        private deviceService: DeviceDetectorService
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
 
     ngOnInit(): void {
         this.Active = 0;
+        this.isDesktop = this.deviceService.isDesktop();
+        this.isMobile = this.deviceService.isMobile();
+        this.isTablet = this.deviceService.isTablet();
     }
 
     loadMap() {
@@ -178,26 +216,39 @@ export class HomeComponent implements AfterViewInit {
 
                 });
 
-                google.maps.event.addListener(Object.marker[i], 'click', (function (marker, i) {
+                google.maps.event.addListener(Object.marker[i], 'click', (function (object, i) {
                     return function () {
-                        infowindow.setContent(Object.getInfoTemplate(data[i]));
-                        infowindow.open(Object.map, marker);
+                        // infowindow.setContent(Object.getInfoTemplate(data[i]));
+                        // infowindow.open(Object.map, marker);
+                        object.openDisplay();
+                        object.setDisplay(i);
 
                     }
-                })(Object.marker[i], i));
+                })(this, this.markIDs[i]));
 
             }
         });
 
-        var infowindow = new google.maps.InfoWindow();
+        // var infowindow = new google.maps.InfoWindow();
 
 
-        google.maps.event.addListener(infowindow, 'content_changed', () => {
-            var string = infowindow.getContent() + "";
-            this.setDisplay();
+        // google.maps.event.addListener(infowindow, 'content_changed', () => {
+        //     var string = infowindow.getContent() + "";
+        //     this.setDisplay();
 
-        });
+        // });
     }
+
+    openMap() {
+        this.showMap=true;
+        this.loadMap();
+    }
+    openDisplay(){
+        this.showMap=false;
+    }
+
+    
+    
 
     centreLoc() {
         this.map.setCenter(this.coordinates);
@@ -216,12 +267,12 @@ export class HomeComponent implements AfterViewInit {
         }
     }
 
-    setDisplay() {
+    setDisplay(markerID) {
         this.displayReady = false;
         var loc = null;
         this.currentMarkServ.getMarkers(this.currentUser, this.lat, this.lng).subscribe(data => {
             for (var i = 0; i < data.length; i++) {
-                if (data[i]["reportID"] == this.currentMID) {
+                if (data[i]["reportID"] == markerID) {
                     loc = i;
                 }
             }
@@ -270,7 +321,7 @@ export class HomeComponent implements AfterViewInit {
         }
 
 
-        this.currentMID=Object["reportID"];
+        this.currentMID = Object["reportID"];
 
 
         var footer = (approved ? '<br><br><i><b>Specialist Approved</b></i>' : '');
@@ -286,6 +337,5 @@ export class HomeComponent implements AfterViewInit {
 
     }
 
-
-
 }
+

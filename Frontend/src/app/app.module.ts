@@ -46,7 +46,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
+import {HomeModule} from './home/home.module';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
@@ -57,11 +57,13 @@ import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
 import { BasicModule } from './_layouts/basic/basic.module';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     RegisterComponent,
     DiagReportComponent,
@@ -78,7 +80,13 @@ import { BasicModule } from './_layouts/basic/basic.module';
     WebcamModule,
     HttpModule,
     BrowserAnimationsModule,
-    AdminModule
+    AdminModule,
+    HomeModule,
+
+    // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
+    DeviceDetectorModule,
+
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

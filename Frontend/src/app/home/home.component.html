@@ -1,4 +1,4 @@
-
+<!-- <div class="container">
 <div class="row">
     <div class="col">
         <a class="btn btn-success" (click)="diagreport()" style="color: white;">Submit diagnosis report</a>
@@ -24,22 +24,6 @@
 <div class="container" style="background-image: url(https://wallpaperplay.com/walls/full/1/6/f/141477.jpg);color: white;opacity: 90%;" [style.visibility]="Active !== 1"
     *ngIf="displayReady">
     <div class="row">
-        <div class="col-sm-4">
-            <h2 class="unselectable">Plant:</h2>
-        </div>
-        <div class="col-sm-8">
-            <h3 class="unselectable"><b>{{currentMark["Pname"]}}</b></h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <!-- <h2 class="unselectable">{{currentMark["Infliction"]}} Name:</h2> -->
-        </div>
-        <div class="col-sm-8">
-            <!-- <h3 class="unselectable"><b>{{currentMark["Infliction name"]}}</b></h3>  for later-->
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm">
             <h2 class="unselectable">Images:</h2>
         </div>
@@ -58,4 +42,112 @@
     <button class="btn btn-primary btn-lg btn-block" (click)="navReport()"
         [disabled]="Active !== 1">{{currentMark["Infliction"]}} Information</button>
     <br>
+</div>
+</div> -->
+
+<!-- Desktop layout -->
+
+<div *ngIf="isDesktop" style="color: white;">
+    <div fxLayout="row" *ngIf="showMap">
+        <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
+                diagnosis report</button></div>
+        <div fxFlex="60" fxLayoutAlign="center">
+            <h1>Welcome to FABI-Surveillance</h1>
+        </div>
+        <div fxFlex="20" fxLayoutAlign="end">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitches" (click)="toggleMapStyle()"
+                    checked>
+                <label class="custom-control-label" for="customSwitches">{{curmapStyle}}</label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div fxLayout="row" *ngIf="!showMap">
+        <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="openMap()">Close
+                report view</button></div>
+        <div fxFlex="60" fxLayoutAlign="center">
+            <h1>View report</h1>
+        </div>
+        <div fxFlex="20" fxLayoutAlign="end">
+
+        </div>
+    </div>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="showMap" style="color: black;">
+        <div fxFlex="100" fxLayoutAlign="center">
+            <div #mapContainer id="map"></div>
+            <div id="legend" style="visibility: hidden;"></div>
+            <a id="showLegend" (click)="legendPopup()" class="unselectable" style="cursor: help;">
+                <p style="background-color: white;font-size: x-large;">Show legend</p>
+            </a>
+            <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg"
+                style="width:50px;height:auto;cursor: pointer;background-color: lightgray;">
+        </div>
+
+    </div>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap">
+        <div fxFlex="60">
+            <h1>Display report details here</h1>
+        </div>
+        <div fxFlex="40" *ngIf="displayReady">
+            <ngb-carousel style="background-color: dar;height: 650px;outline: none;">
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{currentMark['IMG1']}}" alt="Random first slide" style="max-height: 650px;">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{currentMark['IMG2']}}" alt="Random second slide" style="max-height: 650px;">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{currentMark['IMG3']}}" alt="Random third slide" style="max-height: 650px;">
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap">
+        <div fxFlex>
+            <h2>Similar reports</h2>
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+</div>
+<div *ngIf="isMobile">
+
+</div>
+<div *ngIf="isTablet">
+
 </div>

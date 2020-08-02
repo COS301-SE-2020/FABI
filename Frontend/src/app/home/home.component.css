@@ -1,5 +1,5 @@
 #map {
-    height: 350px;
+    height: 650px;
     width: 100%;
     margin-bottom: 10px;
    }
@@ -30,4 +30,8 @@ a {
 body {
     background: url(assets/cool-background.png) no-repeat fixed;
     background-size: cover;
+}
+.picsum-img-wrapper{
+    text-align: center;
+    max-height: 650px;
 }
