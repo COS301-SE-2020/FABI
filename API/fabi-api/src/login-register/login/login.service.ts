@@ -43,7 +43,10 @@ export class LoginService {
 
         if(result){
 
-            if(reqObj.password == result.Password ){
+            //Create hashed Version
+           let hashedPassword = createHmac("sha512",(reqObj.password)).digest('hex');
+
+            if(hashedPassword == result.Password ){
                 
                 let hashtoken = createHmac("sha256",(result.Email+this.makeid())).digest('base64');
                 result.token = hashtoken;

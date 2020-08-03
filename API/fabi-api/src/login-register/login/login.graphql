@@ -1,8 +1,6 @@
 type LoginResponse {
-    email: String!
     token: String!
     status: Int!
-    Usertype: String!
 }
 
 input LoginRequest {

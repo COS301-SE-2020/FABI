@@ -41,8 +41,10 @@ export class UsersService {
       async createUser(obj:Request): Promise<Users> {
         //create token
         let hashtoken = createHmac("sha256",(obj.email+this.makeid())).digest('base64');
+        //Hash password
+        let hashedPassword = createHmac("sha512",(obj.password)).digest('hex');
         //Insert user new User
-        this.UsersRepository.insert({Email:obj.email,Name:obj.name,userType:obj.userType,Surname:obj.surname,token:hashtoken,Password:obj.password,company_id:1,registered:"no"});
+        this.UsersRepository.insert({Email:obj.email,Name:obj.name,userType:obj.userType,Surname:obj.surname,token:hashtoken,Password:hashedPassword,company_id:1,registered:"no"});
         //Return newly inserted user
         return this.UsersRepository.findOne({Email:obj.email});
       } 
