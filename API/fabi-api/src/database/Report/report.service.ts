@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest } from '../../graphql.schema';
+import { UploadRequest, PopTableRequest } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
@@ -57,10 +57,8 @@ export class ReportService {
 
 
 
-    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"date\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
       " AND " + "\"Lat\" BETWEEN " + latRangeNegative + " AND " + latRangePositive + " AND " + "reports.email = users.\"Email\";");
-
-    console.log(results);
 
     return JSON.stringify(results);
   }
@@ -224,25 +222,36 @@ export class ReportService {
 
 
     //Add to database
-    await this.ReportsRepository.insert({
-      email: email,
-      form: report,
-      IMG1: url1,
-      IMG2: url2,
-      IMG3: url3,
-      Long: long, //must get from obj.report
-      Lat: lat, //must get from obj.report
-      Pscore: certainty,
-      Accuracy: accuracy,
-      Pname: pname, //must get from obj.report
-      Infliction: infliction, //must get from obj.report
-      date:todayInt,
-      diagnosis:-1,
-      urgency:10
-    });
+    try {
+      this.ReportsRepository.insert({
+        email: email,
+        form: report,
+        IMG1: url1,
+        IMG2: url2,
+        IMG3: url3,
+        Long: long, //must get from obj.report
+        Lat: lat, //must get from obj.report
+        Pscore: certainty,
+        Accuracy: accuracy,
+        Pname: pname, //must get from obj.report
+        Infliction: infliction, //must get from obj.report
+        date:todayInt,
+        diagnosis:-1,
+        urgency:10
+      });
+      return true;
+      
+    } catch (error) {
+      return false;
+      
+    }
+    
 
-    return true;
+   
   }
+
+ 
+
 
   //Helper function to generate random salt for token
   makeid(): string {

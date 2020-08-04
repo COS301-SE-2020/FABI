@@ -58,9 +58,19 @@ export class UploadService {
             return this.res;
         }else{
             //this will pass upload object to report service that will interact with db
-            this.reportService.InsertReport(reqObj);
+            var bool = await this.reportService.InsertReport(reqObj);
+
+            //check if it uploaded correctly
+            if(bool != true){
+                this.res.status = 500;
+                return this.res;
+            }
+
             this.res.status = 201;
             return this.res;
+
+            
+
         }
         
     }
