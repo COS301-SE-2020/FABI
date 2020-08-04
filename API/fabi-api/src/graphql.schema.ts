@@ -31,6 +31,11 @@ export class LoginRequest {
     password: string;
 }
 
+export class PopTableRequest {
+    reportID: number;
+    token: string;
+}
+
 export class Request {
     name: string;
     surname: string;
@@ -118,7 +123,16 @@ export abstract class IMutation {
 
     abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetReportsResponse | Promise<GetReportsResponse>;
 
+    abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
+
     abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
+}
+
+export class PopTableResponse {
+    status: number;
+    date: string;
+    distance: number;
+    Pname: string;
 }
 
 export abstract class IQuery {

@@ -9,6 +9,7 @@ import { UploadModule } from './report/upload/upload.module';
 import Users from  "./database/Users/Users.entity"
 import { AfflictionRequestsModule } from './afflictionInfo/affliction-requests.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PopulateTableModule } from './report/populate-table/populate-table.module';
 
 
 
@@ -27,6 +28,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
         UploadModule,
         AfflictionRequestsModule,
         DashboardModule,
+        PopulateTableModule,
        ],
 
 })

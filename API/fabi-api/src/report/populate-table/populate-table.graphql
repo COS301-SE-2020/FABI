@@ -1,0 +1,16 @@
+type PopTableResponse{
+    status: Int!
+    date: String!
+    distance: Float!
+    Pname: String!
+
+}
+
+input PopTableRequest{
+    reportID: Int!
+    token: String!
+}
+
+type Mutation{
+    popTableBasicUser(request:PopTableRequest):[PopTableResponse]!
+}
