@@ -84,7 +84,7 @@ describe('LoginService', () => {
     
       });
 
-      it(' Right Login', async () => {
+      /*it(' Right Login', async () => {
 
         const testEmail = "test@test.com";
 
@@ -110,7 +110,7 @@ describe('LoginService', () => {
         testLoginRes = await loginService.login(testLoginReq);
         expect(testLoginRes.status).toBe(201);
     
-      });
+      });*/
 
       
     });
