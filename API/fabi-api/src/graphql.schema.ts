@@ -6,6 +6,22 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class Add_Affliction_Request {
+    type: string;
+    commName: string;
+    scienceName: string;
+    plant: string;
+    distribution: string;
+    status: string;
+    description: string;
+    symptoms: string;
+    management: string;
+    img1: string;
+    img2: string;
+    img3: string;
+    token: string;
+}
+
 export class Admin_Dashboard_request {
     token: string;
 }
@@ -80,6 +96,10 @@ export class UploadRequest {
     Img3: string;
 }
 
+export class Add_Affliction_Response {
+    status?: number;
+}
+
 export class Admin_Dashboard_response {
     data: string;
     status: number;
@@ -105,6 +125,8 @@ export class LoginResponse {
 }
 
 export abstract class IMutation {
+    abstract addAffliction(request?: Add_Affliction_Request): Add_Affliction_Response | Promise<Add_Affliction_Response>;
+
     abstract get_afflictions(request?: All_afflictions_request): All_afflictions[] | Promise<All_afflictions[]>;
 
     abstract get_Single_affliction(request?: Single_affliction_request): Single_affliction_response | Promise<Single_affliction_response>;
