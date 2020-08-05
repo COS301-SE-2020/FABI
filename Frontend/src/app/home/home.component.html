@@ -47,19 +47,15 @@
 
 <!-- Desktop layout -->
 
-<div *ngIf="isDesktop" style="color: white;">
-    <div fxLayout="row" *ngIf="showMap">
+<div *ngIf="DeviceType=='Desktop'" style="color: white;">
+    <div class="flex-container" fxLayout="row" *ngIf="showMap">
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
                 diagnosis report</button></div>
         <div fxFlex="60" fxLayoutAlign="center">
             <h1>Welcome to FABI-Surveillance</h1>
         </div>
         <div fxFlex="20" fxLayoutAlign="end">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitches" (click)="toggleMapStyle()"
-                    checked>
-                <label class="custom-control-label" for="customSwitches">{{curmapStyle}}</label>
-            </div>
+            
         </div>
     </div>
     <br>
@@ -77,17 +73,14 @@
     <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="showMap" style="color: black;">
         <div fxFlex="100" fxLayoutAlign="center">
             <div #mapContainer id="map"></div>
-            <div id="legend" style="visibility: hidden;"></div>
-            <a id="showLegend" (click)="legendPopup()" class="unselectable" style="cursor: help;">
-                <p style="background-color: white;font-size: x-large;">Show legend</p>
-            </a>
+            <div id="legend" ></div>
             <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg"
                 style="width:50px;height:auto;cursor: pointer;background-color: lightgray;">
         </div>
 
     </div>
     <br>
-    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap">
+    <div fxLayout="column" fxLayoutAlign="space-between" *ngIf="!showMap"  fxLayout.xl="row">
         <div fxFlex="60">
             <h1>Display report details here</h1>
         </div>
@@ -145,9 +138,9 @@
         </div>
     </div>
 </div>
-<div *ngIf="isMobile">
+<div *ngIf="DeviceType=='Mobile'">
 
 </div>
-<div *ngIf="isTablet">
+<div *ngIf="DeviceType=='Tablet'">
 
 </div>

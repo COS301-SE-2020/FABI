@@ -10,7 +10,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {LayoutModule} from '@angular/cdk/layout';
 import { MatButtonModule } from "@angular/material/button";
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import { SharedModule } from '@/sharedBasic/shared.module';
+import {MatSidenavModule,} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -19,12 +20,14 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
   ],
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule,   
     MatGridListModule,
     FlexLayoutModule,
     LayoutModule,
     MatButtonModule,
-    MatButtonToggleModule
-  ]
+    MatButtonToggleModule,
+    SharedModule,
+    MatSidenavModule
+  ],
 })
 export class BasicModule { }

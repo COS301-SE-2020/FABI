@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../_services/authentication.service';
-import { User } from '../../_models/user';
+import { AuthenticationService } from '@/_services/authentication.service';
+import { User } from '@/_models/user';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 
@@ -14,9 +14,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 export class BasicComponent implements OnInit {
 
   currentUser: User;
-  isMobile: boolean;
-  isTablet: boolean;
-  isDesktop: boolean;
 
   constructor(
     private router: Router,
@@ -26,9 +23,19 @@ export class BasicComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x); }
 
   ngOnInit(): void {
-    this.isDesktop=this.deviceService.isDesktop();
-    this.isMobile=this.deviceService.isMobile();
-    this.isTablet=this.deviceService.isTablet();
+    localStorage.setItem("StyleMode","Dark");
+    if(this.deviceService.isDesktop()){
+      localStorage.setItem("DeviceType","Desktop");
+    }
+    else if(this.deviceService.isMobile()){
+      localStorage.setItem("DeviceType","Mobile");
+    }
+    else if(this.deviceService.isTablet()){
+      localStorage.setItem("DeviceType","Tablet");
+    }
+    else {
+      localStorage.setItem("DeviceType","Desktop");
+    }
   }
   
 

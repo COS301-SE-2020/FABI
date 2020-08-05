@@ -14,9 +14,6 @@ import * as Styles from '@/MapStyles.json';
 
 // Material Imports
 
-import { MatButtonModule } from "@angular/material/button";
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
 // Purely for example
 
 export interface PeriodicElement {
@@ -24,15 +21,15 @@ export interface PeriodicElement {
     position: number;
     weight: number;
     symbol: string;
-  }
+}
 
 const ELEMENT_DATA: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'}
-  ];
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
+];
 
 @Component({
     templateUrl: 'home.component.html',
@@ -48,9 +45,9 @@ export class HomeComponent implements AfterViewInit {
 
     @ViewChild('mapContainer') gmap: ElementRef;
     displayReady: Boolean = false;
-    isMobile: boolean;
-    isTablet: boolean;
-    isDesktop: boolean;
+
+    DeviceType: String;
+
     lat;
     lng;
     map: google.maps.Map;
@@ -104,9 +101,9 @@ export class HomeComponent implements AfterViewInit {
 
     ngOnInit(): void {
         this.Active = 0;
-        this.isDesktop = this.deviceService.isDesktop();
-        this.isMobile = this.deviceService.isMobile();
-        this.isTablet = this.deviceService.isTablet();
+        this.DeviceType = localStorage.getItem("DeviceType");
+
+
     }
 
     loadMap() {
@@ -115,6 +112,10 @@ export class HomeComponent implements AfterViewInit {
             this.lat = rep.coords.latitude;
             this.lng = rep.coords.longitude;
 
+            var DarkMap = new google.maps.StyledMapType(
+                this.mapStyle.Dark, { name: "Dark Map" });
+            var LightMap = new google.maps.StyledMapType(
+                this.mapStyle.Light, { name: "Light Map" });
 
 
             // Create Map
@@ -122,12 +123,23 @@ export class HomeComponent implements AfterViewInit {
             this.mapOptions = {
                 center: this.coordinates,
                 zoom: 15,
-                styles: (this.DarkMode ? this.mapStyle.NightMode : this.mapStyle.Normal),
+                mapTypeControlOptions: {
+                    mapTypeIds: ['LightMap',
+                            'DarkMap']
+                  },
                 disableDefaultUI: true,
+                mapTypeControl:true,
                 zoomControl: true
             };
+            
             this.map = new google.maps.Map(this.gmap.nativeElement,
                 this.mapOptions);
+
+            this.map.mapTypes.set('DarkMap', DarkMap);
+            this.map.mapTypes.set('LightMap', LightMap);
+            this.map.setMapTypeId('DarkMap');
+
+            
 
             // Generate markers
             this.populateMarkers(this);
@@ -139,13 +151,10 @@ export class HomeComponent implements AfterViewInit {
                 var name = type.name;
                 var icon = type.icon;
                 var div = document.createElement('div');
-                div.innerHTML = '<img src="' + icon + '"> ' + name;
+                div.innerHTML = '<img src="' + icon + '"> ' + name+"<br><br>";
                 legend.appendChild(div);
             }
-            var showLegend = document.getElementById('showLegend');
-            legend.style.display = "none";
-            this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(showLegend);
-            this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend);
+            this.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 
             var centreImage = document.getElementById("centering");
             this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centreImage);
@@ -172,7 +181,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.loadMap();
+        if (this.DeviceType) this.loadMap();
     }
 
 
@@ -240,32 +249,20 @@ export class HomeComponent implements AfterViewInit {
     }
 
     openMap() {
-        this.showMap=true;
+        this.showMap = true;
         this.loadMap();
     }
-    openDisplay(){
-        this.showMap=false;
+    openDisplay() {
+        this.showMap = false;
     }
 
-    
-    
+
+
 
     centreLoc() {
         this.map.setCenter(this.coordinates);
     }
 
-    legendPopup() {
-        var legend = document.getElementById('legend');
-        if (this.legView) {
-            legend.style.display = "none";
-            this.legView = false;
-        }
-        else {
-            this.legView = true;
-            legend.style.display = "block";
-
-        }
-    }
 
     setDisplay(markerID) {
         this.displayReady = false;
@@ -293,11 +290,15 @@ export class HomeComponent implements AfterViewInit {
     }
 
     toggleMapStyle() {
-        this.DarkMode = !this.DarkMode;
-        (this.DarkMode ? this.curmapStyle = "Dark mode" : this.curmapStyle = "Light mode");
-        this.map.setOptions({
-            styles: (this.DarkMode ? this.mapStyle.NightMode : this.mapStyle.Normal)
-        })
+        if (localStorage.getItem("StyleMode") == "Light") {
+            this.map.setOptions({
+                styles: (this.mapStyle.Dark)
+            });
+        } else {
+            this.map.setOptions({
+                styles: (this.mapStyle.Light)
+            });
+        }
     }
 
     getInfoTemplate(Object) {

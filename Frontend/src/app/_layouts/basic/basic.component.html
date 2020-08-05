@@ -1,20 +1,11 @@
+<app-header></app-header>
 <div style="background-color: #1d1d47;height: auto;">
-    <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-        <div class="navbar-nav ">
-            <a class="nav-item nav-link" routerLink="/basic">Home</a>
-            <a class="nav-item nav-link" (click)="logout()">Logout</a>
-        </div>
-    </nav>
+    
     <br>
-    <div *ngIf="isDesktop" style="margin: 1%;">
+    <div style="margin: 1%;">
         <router-outlet></router-outlet>
-    </div>
-    <div *ngIf="isMobile">
-        <router-outlet></router-outlet>
-    </div>
-    <div *ngIf="isTablet">
-
     </div>
 
     <br><br>
 </div>
+<app-footer></app-footer>

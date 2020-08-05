@@ -1,0 +1,5 @@
+@media (min-width: 768px), all {
+    .navbar-expand-md .navbar-toggler {
+      display: none;
+    }
+  }
