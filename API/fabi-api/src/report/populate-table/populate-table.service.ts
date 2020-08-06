@@ -37,7 +37,7 @@ import { ReportService } from '../../database/Report/report.service';
 @Injectable()
 export class PopulateTableService {
 
-    res: PopTableResponse[] = [{ status: -1, Pname: "test data", date: "", distance: 0.0 }];
+    res: PopTableResponse[] = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID:-1 }];
 
     //Define the External services used in this service
     constructor(
@@ -49,6 +49,7 @@ export class PopulateTableService {
 
     //This is the primary function within the service, it will validate the token and call another service
     async populateTableService(reqObj: PopTableRequest): Promise<PopTableResponse[]> {
+
 
         //here we validate our token
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
@@ -63,7 +64,7 @@ export class PopulateTableService {
 
         } else {
             //clear response object
-            this.res.pop;
+            this.res.pop();
 
             //make call to db and get individual report
             let singleReport: String = await this.reportService.getSingleReport(reqObj.reportID);
@@ -87,6 +88,7 @@ export class PopulateTableService {
                 let distance: number;
                 let date: string;
                 let Pname: string;
+                let ID:number;
 
                 //report lat/long
                 let reportLat: number = resultJson[i].Lat;
@@ -105,8 +107,11 @@ export class PopulateTableService {
                 //create the Pname
                 Pname = resultJson[i].Pname;
 
+                //set the ID
+                ID = resultJson[i].reportID;
+
                 //add object to list
-                this.res.push({ Pname: Pname, date: date, distance: distance, status: 201 });
+                this.res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID:ID });
             }
 
             //response

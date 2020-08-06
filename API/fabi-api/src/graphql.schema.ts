@@ -166,6 +166,7 @@ export class PopTableResponse {
     date: string;
     distance: number;
     Pname: string;
+    ID: number;
 }
 
 export abstract class IQuery {
