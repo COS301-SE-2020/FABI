@@ -64,6 +64,7 @@ export class PopulateTableService {
 
         } else {
             //clear response object
+            this.res = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID:-1 }];
             this.res.pop();
 
             //make call to db and get individual report
@@ -81,6 +82,7 @@ export class PopulateTableService {
 
             //create JSON obj
             let resultJson = JSON.parse(result.toString());
+
 
             //Loop through each key in the JSON obj
             for (var i = 0; i < Object.keys(resultJson).length; i++) {
