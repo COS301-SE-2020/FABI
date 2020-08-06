@@ -6,6 +6,8 @@ import  Users, {UsersRepositoryFake } from '../src/database/Users/Users.entity';
 import { LoginService } from '../src/login-register/login/login.service';
 import { LoginRequest, LoginResponse } from '../src/graphql.schema';
 import { UsersService } from '../src/database/Users/users.service';
+import { create } from 'domain';
+import { createHmac } from 'crypto';
 
 
 
@@ -71,7 +73,7 @@ describe('LoginService', () => {
         testLoginReq.password = "";
 
         let testLoginRes = new LoginResponse;
-  
+        
 
         const UserServiceGetByEmailSpy = jest
         .spyOn(usersService, 'getUsersbyEmail')
@@ -84,13 +86,13 @@ describe('LoginService', () => {
     
       });
 
-      /*it(' Right Login', async () => {
+      it(' Right Login', async () => {
 
         const testEmail = "test@test.com";
-
+        const testPassword = createHmac("sha512",("1234")).digest('hex');
         const testObject = Object({
           Email: testEmail,
-          Password:  "1234",
+          Password:  testPassword,
           userType: "testUser",
         }
         )
@@ -110,7 +112,7 @@ describe('LoginService', () => {
         testLoginRes = await loginService.login(testLoginReq);
         expect(testLoginRes.status).toBe(201);
     
-      });*/
+      });
 
       
     });
