@@ -6,19 +6,36 @@ import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import gql from 'graphql-tag';
 
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable,Subject, Subscription } from 'rxjs';
+
+export interface nearbyReport {
+  ID: number;
+  Pname: string;
+  distance: number;
+  date: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportDataService {
+  private nearbyReports:  nearbyReport[];
   private currentMarker: BehaviorSubject<Report>;
   public currentMark: Observable<Report>;
+  public nearbyReport:Observable<nearbyReport>;
+  private reportLenth;
+  
 
   constructor(private apollo: Apollo) {
   }
   public get currentRepValue(): Report {
     return this.currentMarker.value;
+  }
+  public get getNearbyReports() {
+    return this.nearbyReports;
+  }
+  public get reportsLength() {
+    return this.reportLenth;
   }
 
   getMarkers(token, latitude, longitude) {
@@ -55,6 +72,27 @@ export class ReportDataService {
     }))
   }
 
+  requestNearbyReports(page, reportID, token){
+    var pageSize=5;
+    var startIndex=pageSize*(page);
+    return this.apollo.mutate({
+      mutation: gql`mutation {
+                  popTableBasicUser( request: {reportID: ${reportID}, token: "${token}"})
+                  {
+                      date,
+                      distance,
+                      Pname,
+                      ID
+                  }
+              }`
+    }).pipe(map(data => {
+      var list:Array<nearbyReport> = data["data"]["popTableBasicUser"];
+      this.reportLenth=list.length;
+      this.nearbyReports=list.slice(startIndex,startIndex+pageSize);
+      return this.nearbyReports;
+
+    }))
+  }
 
 
 

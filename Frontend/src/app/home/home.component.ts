@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
 import { UserService } from '@/_services/user.service';
@@ -9,27 +9,23 @@ import { Report } from '@/_models/report'
 import { ReportDataService } from '@/_services/report-data.service'
 
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ButtonListenerService } from "@/_services/buttonListener.service";
+import { Subscription } from 'rxjs';
 
 import * as Styles from '@/MapStyles.json';
+import {PageEvent} from '@angular/material/paginator';
 
 // Material Imports
 
 // Purely for example
 
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
+export interface nearbyReport {
+    ID: number;
+    Pname: string;
+    distance: number;
+    date: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
-];
 
 @Component({
     templateUrl: 'home.component.html',
@@ -37,16 +33,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HomeComponent implements AfterViewInit {
 
-    // Purely for example
-
-
-    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    dataSource = ELEMENT_DATA;
+    // Table
+    displayedColumns: string[] = ['ID', 'Pname', 'distance', 'date'];
+    dataSource;
 
     @ViewChild('mapContainer') gmap: ElementRef;
     displayReady: Boolean = false;
+    pageEvent: PageEvent;
+    dataLength=100;
 
     DeviceType: String;
+    overlaySwitch="none";
 
     lat;
     lng;
@@ -86,7 +83,12 @@ export class HomeComponent implements AfterViewInit {
     Active;
     DarkMode = true;
     curmapStyle = "Night mode";
+    currentStyle = "Dark";
     showMap = true;
+    styleSub: Subscription;
+    deviceSub: Subscription;
+    DmapHeight=(innerHeight*0.7)+"px";
+    MmapHeight=(innerHeight)+"px";
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -94,16 +96,30 @@ export class HomeComponent implements AfterViewInit {
         private location: LocationService,
         private router: Router,
         private currentMarkServ: ReportDataService,
-        private deviceService: DeviceDetectorService
+        private deviceService: DeviceDetectorService,
+        private styleSwitch: ButtonListenerService
     ) {
+        
         this.currentUser = this.authenticationService.currentUserValue;
+        this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
+            this.currentStyle = data.text;
+        });
+        this.deviceSub = this.styleSwitch.getDevice().subscribe(data => {
+            this.DeviceType=data.text;
+        });
+    }
+
+    toggleMap(){
+        this.overlaySwitch="block";
+    }
+
+    closeMap(){
+        this.overlaySwitch="none";
     }
 
     ngOnInit(): void {
         this.Active = 0;
         this.DeviceType = localStorage.getItem("DeviceType");
-
-
     }
 
     loadMap() {
@@ -125,13 +141,13 @@ export class HomeComponent implements AfterViewInit {
                 zoom: 15,
                 mapTypeControlOptions: {
                     mapTypeIds: ['LightMap',
-                            'DarkMap']
-                  },
+                        'DarkMap']
+                },
                 disableDefaultUI: true,
-                mapTypeControl:true,
+                mapTypeControl: true,
                 zoomControl: true
             };
-            
+
             this.map = new google.maps.Map(this.gmap.nativeElement,
                 this.mapOptions);
 
@@ -139,7 +155,7 @@ export class HomeComponent implements AfterViewInit {
             this.map.mapTypes.set('LightMap', LightMap);
             this.map.setMapTypeId('DarkMap');
 
-            
+
 
             // Generate markers
             this.populateMarkers(this);
@@ -151,10 +167,14 @@ export class HomeComponent implements AfterViewInit {
                 var name = type.name;
                 var icon = type.icon;
                 var div = document.createElement('div');
-                div.innerHTML = '<img src="' + icon + '"> ' + name+"<br><br>";
+                div.innerHTML = '<img src="' + icon + '"> ' + name + "<br><br>";
                 legend.appendChild(div);
             }
             this.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+            if(this.DeviceType=="Mobile"){
+                var closeButtton=document.getElementById("closeMap");
+                this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(closeButtton);
+            }
 
             var centreImage = document.getElementById("centering");
             this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centreImage);
@@ -179,9 +199,10 @@ export class HomeComponent implements AfterViewInit {
 
         });
     }
+    
 
     ngAfterViewInit(): void {
-        if (this.DeviceType) this.loadMap();
+        this.loadMap();
     }
 
 
@@ -225,15 +246,18 @@ export class HomeComponent implements AfterViewInit {
 
                 });
 
-                google.maps.event.addListener(Object.marker[i], 'click', (function (object, i) {
+                google.maps.event.addListener(Object.marker[i], 'click', (function (object, i, token) {
                     return function () {
                         // infowindow.setContent(Object.getInfoTemplate(data[i]));
                         // infowindow.open(Object.map, marker);
                         object.openDisplay();
                         object.setDisplay(i);
+                        if(object.DeviceType=="Mobile")object.overlaySwitch="none";
+                        object.currentMID=i;
+                        object.paginatorInit();                        
 
                     }
-                })(this, this.markIDs[i]));
+                })(this, this.markIDs[i],this.currentUser.token));
 
             }
         });
@@ -247,6 +271,22 @@ export class HomeComponent implements AfterViewInit {
 
         // });
     }
+
+    getNearbyReports(event){
+        this.currentMarkServ.requestNearbyReports(event.pageIndex,this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
+            this.dataSource=(this.currentMarkServ.getNearbyReports);
+        });
+    }
+
+    paginatorInit(){
+        this.currentMarkServ.requestNearbyReports(0,this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
+            this.dataSource=(this.currentMarkServ.getNearbyReports);
+            this.dataLength=this.currentMarkServ.reportsLength;
+        });
+    }
+
+
+
 
     openMap() {
         this.showMap = true;

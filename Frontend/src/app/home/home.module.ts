@@ -13,6 +13,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -31,7 +32,8 @@ import {MatTableModule} from '@angular/material/table';
     MatButtonToggleModule,
     NgbModule,
     OverlayModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ]
 })
 export class HomeModule { }

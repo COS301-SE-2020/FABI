@@ -47,7 +47,7 @@
 
 <!-- Desktop layout -->
 
-<div *ngIf="DeviceType=='Desktop'" style="color: white;">
+<div *ngIf="DeviceType=='Desktop'" [style.color]="currentStyle=='Dark'?'white':'black'">
     <div class="flex-container" fxLayout="row" *ngIf="showMap">
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
                 diagnosis report</button></div>
@@ -55,7 +55,7 @@
             <h1>Welcome to FABI-Surveillance</h1>
         </div>
         <div fxFlex="20" fxLayoutAlign="end">
-            
+
         </div>
     </div>
     <br>
@@ -72,15 +72,15 @@
     <br>
     <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="showMap" style="color: black;">
         <div fxFlex="100" fxLayoutAlign="center">
-            <div #mapContainer id="map"></div>
-            <div id="legend" ></div>
+            <div #mapContainer id="desktopmap" [style.height]="DmapHeight"></div>
+            <div id="legend"></div>
             <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg"
                 style="width:50px;height:auto;cursor: pointer;background-color: lightgray;">
         </div>
 
     </div>
     <br>
-    <div fxLayout="column" fxLayoutAlign="space-between" *ngIf="!showMap"  fxLayout.xl="row">
+    <div fxLayout="column" fxLayoutAlign="space-between" *ngIf="!showMap" fxLayout.xl="row">
         <div fxFlex="60">
             <h1>Display report details here</h1>
         </div>
@@ -104,42 +104,91 @@
             </ngb-carousel>
         </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap">
+    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap"
+        [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
         <div fxFlex>
-            <h2>Similar reports</h2>
-            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <h2 style="color: black;">Similar reports</h2>
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
                 <!-- Position Column -->
-                <ng-container matColumnDef="position">
-                    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                <ng-container matColumnDef="ID">
+                    <mat-header-cell *matHeaderCellDef> Report ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.ID}} </mat-cell>
                 </ng-container>
 
                 <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                <ng-container matColumnDef="Pname">
+                    <mat-header-cell *matHeaderCellDef> Plant Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.Pname}} </mat-cell>
                 </ng-container>
 
                 <!-- Weight Column -->
-                <ng-container matColumnDef="weight">
-                    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                <ng-container matColumnDef="distance">
+                    <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.distance}} </mat-cell>
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="symbol">
-                    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
+            <mat-paginator [length]="dataLength"  (page)="getNearbyReports($event)" [pageSize]="5" showFirstLastButtons></mat-paginator>
         </div>
     </div>
 </div>
 <div *ngIf="DeviceType=='Mobile'">
 
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="20" fxLayoutAlign="center">
+            
+        </div>
+        <div fxFlex="60" fxLayoutAlign="center"  [style.color]="currentStyle=='Dark'?'white':'black'">
+            <h1>Welcome to FABI-Surveillance</h1>
+        </div>
+        <div fxFlex="20" fxLayoutAlign="center">
+            
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="45" fxLayoutAlign="end">
+            <button type="button" class="btn btn-primary btn-lg" (click)="toggleMap()"><svg width="1em" height="1em"
+                    viewBox="0 0 16 16" class="bi bi-map" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M15.817.613A.5.5 0 0 1 16 1v13a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 14.51l-4.902.98A.5.5 0 0 1 0 15V2a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0l4.902.98 4.902-.98a.5.5 0 0 1 .415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z" />
+                </svg> View Map</button>
+            
+        </div>
+        <div fxFlex="10">
+            
+        </div>
+        <div fxFlex="45" fxLayoutAlign="start">
+            <button (click)="diagreport()" class="mat-fab-bottom-right" mat-fab style="background-color: white;">
+                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-file-earmark-plus" fill="black"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h5v-1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5v2.5A1.5 1.5 0 0 0 10.5 6H13v2h1V6L9 1z" />
+                    <path fill-rule="evenodd"
+                        d="M13.5 10a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z" />
+                    <path fill-rule="evenodd"
+                        d="M13 12.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div id="overlay" [style.display]="overlaySwitch">
+        <div #mapContainer id="mobilemap" [style.height]="MmapHeight"></div>
+        <div id="legend"></div>
+        <button type="button" id="closeMap" class="close" aria-label="Close" (click)="closeMap()" style="background-color: white;">
+            <span aria-hidden="true">&times; Close Map</span>
+          </button>
+        <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg"
+            style="width:50px;height:auto;cursor: pointer;background-color: lightgray;">
+    </div>
 </div>
 <div *ngIf="DeviceType=='Tablet'">
 

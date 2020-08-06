@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@/_services/authentication.service';
 import { User } from '@/_models/user';
+import {ButtonListenerService} from "@/_services/buttonListener.service";
 
 @Component({
   selector: 'app-header',
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
+    private styleSwitch : ButtonListenerService,
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -37,11 +39,13 @@ export class HeaderComponent implements OnInit {
 
   toggleStyle() {
     if (localStorage.getItem("StyleMode") == "Light") {
-      this.curStyle = "Dark";  
+      this.curStyle = "Dark";
+      this.styleSwitch.switchStyle("Dark");
       this.navMode=this.curStyle=="Dark"?this.navStyles.Dark:this.navStyles.Light;         
       localStorage.setItem("StyleMode", "Dark");
     } else {
       this.curStyle = "Light";
+      this.styleSwitch.switchStyle("Light");
       this.navMode=this.curStyle=="Dark"?this.navStyles.Dark:this.navStyles.Light;
       localStorage.setItem("StyleMode", "Light");
     }

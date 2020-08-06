@@ -1,11 +1,8 @@
-<app-header></app-header>
-<div style="background-color: #1d1d47;height: auto;">
-    
+<div fxFlexFill fxLayout="column">
+    <app-header></app-header>
+    <div fxFlex [style.background-color]="currentStyle=='Dark'?'#1d1d47':'#66a6ff'">
     <br>
-    <div style="margin: 1%;">
         <router-outlet></router-outlet>
     </div>
-
-    <br><br>
+    <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
