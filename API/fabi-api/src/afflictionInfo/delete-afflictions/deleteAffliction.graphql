@@ -1,0 +1,12 @@
+input Delete_Affliction_Request {
+  token: String!
+  ID: Int!
+}
+
+type Delete_Affliction_Response{
+    status: Int
+}
+
+type Mutation{
+    deleteAffliction(request:Delete_Affliction_Request):Delete_Affliction_Response
+}

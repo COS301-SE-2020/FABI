@@ -40,6 +40,8 @@ import {UpdateAfflictionsService} from "./updateAfflictions/update-afflictions.s
 import { UpdateAfflictionsResolver } from './updateAfflictions/update-afflictions.resolver';
 import { AddAfflictionsResolver } from './add-afflictions/add-afflictions.resolver';
 import { AddAfflictionService } from './add-afflictions/add-affliction.service';
+import { DeleteAfflictionsResolver } from './delete-afflictions/delete-afflictions.resolver';
+import { DeleteAfflictionsService } from './delete-afflictions/delete-afflictions.service';
 
 @Module({
     providers: [
@@ -51,7 +53,9 @@ import { AddAfflictionService } from './add-afflictions/add-affliction.service';
         AfflictionService,
         UpdateAfflictionsService,
         UpdateAfflictionsResolver,
-        AddAfflictionsResolver],
+        AddAfflictionsResolver,
+        DeleteAfflictionsResolver,
+        DeleteAfflictionsService],
     imports: [UsersModule,AfflictionsModule]
 })
 export class AfflictionRequestsModule {}

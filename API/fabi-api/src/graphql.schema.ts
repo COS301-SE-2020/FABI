@@ -31,6 +31,11 @@ export class All_afflictions_request {
     token: string;
 }
 
+export class Delete_Affliction_Request {
+    token: string;
+    ID: number;
+}
+
 export class GetReportsRequest {
     token: string;
     latitude: number;
@@ -114,6 +119,10 @@ export class All_afflictions {
     status?: number;
 }
 
+export class Delete_Affliction_Response {
+    status?: number;
+}
+
 export class GetReportsResponse {
     reports: string;
     status: number;
@@ -126,6 +135,8 @@ export class LoginResponse {
 
 export abstract class IMutation {
     abstract addAffliction(request?: Add_Affliction_Request): Add_Affliction_Response | Promise<Add_Affliction_Response>;
+
+    abstract deleteAffliction(request?: Delete_Affliction_Request): Delete_Affliction_Response | Promise<Delete_Affliction_Response>;
 
     abstract get_afflictions(request?: All_afflictions_request): All_afflictions[] | Promise<All_afflictions[]>;
 
