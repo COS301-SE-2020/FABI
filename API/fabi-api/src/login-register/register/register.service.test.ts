@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RegisterService } from '../src/login-register/register/register.service';
-import { UsersService } from '../src/database/Users/users.service';
-import {  Response,Request }  from '../src/graphql.schema';
+import { RegisterService } from './register.service';
+import { UsersService } from '../../database/Users/users.service';
+import {  Response,Request }  from '../../graphql.schema';
 import { Repository } from 'typeorm';
-import  Users  from '../src/database/Users/Users.entity';
+import  Users  from '../../database/Users/Users.entity';
 import { InjectRepository, getRepositoryToken } from '@nestjs/typeorm';
 import { assert } from 'console';
 import { RequestMethod } from '@nestjs/common';

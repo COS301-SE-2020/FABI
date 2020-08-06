@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from '../src/database/Users/users.service';
+import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import Users, { UsersRepositoryFake } from '../src/database/Users/Users.entity';
+import Users, { UsersRepositoryFake } from './Users.entity';
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 
