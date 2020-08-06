@@ -22,6 +22,11 @@ export class Add_Affliction_Request {
     token: string;
 }
 
+export class Admin_Cards_request {
+    token: string;
+    cardNum: number;
+}
+
 export class Admin_Dashboard_request {
     token: string;
 }
@@ -105,6 +110,13 @@ export class Add_Affliction_Response {
     status?: number;
 }
 
+export class Admin_Cards_response {
+    status: number;
+    thisWeek: number;
+    lastWeek: number;
+    twoWeeksAgo: number;
+}
+
 export class Admin_Dashboard_response {
     data: string;
     status: number;
@@ -155,6 +167,8 @@ export abstract class IMutation {
     abstract get_TableInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
     abstract get_PieChartInfo(request?: Admin_Dashboard_request): Admin_Piechart_response[] | Promise<Admin_Piechart_response[]>;
+
+    abstract get_CardsInfo(request?: Admin_Cards_request): Admin_Cards_response | Promise<Admin_Cards_response>;
 
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 

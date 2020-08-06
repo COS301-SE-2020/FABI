@@ -13,10 +13,23 @@ type Admin_Piechart_response{
     status: Int!
 }
 
+type Admin_Cards_response{
+    status:Int!
+    thisWeek: Int!
+    lastWeek: Int!
+    twoWeeksAgo: Int!
+}
+
+input Admin_Cards_request {
+    token: String!
+    cardNum: Int!
+}
+
 
 type Mutation{
     get_GraphInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
     get_TableInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
     get_PieChartInfo(request:Admin_Dashboard_request): [Admin_Piechart_response]!
+    get_CardsInfo(request:Admin_Cards_request): Admin_Cards_response!
 }
 

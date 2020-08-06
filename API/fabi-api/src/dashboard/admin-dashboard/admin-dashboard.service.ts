@@ -32,7 +32,7 @@
 
 
 import { Injectable } from '@nestjs/common';
-import {Admin_Dashboard_request,Admin_Dashboard_response, Admin_Piechart_response}  from '../../graphql.schema';
+import {Admin_Dashboard_request,Admin_Dashboard_response, Admin_Piechart_response, Admin_Cards_request, Admin_Cards_response}  from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { GetAdminDashService } from '../../database/admin-dashboard/get-admin-dash.service';
 import { number } from '@hapi/joi';
@@ -143,6 +143,42 @@ export class AdminDashboardService {
 
             return res;
 
+        }
+    }
+
+    async get_CardsInfo_Service(reqObj:Admin_Cards_request): Promise<Admin_Cards_response>{
+
+        //response Object
+        const res: Admin_Cards_response = {status:500,thisWeek:-1,lastWeek:-1,twoWeeksAgo:-1}
+
+         //here we validate our token
+         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+
+        //here we return the return the respective object based 
+        if (result == false) {
+            res[0].status = 415;
+            return res;    
+        } else {
+
+            if((reqObj.cardNum<1) || (reqObj.cardNum>3)){
+                return res;
+            }
+
+            var resultJson = await this.getAdminDashService.get_CardsInfo(reqObj);
+            //this week
+            res.thisWeek = resultJson[0].count;
+            //last week
+            res.lastWeek = resultJson[1].count;
+            //2 weeks ago
+            res.twoWeeksAgo = resultJson[2].count;
+            
+            //set response code
+            res.status = 201;
+
+            //return object
+            return res;
         }
     }
 
