@@ -83,7 +83,7 @@ describe('UsersService', () => {
 
   });
 
- /* describe('Create User', () => {
+ describe('Create User', () => {
     it('Create User Correctly', async () => {
 
       const testEmail = "test@test.com";
@@ -94,7 +94,7 @@ describe('UsersService', () => {
         userType: "testType",
         surname: "testSur",
         token:   "testToken",
-        assword: "testpw",
+        password: "testpw",
       });
 
 
@@ -125,7 +125,7 @@ describe('UsersService', () => {
       });
       
     });
-  });*/
+  });
 });
 
 });
