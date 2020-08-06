@@ -7,10 +7,16 @@ input Admin_Dashboard_request {
     token: String!
 }
 
-type Mutation{
-    get_GraphInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
+type Admin_Piechart_response{
+    percentage: Int!
+    label: String!
+    status: Int!
 }
 
+
 type Mutation{
+    get_GraphInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
     get_TableInfo(request:Admin_Dashboard_request): Admin_Dashboard_response!
+    get_PieChartInfo(request:Admin_Dashboard_request): [Admin_Piechart_response]!
 }
+

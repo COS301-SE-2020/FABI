@@ -92,7 +92,8 @@ export class GetAdminDashService {
 
     return res;
   }
-
+  
+  //function that will fetch data to populate the admin table
   async getTableInfo(reqObj: Admin_Dashboard_request): Promise<Admin_Dashboard_response> {
 
     //create response object
@@ -106,6 +107,13 @@ export class GetAdminDashService {
     console.log(result);
     //return data
     return res;
+  }
+
+  //function that will fetch data to populate the admin piechart
+  async getPieChartInfo(reqObj: Admin_Dashboard_request): Promise<JSON>{
+    //query db
+    const result = await this.ReportsRepository.query("select \"CommName\", count(\"CommName\") from reports, \"Afflictions\", \"Companies\", users where \"Afflictions\".id = diagnosis and email = \"Email\" and \"Companies\".id = (select company_id from users where token = \'" + reqObj.token +"\') group by \"CommName\";");
+    return result;
   }
 
 

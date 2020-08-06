@@ -32,9 +32,10 @@
 
 
 import { Injectable } from '@nestjs/common';
-import {Admin_Dashboard_request,Admin_Dashboard_response}  from '../../graphql.schema';
+import {Admin_Dashboard_request,Admin_Dashboard_response, Admin_Piechart_response}  from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { GetAdminDashService } from '../../database/admin-dashboard/get-admin-dash.service';
+import { number } from '@hapi/joi';
 
 
 
@@ -97,6 +98,52 @@ export class AdminDashboardService {
 
         }
 
+    }
+
+    async getPiechartInfo_Service(reqObj:Admin_Dashboard_request): Promise<Admin_Piechart_response[]>{
+
+        //Define our response data-type
+        const res: Admin_Piechart_response[] = [{label:"abc",percentage:45, status:-1}];
+
+        //here we validate our token
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+
+        //here we return the return the respective object based 
+        if (result == false) {
+            res[0].status = 415;
+            return res;
+            
+        } else {
+            //pop mochdata
+            res.pop();
+
+            //total pests
+            let num:number = 0;
+            //call other service.
+            var resultJson = await this.getAdminDashService.getPieChartInfo(reqObj);
+
+            //loop to add all couts
+            for(var i = 0 ; Object.keys(resultJson).length > i ; i++ ){
+                num = num + parseInt(resultJson[i].count);
+            }
+
+            //loop to create res Object
+            for(var i = 0 ; Object.keys(resultJson).length > i ; i++ ){
+                //variable to hold percenatge
+                let percentage:number;
+                //calculate percentage
+                percentage = Math.round(parseInt(resultJson[i].count) / num * 100) ;
+
+                //create return object
+                res.push({label:resultJson[i].CommName,percentage:percentage,status:201});
+            
+            }
+
+            return res;
+
+        }
     }
 
 

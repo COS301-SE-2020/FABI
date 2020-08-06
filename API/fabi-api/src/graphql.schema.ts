@@ -110,6 +110,12 @@ export class Admin_Dashboard_response {
     status: number;
 }
 
+export class Admin_Piechart_response {
+    percentage: number;
+    label: string;
+    status: number;
+}
+
 export class All_afflictions {
     id?: number;
     type?: string;
@@ -147,6 +153,8 @@ export abstract class IMutation {
     abstract get_GraphInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
     abstract get_TableInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
+
+    abstract get_PieChartInfo(request?: Admin_Dashboard_request): Admin_Piechart_response[] | Promise<Admin_Piechart_response[]>;
 
     abstract login(request?: LoginRequest): LoginResponse | Promise<LoginResponse>;
 
