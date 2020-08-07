@@ -72,7 +72,7 @@ export class AdminDashboardResolver {
 
     //This is the mutation that is exposed to the front-end 
     @Mutation('get_CardsInfo')
-    async get_CardsInfo(@Args('request') reqObj: Admin_Cards_request) : Promise<Admin_Cards_response>{
+    async get_CardsInfo(@Args('request') reqObj: Admin_Cards_request) : Promise<Admin_Cards_response[]>{
         
         //Pass our request to service which will validate token and build response
         return this.getAdminDashboardService.get_CardsInfo_Service(reqObj);

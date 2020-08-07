@@ -118,23 +118,122 @@ export class GetAdminDashService {
   }
 
   //function that will fetch data to populate the admin cards
-  async get_CardsInfo(reqObj: Admin_Cards_request): Promise<JSON>{
+  async get_CardsInfo(reqObj: Admin_Cards_request,cardNum:number): Promise<JSON>{
 
     //function to handel the first card
-    if(reqObj.cardNum == 1){
+    if(cardNum == 0){
      return this.get_Card1(reqObj);
     }
 
     //function to handel the second card
-    if(reqObj.cardNum == 2){
+    if(cardNum == 1){
       return this.get_Card2(reqObj);
     }
 
     //fucntion to handel the third card
-    if(reqObj.cardNum == 3){
+    if(cardNum == 2){
       return this.get_Card3(reqObj);
     }
+
+    //fucntion to handel the forth card
+    if(cardNum == 3){
+      return this.get_Card4(reqObj);
+    }
     
+  }
+
+  //get number of undiagnosed Reports over past 3 weeks
+  async get_Card4(reqObj: Admin_Cards_request): Promise<JSON>{
+    //calculate one week ago
+    //---------------------------------------------------------------------------------------------------------------------------------
+    //two date variables that have today's date
+    var today = new Date();
+    var otherDay = new Date();
+
+    //todays date 
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var year = today.getFullYear();
+
+    //create Int for today's date
+    let todayInt: number = parseInt(year + mm + dd);
+
+    // minus 7 days from current date
+    otherDay.setDate(otherDay.getDate() - 7); // this is today -7
+
+    //  today - 7
+    var ddo = String(otherDay.getDate()).padStart(2, '0');
+    var mmo = String(otherDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yearo = today.getFullYear();
+
+    let otherDayInt: number = parseInt(yearo + mmo + ddo);
+    //get one weekago
+    var result = await this.ReportsRepository.query("select count(*) from reports, \"Companies\" where date between "+ otherDayInt +" and "+ todayInt +" and diagnosis = -1 and \"Companies\".id = (select company_id from users where token = \'"+reqObj.token+"\');");
+
+    //---------------------------------------------------------------------------------------------------------------------------------
+
+        //calculate 2 weeks ago
+    //---------------------------------------------------------------------------------------------------------------------------------
+    //move day to 14 days ago
+    otherDay.setDate(otherDay.getDate() - 7);
+
+    //move today to 7 days ago
+    today.setDate(today.getDate() - 7);
+
+    //todays date -7
+     dd = String(today.getDate()).padStart(2, '0');
+     mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+     year = today.getFullYear();
+
+    //create Int for today's date
+     todayInt = parseInt(year + mm + dd);
+
+    //otherday - 7
+     ddo = String(otherDay.getDate()).padStart(2, '0');
+     mmo = String(otherDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+     yearo = today.getFullYear();
+
+     //create Int
+     otherDayInt = parseInt(yearo + mmo + ddo);
+
+     var result2 = await this.ReportsRepository.query("select count(*) from reports, \"Companies\" where date between "+ otherDayInt +" and "+ todayInt +" and diagnosis = -1 and \"Companies\".id = (select company_id from users where token = \'"+reqObj.token+"\');");
+
+     //concat new object
+     result = result.concat(result2);
+    //------------------------------------------------------------------------------------------------------------------------------------
+
+     //calculate 3 weeks ago
+    //---------------------------------------------------------------------------------------------------------------------------------
+    //move day to 21 days ago
+    otherDay.setDate(otherDay.getDate() - 7);
+
+    //move today to 14 days ago
+    today.setDate(today.getDate() - 7);
+
+    //todays date -14
+     dd = String(today.getDate()).padStart(2, '0');
+     mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+     year = today.getFullYear();
+
+    //create Int for today's date
+     todayInt = parseInt(year + mm + dd);
+
+    //otherday - 14
+     ddo = String(otherDay.getDate()).padStart(2, '0');
+     mmo = String(otherDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+     yearo = today.getFullYear();
+
+     //create Int
+     otherDayInt = parseInt(yearo + mmo + ddo);
+
+     var result3 = await this.ReportsRepository.query("select count(*) from reports, \"Companies\" where date between "+ otherDayInt +" and "+ todayInt +" and diagnosis = -1 and \"Companies\".id = (select company_id from users where token = \'"+reqObj.token+"\');");
+
+     //concat new object
+     result = result.concat(result3);
+    //------------------------------------------------------------------------------------------------------------------------------------
+
+    return result;
+
   }
 
   //get number of pathogens over past 3 weeks

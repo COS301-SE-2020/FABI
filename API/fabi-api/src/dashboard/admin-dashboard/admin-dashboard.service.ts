@@ -148,10 +148,10 @@ export class AdminDashboardService {
         }
     }
 
-    async get_CardsInfo_Service(reqObj:Admin_Cards_request): Promise<Admin_Cards_response>{
+    async get_CardsInfo_Service(reqObj:Admin_Cards_request): Promise<Admin_Cards_response[]>{
 
         //response Object
-        const res: Admin_Cards_response = {status:500,thisWeek:-1,lastWeek:-1,twoWeeksAgo:-1}
+        var res: Admin_Cards_response[] = [{status:500,thisWeek:-1,lastWeek:-1,twoWeeksAgo:-1,name:"abc"}];
 
          //here we validate our token
          const result = await this.userService.validateToken(reqObj.token).then(function (result) {
@@ -163,12 +163,33 @@ export class AdminDashboardService {
             res[0].status = 415;
             return res;    
         } else {
+            //set default 
+            res = [{status:500,thisWeek:-1,lastWeek:-1,twoWeeksAgo:-1,name:"abc"}];
+            //pop
+            res.pop();
 
-            if((reqObj.cardNum<1) || (reqObj.cardNum>3)){
-                return res;
+            //array with label names
+            let names:string[] = ["New Reports","New Pests","New Pathogens","Total Undiagnosed Reports"];
+
+            //loop to get cardInfo
+            for(var i = 0 ; i<4 ; i++){
+                var resultJson = await this.getAdminDashService.get_CardsInfo(reqObj,i);
+                res.push({
+                thisWeek:resultJson[0].count,
+                lastWeek:resultJson[1].count,
+                twoWeeksAgo:resultJson[2].count,
+                name:names[i],
+                status:201
+                })
+
             }
+            
+            //return object
+            return res;
 
-            var resultJson = await this.getAdminDashService.get_CardsInfo(reqObj);
+
+
+           /* var resultJson = await this.getAdminDashService.get_CardsInfo(reqObj);
             //this week
             res.thisWeek = resultJson[0].count;
             //last week
@@ -180,7 +201,7 @@ export class AdminDashboardService {
             res.status = 201;
 
             //return object
-            return res;
+            return res;*/
         }
     }
 
