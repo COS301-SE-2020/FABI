@@ -67,11 +67,9 @@ export class PopulateTableService {
             this.res = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID:-1 }];
             this.res.pop();
 
+            
             //make call to db and get individual report
-            let singleReport: String = await this.reportService.getSingleReport(reqObj.reportID);
-
-            //convert string to JSON
-            let singleReportJSON = JSON.parse(singleReport.toString());
+            let singleReportJSON = await this.reportService.getSingleReport(reqObj.reportID);
 
             //create variables that store given lat,long
             let long: number = singleReportJSON[0].Long;
@@ -83,9 +81,13 @@ export class PopulateTableService {
             //create JSON obj
             let resultJson = JSON.parse(result.toString());
 
+            //sort results by reportID
+            let sortedResults = resultJson.sort(function(a, b) {
+                return parseFloat(a.reportID) - parseFloat(b.reportID);
+            });
 
             //Loop through each key in the JSON obj
-            for (var i = 0; i < Object.keys(resultJson).length; i++) {
+            for (var i = 0; i < Object.keys(sortedResults).length; i++) {
                 //variables created for response object
                 let distance: number;
                 let date: string;
@@ -93,8 +95,8 @@ export class PopulateTableService {
                 let ID:number;
 
                 //report lat/long
-                let reportLat: number = resultJson[i].Lat;
-                let reportLong: number = resultJson[i].Long;
+                let reportLat: number = sortedResults[i].Lat;
+                let reportLong: number = sortedResults[i].Long;
 
                 //calcualate the distance between the reports
                 distance = this.calcDistance(lat, long, reportLat, reportLong);
@@ -107,10 +109,10 @@ export class PopulateTableService {
                 date = date + "-" + temp.toString().substr(6, 2);
 
                 //create the Pname
-                Pname = resultJson[i].Pname;
+                Pname = sortedResults[i].Pname;
 
                 //set the ID
-                ID = resultJson[i].reportID;
+                ID = sortedResults[i].reportID;
 
                 //add object to list
                 this.res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID:ID });

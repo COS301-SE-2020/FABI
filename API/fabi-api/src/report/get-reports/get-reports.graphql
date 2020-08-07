@@ -14,8 +14,24 @@ type GetReportsResponse{
    status: Int!
 }
 
+type GetSingleReportResponse{
+    userType: String
+    Long: Float
+    Lat: Float
+    Pname: String
+    Infliction: String
+    Accuracy: Float
+    NeuralNetRating: Int
+    form: String
+    Img1: String
+    Img2: String
+    Img3: String
+    ID: String
+    status: Int!
+}
+
 type Mutation{
     getReports(getReportsRequest:GetReportsRequest):GetReportsResponse!
-    getSingleReport(getSingleReportRequest:GetSingleReportRequest):GetReportsResponse!
+    getSingleReport(getSingleReportRequest:GetSingleReportRequest):GetSingleReportResponse!
 }
 

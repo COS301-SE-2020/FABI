@@ -30,7 +30,7 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { GetReportsResponse, GetReportsRequest,GetSingleReportRequest } from '../../graphql.schema';
+import { GetReportsResponse, GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse } from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 
@@ -68,7 +68,9 @@ export class GetReportsService {
         }
     }
     
-    async getSingleReports(reqObj: GetSingleReportRequest) : Promise<GetReportsResponse> {
+    async getSingleReports(reqObj: GetSingleReportRequest) : Promise<GetSingleReportResponse> {
+
+        var response: GetSingleReportResponse = {status:-1};
 
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
@@ -80,14 +82,25 @@ export class GetReportsService {
             return this.res;
         } else {
             //this will pass upload object to report service that will interact with db
-            let reportString = await this.reportService.getSingleReport(reqObj.reportID);
+            let report = await this.reportService.getSingleReport(reqObj.reportID);
 
             //Build response object
-            this.res.reports = await reportString.toString();
-            this.res.status = 201;
+            response.Accuracy = report[0].Accuracy;
+            response.Img1 = report[0].IMG1;
+            response.Img2 = report[0].IMG2;
+            response.Img3 = report[0].IMG3;
+            response.Infliction = report[0].Infliction;
+            response.Lat = report[0].Lat;
+            response.Long = report[0].Long;
+            response.Pname = report[0].Pname;
+            response.NeuralNetRating = report[0].Pscore;
+            response.ID = report[0].reportID;
+            response.userType = report[0].userType;
+            response.form = report[0].form;
+            response.status = 201;
 
             //return response Object
-            return this.res;
+            return response;
 
         }
     }

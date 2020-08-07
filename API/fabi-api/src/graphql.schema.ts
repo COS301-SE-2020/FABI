@@ -146,6 +146,22 @@ export class GetReportsResponse {
     status: number;
 }
 
+export class GetSingleReportResponse {
+    userType?: string;
+    Long?: number;
+    Lat?: number;
+    Pname?: string;
+    Infliction?: string;
+    Accuracy?: number;
+    NeuralNetRating?: number;
+    form?: string;
+    Img1?: string;
+    Img2?: string;
+    Img3?: string;
+    ID?: string;
+    status: number;
+}
+
 export class LoginResponse {
     token: string;
     status: number;
@@ -176,7 +192,7 @@ export abstract class IMutation {
 
     abstract getReports(getReportsRequest?: GetReportsRequest): GetReportsResponse | Promise<GetReportsResponse>;
 
-    abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetReportsResponse | Promise<GetReportsResponse>;
+    abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetSingleReportResponse | Promise<GetSingleReportResponse>;
 
     abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
 

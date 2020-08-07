@@ -64,12 +64,11 @@ export class ReportService {
   }
 
   //Function To get Single report from the DB when given an ID
-  async getSingleReport(ID:number): Promise<String>{
-
+  async getSingleReport(ID:number): Promise<JSON>{
 
     var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE reports.email = users.\"Email\" AND \"reportID\" = " + ID +";");
 
-    return JSON.stringify(results);
+    return results;
   }
 
   //function to Insert a new report into the DB
