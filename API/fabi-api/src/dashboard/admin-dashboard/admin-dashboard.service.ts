@@ -103,7 +103,7 @@ export class AdminDashboardService {
     async getPiechartInfo_Service(reqObj:Admin_Dashboard_request): Promise<Admin_Piechart_response[]>{
 
         //Define our response data-type
-        const res: Admin_Piechart_response[] = [{label:"abc",percentage:45, status:-1}];
+        var res: Admin_Piechart_response[] = [{name:"abc",y:45, status:-1}];
 
         //here we validate our token
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
@@ -116,6 +116,8 @@ export class AdminDashboardService {
             return res;
             
         } else {
+            //set default
+            res = [{name:"abc",y:45, status:-1}];
             //pop mochdata
             res.pop();
 
@@ -137,7 +139,7 @@ export class AdminDashboardService {
                 percentage = Math.round(parseInt(resultJson[i].count) / num * 100) ;
 
                 //create return object
-                res.push({label:resultJson[i].CommName,percentage:percentage,status:201});
+                res.push({name:resultJson[i].CommName,y:percentage,status:201});
             
             }
 

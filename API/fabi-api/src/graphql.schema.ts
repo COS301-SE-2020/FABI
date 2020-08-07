@@ -123,8 +123,8 @@ export class Admin_Dashboard_response {
 }
 
 export class Admin_Piechart_response {
-    percentage: number;
-    label: string;
+    y: number;
+    name: string;
     status: number;
 }
 
