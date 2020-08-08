@@ -11,6 +11,8 @@ import { MatPaginator } from '@angular/material/paginator';
 export class DashboardComponent implements OnInit {
 
   cards = []
+  cardPercentage = [75, 75, 75, 75]
+  cardTotal = [14, 14, 14, 14]
   pieChart = []
   pageSizeOptions = []
   displayedColumns: string[] = ['scienceName', 'name', 'management', 'count'];
