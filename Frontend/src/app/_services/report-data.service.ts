@@ -31,9 +31,6 @@ export class ReportDataService {
   public get currentRepValue(): Report {
     return this.currentMarker.value;
   }
-  public get getNearbyReports() {
-    return this.nearbyReports;
-  }
   public get reportsLength() {
     return this.reportLenth;
   }
@@ -72,9 +69,7 @@ export class ReportDataService {
     }))
   }
 
-  requestNearbyReports(page, reportID, token){
-    var pageSize=5;
-    var startIndex=pageSize*(page);
+  requestNearbyReports(reportID, token){
     return this.apollo.mutate({
       mutation: gql`mutation {
                   popTableBasicUser( request: {reportID: ${reportID}, token: "${token}"})
@@ -86,12 +81,19 @@ export class ReportDataService {
                   }
               }`
     }).pipe(map(data => {
-      var list:Array<nearbyReport> = data["data"]["popTableBasicUser"];
-      this.reportLenth=list.length;
-      this.nearbyReports=list.slice(startIndex,startIndex+pageSize);
-      return this.nearbyReports;
+      localStorage.setItem("nearbyReports",JSON.stringify(data["data"]["popTableBasicUser"]))
 
     }))
+  }
+
+  getNearbyReports(page){
+    var pageSize=5;
+    var startIndex=pageSize*(page);
+    var list:Array<nearbyReport> = JSON.parse(localStorage.getItem("nearbyReports"));
+    this.reportLenth=list.length;
+    this.nearbyReports=list.slice(startIndex,startIndex+pageSize);
+    return this.nearbyReports;
+
   }
 
 

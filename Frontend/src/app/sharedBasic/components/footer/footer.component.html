@@ -1,5 +1,5 @@
 <div [style.background-color]="currentStyle=='Dark'?'#1d1d47':'#66a6ff'">
-    <div class="flex-container" fxLayout="row">
+    <div class="flex-container" fxLayout="row" *ngIf="DeviceType=='Desktop'||DeviceType=='Tablet'">
         <div fxFlex="20" fxLayoutAlign="center"></div>
         <div fxFlex="60" fxLayoutAlign="center">
             <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png">

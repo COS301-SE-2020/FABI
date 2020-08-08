@@ -26,6 +26,13 @@ export interface nearbyReport {
     date: string;
 }
 
+export interface Questions{
+    Question: string;
+    Answer: string;
+}
+
+
+
 
 @Component({
     templateUrl: 'home.component.html',
@@ -41,6 +48,8 @@ export class HomeComponent implements AfterViewInit {
     displayReady: Boolean = false;
     pageEvent: PageEvent;
     dataLength=100;
+
+    markerDetails:Array<Questions>;
 
     DeviceType: String;
     overlaySwitch="none";
@@ -78,7 +87,7 @@ export class HomeComponent implements AfterViewInit {
     currentUser: User;
     users = [];
     currentMID = null;
-    currentMark: Report;
+    currentMark;
     markIDs: Array<number> = [];
     Active;
     DarkMode = true;
@@ -273,20 +282,75 @@ export class HomeComponent implements AfterViewInit {
     }
 
     getNearbyReports(event){
-        this.currentMarkServ.requestNearbyReports(event.pageIndex,this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
-            this.dataSource=(this.currentMarkServ.getNearbyReports);
-        });
+            this.dataSource=(this.currentMarkServ.getNearbyReports(event.pageIndex));
     }
 
     paginatorInit(){
-        this.currentMarkServ.requestNearbyReports(0,this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
-            this.dataSource=(this.currentMarkServ.getNearbyReports);
+        this.currentMarkServ.requestNearbyReports(this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
+            this.dataSource=(this.currentMarkServ.getNearbyReports(0));
             this.dataLength=this.currentMarkServ.reportsLength;
         });
     }
 
+    getCurrentInfo(){
+        var report: Array<any>=(this.currentMark.form).split(",");
 
+        this.markerDetails=[
+            {
+                Question:report[0],
+                Answer:report[1]
+            },
+            {
+                Question:report[2],
+                Answer:report[3]
+            },
+            {
+                Question:report[4],
+                Answer:report[5]                
+            },
+            {
+              Question:report[6],
+                Answer:report[7]                
+            },
+            {
+                Question:report[8],
+                Answer:report[9]                
+            },
+            {
+                Question:report[10],
+                Answer:report[11]                
+            },
+            {
+                Question:report[12],
+                Answer:report[13]                
+            },
+            {
+                Question:report[14],
+                Answer:report[15]                
+            },
+            {
+                Question:report[16],
+                Answer:report[17]                
+            },
+            {
+                Question:report[18],
+                Answer:report[19]                
+            },
+            {
+                Question:report[20],
+                Answer:report[21]                
+            },
+            {
+                Question:report[22],
+                Answer:report[23]                
+            }
+        ]
 
+    }
+    
+    getReportByID(ID){
+        console.log(ID);
+    }
 
     openMap() {
         this.showMap = true;
@@ -322,7 +386,7 @@ export class HomeComponent implements AfterViewInit {
 
                 let key = "currentMarker";
                 localStorage.setItem(key, JSON.stringify(this.currentMark));
-
+                this.getCurrentInfo();
                 this.displayReady = true;
             }
         });

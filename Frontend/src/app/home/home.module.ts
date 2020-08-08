@@ -14,6 +14,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
 
 
 
@@ -33,7 +35,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     NgbModule,
     OverlayModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatListModule
   ]
 })
 export class HomeModule { }

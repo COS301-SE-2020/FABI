@@ -63,7 +63,7 @@
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="openMap()">Close
                 report view</button></div>
         <div fxFlex="60" fxLayoutAlign="center">
-            <h1>View report</h1>
+            <h1>Report Details</h1>
         </div>
         <div fxFlex="20" fxLayoutAlign="end">
 
@@ -77,12 +77,21 @@
             <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg"
                 style="width:50px;height:auto;cursor: pointer;background-color: lightgray;">
         </div>
-
     </div>
     <br>
-    <div fxLayout="column" fxLayoutAlign="space-between" *ngIf="!showMap" fxLayout.xl="row">
-        <div fxFlex="60">
-            <h1>Display report details here</h1>
+    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMap" fxLayout.xl="row">
+        <div fxFlex="40">
+            <mat-card>
+                <mat-card-title>
+                    Answer: {{details.selectedOptions.selected[0]?.value}}
+                </mat-card-title>
+            </mat-card>
+            <br>
+            <mat-selection-list #details [multiple]="false" [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
+                <mat-list-option *ngFor="let mark of markerDetails" [value]="mark.Answer">
+                    {{mark.Question}}
+                </mat-list-option>
+            </mat-selection-list>
         </div>
         <div fxFlex="40" *ngIf="displayReady">
             <ngb-carousel style="background-color: dar;height: 650px;outline: none;">
@@ -104,6 +113,7 @@
             </ngb-carousel>
         </div>
     </div>
+    <br>
     <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap"
         [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
         <div fxFlex>
@@ -111,27 +121,27 @@
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
                 [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
                 <!-- Position Column -->
-                <ng-container matColumnDef="ID">
+                <ng-container matColumnDef="ID" >
                     <mat-header-cell *matHeaderCellDef> Report ID </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.ID}} </mat-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.ID}} </mat-cell>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="Pname">
                     <mat-header-cell *matHeaderCellDef> Plant Name </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Pname}} </mat-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.Pname}} </mat-cell>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="distance">
                     <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.distance}} </mat-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.distance}} </mat-cell>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="date">
                     <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.date}} </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -140,6 +150,7 @@
             <mat-paginator [length]="dataLength"  (page)="getNearbyReports($event)" [pageSize]="5" showFirstLastButtons></mat-paginator>
         </div>
     </div>
+    <br>
 </div>
 <div *ngIf="DeviceType=='Mobile'">
 

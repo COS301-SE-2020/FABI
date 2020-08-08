@@ -1,16 +1,22 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject, Observable} from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
+import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 
 import { AuthenticationService } from '@/_services/authentication.service';
 import { ReportDataService } from '@/_services/report-data.service'
 
 import {Report_Questions} from "@/_models/Questions"
-
 import { LocationService } from '@/_services/location.service';
+
+
+
+export interface Questions{
+  Question: string;
+  Answer: string;
+}
 
 @Component({
   selector: 'app-diag-report',
@@ -23,8 +29,6 @@ export class DiagReportComponent implements OnInit {
 
   Answers=new Report_Questions;
   
-
-  // TODO: Cleanup
   public enterImage:Boolean=false;
   public currentUser: User;
   public submitted = false;
@@ -32,7 +36,6 @@ export class DiagReportComponent implements OnInit {
   public Lat:any;
   public Long:any;
   public Acc:any;
-
   public Images:Array<any>=[];
   public ImageDataCount:number=0;
 
@@ -42,12 +45,63 @@ export class DiagReportComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder, 
     private location : LocationService, 
-    private router: Router,    
+    private router: Router,
     private Report: ReportDataService) {
       this.currentUser = this.authenticationService.currentUserValue;
     
    }
-   // new 01/07/2020
+   
+  //  Answers
+  responses : Array<Questions>=[
+    {
+      Question:"Common name",
+      Answer:""
+    },
+    {
+      Question:"Scientific Name",
+      Answer:""
+    },
+    {
+      Question:"Cultivar",
+      Answer:""
+    },
+    {
+      Question:"Where do you see the Pest/Disease on the plant?",
+      Answer:""
+    },
+    {
+      Question:"Do you know what Pest/Disease is affecting the plant?",
+      Answer:""
+    },
+    {
+      Question:"What is its scientific or common name?",
+      Answer:""
+    },
+    {
+      Question:"How many plants are affected?",
+      Answer:""
+    },
+    {
+      Question:"What percentage of plants are affected?",
+      Answer:""
+    },
+    {
+      Question:"Are you experiencing a drought?",
+      Answer:""
+    },
+    {
+      Question:"Have you experienced above average precipitation?",
+      Answer:""
+    },
+    {
+      Question:"Any other climatic conditions worth specifying?",
+      Answer:""
+    },
+    {
+      Question:"Other climatic conditions",
+      Answer:""
+    },
+  ];
 
    ImageData = new FormGroup({
         Description:new FormControl('')
@@ -67,6 +121,7 @@ export class DiagReportComponent implements OnInit {
    }
    
 
+   
    PorD_Selected:Boolean;
    PorD_Options: Array<string> = ["Pest","Disease"];
    YNOptions: any=["Yes","No"];
@@ -75,27 +130,27 @@ export class DiagReportComponent implements OnInit {
       PorD : new FormControl('')
     });
 
-  Plant = new FormGroup({
-    Question1: new FormControl(''),
-    Question2: new FormControl(''),
-    Question3: new FormControl(''),
-  });
+    Questionnaire = this.formBuilder.group({
+      Question1: ['',Validators.required],
+      Question2: ['',Validators.required],
+      Question3: ['',Validators.required],
+      Question4: ['',Validators.required],
+      Question5: ['',Validators.required],
+      Question6: ['',Validators.required],
+      Question7: ['',Validators.required],
+      Question8: ['',Validators.required],
+      Question9: ['',Validators.required],
+      Question10: ['',Validators.required],
+      Question11: ['',Validators.required],
+      Question12: ['',Validators.required],
+    });
+    
 
-  PorD_Questions = new FormGroup({
-    Question4: new FormControl(''),
-    Question5: new FormControl(''),
-    Question6: new FormControl(''),
-    Question7: new FormControl(''),
-    Question8: new FormControl(''),
-  });
-  Question4_Options: any = ["Root","Stem","Branch","Leaf / Leaves","Flowers"];
+    Question4_Options: any = ["Root","Stem","Branch","Leaf / Leaves","Flowers"];
 
-  Climate_Questions = new FormGroup({
-    Question9: new FormControl(''),
-    Question10: new FormControl(''),
-    Question11_a: new FormControl(''),
-    Question11_b: new FormControl(''),
-  });
+  getErrorMessage(){
+    return 'Enter \"Unknown\" if you don\'t know the answer.';
+  }
 
   QuestionDesc : Array<string> = [
     "Common name",
@@ -128,25 +183,31 @@ export class DiagReportComponent implements OnInit {
   }
   
   onSubmit(){
-    this.Answers.UserToken=this.currentUser;
-    if(this.Plant.get("Question1").value!="")this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
-    if(this.Plant.get("Question2").value!="")this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
-    if(this.Plant.get("Question3").value!="")this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
-    if(this.Answers.Questions["Do you know what Pest/Disease is affecting the plant?"]=="Yes"){
-      this.Answers.Questions["What is its scientific or common name?"]=this.PorD_Questions.get("Question6").value;
-    }
-    if(this.Answers.Questions["How many plants are affected?"]=="Yes"){
-      this.Answers.Questions["What percentage of plants are affected?"]=this.PorD_Questions.get("Question8").value;
-    }
-    if(this.Answers.Questions["Any other climatic conditions worth specifying?"]=="Yes"){
-      this.Answers.Questions["Other climatic conditions"]=this.Climate_Questions.get("Question11_b").value;
-    }
+    // Add error checking on bootstrap (Empty fields etc)
+    this.responses;
+    console.log(this.responses);
+    return;
+    // 07/08/2020
+    
+    // this.Answers.UserToken=this.currentUser;
+    // if(this.Plant.get("Question1").value!="")this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
+    // if(this.Plant.get("Question2").value!="")this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
+    // if(this.Plant.get("Question3").value!="")this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
+    // if(this.Answers.Questions["Do you know what Pest/Disease is affecting the plant?"]=="Yes"){
+    //   this.Answers.Questions["What is its scientific or common name?"]=this.PorD_Questions.get("Question6").value;
+    // }
+    // if(this.Answers.Questions["How many plants are affected?"]=="Yes"){
+    //   this.Answers.Questions["What percentage of plants are affected?"]=this.PorD_Questions.get("Question8").value;
+    // }
+    // if(this.Answers.Questions["Any other climatic conditions worth specifying?"]=="Yes"){
+    //   this.Answers.Questions["Other climatic conditions"]=this.Climate_Questions.get("Question11_b").value;
+    // }
 
-    this.Answers.Questions["UserToken"]=this.Answers.UserToken;
-    this.Report.sendReport(this.Answers.UserToken,this.toStr(this.Answers.Questions),this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"],this.Answers.Questions["Longitude"],
-    this.Answers.Questions["Latitude"],this.Answers.Questions["Accuracy"],this.Answers.Questions["Common name"],this.Answers.Questions["Pest Or Disease"],).subscribe(data=>{
-      console.log(data);
-    });
+    // this.Answers.Questions["UserToken"]=this.Answers.UserToken;
+    // this.Report.sendReport(this.Answers.UserToken,this.toStr(this.Answers.Questions),this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"],this.Answers.Questions["Longitude"],
+    // this.Answers.Questions["Latitude"],this.Answers.Questions["Accuracy"],this.Answers.Questions["Common name"],this.Answers.Questions["Pest Or Disease"],).subscribe(data=>{
+    //   console.log(data);
+    // });
 
 
 
@@ -157,16 +218,6 @@ export class DiagReportComponent implements OnInit {
     this.router.navigate(["/basic"]);
   }
 
-  
-
-  toJSON(object){
-      return {
-        "Location":object.Location,
-        "UserToken":object.UserToken,
-        "Questions":object.Questions,
-        "Images":object.Images
-      };
-  }
 
   onCancel(){
     this.submitted = false;

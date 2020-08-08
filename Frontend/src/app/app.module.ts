@@ -59,6 +59,8 @@ import { AdminModule } from './_layouts/admin/admin.module';
 import { BasicModule } from './_layouts/basic/basic.module';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -82,6 +84,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     AdminModule,
     HomeModule,
+    MatFormFieldModule,
+    MatInputModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,
