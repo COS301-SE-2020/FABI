@@ -13,7 +13,7 @@ import Users from '../Users/Users.entity';
 //Classifications
 const labelsAccepted =
   'Agave,azul,Aloe,Annual plant,Arecales,Banana,Banana family,Borassus,flabellifer,Botany,Cycad,Desert Palm,Fern,Flower,Flowering plant,Flowerpot,Garden,Georgia pine,Grass,Grass family,Groundcover,Herb,Houseplant,Ice plant family,Landscape,Leaf,Palm tree,Paurotis Palm,Paurotis Palm,Perennial plant,Pine,Pine family,Plant,Plant community,red pine,Sabal minor,Sabal palmetto,Saw palmetto,Sedge family,shortstraw pine,Shrub,Subshrub,Sweet grass,Taro,Terrestrial plant,Ti plant,Tree,Vascular plant,White pine,Woody plant,Xanthosoma,Yucca,Zingiberales';
-
+let neuralNetTags:string[] = [];
 //google cloud storage
 const gc = new Storage({
   keyFilename: join(__dirname, '../../../fabi-surveillance-d9f5f1321793.json'),
@@ -158,6 +158,8 @@ export class ReportService {
     const classNum2 = this.classify(img2Name + '.' + img2Format);
     const classNum3 = this.classify(img3Name + '.' + img3Format);
 
+    
+
 
     //value that determines if the images are correct
     let certainty = 0;
@@ -211,7 +213,10 @@ export class ReportService {
     let todayInt: number = parseInt(year + mm + dd);
     console.log("bonfire1");
 
-    //
+    //set variables
+    var tags = neuralNetTags.join(",");
+    var diagnoser = "/";// default values for now
+    var verification = "/";// default values for now
     var report = obj.report;
     var long = obj.Longitude;
     var lat = obj.Latitude;
@@ -236,7 +241,10 @@ export class ReportService {
         Infliction: infliction, //must get from obj.report
         date:todayInt,
         diagnosis:-1,
-        urgency:10
+        urgency:10,
+        tags:tags,
+        verification:verification,
+        diagnoser:diagnoser
       });
       return true;
       
@@ -264,6 +272,8 @@ export class ReportService {
     return text;
   }
 
+  
+
   //fucntion that Requests google vision API
   async classify(imageName: string): Promise<number> {
     let matchValue = 0;
@@ -271,15 +281,29 @@ export class ReportService {
     const [result] = await client.labelDetection(imageName);
     const labels = result.labelAnnotations;
     labels.forEach((label: { description: string; score: string }) =>
-      values.push(label.description),
+      values.push(label.description)
     );
+
+    
+    
 
     for (let i = 0; i < values.length; i++) {
       if (labelsAccepted.indexOf(values[i]) != -1) {
         matchValue++;
       }
+      //ensure no duplicate tags
+      if(neuralNetTags.indexOf(values[i]) == -1){
+        neuralNetTags.push(values[i]);
+      }
+      
     }
 
     return matchValue;
   }
 }
+
+/*
+okay cunt what u gonna do?
+-> im going to make a gobal array that stores all the tags, and it will insert those tags once it inserts the report.
+-> REMEMber to clear the tags array
+*/

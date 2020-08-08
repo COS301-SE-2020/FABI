@@ -48,6 +48,15 @@ class Reports {
     @Column({nullable:true})
     public diagnosis: number;
 
+    @Column({nullable:true})
+    public diagnoser:string
+
+    @Column({nullable:true})
+    public verification:string
+
+    @Column({nullable:true})
+    public tags:string
+
 
 }
 
