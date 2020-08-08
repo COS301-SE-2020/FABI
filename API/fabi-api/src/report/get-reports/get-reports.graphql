@@ -27,6 +27,9 @@ type GetSingleReportResponse{
     Img2: String
     Img3: String
     ID: String
+    tags: String
+    verification: String
+    diagnoser: String
     status: Int!
 }
 

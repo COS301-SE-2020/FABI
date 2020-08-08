@@ -159,6 +159,9 @@ export class GetSingleReportResponse {
     Img2?: string;
     Img3?: string;
     ID?: string;
+    tags?: string;
+    verification?: string;
+    diagnoser?: string;
     status: number;
 }
 

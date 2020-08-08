@@ -97,8 +97,11 @@ export class GetReportsService {
             response.ID = report[0].reportID;
             response.userType = report[0].userType;
             response.form = report[0].form;
+            response.tags = report[0].tags;
+            response.verification = report[0].verification;
+            response.diagnoser = report[0].diagnoser;
             response.status = 201;
-
+            
             //return response Object
             return response;
 
