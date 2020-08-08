@@ -36,6 +36,7 @@ import { Component, OnInit, Input } from '@angular/core';
 // Highcharts specific imports
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
+import { DashboardService } from '../../../_components/dashboard.service';
 @Component({
   selector: 'app-widget-pie',
   templateUrl: './pie.component.html',
@@ -43,14 +44,29 @@ import HC_exporting from 'highcharts/modules/exporting';
 })
 export class PieComponent implements OnInit {
 
-  @Input() data: []
-
   Highcharts = Highcharts
   chartOptions = {}
+  pieChartData = []
+  constructor(private dashboardService: DashboardService) { }
 
-  constructor() { }
+  ngOnInit() {
+    this.dashboardService.pieChart().subscribe(data => {
+      data = data.filter(props => {
+            delete props["__typename"]
+            return true
+          })
+      this.pieChartData = data
+      this.updateChart()
+      console.log(data);
+    })
 
-  ngOnInit(): void {
+    setTimeout(() => {
+      window.dispatchEvent(
+        new Event('resize')
+      )
+    }, 100)
+  }
+  updateChart() {
     this.chartOptions = {
       chart: {
         plotBackgroundColor: null,
@@ -88,16 +104,10 @@ export class PieComponent implements OnInit {
       series: [{
         name: 'Afflictions',
         colorByPoint: true,
-        data: this.data
+        data: this.pieChartData
       }]
     }
     HC_exporting(Highcharts)
-
-    setTimeout(() => {
-      window.dispatchEvent(
-        new Event('resize')
-      )
-    }, 100)
   }
 
 }

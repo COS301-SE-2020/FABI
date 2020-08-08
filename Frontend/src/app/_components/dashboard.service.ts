@@ -40,7 +40,19 @@ export class DashboardService {
   }
 
   cards() {
-    return [71, 78, 39, 66]
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        get_CardsInfo(requirest: { token: "${this.authentication.currentUserValue}" })
+        {
+          thisWeek,
+          lastWeek,
+          twoWeeksAgo,
+          name
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["get_cardsInfo"]
+    }))
   }
 
   pieChart() {
@@ -49,13 +61,13 @@ export class DashboardService {
       mutation: gql`mutation {
         get_PieChartInfo( request: { token: "${this.authentication.currentUserValue}" } )
         {
-          y,
           name,
-          status
+          y
         }
       }`
     }).pipe(map(data => {
-      return data["data"]["get_PieChartInfo"]["data"]
+
+      return data["data"]["get_PieChartInfo"]
     }))
 
     // return [{

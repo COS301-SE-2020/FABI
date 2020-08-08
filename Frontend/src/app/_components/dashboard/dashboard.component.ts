@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   cards = []
   cardPercentage = [75, 75, 75, 75]
   cardTotal = [14, 14, 14, 14]
+  cardLabel = ["New Reports", "New Pests", "New Pathogens", "Undiagnosed Reports"]
   pieChart = []
   pageSizeOptions = []
   displayedColumns: string[] = ['scienceName', 'name', 'management', 'count'];
@@ -24,9 +25,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cards = this.dashboardService.cards()
-    this.dashboardService.pieChart().subscribe(data => {
-      this.pieChart = data
-    })
+    // this.pieChart = this.dashboardService.pieChart()
+    // console.log(this.pieChart);
+    
+    // this.dashboardService.pieChart().subscribe(data => {
+    //   data = data.filter(props => {
+    //     delete props["__typename"]
+    //     return true
+    //   })
+    //   this.pieChart = data
+    //   console.log(data);
+    // })
+
     this.dashboardService.adminTable().subscribe(data => {
       data = JSON.parse(data)
       this.dataSource = data
