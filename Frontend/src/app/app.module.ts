@@ -22,6 +22,7 @@ import { Http,HttpModule , Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
+import { SpecSearchComponent } from './spec-search/spec-search.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AdminModule } from './_layouts/admin/admin.module';
     AlertComponent,
     DiagReportComponent,
     MapReportComponent,
+    SpecSearchComponent,
   ],
   imports: [
     BrowserModule,

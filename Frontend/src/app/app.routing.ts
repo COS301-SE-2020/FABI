@@ -50,6 +50,9 @@ import { HomeComponent } from './home/home.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
 
+// Basic User imports
+import { SearchReports } from './spec-search/spec-search.component';
+
 /*
 *   Comment out AuthGuard during development for easier testing
 */
@@ -89,6 +92,10 @@ const routes: Routes = [
             component: PestInfoComponent
         }],
         // canActivate: [AuthGuard]
+    },
+    {
+        path: 'specialist',
+        component: SearchReports
     },
     // otherwise redirect to home
     {
