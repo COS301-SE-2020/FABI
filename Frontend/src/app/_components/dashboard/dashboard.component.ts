@@ -24,7 +24,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cards = this.dashboardService.cards()
-    this.pieChart = this.dashboardService.pieChart()
+    this.dashboardService.pieChart().subscribe(data => {
+      this.pieChart = data
+    })
     this.dashboardService.adminTable().subscribe(data => {
       data = JSON.parse(data)
       this.dataSource = data
