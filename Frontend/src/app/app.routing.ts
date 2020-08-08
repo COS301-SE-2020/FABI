@@ -50,7 +50,7 @@ import { HomeComponent } from './home/home.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
 
-// Basic User imports
+// Specialist User imports
 import { SearchReports } from './spec-search/spec-search.component';
 
 /*
