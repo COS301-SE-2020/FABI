@@ -41,17 +41,17 @@ export class DashboardService {
 
   cards() {
     return this.apollo.mutate({
-      mutation: gql `mutation {
-        get_CardsInfo(requirest: { token: "${this.authentication.currentUserValue}" })
+      mutation: gql`mutation {
+        get_CardsInfo(request: { token: "${this.authentication.currentUserValue}" })
         {
+          name,
           thisWeek,
           lastWeek,
-          twoWeeksAgo,
-          name
+          twoWeeksAgo
         }
       }`
     }).pipe(map(data => {
-      return data["data"]["get_cardsInfo"]
+      return data["data"]["get_CardsInfo"]
     }))
   }
 
