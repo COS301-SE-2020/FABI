@@ -59,11 +59,11 @@
         </div>
     </div>
     <br>
-    <div fxLayout="row" *ngIf="!showMap">
+    <div fxLayout="row" *ngIf="!showMap&&currentMark!=undefined">
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="openMap()">Close
                 report view</button></div>
         <div fxFlex="60" fxLayoutAlign="center">
-            <h1>Report Details</h1>
+            <h1>Report No. {{currentMark.ID}} details</h1>
         </div>
         <div fxFlex="20" fxLayoutAlign="end">
 
@@ -79,35 +79,85 @@
         </div>
     </div>
     <br>
-    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMap" fxLayout.xl="row">
+    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMap&&currentMark!=undefined" fxLayout.xl="row">
         <div fxFlex="40">
             <mat-card>
                 <mat-card-title>
-                    Answer: {{details.selectedOptions.selected[0]?.value}}
+                    <div class="row">
+                        <div class="col">
+                            Plant Name:
+                        </div>
+                        <div class="col">
+                            {{currentMark.Pname}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Infliction type:
+                        </div>
+                        <div class="col">
+                            {{currentMark.Infliction}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Accuracy of marker:
+                        </div>
+                        <div class="col">
+                            {{currentMark.Accuracy}}m
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title class="PscoreInfo">
+                    <div class="row">
+                        <div class="col">
+                            Image accuracy score:
+                        </div>
+                        <div class="col">
+                            {{currentMark.NeuralNet}}
+                        </div>
+                    </div>
                 </mat-card-title>
             </mat-card>
-            <br>
-            <mat-selection-list #details [multiple]="false" [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
-                <mat-list-option *ngFor="let mark of markerDetails" [value]="mark.Answer">
-                    {{mark.Question}}
-                </mat-list-option>
-            </mat-selection-list>
+                <br><br>
+            <mat-card>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Specialist diagnosis:
+                        </div>
+                        <div class="col">
+                            awaiting review
+                        </div>
+                    </div>
+                </mat-card-title>
+                <mat-card-content>
+                    
+                </mat-card-content>
+            </mat-card>
         </div>
         <div fxFlex="40" *ngIf="displayReady">
             <ngb-carousel style="background-color: dar;height: 650px;outline: none;">
                 <ng-template ngbSlide>
                     <div class="picsum-img-wrapper">
-                        <img src="{{currentMark['IMG1']}}" alt="Random first slide" style="max-height: 650px;">
+                        <img src="{{currentMark['Img1']}}" alt="Random first slide" style="max-height: 650px;">
                     </div>
                 </ng-template>
                 <ng-template ngbSlide>
                     <div class="picsum-img-wrapper">
-                        <img src="{{currentMark['IMG2']}}" alt="Random second slide" style="max-height: 650px;">
+                        <img src="{{currentMark['Img2']}}" alt="Random second slide" style="max-height: 650px;">
                     </div>
                 </ng-template>
                 <ng-template ngbSlide>
                     <div class="picsum-img-wrapper">
-                        <img src="{{currentMark['IMG3']}}" alt="Random third slide" style="max-height: 650px;">
+                        <img src="{{currentMark['Img3']}}" alt="Random third slide" style="max-height: 650px;">
                     </div>
                 </ng-template>
             </ngb-carousel>
@@ -151,7 +201,36 @@
         </div>
     </div>
     <br>
+    <div class="flex-container" fxLayout="row" *ngIf="!showMap">
+        <div fxFlex fxLayoutAlign="center">
+            <h1>Report Comparison</h1>
+        </div>
+    </div>
+    <div class="flex-container" fxLayout="row" *ngIf="!showMap" [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
+        <div fxFlex fxLayoutAlign="center">
+            <table class="table table-striped table-light" *ngIf="comparisonMarker!=undefined&&currentMark!=undefined">
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="2">Questions</th>
+                    <th scope="col">Selected report ({{currentMID}})</th>
+                    <th scope="col">Comparison Report ({{comparisonMID}})</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let MD of markerDetails; let i=index">
+                    <th scope="row" colspan="2">{{MD["Question"]}}</th>
+                    <td>{{MD["Answer"]}}</td>
+                    <td *ngIf="comparisonMarker[i]!=undefined">{{comparisonMarker[i]["Answer"]}}</td>
+                    <td *ngIf="comparisonMarker[i]==undefined">Select a report to compare</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
 </div>
+<br><br>
+
 <div *ngIf="DeviceType=='Mobile'">
 
     <div fxLayout="row" fxLayoutAlign="space-between">

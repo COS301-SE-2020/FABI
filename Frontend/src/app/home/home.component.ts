@@ -31,6 +31,17 @@ export interface Questions{
     Answer: string;
 }
 
+export interface currentReport{
+    ID: number;
+    Pname: string;
+    Infliction: string;
+    Accuracy: number;
+    Img1:string;
+    Img2:string;
+    Img3:string;
+    NeuralNet: number;
+    form: string;
+}
 
 
 
@@ -44,12 +55,21 @@ export class HomeComponent implements AfterViewInit {
     displayedColumns: string[] = ['ID', 'Pname', 'distance', 'date'];
     dataSource;
 
+    blankQuestionnaire:Array<Questions>=[
+        {
+            Question:"",
+            Answer:"Select a report to compare"
+        }
+    ];
+
     @ViewChild('mapContainer') gmap: ElementRef;
     displayReady: Boolean = false;
     pageEvent: PageEvent;
     dataLength=100;
 
-    markerDetails:Array<Questions>;
+    markerDetails:Array<Questions>=this.blankQuestionnaire;
+    currentMark: currentReport;
+    comparisonMarker:Array<Questions>=this.blankQuestionnaire;
 
     DeviceType: String;
     overlaySwitch="none";
@@ -58,7 +78,6 @@ export class HomeComponent implements AfterViewInit {
     lng;
     map: google.maps.Map;
     coordinates;
-    infowindow;
     mapOptions: google.maps.MapOptions;
     mapStyle: any = (Styles as any).default;
     legView = false;
@@ -87,7 +106,7 @@ export class HomeComponent implements AfterViewInit {
     currentUser: User;
     users = [];
     currentMID = null;
-    currentMark;
+    comparisonMID=null;
     markIDs: Array<number> = [];
     Active;
     DarkMode = true;
@@ -257,8 +276,6 @@ export class HomeComponent implements AfterViewInit {
 
                 google.maps.event.addListener(Object.marker[i], 'click', (function (object, i, token) {
                     return function () {
-                        // infowindow.setContent(Object.getInfoTemplate(data[i]));
-                        // infowindow.open(Object.map, marker);
                         object.openDisplay();
                         object.setDisplay(i);
                         if(object.DeviceType=="Mobile")object.overlaySwitch="none";
@@ -270,15 +287,6 @@ export class HomeComponent implements AfterViewInit {
 
             }
         });
-
-        // var infowindow = new google.maps.InfoWindow();
-
-
-        // google.maps.event.addListener(infowindow, 'content_changed', () => {
-        //     var string = infowindow.getContent() + "";
-        //     this.setDisplay();
-
-        // });
     }
 
     getNearbyReports(event){
@@ -292,10 +300,10 @@ export class HomeComponent implements AfterViewInit {
         });
     }
 
-    getCurrentInfo(){
-        var report: Array<any>=(this.currentMark.form).split(",");
+    getCurrentInfo(Form){
+        var report: Array<any>=(Form).split(",");
 
-        this.markerDetails=[
+        return [
             {
                 Question:report[0],
                 Answer:report[1]
@@ -349,7 +357,16 @@ export class HomeComponent implements AfterViewInit {
     }
     
     getReportByID(ID){
-        console.log(ID);
+            this.comparisonMarker=this.blankQuestionnaire;
+            this.comparisonMID=null;
+        this.currentMarkServ.getReportDetails(this.currentUser,ID).subscribe(data=>{
+            this.comparisonMarker=this.blankQuestionnaire;
+            this.comparisonMID=null;
+            this.comparisonMarker=this.getCurrentInfo(data["form"]);
+            this.comparisonMID=ID;
+        });
+
+        
     }
 
     openMap() {
@@ -371,25 +388,24 @@ export class HomeComponent implements AfterViewInit {
 
     setDisplay(markerID) {
         this.displayReady = false;
-        var loc = null;
-        this.currentMarkServ.getMarkers(this.currentUser, this.lat, this.lng).subscribe(data => {
-            for (var i = 0; i < data.length; i++) {
-                if (data[i]["reportID"] == markerID) {
-                    loc = i;
-                }
+        this.currentMarkServ.getReportDetails(this.currentUser,markerID).subscribe(data=>{
+            this.currentMark={
+                ID: markerID,
+                Pname: data["Pname"],
+                Infliction: data["Infliction"],
+                Accuracy: data["Accuracy"],
+                Img1:data["Img1"],
+                Img2:data["Img2"],
+                Img3:data["Img3"],
+                NeuralNet: data["NeuralNetRating"],
+                form: data["form"]
+
             }
 
+            this.markerDetails=this.getCurrentInfo(this.currentMark.form);
+            this.displayReady = true;
 
-            if (loc != null) {
-                this.currentMark = data[loc];
 
-                this.Active = 0; // Button set to 1, disabled due to dummy data
-
-                let key = "currentMarker";
-                sessionStorage.setItem(key, JSON.stringify(this.currentMark));
-                this.getCurrentInfo();
-                this.displayReady = true;
-            }
         });
 
     }
@@ -406,42 +422,7 @@ export class HomeComponent implements AfterViewInit {
         }
     }
 
-    getInfoTemplate(Object) {
-        var Maincolor = "";
-        var approved = false;
-        var usertype = "Unknown";
-        switch (Object["userType"]) {
-            case "basic":
-                usertype = "General";
-                Maincolor = "color:lightgreen;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
-                break;
-            case "special":
-                usertype = "Specialist";
-                Maincolor = "color:yellow;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
-                break;
-            case "advanced":
-                usertype = "Company";
-                Maincolor = "color:red;text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;";
-                break;
-
-        }
-
-
-        this.currentMID = Object["reportID"];
-
-
-        var footer = (approved ? '<br><br><i><b>Specialist Approved</b></i>' : '');
-        return '<div id="content" style="width=200px;height=auto;">' +
-            '<div id="siteNotice">' +
-            '</div>' +
-            '<h3 id="firstHeading" class="firstHeading" style="' + Maincolor + '">' + usertype + " User" + '</h3>' +
-            '<div id="bodyContent">' +
-            'Accuracy: ' + Object["Accuracy"] + 'm' +
-            footer +
-            '</div>' +
-            '</div>';
-
-    }
+    
 
 }
 

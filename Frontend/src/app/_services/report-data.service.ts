@@ -6,7 +6,7 @@ import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import gql from 'graphql-tag';
 
-import { BehaviorSubject, Observable,Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 
 export interface nearbyReport {
   ID: number;
@@ -19,12 +19,12 @@ export interface nearbyReport {
   providedIn: 'root'
 })
 export class ReportDataService {
-  private nearbyReports:  nearbyReport[];
+  private nearbyReports: nearbyReport[];
   private currentMarker: BehaviorSubject<Report>;
   public currentMark: Observable<Report>;
-  public nearbyReport:Observable<nearbyReport>;
+  public nearbyReport: Observable<nearbyReport>;
   private reportLenth;
-  
+
 
   constructor(private apollo: Apollo) {
   }
@@ -55,6 +55,27 @@ export class ReportDataService {
     }))
   }
 
+  getReportDetails(token, ID) {
+    return this.apollo.mutate({
+      mutation: gql`mutation {
+                  getSingleReport( getSingleReportRequest: {token: "${token}", reportID: ${ID}})
+                  {
+                      Pname,
+                      Infliction,
+                      Accuracy,
+                      Img1,
+                      Img2,
+                      Img3,
+                      NeuralNetRating,
+                      form
+                  }
+              }`
+    }).pipe(map(data => {
+      return data["data"]["getSingleReport"];
+
+    }))
+  }
+
   sendReport(token, report, Img1, Img2, Img3, long, lat, acc, plant, infliction) {
     return this.apollo.mutate({
       mutation: gql`mutation {
@@ -69,7 +90,7 @@ export class ReportDataService {
     }))
   }
 
-  requestNearbyReports(reportID, token){
+  requestNearbyReports(reportID, token) {
     return this.apollo.mutate({
       mutation: gql`mutation {
                   popTableBasicUser( request: {reportID: ${reportID}, token: "${token}"})
@@ -81,17 +102,17 @@ export class ReportDataService {
                   }
               }`
     }).pipe(map(data => {
-      localStorage.setItem("nearbyReports",JSON.stringify(data["data"]["popTableBasicUser"]))
+      localStorage.setItem("nearbyReports", JSON.stringify(data["data"]["popTableBasicUser"]))
 
     }))
   }
 
-  getNearbyReports(page){
-    var pageSize=5;
-    var startIndex=pageSize*(page);
-    var list:Array<nearbyReport> = JSON.parse(localStorage.getItem("nearbyReports"));
-    this.reportLenth=list.length;
-    this.nearbyReports=list.slice(startIndex,startIndex+pageSize);
+  getNearbyReports(page) {
+    var pageSize = 5;
+    var startIndex = pageSize * (page);
+    var list: Array<nearbyReport> = JSON.parse(localStorage.getItem("nearbyReports"));
+    this.reportLenth = list.length;
+    this.nearbyReports = list.slice(startIndex, startIndex + pageSize);
     return this.nearbyReports;
 
   }
