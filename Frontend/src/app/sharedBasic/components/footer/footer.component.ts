@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class FooterComponent implements OnInit {
 
-  DeviceType = localStorage.getItem("DeviceType");
+  DeviceType = sessionStorage.getItem("DeviceType");
   subscription: Subscription;
   currentStyle = "Dark";
   constructor(
@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
   }
   toggleDevice() {
-    localStorage.setItem("DeviceType", (this.DeviceType == "Desktop" ? "Mobile" : "Desktop"));
+    sessionStorage.setItem("DeviceType", (this.DeviceType == "Desktop" ? "Mobile" : "Desktop"));
     location.reload();
   }
 

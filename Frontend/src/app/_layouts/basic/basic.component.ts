@@ -34,20 +34,17 @@ export class BasicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    localStorage.setItem("StyleMode", "Dark");
+    sessionStorage.setItem("StyleMode", "Dark");
 
-    if (localStorage.getItem("DeviceType") == null) {
+    if (sessionStorage.getItem("DeviceType") == null) {
       if (this.deviceService.isDesktop()) {
-        localStorage.setItem("DeviceType", "Desktop");
+        sessionStorage.setItem("DeviceType", "Desktop");
       }
-      else if (this.deviceService.isMobile()) {
-        localStorage.setItem("DeviceType", "Mobile");
-      }
-      else if (this.deviceService.isTablet()) {
-        localStorage.setItem("DeviceType", "Tablet");
+      else if (this.deviceService.isMobile()||this.deviceService.isTablet()) {
+        sessionStorage.setItem("DeviceType", "Mobile");
       }
       else {
-        localStorage.setItem("DeviceType", "Desktop");
+        sessionStorage.setItem("DeviceType", "Desktop");
       }
     }
   }

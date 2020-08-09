@@ -12,8 +12,8 @@ import {ButtonListenerService} from "@/_services/buttonListener.service";
 export class HeaderComponent implements OnInit {
 
   currentUser: User;
-  DeviceType = localStorage.getItem("DeviceType");
-  curStyle = localStorage.getItem("StyleMode");
+  DeviceType = sessionStorage.getItem("DeviceType");
+  curStyle = sessionStorage.getItem("StyleMode");
   colour=this.curStyle=="Dark"?"white":"black";
   navStyles={"Dark":"navbar-dark bg-dark","Light":"navbar-light bg-light"};
   navMode=this.curStyle=="Dark"?this.navStyles.Dark:this.navStyles.Light;
@@ -38,16 +38,16 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleStyle() {
-    if (localStorage.getItem("StyleMode") == "Light") {
+    if (sessionStorage.getItem("StyleMode") == "Light") {
       this.curStyle = "Dark";
       this.styleSwitch.switchStyle("Dark");
       this.navMode=this.curStyle=="Dark"?this.navStyles.Dark:this.navStyles.Light;         
-      localStorage.setItem("StyleMode", "Dark");
+      sessionStorage.setItem("StyleMode", "Dark");
     } else {
       this.curStyle = "Light";
       this.styleSwitch.switchStyle("Light");
       this.navMode=this.curStyle=="Dark"?this.navStyles.Dark:this.navStyles.Light;
-      localStorage.setItem("StyleMode", "Light");
+      sessionStorage.setItem("StyleMode", "Light");
     }
   }
 

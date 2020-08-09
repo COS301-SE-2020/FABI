@@ -128,7 +128,7 @@ export class HomeComponent implements AfterViewInit {
 
     ngOnInit(): void {
         this.Active = 0;
-        this.DeviceType = localStorage.getItem("DeviceType");
+        this.DeviceType = sessionStorage.getItem("DeviceType");
     }
 
     loadMap() {
@@ -353,6 +353,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     openMap() {
+        sessionStorage.removeItem("currentMarker");
         this.showMap = true;
         this.loadMap();
     }
@@ -385,7 +386,7 @@ export class HomeComponent implements AfterViewInit {
                 this.Active = 0; // Button set to 1, disabled due to dummy data
 
                 let key = "currentMarker";
-                localStorage.setItem(key, JSON.stringify(this.currentMark));
+                sessionStorage.setItem(key, JSON.stringify(this.currentMark));
                 this.getCurrentInfo();
                 this.displayReady = true;
             }
@@ -394,7 +395,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     toggleMapStyle() {
-        if (localStorage.getItem("StyleMode") == "Light") {
+        if (sessionStorage.getItem("StyleMode") == "Light") {
             this.map.setOptions({
                 styles: (this.mapStyle.Dark)
             });

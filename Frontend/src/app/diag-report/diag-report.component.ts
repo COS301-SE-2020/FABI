@@ -38,6 +38,7 @@ export class DiagReportComponent implements OnInit {
   public Acc:any;
   public Images:Array<any>=[];
   public ImageDataCount:number=0;
+  public device=sessionStorage.getItem("DeviceType");
 
   public selectedValue: string = '';
 

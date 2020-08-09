@@ -70,82 +70,82 @@
     </div> -->
 
     
-    <div class="row">
+    <div class="row" *ngIf="device=='Desktop'">
       <div class="col-6">
         <form [formGroup]="Questionnaire">
           <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" style="display: none;">
         
          
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[0].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[0].Question}}</mat-label>
         <input matInput placeholder="namaqualand daisy" formControlName="Question1">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[1].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[1].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question2">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[2].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[2].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question3">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[3].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[3].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question4">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[4].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[4].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question5">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[5].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[5].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question6">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[6].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[6].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question7">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[7].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[7].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question8">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[8].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[8].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question9">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[9].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[9].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question10">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[10].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[10].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question11">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="fill">
-        <mat-label>{{responses[11].Question}}</mat-label>
+        <mat-label class="unselectable">{{responses[11].Question}}</mat-label>
         <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question12">
-        <mat-error *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
         
       
