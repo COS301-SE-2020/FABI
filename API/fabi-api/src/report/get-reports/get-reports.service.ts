@@ -36,8 +36,7 @@ import { ReportService } from '../../database/Report/report.service';
 
 @Injectable()
 export class GetReportsService {
-    // create the return variable
-    res: GetReportsResponse = { reports: "", status: 0 }
+    
 
     //define services used within this file
     constructor(
@@ -45,44 +44,75 @@ export class GetReportsService {
         private reportService: ReportService,
     ) { }
 
-    async getReports(reqObj: GetReportsRequest): Promise<GetReportsResponse> {
+    async getReports(reqObj: GetReportsRequest): Promise<GetSingleReportResponse[]> {
+
+        // create the return variable
+        var res: GetSingleReportResponse[] = [{status:201}]
+
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
         if (result == false) {
             //error code
-            this.res.status = 415;
+            res[0].status = 415;
 
-            return this.res;
+            return res;
         } else {
+
+            //clear array
+            res.pop();
+
             //this will pass upload object to report service that will interact with db
-            let reportString = await this.reportService.getReports(reqObj.latitude, reqObj.longitude);
+            let reportJSON = await this.reportService.getReports(reqObj.latitude, reqObj.longitude);
+
+            if(Object.keys(reportJSON).length == 0){
+            return res;
+            }
 
             //Build response object
-            this.res.reports = await reportString.toString();
-            this.res.status = 201;
+            for(var i = 0 ; i<Object.keys(reportJSON).length ; i++){
+                res.push({status:201,
+                Accuracy:reportJSON[i].Accuracy,
+                Img1:reportJSON[i].IMG1,
+                Img2:reportJSON[i].IMG2,
+                Img3:reportJSON[i].IMG3,
+                ID:reportJSON[i].reportID,
+                Infliction:reportJSON[i].Infliction,
+                Lat:reportJSON[i].Lat,
+                Long:reportJSON[i].Long,
+                Pname:reportJSON[i].Pname,
+                NeuralNetRating:reportJSON[i].Pscore,
+                form:reportJSON[i].form,
+                userType:reportJSON[i].userType
+                })
+            }
 
             //return response Object
-            return this.res;
+            return res;
 
         }
     }
     
     async getSingleReports(reqObj: GetSingleReportRequest) : Promise<GetSingleReportResponse> {
 
-        var response: GetSingleReportResponse = {status:-1};
+        var response: GetSingleReportResponse = {status:500};
 
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
         if (result == false) {
             //error code
-            this.res.status = 415;
+            response.status = 415;
 
-            return this.res;
+            return response;
         } else {
+            
             //this will pass upload object to report service that will interact with db
             let report = await this.reportService.getSingleReport(reqObj.reportID);
+
+            if(Object.keys(report).length==0){
+                return response;
+            }
 
             //Build response object
             response.Accuracy = report[0].Accuracy;

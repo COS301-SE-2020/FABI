@@ -34,7 +34,7 @@ type GetSingleReportResponse{
 }
 
 type Mutation{
-    getReports(getReportsRequest:GetReportsRequest):GetReportsResponse!
+    getReports(getReportsRequest:GetReportsRequest):[GetSingleReportResponse!]
     getSingleReport(getSingleReportRequest:GetSingleReportRequest):GetSingleReportResponse!
 }
 

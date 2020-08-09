@@ -41,7 +41,7 @@ export class ReportService {
   ) { }
 
   //Function To get Reports from DB based on location
-  async getReports(lat: number, long: number): Promise<String> {
+  async getReports(lat: number, long: number): Promise<JSON> {
 
   //values for distance calculations (for 50km radius)
     //long +-0,5057
@@ -60,7 +60,7 @@ export class ReportService {
     var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"date\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
       " AND " + "\"Lat\" BETWEEN " + latRangeNegative + " AND " + latRangePositive + " AND " + "reports.email = users.\"Email\";");
 
-    return JSON.stringify(results);
+    return results;
   }
 
   //Function To get Single report from the DB when given an ID
