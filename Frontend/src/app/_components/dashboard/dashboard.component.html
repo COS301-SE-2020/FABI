@@ -9,8 +9,8 @@
 <br>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
-  <mat-card fxFlex="25" *ngFor="let ct of cardTotal; let i = index">
-    <app-widget-card label="{{cardLabel[i]}}" total="{{ct}}" percentage="{{cardPercentage[i]}}" [data]="cards"></app-widget-card>
+  <mat-card fxFlex="25" *ngFor="let ct of cards; let i = index">
+    <app-widget-card label="{{cardLabel[i]}}" total="{{cardTotal[i]}}" percentage="{{cardPercentage[i]}}" data="{{ct}}"></app-widget-card>
   </mat-card>
 </div>
 

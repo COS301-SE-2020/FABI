@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class DashboardComponent implements OnInit {
 
-  cards = []
+  cards = [[1,2,3], [3,7,9], [4,8,13], [3,6,4]]
   cardPercentage = []
   cardTotal = []
   cardLabel = []
@@ -24,20 +24,20 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    // this.cards = this.dashboardService.cards()
     this.dashboardService.cards().subscribe(data => {
       for (let obj in data) {
           this.cardLabel.push(data[obj]["name"])
           this.cardTotal.push(data[obj]["thisWeek"])
-          this.cards.push(
-            [ data[obj]["twoWeeksAgo"], data[obj]["lastWeek"], data[obj]["thisWeek"] ]
-          )
+          // this.cards.push(
+          //   [ data[obj]["twoWeeksAgo"], data[obj]["lastWeek"], data[obj]["thisWeek"] ]
+          // )
           let divisor = data[obj]["lastWeek"] + data[obj]["twoWeeksAgo"]
           this.cardPercentage.push(
             (divisor > 0) ? (data[obj]["thisWeek"] / divisor) : 0
           )
       }
     })
+
     // this.pieChart = this.dashboardService.pieChart()
     // console.log(this.pieChart);
     

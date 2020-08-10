@@ -29,7 +29,10 @@
  */
 
 
-
+/** 
+ * HIGHCHARTS IS A FRAGILE ECOSYSTEM, THIS CODE WORKS BUT PRODUCES PROBLEMS IN THE TERMINAL
+ * DO NOT TRY TO REMOVE ANYTHING UNLESS YOU KNOW WHAT YOU ARE DOING. IT IS VERY BAD WITH DATA
+*/
 // Angular specific imports
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -44,30 +47,44 @@ import { DashboardService } from '../../../_components/dashboard.service';
 })
 export class PieComponent implements OnInit {
 
-  Highcharts = Highcharts
+  tempData = [{
+    name: 'Aphids',
+    y: 61.41,
+    sliced: true,
+    selected: true
+  }, {
+    name: 'Cicadas',
+    y: 11.84
+  }, {
+    name: 'Corn Earworms',
+    y: 10.85
+  }, {
+    name: 'Cabbage Worms',
+    y: 4.67
+  }, {
+    name: 'Sclerotinia',
+    y: 4.18
+  }, {
+    name: 'Soybean Cyst',
+    y: 1.64
+  }, {
+    name: 'Bean Pod Mottle',
+    y: 1.6
+  }, {
+    name: 'Bacterial Blight',
+    y: 1.2
+  }, {
+    name: 'Other',
+    y: 2.61
+  }]
+  // Highcharts = Highcharts
+  chart
   chartOptions = {}
   pieChartData = []
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    this.dashboardService.pieChart().subscribe(data => {
-      data = data.filter(props => {
-            delete props["__typename"]
-            return true
-          })
-      this.pieChartData = data
-      this.updateChart()
-      console.log(data);
-    })
-
-    setTimeout(() => {
-      window.dispatchEvent(
-        new Event('resize')
-      )
-    }, 100)
-  }
-  updateChart() {
-    this.chartOptions = {
+    this.chart = Highcharts.chart('container', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -104,10 +121,75 @@ export class PieComponent implements OnInit {
       series: [{
         name: 'Afflictions',
         colorByPoint: true,
-        data: this.pieChartData
+        data: this.tempData
       }]
-    }
-    HC_exporting(Highcharts)
+    });
+    // this.chartOptions = {
+    //   chart: {
+    //     plotBackgroundColor: null,
+    //     plotBorderWidth: null,
+    //     plotShadow: false,
+    //     type: 'pie'
+    //   },
+    //   title: {
+    //     text: 'Pest and Pathogen Ratios'
+    //   },
+    //   tooltip: {
+    //     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    //   },
+    //   accessibility: {
+    //     point: {
+    //       valueSuffix: '%'
+    //     }
+    //   },
+    //   plotOptions: {
+    //     pie: {
+    //       allowPointSelect: true,
+    //       cursor: 'pointer',
+    //       dataLabels: {
+    //         enabled: true,
+    //         format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+    //       }
+    //     }
+    //   },
+    //   exporting: {
+    //     enabled: true
+    //   },
+    //   credits: {
+    //     enabled: false
+    //   },
+    //   series: [{
+    //     name: 'Afflictions',
+    //     colorByPoint: true,
+    //     data: this.tempData
+    //   }]
+    // }
+    // HC_exporting(Highcharts)
+
+    this.dashboardService.pieChart().subscribe(data => {
+      data = data.filter(props => {
+        delete props["__typename"]
+        return true
+      })
+      this.pieChartData = data
+      this.updateChart()
+      console.log(this.tempData);
+
+      console.log(data);
+    })
+    // this.pieChartData = this.tempData
+    // this.updateChart()
+
+    setTimeout(() => {
+      window.dispatchEvent(
+        new Event('resize')
+      )
+    }, 100)
+  }
+  updateChart() {
+    this.chart.update({
+      series: { data: this.pieChartData }
+    })
   }
 
 }
