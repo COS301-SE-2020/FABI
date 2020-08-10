@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './spec-search.component.html',
   styleUrls: ['./spec-search.component.css']
 })
-export class SearchReports implements OnInit {
+export class SpecSearchComponent implements OnInit {
 
   constructor() { }
 

@@ -51,7 +51,7 @@ import { DiagReportComponent } from './diag-report/diag-report.component';
 import { MapReportComponent } from './map-report/map-report.component';
 
 // Specialist User imports
-import { SearchReports } from './spec-search/spec-search.component';
+import { SpecSearchComponent } from './spec-search/spec-search.component';
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -95,7 +95,7 @@ const routes: Routes = [
     },
     {
         path: 'specialist',
-        component: SearchReports
+        component: SpecSearchComponent
     },
     // otherwise redirect to home
     {
