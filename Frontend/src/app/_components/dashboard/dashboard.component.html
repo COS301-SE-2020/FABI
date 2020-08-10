@@ -9,17 +9,8 @@
 <br>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
-  <mat-card fxFlex="25">
-    <app-widget-card label="New Reports" total="120" percentage="60" [data]="cards"></app-widget-card>
-  </mat-card>
-  <mat-card fxFlex="25">
-    <app-widget-card label="New Pathogens" total="68" percentage="58" [data]="cards"></app-widget-card>
-</mat-card>
-  <mat-card fxFlex="25">
-    <app-widget-card label="New Pests" total="72" percentage="96" [data]="cards"></app-widget-card>
-  </mat-card>
-  <mat-card fxFlex="25">
-    <app-widget-card label="Total Undiagnosed Reports" total="346" percentage="89" [data]="cards"></app-widget-card>
+  <mat-card fxFlex="25" *ngFor="let ct of cards; let i = index">
+    <app-widget-card label="{{cardLabel[i]}}" total="{{cardTotal[i]}}" percentage="{{cardPercentage[i]}}" data="{{ct}}"></app-widget-card>
   </mat-card>
 </div>
 
@@ -67,6 +58,6 @@
     
   </div>
   <div fxFlex="40">
-    <app-widget-pie [data]="pieChart"></app-widget-pie>
+    <app-widget-pie></app-widget-pie>
   </div>
 </div>
