@@ -2,33 +2,178 @@
 <div class="header" style="border: 1px solid black">
     <span>
         <button class="btn btn-success" style="margin-left: 5px;" routerLink="">Back</button>
-        <h2>Search for Diagnostic Reports</h2>
+        <h2 >Search for Diagnostic Reports</h2>
     </span>
 </div>
 
 <div id="wrapper">
     <div id="left-filter-div">
-        <h2 class>Filter Reports</h2>
         <form>
+            <h2 class="specChild">Filter Reports</h2>
             <div class="form-group">
-                <label>Plant Name</label><br>
-                <!--text box-->
-                <label>Report Status</label><br>
-                <!--drop down-->
+                <label>Plant Name</label>
+                <input type="text" id="pname" name="pname"><br>
+                <label>Report Status</label>
+                <select name="drpDwn" id="drpDwn">
+                    <option value="Unverified">Unverified</option>
+                    <option value="Verified">Verified</option>
+                </select><br>
                 <label>Distance from position</label><br>
-                <!--slider for distance-->
-                <label>List of symptoms</label><br>
-                <!--input text field-->
+                <input type="range" id="distance" name="distance" min="5" max="50" value="5"><br>
+                <label for="sleft" class="pull-left">5km</label>
+                <label for="sright" class="pull-right">50km</label><br>
+                <br><label>List of symptoms</label><br>
+                <textarea id="w3review" name="w3review" rows="4">
+                </textarea>
                 <button class="btn btn-success" style="margin-left: 5px;">Apply Filters</button>
             </div>
         </form>
     </div>
     
     <div id="right-disply-div">
-        <h2>Reports:</h2>
-        <form>
-            
-        </form>
+        <h2>Reports:</h2><br>
+        <div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid; text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+            <div class="report">
+                <h3 style="border-bottom-style: solid;  text-align: center;">SciName</h3>
+                <h3>Symptoms:</h3>
+                <p>
+                    text<br>
+                    text2<br>
+                    text3<br>
+                </p>
+                <h3>18 March 1999</h3>
+            </div>
+        </div>
     </div>
 </div>
 </div>
