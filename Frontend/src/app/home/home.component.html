@@ -47,7 +47,7 @@
 
 <!-- Desktop layout -->
 
-<div *ngIf="DeviceType=='Desktop'" [style.color]="currentStyle=='Dark'?'white':'black'">
+<div *ngIf="DeviceType=='Desktop'" [style.color]="currentStyle=='Dark'?'white':'black'" class="unselectable">
     <div class="flex-container" fxLayout="row" *ngIf="showMap">
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
                 diagnosis report</button></div>

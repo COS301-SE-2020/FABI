@@ -251,7 +251,7 @@ export class HomeComponent implements AfterViewInit {
                 Object.lat = data[i]["Lat"];
                 Object.lng = data[i]["Long"];
 
-                this.markIDs[i] = data[i]["reportID"];
+                this.markIDs[i] = data[i]["ID"];
 
                 var userIcon = "";
 

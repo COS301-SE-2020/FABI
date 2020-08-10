@@ -51,3 +51,7 @@ body {
 .mat-row:hover {
     background-color: grey;
 }
+
+.PscoreInfo{
+    cursor: help;
+}

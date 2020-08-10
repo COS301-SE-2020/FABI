@@ -41,16 +41,14 @@ export class ReportDataService {
                   getReports( getReportsRequest: {token: "${token}", latitude: ${latitude},longitude:${longitude}})
                   {
                       status,
-                      reports
+                      userType,
+                      Lat,
+                      Long,
+                      ID
                   }
               }`
     }).pipe(map(data => {
-      if (data["data"]["getReports"]["status"] == "201") {
-
-        return JSON.parse(data["data"]["getReports"]["reports"]);
-      } else {
-        throw new Error(`Error status code ${data["data"]["getReports"]["status"]}`);
-      }
+      return (data["data"]["getReports"]);
 
     }))
   }
