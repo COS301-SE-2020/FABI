@@ -2,13 +2,13 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import  Users, {UsersRepositoryFake } from '../Users/Users.entity';
-import { UsersService } from '../Users/users.service';
 import { create } from 'domain';
 import { createHmac } from 'crypto';
 import { AdminDashboardService } from './admin-dashboard.service';
 import { Admin_Dashboard_request } from 'src/graphql.schema';
-import { GetAdminDashService } from 'src/database/admin-dashboard/get-admin-dash.service';
+import { GetAdminDashService } from '../../database/admin-dashboard/get-admin-dash.service';
+import { UsersService } from '../../database/Users/users.service';
+
 
 
 class mockGetAdminDashService{
