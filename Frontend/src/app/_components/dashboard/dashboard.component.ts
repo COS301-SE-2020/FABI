@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class DashboardComponent implements OnInit {
 
-  cards = [[1,2,3], [3,7,9], [4,8,13], [3,6,4]]
+  cards = []
   cardPercentage = []
   cardTotal = []
   cardLabel = []
@@ -28,9 +28,9 @@ export class DashboardComponent implements OnInit {
       for (let obj in data) {
           this.cardLabel.push(data[obj]["name"])
           this.cardTotal.push(data[obj]["thisWeek"])
-          // this.cards.push(
-          //   [ data[obj]["twoWeeksAgo"], data[obj]["lastWeek"], data[obj]["thisWeek"] ]
-          // )
+          this.cards.push(
+            [ data[obj]["twoWeeksAgo"], data[obj]["lastWeek"], data[obj]["thisWeek"] ]
+          )
           let divisor = data[obj]["lastWeek"] + data[obj]["twoWeeksAgo"]
           this.cardPercentage.push(
             (divisor > 0) ? (data[obj]["thisWeek"] / divisor) : 0
