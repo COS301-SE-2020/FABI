@@ -23,6 +23,8 @@ import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
 import { SpecSearchComponent } from './spec-search/spec-search.component';
+import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
+import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { SpecSearchComponent } from './spec-search/spec-search.component';
     DiagReportComponent,
     MapReportComponent,
     SpecSearchComponent,
+    SpecVerifyComponent,
+    SpecSubmitComponent,
   ],
   imports: [
     BrowserModule,

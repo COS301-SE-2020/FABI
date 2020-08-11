@@ -52,6 +52,9 @@ import { MapReportComponent } from './map-report/map-report.component';
 
 // Specialist User imports
 import { SpecSearchComponent } from './spec-search/spec-search.component';
+import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
+import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
+
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -96,6 +99,14 @@ const routes: Routes = [
     {
         path: 'specialist',
         component: SpecSearchComponent
+    },
+    {
+        path: 'verify',
+        component: SpecVerifyComponent
+    },
+    {
+        path: 'submit',
+        component: SpecSubmitComponent
     },
     // otherwise redirect to home
     {
