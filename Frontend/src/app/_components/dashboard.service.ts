@@ -14,7 +14,7 @@ export class DashboardService {
   adminTable() {
     console.log(this.authentication.currentUserValue)
     return this.apollo.mutate({
-      mutation: gql `mutation {
+      mutation: gql`mutation {
         get_TableInfo( request: { token: "${this.authentication.currentUserValue}" } ) {
           data,
           status
@@ -27,7 +27,7 @@ export class DashboardService {
 
   bigChart() {
     return this.apollo.mutate({
-      mutation: gql `mutation {
+      mutation: gql`mutation {
         get_GraphInfo( request: { token: "${this.authentication.currentUserValue}" } )
         {
           data,
@@ -40,39 +40,65 @@ export class DashboardService {
   }
 
   cards() {
-    return [71, 78, 39, 66]
+    return this.apollo.mutate({
+      mutation: gql`mutation {
+        get_CardsInfo(request: { token: "${this.authentication.currentUserValue}" })
+        {
+          name,
+          thisWeek,
+          lastWeek,
+          twoWeeksAgo
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["get_CardsInfo"]
+    }))
   }
 
   pieChart() {
-    return [{
-      name: 'Aphids',
-      y: 61.41,
-      sliced: true,
-      selected: true
-    }, {
-      name: 'Cicadas',
-      y: 11.84
-    }, {
-      name: 'Corn Earworms',
-      y: 10.85
-    }, {
-      name: 'Cabbage Worms',
-      y: 4.67
-    }, {
-      name: 'Sclerotinia',
-      y: 4.18
-    }, {
-      name: 'Soybean Cyst',
-      y: 1.64
-    }, {
-      name: 'Bean Pod Mottle',
-      y: 1.6
-    }, {
-      name: 'Bacterial Blight',
-      y: 1.2
-    }, {
-      name: 'Other',
-      y: 2.61
-    }]
+
+    return this.apollo.mutate({
+      mutation: gql`mutation {
+        get_PieChartInfo( request: { token: "${this.authentication.currentUserValue}" } )
+        {
+          name,
+          y
+        }
+      }`
+    }).pipe(map(data => {
+
+      return data["data"]["get_PieChartInfo"]
+    }))
+
+    // return [{
+    //   name: 'Aphids',
+    //   y: 61.41,
+    //   sliced: true,
+    //   selected: true
+    // }, {
+    //   name: 'Cicadas',
+    //   y: 11.84
+    // }, {
+    //   name: 'Corn Earworms',
+    //   y: 10.85
+    // }, {
+    //   name: 'Cabbage Worms',
+    //   y: 4.67
+    // }, {
+    //   name: 'Sclerotinia',
+    //   y: 4.18
+    // }, {
+    //   name: 'Soybean Cyst',
+    //   y: 1.64
+    // }, {
+    //   name: 'Bean Pod Mottle',
+    //   y: 1.6
+    // }, {
+    //   name: 'Bacterial Blight',
+    //   y: 1.2
+    // }, {
+    //   name: 'Other',
+    //   y: 2.61
+    // }]
   }
 }
