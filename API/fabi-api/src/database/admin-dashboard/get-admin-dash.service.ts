@@ -48,13 +48,6 @@ export class GetAdminDashService {
     var days: string[] = [];
     var daysCount: number[] = [];
 
-    //test for no data
-    if(Object.keys(result).length == 0){
-      res.data = "{}";
-      res.status = 201;
-      return res;
-    }
-
     for (var i = 0; i < Object.keys(result).length; i++) {
       var currDate = result[i].date;
       var currCount = result[i].count;

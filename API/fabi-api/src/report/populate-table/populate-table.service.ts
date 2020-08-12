@@ -78,9 +78,8 @@ export class PopulateTableService {
             //get all similar
             let result = await this.reportService.getReports(lat, long);
 
-            //this so retard but the sort function doesn't work if i dont do this.
-            let resultString = JSON.stringify(result);
-            let resultJson = JSON.parse(resultString.toString());
+            //create JSON obj
+            let resultJson = JSON.parse(result.toString());
 
             //sort results by reportID
             let sortedResults = resultJson.sort(function(a, b) {
