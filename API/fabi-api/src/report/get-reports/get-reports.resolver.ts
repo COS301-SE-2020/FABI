@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { GetReportsService } from './get-reports.service';
-import {GetReportsResponse,GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse }  from '../../graphql.schema';
+import {GetReportsResponse,GetReportsRequest,GetSingleReportRequest }  from '../../graphql.schema';
 
 @Resolver('GetReports')
 export class GetReportsResolver {
@@ -11,7 +11,7 @@ export class GetReportsResolver {
     ){}
 
 @Mutation('getReports')
-async getReports(@Args('getReportsRequest') reqObj: GetReportsRequest  ): Promise<GetSingleReportResponse[]>{
+async getReports(@Args('getReportsRequest') reqObj: GetReportsRequest  ): Promise<GetReportsResponse>{
 
     return this.getReportService.getReports(reqObj);
 }

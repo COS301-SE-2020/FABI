@@ -96,7 +96,7 @@ const routes: Routes = [
             path: 'updatePathogen/:id',
             component: UpdatePathogenComponent
         }],
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: 'basic',
