@@ -1,0 +1,38 @@
+#lower-left {
+    float: left;
+    width: 30%;
+    border: solid;
+}
+
+#lower-right {
+    float: left;
+    width: 100%;
+}
+
+#lower {
+    display: flex;
+}
+
+#top {
+    text-align: center;
+    border: solid;
+}
+
+#second-half {
+    float: left;
+    border-left: solid;
+    width: 100%;
+    height: 100%;
+}
+
+#headofsub {
+    text-align: center;
+    border-bottom: solid;
+    width: 100%;
+    height: 100%;
+}
+
+#verifyReport {
+    border: solid;
+    width: 100%;
+}

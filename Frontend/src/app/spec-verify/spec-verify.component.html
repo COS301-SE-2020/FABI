@@ -1,0 +1,35 @@
+<div id="top">
+    <p>Something to do with reports</p>
+</div>
+<div id="lower">
+    <div id="lower-left">
+        <h3>This has been flagged with:</h3><br>
+        <label style="border: solid">Cactus</label>
+        <label style="border: solid">Rose</label>
+        <label style="border: solid">Rock</label>
+        <label style="border: solid">Rock</label>
+    </div>
+    <form id="verifyReport">
+        <div id="lower-right">
+            <div>
+                <h3 id="headofsub">Verify the diagnosis</h3>
+            </div>
+            <div id="first-half">
+                <label>Affliction: </label><br>
+                <input type="text" id="aname" name="aname"><br>
+                <label>Reason: </label><br>
+                <textarea id="reason" name="reason" rows="4"></textarea><br>
+            </div>
+            <div id="second-half">
+                <label>This diagnosis is: </label>
+                <select name="drpDwn" id="drpDwn">
+                    <option value="Correct">Correct</option>
+                    <option value="Incorrect">Incorrect</option>
+                </select><br>
+                <label>Additional comments: </label><br>
+                <textarea id="comment" name="comment" rows="4"></textarea><br>
+                <button class="btn btn-success" style="margin-left: 5px;">Submit for review</button>
+            </div>
+        </div>
+    </form>
+</div>
