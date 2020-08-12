@@ -1,0 +1,77 @@
+button {
+  display: inline-block;
+  margin: 0;
+}
+
+div h2 {
+  text-align: center;
+}
+
+h2 {
+  display: inline-block;
+  margin-left: 40%;
+}
+
+.specChild {
+    margin-left: 25%;
+}
+
+label {
+    margin: 3px;
+}
+
+textarea {
+    margin: 5px;
+    width: 90%;
+}
+
+div .header {
+  border: 1px solid black;
+  width: 100%;
+}
+
+#wrapper {
+  width: 100%;
+  overflow:auto;
+  position: relative;
+  display: flex;
+}
+
+#full-container {
+  width: 100%;
+  height: 100%;
+}
+
+#left-filter-div {
+  float: left;
+  border: 1px solid black;
+  margin: 0 0 0 0;
+  width: 20%;
+}
+
+#right-disply-div {
+  border: 1px solid black;
+  vertical-align:top;
+  margin: 0 0 0 0;
+  width: 80%;
+}
+
+#distance {
+    position: absolute;
+    height: auto; /* optionally add !important for WP version so it overrides default value */
+    margin: 1em;
+    width: 18%;
+}
+.pull-right {
+    margin-right: 2.5%;
+}
+
+.report {
+    float: left;
+    width: 14%;
+    height: 15em;
+    margin: 1em 1em 1em 1em;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
