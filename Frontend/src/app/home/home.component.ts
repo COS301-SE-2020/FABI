@@ -230,7 +230,10 @@ export class HomeComponent implements AfterViewInit {
     
 
     ngAfterViewInit(): void {
-        this.loadMap();
+        if(this.DeviceType=="Desktop")this.loadMap();
+        else{
+                       
+        }
     }
 
 
@@ -300,8 +303,10 @@ export class HomeComponent implements AfterViewInit {
         });
     }
 
-    getCurrentInfo(Form){
-        var report: Array<any>=(Form).split(",");
+    getCurrentInfo(Form:string){
+        var report: Array<any>;
+        report=(Form).split("x2C");
+        
 
         return [
             {

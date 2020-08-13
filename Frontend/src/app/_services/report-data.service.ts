@@ -77,7 +77,7 @@ export class ReportDataService {
   sendReport(token, report, Img1, Img2, Img3, long, lat, acc, plant, infliction) {
     return this.apollo.mutate({
       mutation: gql`mutation {
-                  upload( upload: {token: "${token}", report: "${report}",Img1:"${Img1}",Img2:"${Img2}",Img3:"${Img3}",Longitude:${long},Latitude:${lat},Accuracy:${acc},Pname:"${plant}",Infliction:"${infliction}"})
+                  upload( upload: {token: "${token}", report: "${report}",Urgency:1,Latitude:${lat},Longitude:${long},Accuracy:${acc},Pname:"${plant}",Infliction:"${infliction}",Img1:"${Img1}",Img2:"${Img2}",Img3:"${Img3}"})
                   {
                       status
                   }
@@ -87,6 +87,7 @@ export class ReportDataService {
 
     }))
   }
+
 
   requestNearbyReports(reportID, token) {
     return this.apollo.mutate({
@@ -115,6 +116,7 @@ export class ReportDataService {
 
   }
 
+  
 
 
 }

@@ -35,6 +35,7 @@ export class BasicComponent implements OnInit {
 
   ngOnInit(): void {
     sessionStorage.setItem("StyleMode", "Dark");
+    console.log(this.deviceService.browser)
 
     if (sessionStorage.getItem("DeviceType") == null) {
       if (this.deviceService.isDesktop()) {

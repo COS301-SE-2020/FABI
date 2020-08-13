@@ -3,7 +3,7 @@ form{
     display: flex;
     flex-direction: column;
     background-color: lightgray;
-    margin: 1% 1% 1% 1%;
+    margin: 1% 5% 1% 5%;
 }
 .unselectable {
     -webkit-touch-callout: none;

@@ -16,6 +16,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -37,7 +39,9 @@ import {MatListModule} from '@angular/material/list';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    MatSelectModule
   ]
 })
 export class HomeModule { }
