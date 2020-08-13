@@ -1,17 +1,9 @@
-label {
-    display: inline-block;
-}
-input {
-    text-align: left;
-    align-items: flex-end;
-}
-select{
-    
-    align-items: flex-end;
-}
+
 form{
     display: flex;
     flex-direction: column;
+    background-color: lightgray;
+    margin: 1% 5% 1% 5%;
 }
 .unselectable {
     -webkit-touch-callout: none;
@@ -21,3 +13,8 @@ form{
     -ms-user-select: none;
     user-select: none;
 }
+
+.form-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+    
+  }

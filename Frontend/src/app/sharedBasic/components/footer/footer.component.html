@@ -1,0 +1,19 @@
+<div [style.background-color]="currentStyle=='Dark'?'#1d1d47':'#66a6ff'">
+    <div class="flex-container" fxLayout="row" *ngIf="DeviceType=='Desktop'||DeviceType=='Tablet'">
+        <div fxFlex="20" fxLayoutAlign="center"></div>
+        <div fxFlex="60" fxLayoutAlign="center">
+            <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png">
+        </div>
+        <div fxFlex="20" fxLayoutAlign="end">
+
+        </div>
+    </div>
+    <br>
+    <div class="flex-container" fxLayout="row">
+        <div fxFlex fxLayoutAlign="center">
+            <button type="button" class="btn btn-dark btn-block" *ngIf="DeviceType=='Desktop'||DeviceType=='Tablet'" (click)="toggleDevice()">Mobile
+                version</button>
+            <button type="button" class="btn btn-dark btn-block" *ngIf="DeviceType=='Mobile'" (click)="toggleDevice()">Desktop version</button>
+        </div>
+    </div>
+</div>

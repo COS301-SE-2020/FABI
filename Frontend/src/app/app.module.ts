@@ -34,6 +34,7 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BasicModule } from './_layouts/basic/basic.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -46,7 +47,6 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
@@ -56,15 +56,24 @@ import { Http, HttpModule, Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
-import { BasicModule } from './_layouts/basic/basic.module';
 import { SpecSearchComponent } from './spec-search/spec-search.component';
 import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
 import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatListModule} from '@angular/material/list';
+import {HomeModule} from './home/home.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatButtonModule } from "@angular/material/button";
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     RegisterComponent,
     DiagReportComponent,
@@ -84,7 +93,19 @@ import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
     WebcamModule,
     HttpModule,
     BrowserAnimationsModule,
-    AdminModule
+    AdminModule,
+    HomeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatListModule,
+    MatTooltipModule,
+    MatButtonModule,
+
+    // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
+    DeviceDetectorModule,
+
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,14 +1,17 @@
-<br>
-<!-- Testing camera functionality -->
-<div class="col-sm" *ngIf="ImageDataCount<3&&!enterImage">
-  <div class="row">
-    <div class="col" ><button class="btn btn-success" (click)="toggleWebcam();">Toggle Webcam</button></div>
-    <div class="col" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;"><i class="fa fa-camera"></i> Take photo</button></div>
-    <div class="col" ><button type="button" class="btn btn-danger" *ngIf="(Images.length<3&&!showWebcam)" (click)="onCancel()">Cancel</button></div>
+<!-- <div class="col-sm-2" *ngIf="device=='Mobile'&&Images.length!=3"><button style="background-color: white;" disabled>{{Images.length}} Images</button>
+  <input type="file" accept="image/*" capture="environment" (change)="setImage($event)" *ngIf="deviceService.browser!='Safari'" multiple>
+</div><br> -->
+  <!-- Testing camera functionality -->
+ <div class="col-sm" *ngIf="ImageDataCount<3&&!enterImage">
+  <div class="row justify-content-sm-center" >
+    <div class="col-sm-2" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;setImageData();"><i class="fa fa-camera"></i> Take photo</button></div>
+    <div class="col-sm-2" ><button type="button" class="btn btn-danger"  (click)="onCancel()">Cancel</button></div>
+    
   </div><br>
-  <div class="row" *ngIf="!showWebcam&&ImageDataCount<3&&!enterImage" style="text-align: center;"><h4>You need 3 images to proceed</h4></div><br>
   
-  <div class="row" [style.visibility]="showWebcam?'visible':'hidden'">
+  
+  <div class="row justify-content-sm-center" [style.visibility]="showWebcam?'visible':'hidden'">
+    <div class="col-sm-2" >
         <webcam 
         [width]="350"
         [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
@@ -17,7 +20,7 @@
         [imageQuality]="1"
         (cameraSwitched)="cameraWasSwitched($event)"
         (initError)="handleInitError($event)">
-        </webcam>
+        </webcam></div>
   <br/>
 </div>
 <br>
@@ -35,144 +38,139 @@
 <li>{{error.message}}</li>
 </ul>
 
-<div class="row" *ngIf="!enterImage">
-  <div class="col-md-4" *ngFor="let Image of Images;let i = index;">
-    <div class="thumbnail">
-        <img src="{{Image.src}}" alt="Lights" style="width:100%">
-        <div class="caption">
-          <p>Image: {{i+1}}</p>
-        </div>
-    </div>
+<div class="row justify-content-sm-center" *ngIf="!enterImage&&device!='Mobile'">
+  <div class="col-sm-3" *ngFor="let Image of Images;let i = index;">
+    <img src="{{Image.src}}" style="width: 100%;" alt="Lights">
   </div>
 </div>
 
-<button class="btn btn-danger" (click)="clearImages();" *ngIf="ImageDataCount==3&&!enterImage">Reset Images</button>
-<div class="row" *ngIf="ImageDataCount<3&&enterImage" style="align-items: center;">
-  <div class="col-md-4">
-    <div class="thumbnail">
-        <img src="{{Images[Images.length-1].src}}" alt="Lights" style="width:100%"><br>
-        <div class="caption">
-          <button class="btn btn-primary" (click)="setImageData();" style="width: 100%;">Confirm</button>
-        </div>
-    </div>
-  </div>
-</div>
 
- 
 
-<div *ngIf="ImageDataCount==3&&!enterImage">
-<br/>
-      <h5 class="unselectable">Location:</h5>
-      <div class="input-group" style="opacity: 0.9;pointer-events: none;">
-      <input type="text" aria-label="Latitude" class="form-control" value="{{Lat}}">
-      <input type="text" aria-label="Longitude" class="form-control" value="{{Long}}">
-      <input type="text" aria-label="Accuracy" class="form-control" value="Within {{Answers.Questions['Accuracy']}}m">
-    </div>
 
-    
-
-<form [formGroup]="Plant">
-  <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" style="visibility: hidden;"><br>
   
-  <h5 class="unselectable">Plant information:</h5>
-    <div class="input-group input-group-sm mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">Common name:</span>
-      </div>
-      <input type="text" class="form-control" formControlName="Question1">
-    </div>
-    <div class="input-group input-group-sm mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">Scientific Name: </span>
-      </div>
-      <input type="text" class="form-control" formControlName="Question2">
-    </div>
-    <div class="input-group input-group-sm mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">Cultivar: </span>
-      </div>
-      <input type="text" class="form-control" formControlName="Question3">
-    </div>
-</form>
 
-<form [formGroup]="PestOrDiseases">
-  <div class="form-group">
-    <label class="unselectable" for="PorD">My plant is affected by a: *</label>
-    <select class="form-control" id="PorD" (change)="changeType()" formControlName="PorD">
-      <option *ngFor="let option of PorD_Options" [ngValue]="option">{{option}}</option>
-    </select>
-  </div>
-</form>
-
-<form [formGroup]="PorD_Questions" *ngIf="PorD_Selected">
-  <h4 class="unselectable">{{Answers.Questions["Pest Or Disease"]}} Questions:</h4>
-  <div class="input-group input-group-sm mb-4">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Where do you see the {{Answers.Questions["Pest Or Disease"]}} on the plant?</span>
-    </div>
-    <select class="form-control" (change)="change(4,$event)" formControlName="Question4">
-      <option *ngFor="let option of Question4_Options" value="{{option}}">{{option}}</option>
-    </select>
-  </div>
-  <div class="input-group input-group-sm mb-4">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Do you know what {{Answers.Questions["Pest Or Disease"]}} is affecting the plant?</span>
-    </div>
-    <select class="form-control" (change)="change(5,$event)" formControlName="Question5">
-      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
-    </select>
-  </div>
-  <div class="input-group input-group-sm mb-4" [style.visibility]="Answers.Questions[QuestionDesc[4]]=='Yes'?'visible':'hidden'">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">What is its scientific or common name?</span>
-    </div>
-    <input type="text" class="form-control" formControlName="Question6">
-  </div>
-  <div class="input-group input-group-sm mb-4">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">How many plants are affected?</span>
-    </div>
-    <select class="form-control" (change)="change(7,$event)" formControlName="Question7">
-      <option *ngFor="let option of MultiOptions" value="{{option}}">{{option}}</option>
-    </select>
-  </div>
-  <div class="input-group input-group-sm mb-4" [style.visibility]="Answers.Questions[QuestionDesc[6]]=='More than one'?'visible':'hidden'">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">What percentage of plants are affected?</span>
-    </div>
-    <input type="text" class="form-control" formControlName="Question8">
-  </div>
-</form>
-
-<form [formGroup]="Climate_Questions" *ngIf="PorD_Selected">
-  <h4 class="unselectable">Climate Questions:</h4>
-  <div class="input-group input-group-sm mb-4">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Are you experiencing a drought?</span>
-    </div>
-    <select class="form-control" (change)="change(9,$event)" formControlName="Question9">
-      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
-    </select>
-  </div>
-  <div class="input-group input-group-sm mb-4">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Have you experienced above average precipitation?</span>
-    </div>
-    <select class="form-control" (change)="change(10,$event)" formControlName="Question10">
-      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
-    </select>
-  </div>
-  <div class="input-group input-group-sm mb-4">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Any other climatic conditions worth specifying?</span>
-    </div>
-    <select class="form-control" (change)="change(11,$event)" formControlName="Question11_a">
-      <option *ngFor="let option of YNOptions" value="{{option}}">{{option}}</option>
-    </select>
     
-  </div>
-  <textarea class="form-control" style="resize: none;" formControlName="Question11_b" [style.visibility]="Answers.Questions[QuestionDesc[10]]=='Yes'?'visible':'hidden'"></textarea>
-</form>
-<br><button class="btn btn-success" style="margin-left: 5px;" *ngIf="PorD_Selected&&Images.length==3" (click)="onSubmit()">Submit Report</button>
-</div>
-<br><button type="button" class="btn btn-danger" style="margin-left: 5px;" *ngIf="Images.length==3" (click)="onCancel()">Cancel</button>
+    <form [formGroup]="Questionnaire" *ngIf="Images.length==3">
+      
+      <input type="text" id="Date" name="Date" value="{{today | date:'dd MMMM yyyy'}}" style="display: none;">
+
+      <h2>Plant</h2>
+
+      <mat-selection-list #PNames>
+        <mat-label class="unselectable">Which of the following do you know about the affected plant?</mat-label>
+        <mat-list-option *ngFor="let option of PlantOptions" [value]="option">
+          {{option}}
+        </mat-list-option>
+        <mat-error class="unselectable" *ngIf="PNames.selectedOptions.selected.length==0">At least one option must be selected</mat-error>
+      </mat-selection-list><br>
+
+      <mat-form-field appearance="fill" *ngIf="getSelected(PNames.selectedOptions.selected,'Common name')">
+        <mat-label class="unselectable">{{responses[0].Question}}</mat-label>
+        <input matInput placeholder="namaqualand daisy" [value]="getSelected(PNames.selectedOptions.selected,'Common name')?'Unknown':''" formControlName="Question1">
+        <mat-error class="unselectable" *ngIf="getSelected(PNames.selectedOptions.selected,'Common name')">{{getErrorMessage('Question1')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="getSelected(PNames.selectedOptions.selected,'Scientific name')">
+        <mat-label class="unselectable">{{responses[1].Question}}</mat-label>
+        <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question2">
+        <mat-error class="unselectable" *ngIf="getSelected(PNames.selectedOptions.selected,'Scientific name')">{{getErrorMessage('Question2')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[2].Question}}</mat-label>
+        <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question3">
+      </mat-form-field>
+
+      <h2>Where on plant</h2>
+
+      
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">Is it a Pest or Disease?</mat-label>
+        <mat-select formControlName="PestOrDiseases">
+          <mat-option *ngFor="let option of PorD_Options" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.controls['PestOrDiseases'].invalid">Please select an option</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[3].Question}}</mat-label>
+        <mat-select formControlName="Question4">
+          <mat-option *ngFor="let option of Question4_Options" value="{{option}}">{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.controls['Question4'].invalid">Please select an option</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[4].Question}}</mat-label>
+        <mat-select formControlName="Question5">
+          <mat-option *ngFor="let option of YNOptions" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.controls['Question5'].invalid">Please select an option</mat-error>
+      </mat-form-field>
+
+      <!-- TODO: Add an input for Other -->
+
+      <mat-form-field appearance="fill" *ngIf="isSelected(5,'Yes')&&PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[5].Question}}</mat-label>
+        <mat-select formControlName="Question6" *ngIf="Questionnaire.controls['PestOrDiseases'].value=='Pest'">
+          <mat-option *ngFor="let option of Question5_Options['Pests']" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-select formControlName="Question6" *ngIf="Questionnaire.controls['PestOrDiseases'].value=='Disease'">
+          <mat-option *ngFor="let option of Question5_Options['Diseases']" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.controls['Question6'].invalid">Select 'other' if the Pest/Disease isn't shown.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[6].Question}}</mat-label>
+        <input matInput placeholder="20" formControlName="Question7">
+        <mat-error class="unselectable" *ngIf="Questionnaire.controls['Question7'].invalid">Please enter an amount</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[7].Question}}</mat-label>
+        <input matInput placeholder="20%" formControlName="Question8">
+        <span matSuffix>%</span>
+        <mat-error class="unselectable" *ngIf="Questionnaire.controls['Question8'].invalid">Please enter a percentage</mat-error>
+      </mat-form-field>
+
+      <h2>Weather</h2>
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[8].Question}}</mat-label>
+        <mat-select formControlName="Question9">
+          <mat-option *ngFor="let option of YNOptions" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[9].Question}}</mat-label>
+        <mat-select formControlName="Question10">
+          <mat-option *ngFor="let option of YNOptions" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0">
+        <mat-label class="unselectable">{{responses[10].Question}}</mat-label>
+        <mat-select formControlName="Question11">
+          <mat-option *ngFor="let option of YNOptions" value={{option}}>{{option}}</mat-option>
+        </mat-select>
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="PNames.selectedOptions.selected.length!=0&&isSelected(11,'Yes')">
+        <mat-label class="unselectable">{{responses[11].Question}}</mat-label>
+        <input matInput placeholder="Dimorphotheca sinuata" formControlName="Question12">
+        <mat-error class="unselectable" *ngIf="Questionnaire.invalid"></mat-error>
+      </mat-form-field>
+
+    <button type="button" class="btn btn-primary" 
+    (click)="onSubmit()"
+    [disabled]="Questionnaire.invalid||(Questionnaire.controls['Question1'].value=='Unknown'&&Questionnaire.controls['Question2'].value=='Unknown')">
+    Submit</button>
+    
+    </form>
+    
+    <!--  -->
+  
