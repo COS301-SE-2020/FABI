@@ -113,6 +113,7 @@ export class GetReportsService {
              }
              response.diagnosis = resFromDb[0].CommName;
              response.reason = resFromDb[0].reason;
+             response.comment = resFromDb[0].comment;
              response.status = 201;
 
             return response;

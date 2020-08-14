@@ -149,9 +149,10 @@ export class Delete_Affliction_Response {
 }
 
 export class GetDiagnosis_ReasonResponse {
-    diagnosis: string;
+    diagnosis?: string;
     status: number;
-    reason: string;
+    reason?: string;
+    comment?: string;
 }
 
 export class GetReportsResponse {

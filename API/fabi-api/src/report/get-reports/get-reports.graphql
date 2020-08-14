@@ -10,9 +10,10 @@ input GetSingleReportRequest{
 }
 
 type GetDiagnosis_ReasonResponse{
-    diagnosis: String!
+    diagnosis: String
     status: Int!
-    reason: String!
+    reason: String
+    comment: String
 }
 
 type GetReportsResponse{

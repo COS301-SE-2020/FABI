@@ -276,7 +276,7 @@ export class ReportService {
 
     try {
       //Query
-     var result = await this.ReportsRepository.query("select \"CommName\", reason from reports, \"Afflictions\" where id = diagnosis and \"reportID\" = "+obj.reportID+";");  
+     var result = await this.ReportsRepository.query("select \"CommName\", reason , comment from reports, \"Afflictions\" where id = diagnosis and \"reportID\" = "+obj.reportID+";");  
      return result;
     } catch (error) {
       return JSON.parse(res);
