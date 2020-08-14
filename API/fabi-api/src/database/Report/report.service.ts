@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest, PopTableRequest } from '../../graphql.schema';
+import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
@@ -256,6 +256,19 @@ export class ReportService {
 
    
   }
+  //this function will add diagnosis and reason to report in db
+  async update_diagnosis_reason(obj: Upload_Diagnosis_Reason):Promise<boolean>{
+
+    try{
+      //Ouery
+      this.ReportsRepository.query("update reports set diagnosis = (select id from \"Afflictions\" where \"SciName\" like \'"+obj.diagnosis+"\' or \"CommName\" like \'"+obj.diagnosis+"\'), reason = \'"+obj.reason+"\', diagnoser = (select \"Email\" from users where token = \'"+obj.token+"\') where \"reportID\" = "+obj.reportID+" ;");
+      return true;
+    } catch(error){
+      return false;
+      }
+
+    
+  }
 
  
 
@@ -301,9 +314,3 @@ export class ReportService {
     return matchValue;
   }
 }
-
-/*
-okay cunt what u gonna do?
--> im going to make a gobal array that stores all the tags, and it will insert those tags once it inserts the report.
--> REMEMber to clear the tags array
-*/

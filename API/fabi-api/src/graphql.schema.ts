@@ -91,6 +91,13 @@ export class Update_afflictions_request {
     img3?: string;
 }
 
+export class Upload_Diagnosis_Reason {
+    token: string;
+    reportID: number;
+    diagnosis: string;
+    reason: string;
+}
+
 export class UploadRequest {
     token: string;
     Urgency: number;
@@ -193,13 +200,15 @@ export abstract class IMutation {
 
     abstract registerUser(request?: Request): Response | Promise<Response>;
 
-    abstract getReports(getReportsRequest?: GetReportsRequest): GetReportsResponse | Promise<GetReportsResponse>;
+    abstract getReports(getReportsRequest?: GetReportsRequest): GetSingleReportResponse[] | Promise<GetSingleReportResponse[]>;
 
     abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetSingleReportResponse | Promise<GetSingleReportResponse>;
 
     abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
 
     abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
+
+    abstract uploadDiagnosis_Reason(upload?: Upload_Diagnosis_Reason): UploadResponse | Promise<UploadResponse>;
 }
 
 export class PopTableResponse {
@@ -208,10 +217,6 @@ export class PopTableResponse {
     distance: number;
     Pname: string;
     ID: number;
-}
-
-export abstract class IQuery {
-    abstract dummy(): string | Promise<string>;
 }
 
 export class Response {
