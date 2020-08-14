@@ -148,6 +148,12 @@ export class Delete_Affliction_Response {
     status?: number;
 }
 
+export class GetDiagnosis_ReasonResponse {
+    diagnosis: string;
+    status: number;
+    reason: string;
+}
+
 export class GetReportsResponse {
     reports: string;
     status: number;
@@ -204,6 +210,8 @@ export abstract class IMutation {
 
     abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetSingleReportResponse | Promise<GetSingleReportResponse>;
 
+    abstract getDiagnosis_Reason(getSingleReportRequest?: GetSingleReportRequest): GetDiagnosis_ReasonResponse | Promise<GetDiagnosis_ReasonResponse>;
+
     abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
 
     abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
@@ -217,6 +225,10 @@ export class PopTableResponse {
     distance: number;
     Pname: string;
     ID: number;
+}
+
+export abstract class IQuery {
+    abstract dummy(): string | Promise<string>;
 }
 
 export class Response {

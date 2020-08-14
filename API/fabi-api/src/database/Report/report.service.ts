@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason } from '../../graphql.schema';
+import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason, GetSingleReportRequest, GetDiagnosis_ReasonResponse } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
@@ -268,6 +268,19 @@ export class ReportService {
       }
 
     
+  }
+
+  async getDiagnosisAndReason(obj: GetSingleReportRequest): Promise<JSON>{
+
+    var res = "{}";
+
+    try {
+      //Query
+     var result = await this.ReportsRepository.query("select \"CommName\", reason from reports, \"Afflictions\" where id = diagnosis and \"reportID\" = "+obj.reportID+";");  
+     return result;
+    } catch (error) {
+      return JSON.parse(res);
+    }
   }
 
  
