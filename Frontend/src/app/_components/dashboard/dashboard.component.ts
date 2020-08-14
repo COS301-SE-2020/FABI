@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
           )
           let divisor = data[obj]["lastWeek"] + data[obj]["twoWeeksAgo"]
           this.cardPercentage.push(
-            (divisor > 0) ? (data[obj]["thisWeek"] / divisor) : 0
+            (divisor > 0) ? (data[obj]["thisWeek"] / divisor * 100).toFixed() : 0
           )
       }
     })
