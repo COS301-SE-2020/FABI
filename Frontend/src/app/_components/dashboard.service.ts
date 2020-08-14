@@ -66,7 +66,8 @@ export class DashboardService {
         }
       }`
     }).pipe(map(data => {
-
+      console.log(data["data"]["get_PieChartInfo"]);
+      
       return data["data"]["get_PieChartInfo"]
     }))
   }
