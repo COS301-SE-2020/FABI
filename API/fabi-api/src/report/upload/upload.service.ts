@@ -33,7 +33,7 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { UploadResponse, UploadRequest, Upload_Diagnosis_Reason } from 'src/graphql.schema';
+import { UploadResponse, UploadRequest, Upload_Diagnosis_Reason, UpdateVerificationStatus } from 'src/graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 
@@ -97,5 +97,30 @@ export class UploadService {
             return this.res;
 
         }
+    }
+     //This function will validate our token and send data to the respective service
+    async updateVerificationStatusService(reqObj:UpdateVerificationStatus): Promise<UploadResponse>{
+
+        const result = await this.userService.validateToken(reqObj.token).then(function(result){
+            return result;
+        })
+        if(result==false){
+            this.res.status = 415;
+            return this.res;
+        }else{
+            //this will pass upload object to report service that will interact with db
+            var bool = await this.reportService.updateVerification(reqObj);
+
+            //check if it uploaded correctly
+            if(bool != true){
+                this.res.status = 500;
+                return this.res;
+            }
+
+            this.res.status = 201;
+            return this.res;
+
+        }
+        
     }
 }

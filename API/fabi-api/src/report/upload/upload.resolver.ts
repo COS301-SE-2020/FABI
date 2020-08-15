@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { UploadService } from './upload.service';
-import {  UploadResponse,UploadRequest, Upload_Diagnosis_Reason }  from '../../graphql.schema';
+import {  UploadResponse,UploadRequest, Upload_Diagnosis_Reason, UpdateVerificationStatus }  from '../../graphql.schema';
 
 @Resolver('Upload')
 export class UploadResolver {
@@ -19,4 +19,10 @@ async uploadDiagnosis_Reason(@Args('upload') reqObj: Upload_Diagnosis_Reason): P
 
     return this.uploadService.upload_Diagnosis_Reason(reqObj);
 }
+
+@Mutation('updateVerificationStatus')
+async updateVerificationStatus(@Args('upload') reqObj: UpdateVerificationStatus): Promise<UploadResponse>{
+    return this.uploadService.updateVerificationStatusService(reqObj);
+}
+
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason, GetSingleReportRequest, GetDiagnosis_ReasonResponse } from '../../graphql.schema';
+import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason, GetSingleReportRequest, GetDiagnosis_ReasonResponse, UpdateVerificationStatus } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
@@ -280,6 +280,17 @@ export class ReportService {
      return result;
     } catch (error) {
       return JSON.parse(res);
+    }
+  }
+
+  async updateVerification(obj:UpdateVerificationStatus): Promise<boolean>{
+
+    try {
+      //Query
+      this.ReportsRepository.query("update reports set verification = \'"+obj.verification+"\' , comment = \'"+obj.comment+"' where \"reportID\" = "+obj.reportID+" ;");
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 

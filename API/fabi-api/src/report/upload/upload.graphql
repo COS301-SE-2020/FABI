@@ -20,6 +20,13 @@ input Upload_Diagnosis_Reason{
     reason: String!
 }
 
+input UpdateVerificationStatus{
+    token: String!
+    reportID:Int!
+    verification: String!
+    comment: String!
+}
+
 
 type UploadResponse{
     status: Int!
@@ -28,6 +35,7 @@ type UploadResponse{
 type Mutation{
     upload(upload:UploadRequest):UploadResponse!
     uploadDiagnosis_Reason(upload:Upload_Diagnosis_Reason):UploadResponse!
+    updateVerificationStatus(upload:UpdateVerificationStatus):UploadResponse!
 }
 
 type Query {
