@@ -307,6 +307,21 @@ export class HomeComponent implements AfterViewInit {
         });
     }
 
+    // Mobile
+
+    getNearbyReportsMobile(event){
+        this.dataSource=(this.currentMarkServ.getNearbyReports(event.pageIndex));
+    }
+
+    paginatorInitMobile(){
+        this.currentMarkServ.requestNearbyReports(this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
+            this.dataSource=(this.currentMarkServ.getNearbyReports(0));
+            this.dataLength=this.currentMarkServ.reportsLength;
+        });
+    }
+
+    // End Mobile
+
     getCurrentInfo(Form:string){
         var report: Array<any>;
         report=(Form).split("x2C");
