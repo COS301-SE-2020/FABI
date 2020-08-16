@@ -88,6 +88,25 @@ export class ReportDataService {
     }))
   }
 
+  // For tests
+  getMarkerNames(token, latitude, longitude){
+    return this.apollo.mutate({
+      mutation: gql`mutation {
+                  getReports( getReportsRequest: {token: "${token}", latitude: ${latitude},longitude:${longitude}})
+                  {
+                      status,
+                      Pname,
+                      Lat,
+                      Long,
+                      ID
+                  }
+              }`
+    }).pipe(map(data => {
+      return (data["data"]["getReports"]);
+
+    }))
+  }
+
 
   requestNearbyReports(reportID, token) {
     return this.apollo.mutate({

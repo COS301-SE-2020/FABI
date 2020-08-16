@@ -232,6 +232,9 @@ export class DiagReportComponent implements OnInit {
       this.Answers.plant,
       this.Answers.infliction).subscribe(data => {
         console.log(data);
+
+        // MOBILE debugging
+        //this.downloadString(JSON.stringify(data)+"\n"+JSON.stringify(this.Answers));
       });
       console.log(this.currentUser,
         this.Answers.report,
@@ -240,6 +243,8 @@ export class DiagReportComponent implements OnInit {
         this.Answers.acc,
         this.Answers.plant,
         this.Answers.infliction);
+
+      
 
     this.submitted = true;
     this.router.navigate(["/basic"]);
@@ -327,6 +332,7 @@ public handleImage(webcamImage: WebcamImage): void {
   var image = new Image();
   image.src = webcamImage.imageAsDataUrl;
   this.Images.push(image);
+  
 
   this.webcamImage = webcamImage;
 }
@@ -341,6 +347,20 @@ public get triggerObservable(): Observable<void> {
 
 public get nextWebcamObservable(): Observable<boolean|string> {
   return this.nextWebcam.asObservable();
+}
+
+downloadString(text) {
+  var blob = new Blob([text], { type: "text/plain" });
+
+  var a = document.createElement('a');
+  a.download = "Stuff";
+  a.href = URL.createObjectURL(blob);
+  a.dataset.downloadurl = ["text/plain", a.download, a.href].join(':');
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);
 }
 
 }
