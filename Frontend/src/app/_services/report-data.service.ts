@@ -36,6 +36,7 @@ export class ReportDataService {
   }
 
   getMarkers(token, latitude, longitude) {
+    
     return this.apollo.mutate({
       mutation: gql`mutation {
                   getReports( getReportsRequest: {token: "${token}", latitude: ${latitude},longitude:${longitude}})
@@ -48,6 +49,7 @@ export class ReportDataService {
                   }
               }`
     }).pipe(map(data => {
+      console.log(data);
       return (data["data"]["getReports"]);
 
     }))
@@ -129,6 +131,35 @@ export class ReportDataService {
     var pageSize = 5;
     var startIndex = pageSize * (page);
     var list: Array<nearbyReport> = JSON.parse(localStorage.getItem("nearbyReports"));
+    this.reportLenth = list.length;
+    this.nearbyReports = list.slice(startIndex, startIndex + pageSize);
+    return this.nearbyReports;
+
+  }
+
+  requestNearbyReportsMobile(token,longitude,latitude) {
+    console.log(latitude,longitude,token);
+    return this.apollo.mutate({
+      mutation: gql`mutation{
+                      getReportsMobile(getReportsRequest:{token:"${token}",latitude:${latitude},longitude:${longitude}}){
+                        date,
+                        distance,
+                        Pname,
+                        ID,
+                        status
+                      }
+                  }`
+    }).pipe(map(data => {
+      console.log(data);
+      localStorage.setItem("nearbyReportsMobile", JSON.stringify(data["data"]["getReportsMobile"]))
+
+    }))
+  }
+
+  getNearbyReportsMobile(page) {
+    var pageSize = 10;
+    var startIndex = pageSize * (page);
+    var list: Array<nearbyReport> = JSON.parse(localStorage.getItem("nearbyReportsMobile"));
     this.reportLenth = list.length;
     this.nearbyReports = list.slice(startIndex, startIndex + pageSize);
     return this.nearbyReports;

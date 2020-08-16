@@ -232,7 +232,13 @@ export class HomeComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         if(this.DeviceType=="Desktop")this.loadMap();
         else{
-                       
+            this.location.getLocation().subscribe(rep => {
+
+                this.lat = rep.coords.latitude;
+                this.lng = rep.coords.longitude;
+                this.paginatorInitMobile();            
+            });
+            
         }
     }
 
@@ -287,7 +293,8 @@ export class HomeComponent implements AfterViewInit {
                         object.setDisplay(i);
                         if(object.DeviceType=="Mobile")object.overlaySwitch="none";
                         object.currentMID=i;
-                        object.paginatorInit();                        
+                        object.paginatorInit();       
+                                   
 
                     }
                 })(this, this.markIDs[i],this.currentUser.token));
@@ -310,12 +317,13 @@ export class HomeComponent implements AfterViewInit {
     // Mobile
 
     getNearbyReportsMobile(event){
-        this.dataSource=(this.currentMarkServ.getNearbyReports(event.pageIndex));
+        this.dataSource=(this.currentMarkServ.getNearbyReportsMobile(event.pageIndex));
     }
 
     paginatorInitMobile(){
-        this.currentMarkServ.requestNearbyReports(this.currentMID,JSON.parse(localStorage.getItem("currentUser"))).subscribe(rep=>{
-            this.dataSource=(this.currentMarkServ.getNearbyReports(0));
+        this.currentMarkServ.requestNearbyReportsMobile(this.currentUser,this.lat,this.lng).subscribe(rep=>{
+            
+            this.dataSource=(this.currentMarkServ.getNearbyReportsMobile(0));
             this.dataLength=this.currentMarkServ.reportsLength;
         });
     }
