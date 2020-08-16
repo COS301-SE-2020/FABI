@@ -246,8 +246,12 @@ export class HomeComponent implements AfterViewInit {
     }
 
     populateMarkers(Object) {
-
+        // Debug data
+        // this.currentMarkServ.getMarkerNames(this.currentUser, this.lat, this.lng).subscribe(data=>{
+        //     console.log(data);
+        // });
         this.currentMarkServ.getMarkers(this.currentUser, this.lat, this.lng).subscribe(data => {
+            
 
             for (var i = 0; i < data.length; i++) {
 
