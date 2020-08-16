@@ -1,10 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { GetReportsService } from './get-reports.service';
-<<<<<<< HEAD
-import {GetReportsResponse,GetReportsRequest,GetSingleReportRequest }  from '../../graphql.schema';
-=======
-import {GetReportsResponse,GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse, GetDiagnosis_ReasonResponse }  from '../../graphql.schema';
->>>>>>> api/specialistUser
+import {GetReportsResponse,GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse, GetDiagnosis_ReasonResponse, PopTableMobileResponse }  from '../../graphql.schema';
 
 @Resolver('GetReports')
 export class GetReportsResolver {
@@ -32,5 +28,10 @@ async getDiagnosis_Reason(@Args('getSingleReportRequest') reqObj: GetSingleRepor
 
     return this.getReportService.getDiagnosis_ReasonService(reqObj);
 
+}
+
+@Mutation('getReportsMobile')
+async getReportsMobile(@Args('getReportsRequest') reqObj: GetReportsRequest  ):Promise<PopTableMobileResponse[]>{
+    return this.getReportService.getReportsMobileService(reqObj);
 }
 }

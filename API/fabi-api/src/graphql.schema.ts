@@ -214,11 +214,13 @@ export abstract class IMutation {
 
     abstract registerUser(request?: Request): Response | Promise<Response>;
 
-    abstract getReports(getReportsRequest?: GetReportsRequest): GetSingleReportResponse[] | Promise<GetSingleReportResponse[]>;
+    abstract getReports(getReportsRequest?: GetReportsRequest): GetReportsResponse | Promise<GetReportsResponse>;
 
     abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetSingleReportResponse | Promise<GetSingleReportResponse>;
 
     abstract getDiagnosis_Reason(getSingleReportRequest?: GetSingleReportRequest): GetDiagnosis_ReasonResponse | Promise<GetDiagnosis_ReasonResponse>;
+
+    abstract getReportsMobile(getReportsRequest?: GetReportsRequest): PopTableMobileResponse[] | Promise<PopTableMobileResponse[]>;
 
     abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
 
@@ -227,6 +229,14 @@ export abstract class IMutation {
     abstract uploadDiagnosis_Reason(upload?: Upload_Diagnosis_Reason): UploadResponse | Promise<UploadResponse>;
 
     abstract updateVerificationStatus(upload?: UpdateVerificationStatus): UploadResponse | Promise<UploadResponse>;
+}
+
+export class PopTableMobileResponse {
+    status: number;
+    date: string;
+    distance: number;
+    Pname: string;
+    ID: number;
 }
 
 export class PopTableResponse {

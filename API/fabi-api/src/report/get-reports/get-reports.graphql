@@ -21,6 +21,15 @@ type GetReportsResponse{
    status: Int!
 }
 
+type PopTableMobileResponse{
+    status: Int!
+    date: String!
+    distance: Float!
+    Pname: String!
+    ID: Int!
+
+}
+
 type GetSingleReportResponse{
     userType: String
     Long: Float
@@ -44,5 +53,6 @@ type Mutation{
     getReports(getReportsRequest:GetReportsRequest):GetReportsResponse!
     getSingleReport(getSingleReportRequest:GetSingleReportRequest):GetSingleReportResponse!
     getDiagnosis_Reason(getSingleReportRequest:GetSingleReportRequest):GetDiagnosis_ReasonResponse!
+    getReportsMobile(getReportsRequest:GetReportsRequest):[PopTableMobileResponse]!
 }
 
