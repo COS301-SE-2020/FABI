@@ -30,7 +30,7 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { GetReportsResponse, GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse } from '../../graphql.schema';
+import { GetReportsResponse, GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse, GetDiagnosis_ReasonResponse } from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 
@@ -66,6 +66,35 @@ export class GetReportsService {
             return this.res;
 
         }
+    }
+
+    async getDiagnosis_ReasonService(reqObj: GetSingleReportRequest): Promise<GetDiagnosis_ReasonResponse>{
+        var response: GetDiagnosis_ReasonResponse = {status:500,diagnosis:"a",reason:"a"};
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            response.status = 415;
+
+            return response;
+        } else {
+            
+            //this will pass upload object to report service that will interact with db
+             var resFromDb = await this.reportService.getDiagnosisAndReason(reqObj);
+             if(Object.keys(resFromDb).length == 0){
+                 return response;
+             }
+             response.diagnosis = resFromDb[0].CommName;
+             response.reason = resFromDb[0].reason;
+             response.comment = resFromDb[0].comment;
+             response.status = 201;
+
+            return response;
+
+        }
+
     }
     
     async getSingleReports(reqObj: GetSingleReportRequest) : Promise<GetSingleReportResponse> {
