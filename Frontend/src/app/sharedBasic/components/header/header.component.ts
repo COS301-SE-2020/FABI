@@ -37,6 +37,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  home(){
+    this.router.navigate(['/home']);
+  }
+
+
+
   toggleStyle() {
     if (sessionStorage.getItem("StyleMode") == "Light") {
       this.curStyle = "Dark";
