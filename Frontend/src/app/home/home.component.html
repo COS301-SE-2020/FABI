@@ -242,11 +242,6 @@
             <h2 style="color: black;">Nearby reports</h2>
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
                 [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
-                <!-- Position Column -->
-                <ng-container matColumnDef="ID" >
-                    <mat-header-cell *matHeaderCellDef> Report ID </mat-header-cell>
-                    <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.ID}} </mat-cell>
-                </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="Pname">
@@ -254,30 +249,30 @@
                     <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.Pname}} </mat-cell>
                 </ng-container>
 
-                <!-- Weight Column -->
+                <!-- Distance Column -->
                 <ng-container matColumnDef="distance">
                     <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
                     <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.distance}} </mat-cell>
                 </ng-container>
 
-                <!-- Symbol Column -->
+                <!-- Date Column -->
                 <ng-container matColumnDef="date">
                     <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
                     <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.date}} </mat-cell>
                 </ng-container>
 
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-header-row *matHeaderRowDef="displayedColumnsMobile"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsMobile;"></mat-row>
             </mat-table>
             <mat-paginator [length]="dataLength"  (page)="getNearbyReportsMobile($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
         </div>
     </div>
 
-    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMobileTable&&currentMark!=undefined" fxLayout.xl="row">
-        <div fxFlex="40">
+    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMobileTable&&currentMark!=undefined">
+        <div fxFlex>
             <mat-card >
                 <mat-card-title>
-                    <div class="row" style="font-size:smaller;">
+                    <div class="row" style="font-size:small;">
                         <div class="col-8">
                             Plant Name:
                         </div>
@@ -288,7 +283,7 @@
                 </mat-card-title>
                 <br>
                 <mat-card-title>
-                    <div class="row" style="font-size:smaller;">
+                    <div class="row" style="font-size:small;">
                         <div class="col-8">
                             Infliction type:
                         </div>
@@ -299,7 +294,7 @@
                 </mat-card-title>
                 <br>
                 <mat-card-title>
-                    <div class="row" style="font-size:smaller;">
+                    <div class="row" style="font-size:small;">
                         <div class="col-8">
                             Accuracy of marker:
                         </div>
@@ -310,7 +305,7 @@
                 </mat-card-title>
                 <br>
                 <mat-card-title>
-                    <div class="row" style="font-size:smaller;">
+                    <div class="row" style="font-size:small;">
                         <div class="col-8">
                             Image accuracy score:
                         </div>
@@ -327,7 +322,7 @@
                         Specialist diagnosis:
                     </div>
                     <br>
-                    <div class="row" style="font-size:smaller;">
+                    <div class="row" style="font-size:small;">
                         <p>Awaiting review</p>
                     </div>
                 </mat-card-title>
@@ -337,24 +332,8 @@
             </mat-card>
         </div>
         <br>
-        <div fxFlex="40" *ngIf="!showMobileTable">
-            <ngb-carousel class="mobileCarousel">
-                <ng-template ngbSlide>
-                    <div class="picsum-img-wrapper">
-                        <img src="{{currentMark['Img1']}}" alt="Random first slide" style="max-height: 650px;">
-                    </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                    <div class="picsum-img-wrapper">
-                        <img src="{{currentMark['Img2']}}" alt="Random second slide" style="max-height: 650px;">
-                    </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                    <div class="picsum-img-wrapper">
-                        <img src="{{currentMark['Img3']}}" alt="Random third slide" style="max-height: 650px;">
-                    </div>
-                </ng-template>
-            </ngb-carousel>
+        <div fxFlex *ngIf="!showMobileTable">
+            <ng-image-slider [images]="imageObject" [infinite]="true" #nav></ng-image-slider>
         </div>
     </div>
     <br>

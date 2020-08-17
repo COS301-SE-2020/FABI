@@ -26,6 +26,12 @@ export interface nearbyReport {
     date: string;
 }
 
+export interface nearbyReportMobile {
+    Pname: string;
+    distance: number;
+    date: string;
+}
+
 export interface Questions{
     Question: string;
     Answer: string;
@@ -53,6 +59,7 @@ export class HomeComponent implements AfterViewInit {
 
     // Table
     displayedColumns: string[] = ['ID', 'Pname', 'distance', 'date'];
+    displayedColumnsMobile: string[] = ['Pname', 'distance', 'date'];
     dataSource;
 
     blankQuestionnaire:Array<Questions>=[
@@ -330,6 +337,8 @@ export class HomeComponent implements AfterViewInit {
         });
     }
 
+    imageObject: Array<object>=[];
+
     // End Mobile
 
     getCurrentInfo(Form:string){
@@ -421,6 +430,21 @@ export class HomeComponent implements AfterViewInit {
 
             this.markerDetails=this.getCurrentInfo(this.currentMark.form);
             this.showMobileTable = false;
+
+            this.imageObject=[{
+                image: this.currentMark['Img1'],
+                thumbImage: this.currentMark['Img1'],
+                title: "Image 1"
+            }, {
+                image: this.currentMark['Img2'], 
+                thumbImage: this.currentMark['Img2'],
+                title: "Image 2"
+            }, {
+                image: this.currentMark['Img3'], 
+                thumbImage: this.currentMark['Img3'],
+                title: "Image 3"
+            }
+            ]
 
 
         });

@@ -52,22 +52,5 @@ body {
     background-color: grey;
 }
 
-@media (max-width: 600px){
-    .mobileCarousel{
-        outline: none;
-        max-height: 650px;
-        max-width: 550px;
-    }
 
-    .picsum-img-wrapper{
-        text-align: center;
-        max-height: 650px;
-        max-width: 550px;
-    }
-
-    img{
-        max-height: 650px;
-        max-width: 550px;        
-    }
-}
 
