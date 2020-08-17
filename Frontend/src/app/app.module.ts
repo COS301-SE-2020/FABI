@@ -41,7 +41,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/fake-backend';
-import { WebcamModule } from 'ngx-webcam';
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
@@ -88,7 +87,6 @@ import { MatButtonModule } from "@angular/material/button";
     appRoutingModule,
     FormsModule,
     GraphQLModule,
-    WebcamModule,
     HttpModule,
     BrowserAnimationsModule,
     AdminModule,

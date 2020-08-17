@@ -132,6 +132,7 @@ export class HomeComponent implements AfterViewInit {
     deviceSub: Subscription;
     DmapHeight=(innerHeight*0.7)+"px";
     MmapHeight=(innerHeight)+"px";
+    MobileWidth=innerWidth;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -141,7 +142,7 @@ export class HomeComponent implements AfterViewInit {
         private currentMarkServ: ReportDataService,
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
-    ) {console.log(this.Browser);
+    ) {console.log(this.MobileWidth);
         
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
