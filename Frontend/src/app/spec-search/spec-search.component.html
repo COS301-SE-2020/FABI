@@ -1,21 +1,22 @@
 <div id="full-container">
     <header class="header">
-        <button class="button btn" routerLink="">Back</button>
-        <h2>Search for Diagnostic Reports</h2>
+        <div fxFlex="20" fxLayoutAlign="pull-left"><button class="button btn" routerLink="">Back</button></div>
+        <h2 class="Title">Search for Diagnostic Reports</h2>
     </header>
 
     <div id="wrapper">
         <div id="left-filter-div">
             <form>
-                <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png" alt="Company Name">
+                <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png" alt="Company Name"><br>
                 <h2 class="specChild">Filter Reports</h2>
                 <div class="form-group">
                     <label>Plant Name</label>
                     <input type="text" id="pname" name="pname"><br>
-                    <label>Report Status</label>
-                    <select name="drpDwn" id="drpDwn">
-                        <option value="Unverified">Unverified</option>
-                        <option value="Verified">Verified</option>
+                    <label>Report Status</label><br>
+                    <select class="browser-default">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Correct</option>
+                        <option value="2">Incorrect</option>
                     </select><br>
                     <label>Distance from position</label><br>
                     <input type="range" id="distance" name="distance" min="5" max="50" value="5"><br>
@@ -24,11 +25,13 @@
                     <br><label>List of symptoms</label><br>
                     <textarea id="w3review" name="w3review" rows="4">
                     </textarea>
-                    <button class="button btn">Apply Filters</button>
+                    <button type="submit" class="button btn">Apply Filters</button>
                 </div>
             </form>
         </div>
 
+        <mat-divider></mat-divider>
+        
         <div id="right-disply-div">
             <h2 class="HeadofRight">Reports:</h2><br>
             <div *ngFor="let report of reports" class="report">
@@ -36,8 +39,7 @@
                 <h3>Symptoms:</h3>
                 <p *ngFor="let symptom of report.symptoms">{{symptom}}</p>
                 <h3>{{report.date}}</h3>
-            </div>
-            
+            </div> 
         </div>
     </div>
 
