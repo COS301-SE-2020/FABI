@@ -76,8 +76,6 @@ import { MatButtonModule } from "@angular/material/button";
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DiagReportComponent,
-    MapReportComponent,
     SpecSearchComponent,
     SpecVerifyComponent,
     SpecSubmitComponent,
@@ -95,12 +93,6 @@ import { MatButtonModule } from "@angular/material/button";
     BrowserAnimationsModule,
     AdminModule,
     HomeModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatListModule,
-    MatTooltipModule,
-    MatButtonModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,
