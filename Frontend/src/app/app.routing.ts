@@ -118,14 +118,6 @@ const routes: Routes = [
         path: 'specialist',
         component: SpecSearchComponent
     },
-    {
-        path: 'verify',
-        component: SpecVerifyComponent
-    },
-    {
-        path: 'submit',
-        component: SpecSubmitComponent
-    },
     // otherwise redirect to home
     {
         path: '**',

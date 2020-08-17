@@ -61,6 +61,14 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HomeModule} from './home/home.module';
 
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from "@angular/material/button";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatCardModule } from "@angular/material/card";
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 
 
 @NgModule({
@@ -83,6 +91,13 @@ import {HomeModule} from './home/home.module';
     BrowserAnimationsModule,
     AdminModule,
     HomeModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatGridListModule,
+    HttpModule,
+    MatCardModule,
+    FormsModule,
+    RouterModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,
