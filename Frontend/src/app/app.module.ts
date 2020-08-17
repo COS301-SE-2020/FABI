@@ -67,6 +67,16 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+
+
+
+
 
 
 
@@ -97,6 +107,11 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     FormsModule,
     RouterModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

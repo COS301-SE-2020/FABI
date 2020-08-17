@@ -106,3 +106,16 @@ h1 {
   background-color: #3e8e41;  
   margin-left: 5px;
 }
+
+mat-slider {
+  width: 90%;
+  margin-left: 5%;
+}
+
+textarea {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}

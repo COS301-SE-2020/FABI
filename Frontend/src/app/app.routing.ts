@@ -57,8 +57,6 @@ import { UpdatePathogenComponent } from './_components/pathogen-info/update-path
 
 // Specialist User imports
 import { SpecSearchComponent } from './spec-search/spec-search.component';
-import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
-import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
 
 /*
 *   Comment out AuthGuard during development for easier testing
