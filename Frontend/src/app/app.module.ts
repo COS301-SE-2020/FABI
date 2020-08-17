@@ -68,6 +68,8 @@ import {MatListModule} from '@angular/material/list';
 import {HomeModule} from './home/home.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatButtonModule } from "@angular/material/button";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatCardModule } from "@angular/material/card";
 
 
 
@@ -101,6 +103,8 @@ import { MatButtonModule } from "@angular/material/button";
     MatListModule,
     MatTooltipModule,
     MatButtonModule,
+    MatGridListModule,
+    MatCardModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

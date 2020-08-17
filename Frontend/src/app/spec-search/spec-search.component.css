@@ -1,3 +1,33 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+mat-grid-tile {
+  background-color: aqua;
+}
+
+img {
+  scale: inherit;
+  max-width: 100%;
+  max-height: 100%;
+  width: 80%;
+  height: 80%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+
+}
+
+.btn:hover {
+  background-color: #3e8e41;  
+  margin-left: 5px;
+}
+
+header {
+  background-color: #228b22;
+  align-content: center;
+  width: 100%;
+}
+
 button {
   display: inline-block;
   margin: 0;
@@ -25,11 +55,6 @@ textarea {
     width: 90%;
 }
 
-div .header {
-  border: 1px solid black;
-  width: 100%;
-}
-
 #wrapper {
   width: 100%;
   overflow:auto;
@@ -44,7 +69,6 @@ div .header {
 
 #left-filter-div {
   float: left;
-  border: 1px solid black;
   margin: 0 0 0 0;
   width: 20%;
 }
@@ -54,11 +78,13 @@ div .header {
   vertical-align:top;
   margin: 0 0 0 0;
   width: 80%;
+  height: 100%;
+  overflow-y: auto;
 }
 
 #distance {
     position: absolute;
-    height: auto; /* optionally add !important for WP version so it overrides default value */
+    height: auto;
     margin: 1em;
     width: 18%;
 }
@@ -75,3 +101,6 @@ div .header {
     border-radius: 25px;
 }
 
+footer {
+    padding: 20px;
+}
