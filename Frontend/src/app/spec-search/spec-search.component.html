@@ -1,6 +1,6 @@
 <div id="full-container">
     <header class="header">
-        <div><button class="button btn">Back</button></div>
+        <div><button mat-raised-button color="primary">Back</button></div>
         <h2 class="Title">Search for Diagnostic Reports</h2>
     </header>
 
@@ -13,11 +13,14 @@
                     <label>Plant Name</label>
                     <input type="text" id="pname" name="pname"><br>
                     <label>Report Status</label><br>
-                    <select class="browser-default">
-                        <option value="" disabled selected>Choose your option</option>
-                        <option value="1">Correct</option>
-                        <option value="2">Incorrect</option>
-                    </select><br>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Choose your option</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let option of options" [value]="option.value">
+                                {{option.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field><br>
                     <label>Distance from position</label><br>
                     <input type="range" id="distance" name="distance" min="5" max="50" value="5"><br>
                     <label for="sleft" class="pull-left">5km</label>
@@ -25,7 +28,7 @@
                     <br><label>List of symptoms</label><br>
                     <textarea id="w3review" name="w3review" rows="4">
                     </textarea>
-                    <button type="submit" class="button btn">Apply Filters</button>
+                    <button mat-raised-button color="primary">Apply Filters</button>
                 </div>
             </form>
         </div>

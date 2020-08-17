@@ -34,6 +34,15 @@ export class SpecSearchComponent implements OnInit {
     }
   ];
 
+  opttions: option[] = [
+    {
+      value: '1', viewValue: 'Correct'
+    },
+    {
+      value: '2', viewValue: 'Incorrect'
+    }
+  ]
+
   constructor() { }
 
   ngOnInit(): void {
