@@ -74,6 +74,8 @@ export class HomeComponent implements AfterViewInit {
     DeviceType: String;
     overlaySwitch="none";
 
+    showMobileTable=true;
+
     lat;
     lng;
     map: google.maps.Map;
@@ -399,6 +401,29 @@ export class HomeComponent implements AfterViewInit {
         });
 
         
+    }
+
+    getSelectedReport(ID){
+        this.showMobileTable = true;
+        this.currentMarkServ.getReportDetails(this.currentUser,ID).subscribe(data=>{
+            this.currentMark={
+                ID: ID,
+                Pname: data["Pname"],
+                Infliction: data["Infliction"],
+                Accuracy: data["Accuracy"],
+                Img1:data["Img1"],
+                Img2:data["Img2"],
+                Img3:data["Img3"],
+                NeuralNet: data["NeuralNetRating"],
+                form: data["form"]
+
+            }
+
+            this.markerDetails=this.getCurrentInfo(this.currentMark.form);
+            this.showMobileTable = false;
+
+
+        });
     }
 
     openMap() {

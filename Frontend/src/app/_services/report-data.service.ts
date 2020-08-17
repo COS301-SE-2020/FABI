@@ -137,11 +137,11 @@ export class ReportDataService {
 
   }
 
-  requestNearbyReportsMobile(token,longitude,latitude) {
+  requestNearbyReportsMobile(token,latitude,longitude) {
     console.log(latitude,longitude,token);
     return this.apollo.mutate({
       mutation: gql`mutation{
-                      getReportsMobile(getReportsRequest:{token:"${token}",latitude:${latitude},longitude:${longitude}}){
+                  getReportsMobile(getReportsRequest:{token:"${token}",latitude:${latitude},longitude:${longitude}}){
                         date,
                         distance,
                         Pname,
@@ -157,7 +157,7 @@ export class ReportDataService {
   }
 
   getNearbyReportsMobile(page) {
-    var pageSize = 10;
+    var pageSize = 8;
     var startIndex = pageSize * (page);
     var list: Array<nearbyReport> = JSON.parse(localStorage.getItem("nearbyReportsMobile"));
     this.reportLenth = list.length;
