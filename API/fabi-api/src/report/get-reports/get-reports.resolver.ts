@@ -11,7 +11,7 @@ export class GetReportsResolver {
     ){}
 
 @Mutation('getReports')
-async getReports(@Args('getReportsRequest') reqObj: GetReportsRequest  ): Promise<GetReportsResponse>{
+async getReports(@Args('getReportsRequest') reqObj: GetReportsRequest  ): Promise<GetSingleReportResponse[]>{
 
     return this.getReportService.getReports(reqObj);
 }

@@ -214,7 +214,7 @@ export abstract class IMutation {
 
     abstract registerUser(request?: Request): Response | Promise<Response>;
 
-    abstract getReports(getReportsRequest?: GetReportsRequest): GetReportsResponse | Promise<GetReportsResponse>;
+    abstract getReports(getReportsRequest?: GetReportsRequest): GetSingleReportResponse[] | Promise<GetSingleReportResponse[]>;
 
     abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetSingleReportResponse | Promise<GetSingleReportResponse>;
 

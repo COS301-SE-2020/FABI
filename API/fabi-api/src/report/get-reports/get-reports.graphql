@@ -50,7 +50,7 @@ type GetSingleReportResponse{
 }
 
 type Mutation{
-    getReports(getReportsRequest:GetReportsRequest):GetReportsResponse!
+    getReports(getReportsRequest:GetReportsRequest):[GetSingleReportResponse!]
     getSingleReport(getSingleReportRequest:GetSingleReportRequest):GetSingleReportResponse!
     getDiagnosis_Reason(getSingleReportRequest:GetSingleReportRequest):GetDiagnosis_ReasonResponse!
     getReportsMobile(getReportsRequest:GetReportsRequest):[PopTableMobileResponse]!
