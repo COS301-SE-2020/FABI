@@ -12,14 +12,33 @@ input UploadRequest {
     Img3:String!
     
 }
+
+input Upload_Diagnosis_Reason{
+    token: String!
+    reportID: Int!
+    diagnosis: String!
+    reason: String!
+}
+
+input UpdateVerificationStatus{
+    token: String!
+    reportID:Int!
+    verification: String!
+    comment: String!
+}
+
+
 type UploadResponse{
     status: Int!
 }
 
 type Mutation{
     upload(upload:UploadRequest):UploadResponse!
+    uploadDiagnosis_Reason(upload:Upload_Diagnosis_Reason):UploadResponse!
+    updateVerificationStatus(upload:UpdateVerificationStatus):UploadResponse!
 }
 
 type Query {
   dummy: String
 }
+

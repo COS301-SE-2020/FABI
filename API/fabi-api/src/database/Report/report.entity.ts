@@ -57,6 +57,12 @@ class Reports {
     @Column({nullable:true})
     public tags:string
 
+    @Column({nullable:true})
+    public reason:string
+
+    @Column({nullable:true})
+    public comment:string
+
 
 }
 

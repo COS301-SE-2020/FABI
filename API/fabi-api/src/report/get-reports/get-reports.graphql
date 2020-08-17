@@ -9,9 +9,25 @@ input GetSingleReportRequest{
     reportID: Int!
 }
 
+type GetDiagnosis_ReasonResponse{
+    diagnosis: String
+    status: Int!
+    reason: String
+    comment: String
+}
+
 type GetReportsResponse{
    reports: String!
    status: Int!
+}
+
+type PopTableMobileResponse{
+    status: Int!
+    date: String!
+    distance: Float!
+    Pname: String!
+    ID: Int!
+
 }
 
 type GetSingleReportResponse{
@@ -36,5 +52,7 @@ type GetSingleReportResponse{
 type Mutation{
     getReports(getReportsRequest:GetReportsRequest):GetReportsResponse!
     getSingleReport(getSingleReportRequest:GetSingleReportRequest):GetSingleReportResponse!
+    getDiagnosis_Reason(getSingleReportRequest:GetSingleReportRequest):GetDiagnosis_ReasonResponse!
+    getReportsMobile(getReportsRequest:GetReportsRequest):[PopTableMobileResponse]!
 }
 

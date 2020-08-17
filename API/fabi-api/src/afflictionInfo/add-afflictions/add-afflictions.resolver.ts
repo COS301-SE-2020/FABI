@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { AddAfflictionService } from './add-affliction.service';
-import { Add_Affliction_Request, Add_Affliction_Response } from 'src/graphql.schema';
+import { Add_Affliction_Request, Add_Affliction_Response } from '../../graphql.schema';
 
 @Resolver('AddAfflictions')
 export class AddAfflictionsResolver {

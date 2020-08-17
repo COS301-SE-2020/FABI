@@ -91,6 +91,20 @@ export class Update_afflictions_request {
     img3?: string;
 }
 
+export class UpdateVerificationStatus {
+    token: string;
+    reportID: number;
+    verification: string;
+    comment: string;
+}
+
+export class Upload_Diagnosis_Reason {
+    token: string;
+    reportID: number;
+    diagnosis: string;
+    reason: string;
+}
+
 export class UploadRequest {
     token: string;
     Urgency: number;
@@ -139,6 +153,13 @@ export class All_afflictions {
 
 export class Delete_Affliction_Response {
     status?: number;
+}
+
+export class GetDiagnosis_ReasonResponse {
+    diagnosis?: string;
+    status: number;
+    reason?: string;
+    comment?: string;
 }
 
 export class GetReportsResponse {
@@ -197,9 +218,25 @@ export abstract class IMutation {
 
     abstract getSingleReport(getSingleReportRequest?: GetSingleReportRequest): GetSingleReportResponse | Promise<GetSingleReportResponse>;
 
+    abstract getDiagnosis_Reason(getSingleReportRequest?: GetSingleReportRequest): GetDiagnosis_ReasonResponse | Promise<GetDiagnosis_ReasonResponse>;
+
+    abstract getReportsMobile(getReportsRequest?: GetReportsRequest): PopTableMobileResponse[] | Promise<PopTableMobileResponse[]>;
+
     abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
 
     abstract upload(upload?: UploadRequest): UploadResponse | Promise<UploadResponse>;
+
+    abstract uploadDiagnosis_Reason(upload?: Upload_Diagnosis_Reason): UploadResponse | Promise<UploadResponse>;
+
+    abstract updateVerificationStatus(upload?: UpdateVerificationStatus): UploadResponse | Promise<UploadResponse>;
+}
+
+export class PopTableMobileResponse {
+    status: number;
+    date: string;
+    distance: number;
+    Pname: string;
+    ID: number;
 }
 
 export class PopTableResponse {
