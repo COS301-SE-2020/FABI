@@ -30,7 +30,7 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { GetReportsResponse, GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse, GetDiagnosis_ReasonResponse, PopTableMobileResponse } from '../../graphql.schema';
+import { GetReportsResponse, GetReportsRequest,GetSingleReportRequest, GetSingleReportResponse, GetDiagnosis_ReasonResponse, PopTableMobileResponse, GetFilteredReportsRequest } from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 import { PopulateTableService } from '../populate-table/populate-table.service';
@@ -168,6 +168,7 @@ export class GetReportsService {
         }
     }
 
+    //this function handels the mobile GetReports
     async getReportsMobileService(reqObj: GetReportsRequest):Promise<PopTableMobileResponse[]>{
         //response object
        var res: PopTableMobileResponse[] = [{ status: -1, Pname: "/", date: "/", distance: 0.0, ID:-1 }];
@@ -192,11 +193,16 @@ export class GetReportsService {
         //get all similar
         let result = await this.reportService.getReports(lat, long);
 
+        if(Object.keys(result).length == 0){
+             res[0].status = 500;
+             return res;
+        }
+
         //create JSON obj
-        let resultJson = JSON.parse(result.toString());
+       // let resultJson = JSON.parse(result.toString());
 
         //not needed
-        let sortedResults = resultJson;
+        let sortedResults = result;
 
         //Loop through each key in the JSON obj
         for (var i = 0; i < Object.keys(sortedResults).length; i++) {
@@ -215,7 +221,7 @@ export class GetReportsService {
             distance = Math.round(distance * 100) / 100
 
             //create the date as string
-            var temp = resultJson[i].date;
+            var temp = result[i].date;
             date = temp.toString().substr(0, 4);
             date = date + "-" + temp.toString().substr(4, 2);
             date = date + "-" + temp.toString().substr(6, 2);
@@ -242,4 +248,69 @@ export class GetReportsService {
             }
     }
 
+    async getFilteredReportsService(reqObj: GetFilteredReportsRequest):Promise<GetSingleReportResponse[]>{
+
+        //response object
+        var res: GetSingleReportResponse[] = [{status:201}];
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            res[0].status = 415;
+    
+            return res;
+        } else {
+        res.pop();
+        var resultJSON = await this.reportService.filteredReports(reqObj);
+
+        for (var i = 0; i < Object.keys(resultJSON).length; i++){
+
+            //variables created for response object
+            let distance: number;
+            let Pname: string;
+            let date: string;
+
+            //report lat/long
+            let reportLat: number = resultJSON[i].Lat;
+            let reportLong: number = resultJSON[i].Long;
+
+            //calcualate the distance between the reports
+            distance = this.populateTableService.calcDistance(reqObj.latitude,reqObj.longitude, reportLat, reportLong);
+            distance = Math.round(distance * 100) / 100;
+
+            //create the date as string
+            var temp = resultJSON[i].date;
+            date = temp.toString().substr(0, 4);
+            date = date + "-" + temp.toString().substr(4, 2);
+            date = date + "-" + temp.toString().substr(6, 2);
+
+            //create the Pname
+            Pname = resultJSON[i].Pname;
+
+            if(distance <= reqObj.distance){
+            //add object to list
+            res.push({
+                status:201,
+                Accuracy:resultJSON[i].Accuracy,
+                Img1:resultJSON[i].IMG1,
+                Img2:resultJSON[i].IMG2,
+                Img3:resultJSON[i].IMG3,
+                ID:resultJSON[i].reportID,
+                Infliction:resultJSON[i].Infliction,
+                Lat:resultJSON[i].Lat,
+                Long:resultJSON[i].Long,
+                Pname:resultJSON[i].Pname,
+                NeuralNetRating:resultJSON[i].Pscore,
+                form:resultJSON[i].form,
+                date:date
+                    });
+            }
+
+        }
+
+        return res;
+        }
+    }
 }
