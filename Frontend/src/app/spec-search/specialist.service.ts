@@ -81,7 +81,7 @@ verify(reportID, verification, comment) {
     return this.apollo.mutate({
       mutation: gql `mutation {
         updateVerificationStatus(upload: {
-          token: ${this.authentication.currentUserValue},
+          token: "${this.authentication.currentUserValue}",
           reportID: ${reportID},
           verification: ${verification},
           comment: ${comment}
@@ -92,4 +92,25 @@ verify(reportID, verification, comment) {
       }`
     })
   }
+  /**
+   * Gets diagnosis
+   * @param reportID 
+   * @returns  diagnosis, status, reason, comment
+   */
+  getDiagnosis(reportID) {
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        getDiagnosis_Reason(getSingleReportRequest: {
+          token: "${this.authentication.currentUserValue}",
+          reportID: ${reportID}
+        })
+        {
+          diagnosis,
+          status,
+          reason,
+          comment
+        }
+      }`
+    })
+  } 
 }
