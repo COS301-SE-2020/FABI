@@ -26,6 +26,12 @@ export interface nearbyReport {
     date: string;
 }
 
+export interface nearbyReportMobile {
+    Pname: string;
+    distance: number;
+    date: string;
+}
+
 export interface Questions{
     Question: string;
     Answer: string;
@@ -51,8 +57,15 @@ export interface currentReport{
 })
 export class HomeComponent implements AfterViewInit {
 
+    // Device
+
+    Browser=sessionStorage.getItem("Browser");
+    
+    
+
     // Table
     displayedColumns: string[] = ['ID', 'Pname', 'distance', 'date'];
+    displayedColumnsMobile: string[] = ['Pname', 'distance', 'date'];
     dataSource;
 
     blankQuestionnaire:Array<Questions>=[
@@ -73,6 +86,8 @@ export class HomeComponent implements AfterViewInit {
 
     DeviceType: String;
     overlaySwitch="none";
+
+    showMobileTable=true;
 
     lat;
     lng;
@@ -117,6 +132,7 @@ export class HomeComponent implements AfterViewInit {
     deviceSub: Subscription;
     DmapHeight=(innerHeight*0.7)+"px";
     MmapHeight=(innerHeight)+"px";
+    MobileWidth=innerWidth;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -126,7 +142,7 @@ export class HomeComponent implements AfterViewInit {
         private currentMarkServ: ReportDataService,
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
-    ) {
+    ) {console.log(this.MobileWidth);
         
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
@@ -232,7 +248,13 @@ export class HomeComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         if(this.DeviceType=="Desktop")this.loadMap();
         else{
-                       
+            this.location.getLocation().subscribe(rep => {
+
+                this.lat = rep.coords.latitude;
+                this.lng = rep.coords.longitude;
+                this.paginatorInitMobile();            
+            });
+            
         }
     }
 
@@ -287,7 +309,8 @@ export class HomeComponent implements AfterViewInit {
                         object.setDisplay(i);
                         if(object.DeviceType=="Mobile")object.overlaySwitch="none";
                         object.currentMID=i;
-                        object.paginatorInit();                        
+                        object.paginatorInit();       
+                                   
 
                     }
                 })(this, this.markIDs[i],this.currentUser.token));
@@ -306,6 +329,24 @@ export class HomeComponent implements AfterViewInit {
             this.dataLength=this.currentMarkServ.reportsLength;
         });
     }
+
+    // Mobile
+
+    getNearbyReportsMobile(event){
+        this.dataSource=(this.currentMarkServ.getNearbyReportsMobile(event.pageIndex));
+    }
+
+    paginatorInitMobile(){
+        this.currentMarkServ.requestNearbyReportsMobile(this.currentUser,this.lat,this.lng).subscribe(rep=>{
+            
+            this.dataSource=(this.currentMarkServ.getNearbyReportsMobile(0));
+            this.dataLength=this.currentMarkServ.reportsLength;
+        });
+    }
+
+    imageObject: Array<object>=[];
+
+    // End Mobile
 
     getCurrentInfo(Form:string){
         var report: Array<any>;
@@ -376,6 +417,44 @@ export class HomeComponent implements AfterViewInit {
         });
 
         
+    }
+
+    getSelectedReport(ID){
+        this.showMobileTable = true;
+        this.currentMarkServ.getReportDetails(this.currentUser,ID).subscribe(data=>{
+            this.currentMark={
+                ID: ID,
+                Pname: data["Pname"],
+                Infliction: data["Infliction"],
+                Accuracy: data["Accuracy"],
+                Img1:data["Img1"],
+                Img2:data["Img2"],
+                Img3:data["Img3"],
+                NeuralNet: data["NeuralNetRating"],
+                form: data["form"]
+
+            }
+
+            this.markerDetails=this.getCurrentInfo(this.currentMark.form);
+            this.showMobileTable = false;
+
+            this.imageObject=[{
+                image: this.currentMark['Img1'],
+                thumbImage: this.currentMark['Img1'],
+                title: "Image 1"
+            }, {
+                image: this.currentMark['Img2'], 
+                thumbImage: this.currentMark['Img2'],
+                title: "Image 2"
+            }, {
+                image: this.currentMark['Img3'], 
+                thumbImage: this.currentMark['Img3'],
+                title: "Image 3"
+            }
+            ]
+
+
+        });
     }
 
     openMap() {

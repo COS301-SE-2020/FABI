@@ -19,6 +19,10 @@ import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
+// General imports
+
+import { NgImageSliderModule } from 'ng-image-slider';
+
 
 
 
@@ -41,7 +45,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCardModule,
     MatListModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    NgImageSliderModule
   ]
 })
 export class HomeModule { }

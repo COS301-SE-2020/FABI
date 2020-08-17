@@ -39,6 +39,7 @@
     "graphql-tag": "^2.10.4",
     "highcharts": "^8.1.2",
     "highcharts-angular": "^2.4.0",
+    "ng-image-slider": "^2.6.1",
     "ngx-device-detector": "^1.4.6",
     "ngx-webcam": "^0.3.0",
     "rxjs": "~6.5.4",
