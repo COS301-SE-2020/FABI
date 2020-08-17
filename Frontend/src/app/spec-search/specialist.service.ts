@@ -70,4 +70,26 @@ diagnose(reportID, diagnosis, reason) {
       return data["data"]["uploadDiagnosis_Reason"]
     }))
   }
+/**
+ * Verifys specialist service
+ * @param reportID 
+ * @param verification 
+ * @param comment 
+ * @returns  status
+ */
+verify(reportID, verification, comment) {
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        updateVerificationStatus(upload: {
+          token: ${this.authentication.currentUserValue},
+          reportID: ${reportID},
+          verification: ${verification},
+          comment: ${comment}
+        })
+        {
+          status
+        }
+      }`
+    })
+  }
 }
