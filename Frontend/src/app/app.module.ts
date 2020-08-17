@@ -55,8 +55,6 @@ import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
 import { SpecSearchComponent } from './spec-search/spec-search.component';
-import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
-import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HomeModule} from './home/home.module';
@@ -72,6 +70,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -86,8 +86,6 @@ import { MatInputModule } from '@angular/material/input';
     LoginComponent,
     RegisterComponent,
     SpecSearchComponent,
-    SpecVerifyComponent,
-    SpecSubmitComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +110,8 @@ import { MatInputModule } from '@angular/material/input';
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatToolbarModule,
+    FlexLayoutModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,
