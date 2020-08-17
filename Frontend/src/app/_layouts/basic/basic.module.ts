@@ -24,6 +24,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MapReportComponent } from '@/map-report/map-report.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -49,6 +50,9 @@ import { MapReportComponent } from '@/map-report/map-report.component';
     MatListModule,
     MatTooltipModule,
     MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule
+    
   ],
 })
 export class BasicModule { }

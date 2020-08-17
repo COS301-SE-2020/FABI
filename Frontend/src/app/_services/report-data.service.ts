@@ -150,6 +150,7 @@ export class ReportDataService {
                       }
                   }`
     }).pipe(map(data => {
+      console.log(JSON.stringify(data["data"]["getReportsMobile"]));
       localStorage.setItem("nearbyReportsMobile", JSON.stringify(data["data"]["getReportsMobile"]))
 
     }))

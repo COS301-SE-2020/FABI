@@ -50,7 +50,6 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
-import { FormsModule } from '@angular/forms';
 import { Http, HttpModule, Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,13 +59,7 @@ import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
 import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatListModule} from '@angular/material/list';
 import {HomeModule} from './home/home.module';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import { MatButtonModule } from "@angular/material/button";
 
 
 
@@ -85,7 +78,6 @@ import { MatButtonModule } from "@angular/material/button";
     BasicModule,
     HttpClientModule,
     appRoutingModule,
-    FormsModule,
     GraphQLModule,
     HttpModule,
     BrowserAnimationsModule,
