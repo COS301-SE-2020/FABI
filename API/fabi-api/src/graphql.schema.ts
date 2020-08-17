@@ -40,6 +40,16 @@ export class Delete_Affliction_Request {
     ID: number;
 }
 
+export class GetFilteredReportsRequest {
+    token: string;
+    latitude: number;
+    longitude: number;
+    verification: string;
+    diagnosis: string;
+    distance: number;
+    formSearch: string;
+}
+
 export class GetReportsRequest {
     token: string;
     latitude: number;
@@ -184,6 +194,7 @@ export class GetSingleReportResponse {
     verification?: string;
     diagnoser?: string;
     status: number;
+    date?: string;
 }
 
 export class LoginResponse {
@@ -221,6 +232,8 @@ export abstract class IMutation {
     abstract getDiagnosis_Reason(getSingleReportRequest?: GetSingleReportRequest): GetDiagnosis_ReasonResponse | Promise<GetDiagnosis_ReasonResponse>;
 
     abstract getReportsMobile(getReportsRequest?: GetReportsRequest): PopTableMobileResponse[] | Promise<PopTableMobileResponse[]>;
+
+    abstract getFilteredReports(getReportsRequest?: GetFilteredReportsRequest): GetSingleReportResponse[] | Promise<GetSingleReportResponse[]>;
 
     abstract popTableBasicUser(request?: PopTableRequest): PopTableResponse[] | Promise<PopTableResponse[]>;
 

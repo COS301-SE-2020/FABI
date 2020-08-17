@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason, GetSingleReportRequest, GetDiagnosis_ReasonResponse, UpdateVerificationStatus } from '../../graphql.schema';
+import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason, GetSingleReportRequest, GetDiagnosis_ReasonResponse, UpdateVerificationStatus, GetFilteredReportsRequest } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
@@ -291,6 +291,32 @@ export class ReportService {
       return true;
     } catch (error) {
       return false;
+    }
+  }
+
+  async filteredReports(obj:GetFilteredReportsRequest): Promise<JSON>{
+    try {
+    //values for distance calculations (for 50km radius)
+    //long +-0,5057
+    //lat  +-0,453
+
+    let lat:number = obj.latitude;
+    let long:number = obj.longitude;
+
+
+    //Lat ranges
+    let latRangePositive = (lat + 0.453);
+    let latRangeNegative = (lat - 0.453);
+
+    //Long ranges
+    let longRangePositive = (long + 0.5057);
+    let longRangeNegative = (long - 0.5057);
+      //Query
+      var result = this.ReportsRepository.query("select * from reports, \"Afflictions\" where diagnosis = id and (\"CommName\" = \'"+obj.diagnosis+"\' or \"SciName\" = \'"+obj.diagnosis+"\') and verification = \'"+obj.verification+"\' and \"Long\" between "+longRangeNegative+" and "+longRangePositive+" and \"Lat\" between "+latRangeNegative+" and "+latRangePositive+" and form like \'%"+obj.formSearch+"%\';");
+      return result;
+    } catch (error) {
+      var empty = "{}";
+      return JSON.parse(empty);
     }
   }
 
