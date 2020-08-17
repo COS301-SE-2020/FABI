@@ -34,7 +34,7 @@ export class SpecSearchComponent implements OnInit {
     }
   ];
 
-  opttions: option[] = [
+  options = [
     {
       value: '1', viewValue: 'Correct'
     },
