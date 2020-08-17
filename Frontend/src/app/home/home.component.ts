@@ -57,6 +57,12 @@ export interface currentReport{
 })
 export class HomeComponent implements AfterViewInit {
 
+    // Device
+
+    Browser=sessionStorage.getItem("Browser");
+    
+    
+
     // Table
     displayedColumns: string[] = ['ID', 'Pname', 'distance', 'date'];
     displayedColumnsMobile: string[] = ['Pname', 'distance', 'date'];
@@ -135,7 +141,7 @@ export class HomeComponent implements AfterViewInit {
         private currentMarkServ: ReportDataService,
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
-    ) {
+    ) {console.log(this.Browser);
         
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {

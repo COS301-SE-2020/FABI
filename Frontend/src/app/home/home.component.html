@@ -332,8 +332,15 @@
             </mat-card>
         </div>
         <br>
-        <div fxFlex *ngIf="!showMobileTable">
-            <ng-image-slider [images]="imageObject" [infinite]="true" #nav></ng-image-slider>
+        <div fxFlex *ngIf="!showMobileTable&&Browser!='Safari'">
+            <ng-image-slider 
+            [images]="imageObject" 
+            [infinite]="true"
+            [imagePopup]="true"
+            #nav></ng-image-slider>
+        </div>
+        <div fxFlex *ngIf="!showMobileTable&&Browser=='Safari'">
+            <p style="color: white;">Images cannot show on Safari!</p>
         </div>
     </div>
     <br>
