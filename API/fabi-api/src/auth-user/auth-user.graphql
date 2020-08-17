@@ -1,0 +1,12 @@
+input AuthUserRequest{
+    token:String!
+}
+
+type AuthUserResponse{
+    status:Int!
+    UserType:String!
+}
+
+type Mutation{
+    getUserType(request:AuthUserRequest):AuthUserResponse!
+}
