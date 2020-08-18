@@ -25,4 +25,8 @@ export class UsersComponent implements OnInit {
 
   }
 
+  updateRole(role) {
+    
+  }
+
 }
