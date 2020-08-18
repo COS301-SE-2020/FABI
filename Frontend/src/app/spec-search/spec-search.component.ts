@@ -43,6 +43,24 @@ export class SpecSearchComponent implements OnInit {
     }
   ]
 
+  areas = [
+    {
+      value: '1', viewValue: 'Root'
+    },
+    {
+      value: '2', viewValue: 'Stem'
+    },
+    {
+      value: '3', viewValue: 'Branch'
+    },
+    {
+      value: '4', viewValue: 'Leaf / Leaves'
+    },
+    {
+      value: '5', viewValue: 'Flowers'
+    }
+  ]
+
   constructor() { }
 
   ngOnInit(): void {

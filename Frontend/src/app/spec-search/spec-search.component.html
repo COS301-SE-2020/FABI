@@ -1,7 +1,7 @@
 
-<mat-toolbar color="primary">
+<mat-toolbar>
     <mat-toolbar-row>
-        <div><button mat-raised-button color="primary">Back</button></div>
+        <div><button mat-button>Back</button></div>
         <h2 class="Title">Diagnostic Reports</h2>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -31,11 +31,14 @@
             <label for="sright" class="pull-right">50km</label><br>
             <br>
             <mat-form-field>
-                <label>List of symptoms</label><br>
-                <textarea matInput>
-                        </textarea>
+                <label>Affected Area</label><br>
+                <mat-select>
+                    <mat-option *ngFor="let area of areas" [value]="area.value">
+                        {{area.viewValue}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field><br>
-            <button mat-raised-button color="primary">Apply Filters</button>
+            <button mat-raised-button>Apply Filters</button>
         </div>
     </mat-drawer>
     <mat-drawer-content fxFlex="70">
