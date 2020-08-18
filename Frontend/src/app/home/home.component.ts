@@ -142,7 +142,7 @@ export class HomeComponent implements AfterViewInit {
         private currentMarkServ: ReportDataService,
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
-    ) {console.log(this.MobileWidth);
+    ) {
         
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
