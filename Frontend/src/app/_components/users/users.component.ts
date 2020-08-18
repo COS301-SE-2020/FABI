@@ -6,6 +6,7 @@ import { Observable } from 'apollo-link';
 import { Affliction } from '@/_models/affliction';
 import { Router, ActivatedRoute } from '@angular/router'
 import { UserService } from '@/_services/user.service';
+import { User } from '@/_models/user';
 
 @Component({
   selector: 'app-users',
@@ -14,15 +15,20 @@ import { UserService } from '@/_services/user.service';
 })
 export class UsersComponent implements OnInit {
   displayedColumns: string[] = ["email", "name", "surname", "actions"]
+  sDataSource
   special
-  basic
+  basic = [{
+    name: "John",
+    surname: "Doe",
+    email: "JohnDoe@gmail.com"
+  }]
   
   constructor(private userService: UserService) { }
   
   @ViewChild(MatSort, {static: true}) sort: MatSort
 
   ngOnInit(): void {
-
+    this.sDataSource = new MatTableDataSource(this.basic);
   }
 
   updateRole(role) {
