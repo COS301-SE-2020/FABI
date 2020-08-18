@@ -232,22 +232,16 @@ export class DiagReportComponent implements OnInit {
       this.Answers.plant,
       this.Answers.infliction).subscribe(data => {
         console.log(data);
+        this.submitted = true;
+        this.router.navigate(["/basic"]);
 
         // MOBILE debugging
         //this.downloadString(JSON.stringify(data)+"\n"+JSON.stringify(this.Answers));
       });
-      console.log(this.currentUser,
-        this.Answers.report,
-        this.Answers.long,
-        this.Answers.lat,
-        this.Answers.acc,
-        this.Answers.plant,
-        this.Answers.infliction);
 
       
 
-    this.submitted = true;
-    this.router.navigate(["/basic"]);
+    
   }
 
   createJSONstring(arr:Array<Questions>){
