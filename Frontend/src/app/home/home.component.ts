@@ -106,8 +106,8 @@ export class HomeComponent implements AfterViewInit {
             icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png"
         },
         Company: {
-            name: 'Company',
-            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redC.png"
+            name: 'Admin',
+            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redA.png"
         },
         You: {
             name: 'You',
@@ -291,8 +291,8 @@ export class HomeComponent implements AfterViewInit {
                     case "special":
                         userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png";
                         break;
-                    case "advanced":
-                        userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redC.png";
+                    case "admin":
+                        userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_redA.png";
                         break;
                 }
 
