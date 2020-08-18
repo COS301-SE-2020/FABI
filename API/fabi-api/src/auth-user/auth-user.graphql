@@ -7,6 +7,16 @@ type AuthUserResponse{
     UserType:String!
 }
 
+type UsersResponse{
+    status:Int!
+    name:String!
+    surname:String!
+    email:String!
+    userType:String!
+}
+
 type Mutation{
     getUserType(request:AuthUserRequest):AuthUserResponse!
+    getSpecialUsers(request:AuthUserRequest):[UsersResponse]!
+    getBasicUsers(request:AuthUserRequest):[UsersResponse]!
 }

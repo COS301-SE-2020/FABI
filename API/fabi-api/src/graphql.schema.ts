@@ -224,6 +224,10 @@ export abstract class IMutation {
 
     abstract getUserType(request?: AuthUserRequest): AuthUserResponse | Promise<AuthUserResponse>;
 
+    abstract getSpecialUsers(request?: AuthUserRequest): UsersResponse[] | Promise<UsersResponse[]>;
+
+    abstract getBasicUsers(request?: AuthUserRequest): UsersResponse[] | Promise<UsersResponse[]>;
+
     abstract get_GraphInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
     abstract get_TableInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
@@ -303,4 +307,12 @@ export class Update_afflictions_response {
 
 export class UploadResponse {
     status: number;
+}
+
+export class UsersResponse {
+    status: number;
+    name: string;
+    surname: string;
+    email: string;
+    userType: string;
 }

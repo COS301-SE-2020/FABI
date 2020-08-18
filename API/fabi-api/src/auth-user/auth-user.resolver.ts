@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { AuthUserService } from './auth-user.service';
-import { AuthUserRequest, AuthUserResponse } from '../graphql.schema';
+import { AuthUserRequest, AuthUserResponse, UsersResponse } from '../graphql.schema';
 
 @Resolver('AuthUser')
 export class AuthUserResolver {
@@ -12,5 +12,10 @@ export class AuthUserResolver {
     async login(@Args('request') reqObj: AuthUserRequest): Promise<AuthUserResponse> {
 
         return this.authUserService.AuthUserService(reqObj);
+    }
+
+    @Mutation('getSpecialUsers')
+    async getSpecialUsers(@Args('request') reqobj: AuthUserRequest): Promise<UsersResponse[]>{
+        return this.authUserService.getSpecialUserService(reqobj);
     }
 }

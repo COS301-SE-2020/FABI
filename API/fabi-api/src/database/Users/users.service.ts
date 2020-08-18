@@ -48,6 +48,10 @@ export class UsersService {
     return User.Email;
   }
 
+  async getSpecialUsers(): Promise<Users[]>{
+    return await this.UsersRepository.find({userType:"special"});
+  }
+
   async createUser(obj: Request): Promise<Users> {
     //create token
     let hashtoken = createHmac("sha256", (obj.email + this.makeid())).digest('base64');
