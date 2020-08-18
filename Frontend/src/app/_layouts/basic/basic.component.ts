@@ -41,7 +41,7 @@ export class BasicComponent implements OnInit {
       if (this.deviceService.isDesktop()) {
         sessionStorage.setItem("DeviceType", "Desktop");
       }
-      else if (this.deviceService.isMobile()||this.deviceService.isTablet()) {
+      else if (this.deviceService.isMobile()) {
         sessionStorage.setItem("DeviceType", "Mobile");
       }
       else {

@@ -288,9 +288,6 @@ export class DiagReportComponent implements OnInit {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
   ngOnInit(): void {
-    window.onbeforeunload = function() {
-      return "Dude, are you sure you want to leave? Think of the kittens!";
-    }
 
     WebcamUtil.getAvailableVideoInputs()
     .then((mediaDevices: MediaDeviceInfo[]) => {
