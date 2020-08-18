@@ -34,7 +34,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../database/Users/users.service';
-import { AuthUserRequest, AuthUserResponse, UsersResponse } from '../graphql.schema';
+import { AuthUserRequest, AuthUserResponse, UsersResponse, UpdateUserResponse, UpdateUserRequest } from '../graphql.schema';
 
 @Injectable()
 export class AuthUserService {
@@ -70,8 +70,8 @@ export class AuthUserService {
 
     }
 
-    async getSpecialUserService(reqObj:AuthUserRequest): Promise<UsersResponse[]>{
-        var res: UsersResponse[] = [{ status: 0, email:"",name:"",surname:"",userType:""}];
+    async getSpecialUserService(reqObj: AuthUserRequest): Promise<UsersResponse[]> {
+        var res: UsersResponse[] = [{ status: 0, email: "", name: "", surname: "", userType: "" }];
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
@@ -83,26 +83,26 @@ export class AuthUserService {
             res.pop();
             var resultJSON = await this.userService.getSpecialUsers();
 
-            if(Object.keys(resultJSON).length == 0){
-                 res[0].status = 500;
-                 return res;
+            if (Object.keys(resultJSON).length == 0) {
+                res[0].status = 500;
+                return res;
             }
 
-            for(var i = 0;i<Object.keys(resultJSON).length;i++){
+            for (var i = 0; i < Object.keys(resultJSON).length; i++) {
                 res.push({
-                    status:201,
-                    email:resultJSON[i].Email,
-                    name:resultJSON[i].Name,
-                    surname:resultJSON[i].Surname,
-                    userType:resultJSON[i].userType
+                    status: 201,
+                    email: resultJSON[i].Email,
+                    name: resultJSON[i].Name,
+                    surname: resultJSON[i].Surname,
+                    userType: resultJSON[i].userType
                 })
             }
             return res;
         }
     }
 
-    async getBasicUserService(reqObj:AuthUserRequest): Promise<UsersResponse[]>{
-        var res: UsersResponse[] = [{ status: 0, email:"",name:"",surname:"",userType:""}];
+    async getBasicUserService(reqObj: AuthUserRequest): Promise<UsersResponse[]> {
+        var res: UsersResponse[] = [{ status: 0, email: "", name: "", surname: "", userType: "" }];
 
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
@@ -115,21 +115,46 @@ export class AuthUserService {
             res.pop();
             var resultJSON = await this.userService.getBasicUsers();
 
-            if(Object.keys(resultJSON).length == 0){
-                 res[0].status = 500;
-                 return res;
+            if (Object.keys(resultJSON).length == 0) {
+                res[0].status = 500;
+                return res;
             }
 
-            for(var i = 0;i<Object.keys(resultJSON).length;i++){
+            for (var i = 0; i < Object.keys(resultJSON).length; i++) {
                 res.push({
-                    status:201,
-                    email:resultJSON[i].Email,
-                    name:resultJSON[i].Name,
-                    surname:resultJSON[i].Surname,
-                    userType:resultJSON[i].userType
+                    status: 201,
+                    email: resultJSON[i].Email,
+                    name: resultJSON[i].Name,
+                    surname: resultJSON[i].Surname,
+                    userType: resultJSON[i].userType
                 })
             }
             return res;
         }
+    }
+
+    async updateUserService(reqObj: UpdateUserRequest): Promise<UpdateUserResponse> {
+
+        var res: UpdateUserResponse = { status: 0 };
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            res.status = 415;
+            return res;
+        } else {
+            var bool = await this.userService.updateUser(reqObj.email, reqObj.newUserType);
+
+            if (bool == false) {
+                res.status = 500
+                return res;
+            }
+
+            res.status = 201;
+            return res;
+        }
+
     }
 }
