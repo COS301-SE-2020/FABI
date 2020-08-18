@@ -63,10 +63,10 @@ export class SpecialistService {
           token: "${this.authentication.currentUserValue}",
           latitude: ${latitude},
           longitude: ${longitude},
-          verification: ${verification},
-          diagnosis: ${diagnosis},
+          verification: "${verification}",
+          diagnosis: "${diagnosis}",
           distance: ${distance},
-          formSearch: ${formSearch}
+          formSearch: "${formSearch}"
         })
         {
           form,

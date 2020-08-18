@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpecialistService } from './specialist.service';
 
 @Component({
   selector: 'app-spec-search',
@@ -33,6 +34,7 @@ export class SpecSearchComponent implements OnInit {
       date: "18 March 2020"
     }
   ];
+  // reports
 
   options = [
     {
@@ -61,10 +63,13 @@ export class SpecSearchComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor(private specialistService: SpecialistService) { }
 
   ngOnInit(): void {
-
+    this.specialistService.filterReports(-25.877847437584027, 28.230844648390754,"Verified","Wattle rust",40, "Leaf / Leaves").subscribe(data => {
+      console.log(data);
+      
+    })
   }
 
 }
