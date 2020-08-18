@@ -52,6 +52,10 @@ export class UsersService {
     return await this.UsersRepository.find({userType:"special"});
   }
 
+  async getBasicUsers(): Promise<Users[]>{
+    return await this.UsersRepository.find({userType:"basic"});
+  }
+
   async createUser(obj: Request): Promise<Users> {
     //create token
     let hashtoken = createHmac("sha256", (obj.email + this.makeid())).digest('base64');

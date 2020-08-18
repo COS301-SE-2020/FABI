@@ -18,4 +18,9 @@ export class AuthUserResolver {
     async getSpecialUsers(@Args('request') reqobj: AuthUserRequest): Promise<UsersResponse[]>{
         return this.authUserService.getSpecialUserService(reqobj);
     }
+
+    @Mutation('getBasicUsers')
+    async getBasicUsers(@Args('request') reqobj: AuthUserRequest): Promise<UsersResponse[]>{
+        return this.authUserService.getBasicUserService(reqobj);
+    }
 }

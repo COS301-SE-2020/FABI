@@ -100,4 +100,36 @@ export class AuthUserService {
             return res;
         }
     }
+
+    async getBasicUserService(reqObj:AuthUserRequest): Promise<UsersResponse[]>{
+        var res: UsersResponse[] = [{ status: 0, email:"",name:"",surname:"",userType:""}];
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            res[0].status = 415;
+            return res;
+        } else {
+            res.pop();
+            var resultJSON = await this.userService.getBasicUsers();
+
+            if(Object.keys(resultJSON).length == 0){
+                 res[0].status = 500;
+                 return res;
+            }
+
+            for(var i = 0;i<Object.keys(resultJSON).length;i++){
+                res.push({
+                    status:201,
+                    email:resultJSON[i].Email,
+                    name:resultJSON[i].Name,
+                    surname:resultJSON[i].Surname,
+                    userType:resultJSON[i].userType
+                })
+            }
+            return res;
+        }
+    }
 }
