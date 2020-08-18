@@ -169,8 +169,8 @@
 
     <button type="button" class="btn btn-primary" 
     (click)="onSubmit()"
-    [disabled]="Questionnaire.invalid||(Questionnaire.controls['Question1'].value=='Unknown'&&Questionnaire.controls['Question2'].value=='Unknown')">
-    Submit</button>
+    [disabled]="submitButtonPressed || Questionnaire.invalid||(Questionnaire.controls['Question1'].value=='Unknown'&&Questionnaire.controls['Question2'].value=='Unknown')">
+    {{submitButtonText}}</button>
     
     </form>
     

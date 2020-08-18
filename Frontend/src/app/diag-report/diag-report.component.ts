@@ -27,9 +27,11 @@ export interface Questions{
 export class DiagReportComponent implements OnInit {
 
   // Model
+  // Steven Debug stuff
+  public submitButtonText: string = "Submit";
+  public submitButtonPressed: Boolean = false;
 
   Answers=new Report_Questions;
-  
   public enterImage:Boolean=false;
   public currentUser: User;
   public submitted = false;
@@ -207,6 +209,9 @@ export class DiagReportComponent implements OnInit {
 
  
   onSubmit(){
+    // TEMPORARY VALUE FOR TESTING
+    this.submitButtonPressed = true;
+    this.submitButtonText = "Processing";
     // Add error checking on bootstrap (Empty fields etc)
     var i=1;
     this.responses.forEach(element=>{
@@ -233,6 +238,9 @@ export class DiagReportComponent implements OnInit {
       this.Answers.infliction).subscribe(data => {
         console.log(data);
         this.submitted = true;
+        if (data["upload"]["status"] != 201)
+          this.submitButtonText = "Failed";
+          
         this.router.navigate(["/basic"]);
 
         // MOBILE debugging
