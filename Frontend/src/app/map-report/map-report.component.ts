@@ -70,7 +70,6 @@ export class MapReportComponent implements OnInit {
     this.pnd["Images"].forEach(element => {
       this.Images.push(element["Image"]);
     });
-    console.log(this.Images[0]);
 
     this.Management=this.pnd["Management"];
     this.Name=this.pnd["Name"];
