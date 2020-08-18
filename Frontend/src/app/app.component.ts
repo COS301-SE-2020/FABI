@@ -36,7 +36,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Services
-import { AuthenticationService } from './_services/authentication.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { ReportDataService } from './_services/report-data.service'
 
 // Models

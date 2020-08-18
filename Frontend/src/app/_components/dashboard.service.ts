@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from "../_services/authentication.service";
+import { AuthenticationService } from "@/_UMservices/authentication.service";
 // API specific imports
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

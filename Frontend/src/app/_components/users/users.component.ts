@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'apollo-link';
 import { Affliction } from '@/_models/affliction';
 import { Router, ActivatedRoute } from '@angular/router'
-import { UserService } from '@/_services/user.service';
+import { UserService } from '@/_UMservices/user.service';
 
 @Component({
   selector: 'app-users',

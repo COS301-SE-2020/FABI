@@ -34,10 +34,10 @@
 
 
 // Angular specific imports
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 // User Management imports
-import { AuthGuard } from './_helpers/auth.guard';
+import { AuthGuardService } from '@/_UMservices/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
@@ -97,8 +97,7 @@ const routes: Routes = [
         {
             path: 'users',
             component: UsersComponent
-        }],
-        canActivate: [AuthGuard]
+        }]
     },
     {
         path: 'basic',
@@ -124,7 +123,6 @@ const routes: Routes = [
             path: 'specialist',
             component: SpecSearchComponent
         }]
-        // canActivate: [AuthGuard]
     },
         
         {
