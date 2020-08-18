@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService } from '@/_services/alert.service';
-import { AuthenticationService } from '@/_services/authentication.service';
+import { AlertService } from '@/_UMservices/alert.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { BasicComponent } from '@/_layouts/basic/basic.component';
 
 @Component({ templateUrl: 'login.component.html' })

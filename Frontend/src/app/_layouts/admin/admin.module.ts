@@ -57,7 +57,7 @@ import { UpdatePestComponent } from '../../_components/pest-info/update-pest/upd
 
 // Shared module
 import { SharedModule } from '@/sharedAdmin/shared.module';
-import { AlertService } from '@/_services/alert.service';
+import { AlertService } from '@/_UMservices/alert.service';
 import { AlertComponent } from '@/_components/alert.component';
 import { PathogenInfoComponent } from '../../_components/pathogen-info/pathogen-info.component';
 import { UpdatePathogenComponent } from '../../_components/pathogen-info/update-pathogen/update-pathogen.component';

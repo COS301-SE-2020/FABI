@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
-import { UserService } from '@/_services/user.service';
-import { AuthenticationService } from '@/_services/authentication.service';
+import { UserService } from '@/_UMservices/user.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { LocationService } from '@/_services/location.service';
 
 import { Report } from '@/_models/report'
