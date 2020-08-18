@@ -37,7 +37,7 @@ import { ReportService } from '../../database/Report/report.service';
 @Injectable()
 export class PopulateTableService {
 
-    res: PopTableResponse[] = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID:-1 }];
+    res: PopTableResponse[] = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID: -1 }];
 
     //Define the External services used in this service
     constructor(
@@ -64,10 +64,10 @@ export class PopulateTableService {
 
         } else {
             //clear response object
-            this.res = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID:-1 }];
+            this.res = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID: -1 }];
             this.res.pop();
 
-            
+
             //make call to db and get individual report
             let singleReportJSON = await this.reportService.getSingleReport(reqObj.reportID);
 
@@ -83,7 +83,7 @@ export class PopulateTableService {
             let resultJson = JSON.parse(resultString.toString());
 
             //sort results by reportID
-            let sortedResults = resultJson.sort(function(a, b) {
+            let sortedResults = resultJson.sort(function (a, b) {
                 return parseFloat(a.reportID) - parseFloat(b.reportID);
             });
 
@@ -93,7 +93,7 @@ export class PopulateTableService {
                 let distance: number;
                 let date: string;
                 let Pname: string;
-                let ID:number;
+                let ID: number;
 
                 //report lat/long
                 let reportLat: number = sortedResults[i].Lat;
@@ -116,7 +116,7 @@ export class PopulateTableService {
                 ID = sortedResults[i].reportID;
 
                 //add object to list
-                this.res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID:ID });
+                this.res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID: ID });
             }
 
             //response

@@ -35,6 +35,10 @@ export class All_afflictions_request {
     token: string;
 }
 
+export class AuthUserRequest {
+    token: string;
+}
+
 export class Delete_Affliction_Request {
     token: string;
     ID: number;
@@ -161,6 +165,11 @@ export class All_afflictions {
     status?: number;
 }
 
+export class AuthUserResponse {
+    status: number;
+    UserType: string;
+}
+
 export class Delete_Affliction_Response {
     status?: number;
 }
@@ -212,6 +221,8 @@ export abstract class IMutation {
     abstract get_Single_affliction(request?: Single_affliction_request): Single_affliction_response | Promise<Single_affliction_response>;
 
     abstract update_afflictions(request?: Update_afflictions_request): Update_afflictions_response | Promise<Update_afflictions_response>;
+
+    abstract getUserType(request?: AuthUserRequest): AuthUserResponse | Promise<AuthUserResponse>;
 
     abstract get_GraphInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
