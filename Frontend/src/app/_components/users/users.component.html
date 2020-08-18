@@ -1,38 +1,28 @@
 <table mat-table [dataSource]="users" matSort class="mat-elevation-z8">
 
-    <ng-container matColumnDef="Scientific Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Scientific Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.scientificName}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Common Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Common Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Affected Plant">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Affected Plant </th>
-      <td mat-cell *matCellDef="let element"> {{element.plant}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Add pathogen &nbsp;
-        <button mat-mini-fab type="button" color="primary" mat-button>
-          <mat-icon>add</mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-mini-fab type="button" color="accent" mat-button (click)="updatePathogen(element.id)">
-          <mat-icon>input</mat-icon>
-        </button>
-        &nbsp;&nbsp;&nbsp;
-        <button mat-mini-fab type="button" color="warn" class="delButton" mat-button (click)="deletePathogen(element.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email address</th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="surname">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Surname</th>
+    <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <td mat-cell *matCellDef="let element">
+      <button mat-mini-fab type="button" color="primary" mat-button (click)="updateRole('promote')">
+        Promote
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
