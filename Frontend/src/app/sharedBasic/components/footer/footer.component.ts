@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonListenerService } from "@/_services/buttonListener.service";
 import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -13,6 +14,7 @@ export class FooterComponent implements OnInit {
   subscription: Subscription;
   currentStyle = "Dark";
   constructor(
+    private router: Router,
     private styleSwitch: ButtonListenerService
   ) {
     this.subscription = this.styleSwitch.getStyle().subscribe(data => {
@@ -24,7 +26,7 @@ export class FooterComponent implements OnInit {
   }
   toggleDevice() {
     sessionStorage.setItem("DeviceType", (this.DeviceType == "Desktop" ? "Mobile" : "Desktop"));
-    location.reload();
+    this.router.navigate(["/basic"]);
   }
 
 }
