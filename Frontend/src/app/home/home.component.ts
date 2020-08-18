@@ -143,7 +143,6 @@ export class HomeComponent implements AfterViewInit {
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
     ) {
-        
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
             this.currentStyle = data.text;
