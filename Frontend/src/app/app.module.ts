@@ -72,7 +72,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 
@@ -112,6 +112,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatInputModule,
     MatToolbarModule,
     FlexLayoutModule,
+    MatSidenavModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,
