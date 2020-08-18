@@ -34,7 +34,6 @@ toggleSideBar() {
   }
   
   logout() {
-    // TODO: Implement logout
     this.service.logout()
     this.router.navigateByUrl('')
   }

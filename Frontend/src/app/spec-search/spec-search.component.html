@@ -2,12 +2,12 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
         <div><button mat-raised-button color="primary">Back</button></div>
-        <h2 class="Title">Search for Diagnostic Reports</h2>
+        <h2 class="Title">Diagnostic Reports</h2>
     </mat-toolbar-row>
 </mat-toolbar>
 
-<div id="container" fxLayout="row">
-    <div fxFlex="20">
+<mat-drawer-container fxLayout="row" class="example-container">
+    <mat-drawer fxFlex="30" mode="side" opened>
         <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png" alt="Company Name"><br>
         <mat-divider></mat-divider>
         <h2 class="specChild">Filter Reports</h2>
@@ -33,21 +33,21 @@
             <mat-form-field>
                 <label>List of symptoms</label><br>
                 <textarea matInput>
-                </textarea>
+                        </textarea>
             </mat-form-field><br>
             <button mat-raised-button color="primary">Apply Filters</button>
         </div>
-    </div>
-    <div fxFlex="80">
-            <h2 class="HeadofRight">Reports:</h2><br>
-            <div *ngFor="let report of reports" class="report">
-                <h3 style="border-bottom-style: solid; text-align: center;">{{report.name}}</h3>
-                <h3>Symptoms:</h3>
-                <p *ngFor="let symptom of report.symptoms">{{symptom}}</p>
-                <h3>{{report.date}}</h3>
-            </div>
+    </mat-drawer>
+    <mat-drawer-content fxFlex="70">
+        <h2 class="HeadofRight">Reports:</h2><br>
+        <div *ngFor="let report of reports" class="report">
+            <h3 style="border-bottom-style: solid; text-align: center;">{{report.name}}</h3>
+            <h3>Symptoms:</h3>
+            <p *ngFor="let symptom of report.symptoms">{{symptom}}</p>
+            <h3>{{report.date}}</h3>
         </div>
-</div>
+    </mat-drawer-content>
+</mat-drawer-container>
 
 <mat-divider></mat-divider>
 <footer>
