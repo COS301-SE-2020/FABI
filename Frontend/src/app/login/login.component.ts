@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AlertService } from '@/_services/alert.service';
 import { AuthenticationService } from '@/_services/authentication.service';
+import { BasicComponent } from '@/_layouts/basic/basic.component';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        localStorage.clear();
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -55,7 +57,20 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.authenticationService.getUserType(data).subscribe(data=>{
+                        switch(data){
+                            case "special":
+                                this.router.navigate(["/special"]);
+                            break;
+                            case "basic":
+                                this.router.navigate(["/basic"]);
+                            break;
+                            case "admin":
+                                this.router.navigate(["/admin"]);
+                            break;
+                        }
+                        
+                    });
                 },
                 error => {
                     this.alertService.error(error);

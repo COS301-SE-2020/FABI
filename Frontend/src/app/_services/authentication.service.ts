@@ -85,4 +85,18 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+
+    getUserType(token){
+        return this.apollo.mutate({
+            mutation: gql`mutation {
+                    getUserType(request:{
+                    token:"${token}"
+                    }){
+                    UserType
+                    }
+              }`
+        }).pipe(map(data => {
+            return data["data"]["getUserType"]["UserType"];
+        }))
+    }
 }

@@ -118,14 +118,20 @@ const routes: Routes = [
         // canActivate: [AuthGuard]
     },
     {
-        path: 'specialist',
-        component: SpecSearchComponent
+        path: 'special',
+        component: BasicComponent,
+        children: [{
+            path: 'specialist',
+            component: SpecSearchComponent
+        }]
+        // canActivate: [AuthGuard]
     },
-    // otherwise redirect to home
-    {
-        path: '**',
-        redirectTo: 'basic'
-    }
+        
+        {
+            path: '**',
+            redirectTo: 'login'
+        }
+    
 ];
 
 export const appRoutingModule = RouterModule.forRoot(routes);
