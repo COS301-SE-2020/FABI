@@ -20,4 +20,21 @@ export class UsersService {
       }`
     })
   }
+
+  getSpecial() {
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        getSpecialUsers( request: { token: "${this.authentication.currentUserValue}" })
+        {
+          status,
+          name,
+          surname,
+          email,
+          userType
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["getSpecialUsers"];
+    }))
+  }
 }
