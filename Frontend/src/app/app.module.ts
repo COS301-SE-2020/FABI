@@ -55,8 +55,6 @@ import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
 import { SpecSearchComponent } from './spec-search/spec-search.component';
-import { SpecVerifyComponent } from './spec-verify/spec-verify.component';
-import { SpecSubmitComponent } from './spec-submit/spec-submit.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HomeModule} from './home/home.module';
@@ -67,6 +65,18 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+
+
+
+
 
 
 
@@ -76,8 +86,6 @@ import { RouterModule } from '@angular/router';
     LoginComponent,
     RegisterComponent,
     SpecSearchComponent,
-    SpecVerifyComponent,
-    SpecSubmitComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +105,13 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     FormsModule,
     RouterModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatToolbarModule,
+    FlexLayoutModule,
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

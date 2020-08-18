@@ -36,10 +36,10 @@ export class SpecSearchComponent implements OnInit {
 
   options = [
     {
-      value: '1', viewValue: 'Correct'
+      value: '1', viewValue: 'Verified'
     },
     {
-      value: '2', viewValue: 'Incorrect'
+      value: '2', viewValue: 'Unverivied'
     }
   ]
 

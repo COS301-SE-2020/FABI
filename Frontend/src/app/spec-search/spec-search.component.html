@@ -1,55 +1,57 @@
-<div id="full-container">
-    <header class="header">
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
         <div><button mat-raised-button color="primary">Back</button></div>
         <h2 class="Title">Search for Diagnostic Reports</h2>
-    </header>
+    </mat-toolbar-row>
+</mat-toolbar>
 
-    <div id="wrapper">
-        <div id="left-filter-div">
-            <form>
-                <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png" alt="Company Name"><br>
-                <h2 class="specChild">Filter Reports</h2>
-                <div>
-                    <label>Plant Name</label>
-                    <input type="text" id="pname" name="pname"><br>
-                    <label>Report Status</label><br>
-                    <!--<mat-form-field appearance="fill">
-                        <mat-label>Choose your option</mat-label>
-                        <mat-select>
-                            <mat-option *ngFor="let option of options" [value]="option.value">
-                                {{option.viewValue}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>-->
-                    <select class="browser-default">
-                        <option value="" disabled selected>Choose your option</option>
-                        <option value="1">Correct</option>
-                        <option value="2">Incorrect</option>
-                    </select><br>
-                    <label>Distance from position</label><br>
-                    <input type="range" id="distance" name="distance" min="5" max="50" value="5"><br>
-                    <label for="sleft" class="pull-left">5km</label>
-                    <label for="sright" class="pull-right">50km</label><br>
-                    <br><label>List of symptoms</label><br>
-                    <textarea id="w3review" name="w3review" rows="4">
-                    </textarea>
-                    <button mat-raised-button color="primary">Apply Filters</button>
-                </div>
-            </form>
+<div id="container" fxLayout="row">
+    <div fxFlex="20">
+        <img src="https://www.fabinet.up.ac.za/templates/fabi_new/images/logo.png" alt="Company Name"><br>
+        <mat-divider></mat-divider>
+        <h2 class="specChild">Filter Reports</h2>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Plant Name</mat-label>
+                <input matInput>
+            </mat-form-field><br>
+            <label>Report Status</label><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Choose your option</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let option of options" [value]="option.value">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field><br>
+            <label>Distance from position</label><br>
+            <mat-slider min="5" max="50" value="5"></mat-slider><br>
+            <label for="sleft" class="pull-left">5km</label>
+            <label for="sright" class="pull-right">50km</label><br>
+            <br>
+            <mat-form-field>
+                <label>List of symptoms</label><br>
+                <textarea matInput>
+                </textarea>
+            </mat-form-field><br>
+            <button mat-raised-button color="primary">Apply Filters</button>
         </div>
-        
-        <div id="right-disply-div">
+    </div>
+    <div fxFlex="80">
             <h2 class="HeadofRight">Reports:</h2><br>
             <div *ngFor="let report of reports" class="report">
                 <h3 style="border-bottom-style: solid; text-align: center;">{{report.name}}</h3>
                 <h3>Symptoms:</h3>
                 <p *ngFor="let symptom of report.symptoms">{{symptom}}</p>
                 <h3>{{report.date}}</h3>
-            </div> 
+            </div>
         </div>
-    </div>
-
-    <footer>
-        &copy; All rights reserved 2020
-    </footer>
 </div>
+
+<mat-divider></mat-divider>
+<footer>
+    &copy; All rights reserved 2020
+</footer>
+
+    
