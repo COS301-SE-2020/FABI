@@ -13,7 +13,15 @@
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Diagnosis</mat-label>
-                <input matInput [(ngModel)]="filter.Diagnosis">
+
+                <input type="text" matInput [(ngModel)]="filter.Diagnosis" [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    Suggested option
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
+
             </mat-form-field><br>
             <label>Report Status</label><br>
             <mat-form-field appearance="fill">
@@ -40,9 +48,9 @@
             <button mat-raised-button (click)="filterReports()">Apply Filters</button>
         </div>
     </mat-drawer>
-    <mat-drawer-content fxFlex="70" >
+    <mat-drawer-content fxFlex="70">
         <h2 class="HeadofRight">{{title}}</h2><br>
-        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8">
+        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8" *ngIf="reports.length!=0">
 
             <ng-container matColumnDef="Plant Name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Plant Name </th>
@@ -64,14 +72,39 @@
                 Actions
               </th>
               <td mat-cell *matCellDef="let element">
-                <button type="button" mat-button (click)="viewReport(element.id)">View Report</button>
+                <button type="button" mat-button>View Report</button>
               </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+          <mat-table [dataSource]="ITdatasource" class="mat-elevation-z8">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Pname">
+                    <mat-header-cell *matHeaderCellDef> Plant Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="viewReport(element.ID)" style="cursor: pointer;"> {{element.Pname}} </mat-cell>
+                </ng-container>
+
+                <!-- Distance Column -->
+                <ng-container matColumnDef="distance">
+                    <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="viewReport(element.ID)" style="cursor: pointer;"> {{element.distance}} </mat-cell>
+                </ng-container>
+
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="viewReport(element.ID)" style="cursor: pointer;"> {{element.date}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="ITdisplayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ITdisplayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [length]="dataLength"  (page)="getNearbyReports($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
     </mat-drawer-content>
+    
 </mat-drawer-container>
 
 <mat-divider></mat-divider>

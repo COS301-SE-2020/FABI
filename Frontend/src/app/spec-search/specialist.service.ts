@@ -147,4 +147,5 @@ verify(reportID, verification, comment) {
       }`
     })
   } 
+
 }

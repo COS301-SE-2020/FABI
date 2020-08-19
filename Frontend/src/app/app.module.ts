@@ -75,6 +75,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AccessControlComponent } from './access-control/access-control.component';
 import { MatTableModule } from '@angular/material/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 
@@ -117,7 +118,7 @@ import { MatTableModule } from '@angular/material/table';
     MatToolbarModule,
     FlexLayoutModule,
     MatSidenavModule,
-    
+    MatAutocompleteModule,    
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

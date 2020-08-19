@@ -4,7 +4,15 @@ import { LocationService } from '@/_services/location.service';
 import { AlertService } from '@/_services/alert.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import {FormControl} from '@angular/forms';
 import { report } from 'process';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
+
+// Filter
+import { Observable, Subject } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { ReportDataService } from '@/_services/report-data.service'
+import {PageEvent} from '@angular/material/paginator';
 
 export interface filterModel{
   Diagnosis:string;
@@ -12,6 +20,11 @@ export interface filterModel{
   Distance:number;
   AffectedArea:string;
 }
+
+export interface filterValue{
+  name: string;
+}
+
 
 @Component({
   selector: 'app-spec-search',
@@ -24,6 +37,14 @@ export class SpecSearchComponent implements OnInit {
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  // Initial table
+
+  ITdatasource;
+  ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
+  displayReady=false;
+  datalength;
+  pageEvent: PageEvent;
+
   // Filter values
 
   filter: filterModel={
@@ -32,7 +53,43 @@ export class SpecSearchComponent implements OnInit {
     Distance:5,
     AffectedArea:""
   }
-  title = "Reports will appear here"
+  title = "All reports";
+
+  Foptions :filterValue[]= [
+    {name:"Eucalyptus/guava/myrtle rust pathogen"},
+    {name:"Chrysoporthe canker"},
+    {name:"Kirramyces stem canker "},
+    {name:"Leaf blotch"},
+    {name:"Pitch canker"},
+    {name:"Wattle rust"},
+    {name:"Ceratocystis wattle wilt"},
+    {name:"Botryosphaeriaceae canker"},
+    {name:"Armillaria root rot"},
+    {name:"Phytophthora root rot"},
+    {name:"Deodar weevil"},
+    {name:"Bronze bug"},
+    {name:"Eucalyptus weevil/snout beetle"},
+    {name:"Wattle bagworm"},
+    {name:"Sirex woodwasp"},
+    {name:"Bluegum chalcid"},
+    {name:"Wattle mirid"},
+    {name:"Cossid moth/Quince borer"},
+    {name:"Shell lerp psyllid"},
+    {name:"Eucalyptus gall wasp"},
+    {name:"Red gum lerp psyllid"},
+  ];
+  filteredOptions: Observable<any>;
+  myControl = new FormControl();
+
+  private _filter(name: string): filterValue[] {
+    const filtervalue = name.toLowerCase();
+
+    return this.Foptions.filter(option => option.name.toLowerCase().indexOf(filtervalue) === 0);
+  }
+
+  displayFn(filter: filterValue): string {
+    return filter && filter.name ? filter.name : '';
+  }
 
 
   options = [
@@ -42,7 +99,7 @@ export class SpecSearchComponent implements OnInit {
     {
       value: '2', viewValue: 'Unverified'
     }
-  ]
+  ];
 
   areas = [
     {
@@ -60,23 +117,54 @@ export class SpecSearchComponent implements OnInit {
     {
       value: '5', viewValue: 'Flowers'
     }
-  ]
+  ];
 
-  constructor(private specialistService: SpecialistService, private locationService: LocationService) { }
+  constructor(
+    private specialistService: SpecialistService, 
+    private locationService: LocationService, 
+    private repServe:ReportDataService,
+    private auth:AuthenticationService
+    ) { }
+
+    paginatorInit(){
+      this.locationService.getLocation().subscribe(location => {
+      this.repServe.requestNearbyReportsMobile(this.auth.currentUserValue,location.coords.latitude,location.coords.longitude).subscribe(rep=>{
+            
+        this.ITdatasource=(this.repServe.getNearbyReportsMobile(0));
+        this.datalength=this.repServe.reportsLength;
+    });})
+  }
+
+  getNearbyReports(event){
+    this.dataSource=(this.repServe.getNearbyReportsMobile(event.pageIndex));
+  }
 
   ngOnInit(): void {
+
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.options.slice())
+      );
     this.dataSource = new MatTableDataSource(this.reports)
     this.dataSource.sort = this.sort
+
+    this.paginatorInit();
   }
   viewReport(id) {
-    
+    console.log(id)
   }
+
+
   filterReports() {
     // TODO: This function is incomplete and needs location data added
     this.locationService.getLocation().subscribe(location => {
       this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis, this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
+        console.log(data);
+        
         if (data[0]["status"] == 500) {
-          this.title = "No Reports found"
+          this.title = "No Reports found, showing all unfiltered reports"
         }
         else {
           data = data.filter(props => {
