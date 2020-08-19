@@ -59,13 +59,13 @@ export class LoginComponent implements OnInit {
                     this.authenticationService.getUserType(data).subscribe(data=>{
                         switch(data){
                             case "special":
-                                this.router.navigate(["/special"]);
+                                this.router.navigate(["/special"],{ state:  { login:true }});
                             break;
                             case "basic":
-                                this.router.navigate(["/basic"]);
+                                this.router.navigate(["/basic"],{ state:  { login:true }});
                             break;
                             case "admin":
-                                this.router.navigate(["/admin"]);
+                                this.router.navigate(["/admin"],{ state:  { login:true }});
                             break;
                         }
                         

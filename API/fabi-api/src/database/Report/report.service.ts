@@ -216,7 +216,7 @@ export class ReportService {
     //set variables
     var tags = neuralNetTags.join(",");
     var diagnoser = "/";// default values for now
-    var verification = "/";// default values for now
+    var verification = "Unverified";// default values for now
     var report = obj.report;
     var long = obj.Longitude;
     var lat = obj.Latitude;

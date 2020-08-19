@@ -133,10 +133,26 @@
                         <div class="col">
                             Specialist diagnosis:
                         </div>
-                        <div class="col">
-                            awaiting review
+                        <div class="col" *ngIf="Diagnosis">
+                            {{Diagnose.diagnosis}}
                         </div>
                     </div>
+                    <br>
+                    <div class="row" *ngIf="!Diagnosis">
+                        <div class="col">
+                            Awaiting review
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="Diagnosis">
+                        <div class="col">
+                            Reason:
+                        </div>
+                        <div class="col">
+                            {{Diagnose.reason}}
+                        </div>
+                    </div>
+
+                    
                 </mat-card-title>
                 <mat-card-content>
                     
@@ -323,7 +339,7 @@
                     </div>
                     <br>
                     <div class="row" style="font-size:small;">
-                        <p>Awaiting review</p>
+                        <p>{{Diagnosis}}</p>
                     </div>
                 </mat-card-title>
                 <mat-card-content>

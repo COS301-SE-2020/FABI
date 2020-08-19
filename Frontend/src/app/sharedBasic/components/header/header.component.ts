@@ -39,7 +39,9 @@ export class HeaderComponent implements OnInit {
   }
 
   home(){
-    this.router.navigate(['/home']);
+    this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
+      this.router.navigate(["/"+data]);
+    });
   }
 
 
