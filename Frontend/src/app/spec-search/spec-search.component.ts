@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpecialistService } from './specialist.service';
 import { LocationService } from '@/_services/location.service';
-
+import { AlertService } from '@/_services/alert.service';
 @Component({
   selector: 'app-spec-search',
   templateUrl: './spec-search.component.html',
@@ -13,6 +13,7 @@ export class SpecSearchComponent implements OnInit {
   diagnosis = "";
   status
   affectedArea
+  title = "Reports"
 
   reports = [
     {
@@ -70,20 +71,18 @@ export class SpecSearchComponent implements OnInit {
     }
   ]
 
-  constructor(private specialistService: SpecialistService, private locationService: LocationService) { }
+  constructor(private specialistService: SpecialistService, private locationService: LocationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
 
   }
   filterReports() {
     // TODO: This function is incomplete and needs location data added
-    console.log(this.status);
       this.locationService.getLocation().subscribe(location => {
-        // console.log(location.coords.latitude+ ", "+ location.coords.longitude+ ", "+ this.status+ ", "+ this.diagnosis+ ", "+ this.distance+ ", "+ this.affectedArea);
-        
         this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.status, this.diagnosis, this.distance, this.affectedArea).subscribe(data => {
-          console.log(data);
-          
+          if (data[0]["status"] == 500){
+            this.title = "No Reports found"            
+          }
         })
       })
 

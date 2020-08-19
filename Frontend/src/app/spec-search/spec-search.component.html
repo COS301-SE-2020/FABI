@@ -1,4 +1,3 @@
-
 <mat-toolbar>
     <mat-toolbar-row>
         <div><button mat-button>Back</button></div>
@@ -42,7 +41,7 @@
         </div>
     </mat-drawer>
     <mat-drawer-content fxFlex="70">
-        <h2 class="HeadofRight">Reports:</h2><br>
+        <h2 class="HeadofRight">{{title}}</h2><br>
         <div *ngFor="let report of reports" class="report">
             <h3 style="border-bottom-style: solid; text-align: center;">{{report.name}}</h3>
             <h3>Symptoms:</h3>
