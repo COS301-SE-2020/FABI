@@ -127,16 +127,16 @@ export class Upload_Diagnosis_Reason {
 
 export class UploadRequest {
     token: string;
-    Urgency: number;
-    report: string;
-    Latitude: number;
-    Longitude: number;
-    Accuracy: number;
-    Pname: string;
-    Infliction: string;
-    Img1: string;
-    Img2: string;
-    Img3: string;
+    Urgency?: number;
+    report?: string;
+    Latitude?: number;
+    Longitude?: number;
+    Accuracy?: number;
+    Pname?: string;
+    Infliction?: string;
+    Img1?: string;
+    Img2?: string;
+    Img3?: string;
 }
 
 export class Add_Affliction_Response {
@@ -210,6 +210,8 @@ export class GetSingleReportResponse {
     diagnoser?: string;
     status: number;
     date?: string;
+    preDiagnosisNames?: string;
+    preDiagnosisProbabilities?: string;
 }
 
 export class LoginResponse {

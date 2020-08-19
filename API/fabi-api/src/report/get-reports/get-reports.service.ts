@@ -34,6 +34,7 @@ import { GetReportsResponse, GetReportsRequest, GetSingleReportRequest, GetSingl
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 import { PopulateTableService } from '../populate-table/populate-table.service';
+import { log } from 'console';
 
 @Injectable()
 export class GetReportsService {
@@ -66,6 +67,36 @@ export class GetReportsService {
             //this will pass upload object to report service that will interact with db
             let reportJSON = await this.reportService.getReports(reqObj.latitude, reqObj.longitude);
 
+            //buid diagnosis names
+            var diagnosis = JSON.parse(reportJSON[0].prediagnosis);
+            var diagnosisNames = Object.keys(diagnosis);
+            var diagnosisProbs = Object.values(diagnosis);
+
+            
+            var swapp;
+            var n = diagnosisProbs.length-1;
+
+            //bubble sort cause im dumb
+            do{
+                swapp = false;
+                for (var i=0; i < n; i++)
+                {
+                    if (diagnosisProbs[i] < diagnosisProbs[i+1])
+                    {
+                       var temp2 = diagnosisNames[i]
+                       var temp = diagnosisProbs[i];
+                       diagnosisProbs[i] = diagnosisProbs[i+1];
+                       diagnosisNames[i] = diagnosisNames[i+1];
+                       diagnosisProbs[i+1] = temp;
+                       diagnosisNames[i+1] = temp2;
+                       swapp = true;
+                    }
+                }
+                n--;
+            } while (swapp);
+
+  
+
             if (Object.keys(reportJSON).length == 0) {
                 return res;
             }
@@ -86,7 +117,9 @@ export class GetReportsService {
                     Pname: reportJSON[i].Pname,
                     NeuralNetRating: reportJSON[i].Pscore,
                     form: reportJSON[i].form,
-                    userType: reportJSON[i].userType
+                    userType: reportJSON[i].userType,
+                    preDiagnosisNames:diagnosisNames.toString(),
+                    preDiagnosisProbabilities:diagnosisProbs.toString()
                 })
             }
 
@@ -140,6 +173,36 @@ export class GetReportsService {
         } else {
             //this will pass upload object to report service that will interact with db
             let report = await this.reportService.getSingleReport(reqObj.reportID);
+            
+            //buid diagnosis names
+            var diagnosis = JSON.parse(report[0].prediagnosis);
+            var diagnosisNames = Object.keys(diagnosis);
+            var diagnosisProbs = Object.values(diagnosis);
+
+            
+            var swapp;
+            var n = diagnosisProbs.length-1;
+
+            //bubble sort cause im dumb
+            do {
+                swapp = false;
+                for (var i=0; i < n; i++)
+                {
+                    if (diagnosisProbs[i] < diagnosisProbs[i+1])
+                    {
+                       var temp2 = diagnosisNames[i]
+                       var temp = diagnosisProbs[i];
+                       diagnosisProbs[i] = diagnosisProbs[i+1];
+                       diagnosisNames[i] = diagnosisNames[i+1];
+                       diagnosisProbs[i+1] = temp;
+                       diagnosisNames[i+1] = temp2;
+                       swapp = true;
+                    }
+                }
+                n--;
+            } while (swapp);
+
+
 
             if (Object.keys(report).length == 0) {
                 return response;
@@ -162,6 +225,8 @@ export class GetReportsService {
             response.verification = report[0].verification;
             response.diagnoser = report[0].diagnoser;
             response.status = 201;
+            response.preDiagnosisNames = diagnosisNames.toString();
+            response.preDiagnosisProbabilities = diagnosisProbs.toString();
 
             //return response Object
             return response;

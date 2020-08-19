@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
@@ -38,6 +38,7 @@ export class ReportService {
     @InjectRepository(Reports)
     private ReportsRepository: Repository<Reports>,
     private userService: UsersService,
+    private httpService: HttpService
   ) { }
 
   //Function To get Reports from DB based on location
@@ -57,7 +58,7 @@ export class ReportService {
 
 
 
-    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"date\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"date\",prediagnosis FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
       " AND " + "\"Lat\" BETWEEN " + latRangeNegative + " AND " + latRangePositive + " AND " + "reports.email = users.\"Email\";");
 
       return results;
@@ -66,7 +67,7 @@ export class ReportService {
   //Function To get Single report from the DB when given an ID
   async getSingleReport(ID:number): Promise<JSON>{
 
-    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"tags\",\"verification\",\"diagnoser\" FROM public.reports,public.users WHERE reports.email = users.\"Email\" AND \"reportID\" = " + ID +";");
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"tags\",\"verification\",\"diagnoser\",prediagnosis FROM public.reports,public.users WHERE reports.email = users.\"Email\" AND \"reportID\" = " + ID +";");
 
     return results;
   }
@@ -213,6 +214,22 @@ export class ReportService {
     let todayInt: number = parseInt(year + mm + dd);
     console.log("bonfire1");
 
+    //here im going to create an object that will be sent to neural net 
+    var sendData = {
+      "form": obj.report,
+      "long": obj.Longitude,
+      "lat":obj.Latitude
+    }
+
+    //local neural network 
+    var diag = this.httpService.post("https://neuralnet-hzg6vf4a2a-ez.a.run.app/",sendData);
+
+    diag.subscribe(data =>{
+
+    //neural net response
+    var netResponse = data.data;  
+    netResponse = JSON.stringify(netResponse);
+      
     //set variables
     var tags = neuralNetTags.join(",");
     var diagnoser = "/";// default values for now
@@ -244,7 +261,8 @@ export class ReportService {
         urgency:10,
         tags:tags,
         verification:verification,
-        diagnoser:diagnoser
+        diagnoser:diagnoser,
+        prediagnosis:netResponse
       });
       return true;
       
@@ -252,6 +270,9 @@ export class ReportService {
       return false;
       
     }
+    });
+
+    
     
 
    

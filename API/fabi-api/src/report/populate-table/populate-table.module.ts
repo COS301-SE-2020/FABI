@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { PopulateTableResolver } from '../populate-table/populate-table.resolver';
 import { PopulateTableService } from '../populate-table/populate-table.service';
 import { UsersService } from '../../database/Users/users.service';
@@ -8,6 +8,6 @@ import { ReportModule } from '../../database/Report/report.module';
 
 @Module({
   providers: [PopulateTableResolver, PopulateTableService, UsersService , ReportService],
-  imports: [UsersModule,ReportModule]
+  imports: [UsersModule,ReportModule,HttpModule]
 })
 export class PopulateTableModule {}
