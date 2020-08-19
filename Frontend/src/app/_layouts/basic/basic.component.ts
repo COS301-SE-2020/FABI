@@ -6,6 +6,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { ButtonListenerService } from "@/_services/buttonListener.service";
 import { Subscription } from 'rxjs';
 import { Body } from '@angular/http/src/body';
+import { sha256 } from 'js-sha256';
 
 
 
@@ -20,6 +21,7 @@ export class BasicComponent implements OnInit {
   currentStyle="Dark";
   styleSub: Subscription;
   deviceSub:Subscription;
+  specialUser:boolean;
 
   constructor(
     private router: Router,
@@ -27,6 +29,8 @@ export class BasicComponent implements OnInit {
     private deviceService: DeviceDetectorService,
     private styleSwitch: ButtonListenerService
   ) {
+    this.specialUser=this.authenticationService.currentUserTypeValue==sha256("special");
+    
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
       this.currentStyle = data.text;
