@@ -5,11 +5,11 @@ async function start(){
 
 const Pool = require('pg').Pool
 const poolConfig = {
-    user: 'fabi-surveillance',
-    host: '34.105.219.218',
-    database: 'Fabi-surveillance-DB',
-    password: 'CAPstone1@',
-    port: '5432'
+    user: '/',
+    host: '/',
+    database: '/',
+    password: '/',
+    port: '/'
 }
 const pool = new Pool(poolConfig)
 var rawData;
