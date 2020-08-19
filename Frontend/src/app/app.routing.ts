@@ -141,10 +141,10 @@ const routes: Routes = [
     {
         path: 'diagnose',
         component: DiagnoseReportComponent,
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:["special",'admin']
-        }
+        // canActivate: ([AuthGuard]),
+        // data:{
+        //     expectedRole:["special",'admin']
+        // }
     },
     {
         path: 'noaccess',

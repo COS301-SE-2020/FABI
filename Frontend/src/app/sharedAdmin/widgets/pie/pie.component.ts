@@ -48,7 +48,6 @@ import { DashboardService } from '../../../_components/dashboard.service';
 })
 export class PieComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
-  // chart
   chartOptions: Options;
   pieChartData = []
   constructor(private dashboardService: DashboardService) { }

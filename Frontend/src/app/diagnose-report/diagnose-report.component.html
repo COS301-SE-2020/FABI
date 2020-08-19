@@ -1,1 +1,36 @@
-<p>diagnose-report works!</p>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div fxHide.gt-xs>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div>
+        <a routerLink="/">
+          Back
+        </a>
+      </div>
+    </mat-toolbar>
+    <main>
+      <div>
+        <br>
+        <div class="container">
+          <div class="container">
+            <div fxLayout="row" fxLayoutAlign="center center" class="content">
+              <mat-card class="card">
+                <mat-card-content>
+                  <figure class="highcharts-figure">
+                    <div id="container"></div>
+                  </figure>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
