@@ -59,6 +59,7 @@ import { UpdatePathogenComponent } from './_components/pathogen-info/update-path
 // Specialist User imports
 import { SpecSearchComponent } from './spec-search/spec-search.component';
 import { UsersComponent } from './_components/users/users.component';
+import { AutomatedComponent } from './_components/automated/automated.component';
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -98,6 +99,10 @@ const routes: Routes = [
         {
             path: 'users',
             component: UsersComponent
+        },
+        {
+            path: 'auto',
+            component: AutomatedComponent
         }],
         canActivate: ([AuthGuard]),
         data:{

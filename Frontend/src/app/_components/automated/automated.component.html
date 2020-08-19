@@ -1,2 +1,37 @@
-<highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
-style="width: 100%; display: block;"></highcharts-chart>
+<h2>SNOET Data Summary</h2>
+<div fxLayout="row" fxLayoutAlign="space-between top" fxLayoutGap="20px">
+  <div fxFlex="24">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="lightChartOptions" style="width: 100%; display: block;">
+    </highcharts-chart>
+  </div>
+  <div fxFlex="24">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="ambTempChartOptions" style="width: 100%; display: block;">
+    </highcharts-chart>
+  </div>
+  <div fxFlex="24">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="ccs811ChartOptions" style="width: 100%; display: block;">
+    </highcharts-chart>
+  </div>
+  <div fxFlex="24">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="uvChartOptions" style="width: 100%; display: block;">
+    </highcharts-chart>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="space-between top" fxLayoutGap="20px">
+    <div fxFlex="24">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="airChartOptions" style="width: 100%; display: block;">
+      </highcharts-chart>
+    </div>
+    <div fxFlex="24">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="coChartOptions" style="width: 100%; display: block;">
+      </highcharts-chart>
+    </div>
+    <div fxFlex="24">
+        <highcharts-chart [Highcharts]="Highcharts" [options]="uvaChartOptions" style="width: 100%; display: block;">
+        </highcharts-chart>
+      </div>
+      <div fxFlex="24">
+        <highcharts-chart [Highcharts]="Highcharts" [options]="concTempChartOptions" style="width: 100%; display: block;">
+        </highcharts-chart>
+      </div>
+  </div>

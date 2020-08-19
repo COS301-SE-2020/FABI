@@ -63,6 +63,7 @@ import { PathogenInfoComponent } from '../../_components/pathogen-info/pathogen-
 import { UpdatePathogenComponent } from '../../_components/pathogen-info/update-pathogen/update-pathogen.component';
 import { UsersComponent } from '../../_components/users/users.component';
 import { AutomatedComponent } from '../../_components/automated/automated.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { AutomatedComponent } from '../../_components/automated/automated.compon
     SharedModule,
     MatSidenavModule,
     MatDividerModule,
+    HighchartsChartModule,
     FlexLayoutModule,
     MatCardModule,
     MatPaginatorModule,
