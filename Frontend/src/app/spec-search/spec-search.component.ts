@@ -7,6 +7,12 @@ import { SpecialistService } from './specialist.service';
   styleUrls: ['./spec-search.component.css']
 })
 export class SpecSearchComponent implements OnInit {
+  // Filter values
+  distance = 10;
+  plant = "";
+  status
+  affectedArea
+
   reports = [
     {
       name: "Sunflower",
@@ -41,7 +47,7 @@ export class SpecSearchComponent implements OnInit {
       value: '1', viewValue: 'Verified'
     },
     {
-      value: '2', viewValue: 'Unverivied'
+      value: '2', viewValue: 'Unverified'
     }
   ]
 
@@ -66,7 +72,16 @@ export class SpecSearchComponent implements OnInit {
   constructor(private specialistService: SpecialistService) { }
 
   ngOnInit(): void {
-    this.specialistService.filterReports(-25.877847437584027, 28.230844648390754,"Verified","Wattle rust",40, "Leaf / Leaves").subscribe(data => {
+    // this.specialistService.filterReports(-25.877847437584027, 28.230844648390754,"Verified","Wattle rust",40, "Leaf / Leaves").subscribe(data => {
+    //   console.log(data);
+      
+    // })
+  }
+  filterReports() {
+    // TODO: This function is incomplete and needs location data added
+    console.log(this.options[this.status-1]["viewValue"]);
+    
+      this.specialistService.filterReports(-25.877847437584027, 28.230844648390754, this.options[this.status-1]["viewValue"], this.plant, this.distance, this.areas[this.affectedArea-1]["viewValue"]).subscribe(data => {
       console.log(data);
       
     })

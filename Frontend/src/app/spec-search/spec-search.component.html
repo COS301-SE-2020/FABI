@@ -14,31 +14,31 @@
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Plant Name</mat-label>
-                <input matInput>
+                <input matInput [(ngModel)]="plant">
             </mat-form-field><br>
             <label>Report Status</label><br>
             <mat-form-field appearance="fill">
                 <mat-label>Choose your option</mat-label>
-                <mat-select>
+                <mat-select [(value)]="status">
                     <mat-option *ngFor="let option of options" [value]="option.value">
                         {{option.viewValue}}
                     </mat-option>
                 </mat-select>
             </mat-form-field><br>
             <label>Distance from position</label><br>
-            <mat-slider min="5" max="50" value="5"></mat-slider><br>
+            <mat-slider min="5" max="50" [(value)]="distance"></mat-slider><br>
             <label for="sleft" class="pull-left">5km</label>
             <label for="sright" class="pull-right">50km</label><br>
             <br>
             <mat-form-field>
                 <label>Affected Area</label><br>
-                <mat-select>
+                <mat-select [(value)]="affectedArea">
                     <mat-option *ngFor="let area of areas" [value]="area.value">
                         {{area.viewValue}}
                     </mat-option>
                 </mat-select>
             </mat-form-field><br>
-            <button mat-raised-button>Apply Filters</button>
+            <button mat-raised-button (click)="filterReports()">Apply Filters</button>
         </div>
     </mat-drawer>
     <mat-drawer-content fxFlex="70">

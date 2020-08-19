@@ -38,7 +38,7 @@ import { map } from 'rxjs/operators';
 // API imports
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { AuthenticationService } from '../_services/authentication.service';
+import { AuthenticationService } from '../_UMservices/authentication.service';
 
 @Injectable({
   providedIn: 'root'
