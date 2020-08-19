@@ -163,6 +163,25 @@ export class ReportDataService {
 
   }
 
+  getDiagnosis(token,reportID){
+    return this.apollo.mutate({
+      mutation: gql`mutation{
+                  getDiagnosis_Reason(getSingleReportRequest:{
+                    token:"${token}",
+                    reportID:${reportID}
+                  }){
+                    diagnosis,
+                    reason,
+                    comment,
+                    status
+                  }
+                  }`
+    }).pipe(map(data => {
+      return data["data"];
+
+    }))
+  }
+
   
 
 

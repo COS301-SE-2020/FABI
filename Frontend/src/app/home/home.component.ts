@@ -98,8 +98,8 @@ export class HomeComponent implements AfterViewInit {
     legView = false;
     icons = {
         General: {
-            name: 'General',
-            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenG.png"
+            name: 'Basic',
+            icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenB.png"
         },
         Specialist: {
             name: 'Specialist',
@@ -285,7 +285,7 @@ export class HomeComponent implements AfterViewInit {
 
                 switch (data[i]["userType"]) {
                     case "basic":
-                        userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenG.png";
+                        userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_greenB.png";
                         break;
                     case "special":
                         userIcon = "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowS.png";
