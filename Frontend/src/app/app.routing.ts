@@ -153,7 +153,7 @@ const routes: Routes = [
         
         {
             path: '**',
-            redirectTo: 'noaccess'
+            redirectTo: 'login'
         }
     
 ];
