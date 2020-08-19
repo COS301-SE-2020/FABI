@@ -1,7 +1,6 @@
-
-<mat-toolbar color="primary">
+<mat-toolbar>
     <mat-toolbar-row>
-        <div><button mat-raised-button color="primary">Back</button></div>
+        <div><button mat-button>Back</button></div>
         <h2 class="Title">Diagnostic Reports</h2>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -13,39 +12,65 @@
         <h2 class="specChild">Filter Reports</h2>
         <div>
             <mat-form-field appearance="fill">
-                <mat-label>Plant Name</mat-label>
-                <input matInput>
+                <mat-label>Diagnosis</mat-label>
+                <input matInput [(ngModel)]="diagnosis">
             </mat-form-field><br>
             <label>Report Status</label><br>
             <mat-form-field appearance="fill">
                 <mat-label>Choose your option</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let option of options" [value]="option.value">
+                <mat-select [(value)]="status">
+                    <mat-option *ngFor="let option of options" [value]="option.viewValue">
                         {{option.viewValue}}
                     </mat-option>
                 </mat-select>
             </mat-form-field><br>
             <label>Distance from position</label><br>
-            <mat-slider min="5" max="50" value="5"></mat-slider><br>
+            <mat-slider min="5" max="50" [(value)]="distance"></mat-slider><br>
             <label for="sleft" class="pull-left">5km</label>
             <label for="sright" class="pull-right">50km</label><br>
             <br>
             <mat-form-field>
-                <label>List of symptoms</label><br>
-                <textarea matInput>
-                        </textarea>
+                <label>Affected Area</label><br>
+                <mat-select [(value)]="affectedArea">
+                    <mat-option *ngFor="let area of areas" [value]="area.viewValue">
+                        {{area.viewValue}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field><br>
-            <button mat-raised-button color="primary">Apply Filters</button>
+            <button mat-raised-button (click)="filterReports()">Apply Filters</button>
         </div>
     </mat-drawer>
-    <mat-drawer-content fxFlex="70">
-        <h2 class="HeadofRight">Reports:</h2><br>
-        <div *ngFor="let report of reports" class="report">
-            <h3 style="border-bottom-style: solid; text-align: center;">{{report.name}}</h3>
-            <h3>Symptoms:</h3>
-            <p *ngFor="let symptom of report.symptoms">{{symptom}}</p>
-            <h3>{{report.date}}</h3>
-        </div>
+    <mat-drawer-content fxFlex="70" >
+        <h2 class="HeadofRight">{{title}}</h2><br>
+        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8">
+
+            <ng-container matColumnDef="Plant Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Plant Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.pName}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Cultivar">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Cultivar </th>
+              <td mat-cell *matCellDef="let element"> {{element.cultivar}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Actions
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <button type="button" mat-button (click)="viewReport(element.id)">View Report</button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
     </mat-drawer-content>
 </mat-drawer-container>
 

@@ -46,6 +46,40 @@ import { AuthenticationService } from '../_UMservices/authentication.service';
 export class SpecialistService {
 
   constructor(private apollo: Apollo, private authentication: AuthenticationService) { }
+  /**
+   * Filters reports
+   * @param latitude 
+   * @param longitude 
+   * @param verification 
+   * @param diagnosis 
+   * @param distance 
+   * @param formSearch 
+   * @returns data
+   */
+  filterReports(latitude, longitude, verification, diagnosis, distance, formSearch) {
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        getFilteredReports(getReportsRequest: {
+          token: "${this.authentication.currentUserValue}",
+          latitude: ${latitude},
+          longitude: ${longitude},
+          verification: "${verification}",
+          diagnosis: "${diagnosis}",
+          distance: ${distance},
+          formSearch: "${formSearch}"
+        })
+        {
+          form,
+          Pname,
+          status,
+          date,
+          ID
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["getFilteredReports"];
+    }))
+  }
 /**
  * Diagnoses specialist service
  * @param reportID 

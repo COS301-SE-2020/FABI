@@ -126,19 +126,15 @@ const routes: Routes = [
         }],
         canActivate: ([AuthGuard]),
         data:{
-            expectedRole:"basic"
+            expectedRole:["basic",'special','admin']
         }
     },
     {
         path: 'special',
-        component: BasicComponent,
-        children: [{
-            path: 'specialist',
-            component: SpecSearchComponent
-        }],
+        component: SpecSearchComponent,
         canActivate: ([AuthGuard]),
         data:{
-            expectedRole:"special"
+            expectedRole:["special",'admin']
         }
     },
     {

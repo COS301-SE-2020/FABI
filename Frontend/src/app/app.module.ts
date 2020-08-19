@@ -74,6 +74,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AccessControlComponent } from './access-control/access-control.component';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -109,6 +110,7 @@ import { AccessControlComponent } from './access-control/access-control.componen
     RouterModule,
     MatSelectModule,
     MatSliderModule,
+    MatTableModule,
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,

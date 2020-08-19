@@ -6,6 +6,17 @@
   overflow: hidden;
 }
 
+button {
+    background-color: forestgreen;
+    color: white
+}
+
+mat-toolbar {
+    background-color: forestgreen;
+}
+
+
+
 .example-container {
   height: 90%;
 }
@@ -104,3 +115,4 @@ mat-form-field {
 mat-toolbar {
   width: 100%;
 }
+
