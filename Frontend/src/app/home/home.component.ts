@@ -162,9 +162,16 @@ export class HomeComponent implements AfterViewInit {
         this.deviceSub = this.styleSwitch.getDevice().subscribe(data => {
             this.DeviceType=data.text;
         });
-        if(this.router.getCurrentNavigation().extras.state!=undefined){
+        if(this.authenticationService.currentUserTypeValue==sha256("special")){
+            if(this.router.getCurrentNavigation().extras.state!=undefined){
+                this.currentMID=this.router.getCurrentNavigation().extras.state.id;
+                localStorage.setItem("CurMID",this.currentMID);
+            }
+            else {
+                this.currentMID=localStorage.getItem("CurMID");
+            }
             this.showMap=false;
-            this.currentMID=this.router.getCurrentNavigation().extras.state.id;
+            
             this.openDisplay();
             this.setDisplay(this.currentMID);
             if(this.DeviceType=="Mobile")this.overlaySwitch="none";

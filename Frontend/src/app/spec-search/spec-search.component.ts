@@ -138,7 +138,7 @@ export class SpecSearchComponent implements OnInit {
   }
 
   getNearbyReports(event){
-    this.dataSource=(this.repServe.getNearbyReportsMobile(event.pageIndex));
+    this.ITdatasource=(this.repServe.getNearbyReportsMobile(event.pageIndex));
   }
 
   ngOnInit(): void {
