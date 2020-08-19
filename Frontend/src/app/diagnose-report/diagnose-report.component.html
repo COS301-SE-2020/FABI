@@ -25,7 +25,7 @@
                 <mat-card class="card">
                   <mat-form-field appearance="fill">
                     <mat-label>Diagnosis</mat-label>
-                    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <input type="text" matInput [(ngModel)]="filter.Diagnosis" [formControl]="myControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                       Suggested option
                       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -37,7 +37,7 @@
                   <br>
                   <mat-form-field class="example-full-width">
                     <mat-label>Reason for this diagnosis</mat-label>
-                    <textarea matInput placeholder="Ex. Pigment of the leaves indicates..."></textarea>
+                    <textarea matInput [(ngModel)]="filter.Reason" placeholder="Ex. Pigment of the leaves indicates..."></textarea>
                   </mat-form-field><br><br><button mat-raised-button color="primary" (click)="submitVerification()">Submit diagnosis</button>
                 </mat-card>
               </mat-card>

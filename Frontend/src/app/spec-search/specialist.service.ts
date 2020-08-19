@@ -93,8 +93,8 @@ diagnose(reportID, diagnosis, reason) {
         uploadDiagnosis_Reason(upload: {
           token: "${this.authentication.currentUserValue}",
           reportID: ${reportID},
-          diagnosis: ${diagnosis},
-          reason: ${reason}
+          diagnosis: "${diagnosis}",
+          reason: "${reason}"
         })
         {
           status
