@@ -627,7 +627,7 @@ export class AutomatedComponent implements OnInit {
         useUTC: false
       },
       title: {
-        text: 'Concrete floor infrared temperature'
+        text: 'Concrete floor IR temperature'
       },
       accessibility: {
         announceNewData: {
