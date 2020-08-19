@@ -177,7 +177,7 @@ export class ReportDataService {
                   }
                   }`
     }).pipe(map(data => {
-      return data["data"];
+      return data["data"]["getDiagnosis_Reason"];
 
     }))
   }

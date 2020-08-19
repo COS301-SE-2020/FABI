@@ -49,6 +49,11 @@ export interface currentReport{
     form: string;
 }
 
+export interface DiagnosisReport{
+    diagnosis:string;
+    reason:string;
+}
+
 
 
 @Component({
@@ -77,6 +82,11 @@ export class HomeComponent implements AfterViewInit {
 
     @ViewChild('mapContainer') gmap: ElementRef;
     displayReady: Boolean = false;
+    Diagnosis:boolean=false;
+    Diagnose:DiagnosisReport= {
+        diagnosis:"",
+        reason:""
+    };
     pageEvent: PageEvent;
     dataLength=100;
 
@@ -308,7 +318,7 @@ export class HomeComponent implements AfterViewInit {
                         object.setDisplay(i);
                         if(object.DeviceType=="Mobile")object.overlaySwitch="none";
                         object.currentMID=i;
-                        object.paginatorInit();       
+                        object.paginatorInit();
                                    
 
                     }
@@ -490,6 +500,21 @@ export class HomeComponent implements AfterViewInit {
             }
 
             this.markerDetails=this.getCurrentInfo(this.currentMark.form);
+
+            this.currentMarkServ.getDiagnosis(this.currentUser,markerID).subscribe(data=>{
+                console.log(data["status"]==201);
+                if(data["status"]==201){
+                    this.Diagnosis=true;
+                    this.Diagnose={
+                        diagnosis:data["diagnosis"],
+                        reason:data["reason"]
+                    }
+                }
+                else {
+                    this.Diagnosis=false;
+                }
+            });
+
             this.displayReady = true;
 
 
