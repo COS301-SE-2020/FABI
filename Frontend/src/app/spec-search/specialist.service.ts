@@ -72,7 +72,8 @@ export class SpecialistService {
           form,
           Pname,
           status,
-          date
+          date,
+          ID
         }
       }`
     }).pipe(map(data => {

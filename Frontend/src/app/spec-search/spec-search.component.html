@@ -40,14 +40,37 @@
             <button mat-raised-button (click)="filterReports()">Apply Filters</button>
         </div>
     </mat-drawer>
-    <mat-drawer-content fxFlex="70">
+    <mat-drawer-content fxFlex="70" >
         <h2 class="HeadofRight">{{title}}</h2><br>
-        <div *ngFor="let report of reports" class="report">
-            <h3 style="border-bottom-style: solid; text-align: center;">{{report.name}}</h3>
-            <h3>Symptoms:</h3>
-            <p *ngFor="let symptom of report.symptoms">{{symptom}}</p>
-            <h3>{{report.date}}</h3>
-        </div>
+        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8">
+
+            <ng-container matColumnDef="Plant Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Plant Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.pName}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Cultivar">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Cultivar </th>
+              <td mat-cell *matCellDef="let element"> {{element.cultivar}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Actions
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <button type="button" mat-button (click)="viewReport(element.id)">View Report</button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
     </mat-drawer-content>
 </mat-drawer-container>
 
