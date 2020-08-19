@@ -162,7 +162,7 @@ export class HomeComponent implements AfterViewInit {
         this.deviceSub = this.styleSwitch.getDevice().subscribe(data => {
             this.DeviceType=data.text;
         });
-        if(this.authenticationService.currentUserTypeValue==sha256("special")){
+        if(JSON.parse(localStorage.getItem("0"))==sha256("special")){
             this.specialUser=true;
             if(this.router.getCurrentNavigation().extras.state!=undefined){
                 this.currentMID=this.router.getCurrentNavigation().extras.state.id;
