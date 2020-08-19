@@ -115,6 +115,7 @@ import { AccessControlComponent } from './access-control/access-control.componen
     MatToolbarModule,
     FlexLayoutModule,
     MatSidenavModule,
+    
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

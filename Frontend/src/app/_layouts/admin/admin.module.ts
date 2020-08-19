@@ -62,6 +62,8 @@ import { AlertComponent } from '@/_components/alert.component';
 import { PathogenInfoComponent } from '../../_components/pathogen-info/pathogen-info.component';
 import { UpdatePathogenComponent } from '../../_components/pathogen-info/update-pathogen/update-pathogen.component';
 import { UsersComponent } from '../../_components/users/users.component';
+import { AutomatedComponent } from '../../_components/automated/automated.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,8 @@ import { UsersComponent } from '../../_components/users/users.component';
     AlertComponent,
     PathogenInfoComponent,
     UpdatePathogenComponent,
-    UsersComponent
+    UsersComponent,
+    AutomatedComponent
   ],
   imports: [
     CommonModule,
@@ -80,6 +83,7 @@ import { UsersComponent } from '../../_components/users/users.component';
     SharedModule,
     MatSidenavModule,
     MatDividerModule,
+    HighchartsChartModule,
     FlexLayoutModule,
     MatCardModule,
     MatPaginatorModule,
