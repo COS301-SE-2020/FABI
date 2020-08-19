@@ -10,26 +10,34 @@ export interface filterValue{
   name: string;
 }
 
+export interface filterModel{
+  Diagnosis:string;
+  Reason:string;
+}
+
 @Component({
   selector: 'app-diagnose-report',
   templateUrl: './diagnose-report.component.html',
   styleUrls: ['./diagnose-report.component.css']
 })
 export class DiagnoseReportComponent implements OnInit {
-  reportID:any = 90;//null; 91 unverified
+  reportID:any = null; 
   verified=false;
   filteredOptions: Observable<any>;
   myControl = new FormControl();
+  filter: filterModel={
+    Diagnosis:"",
+    Reason:""
+  }
   constructor(
     private router: Router,
     private special:SpecialistService
   ) {
-    // Remove comments
-    // this.reportID = this.router.getCurrentNavigation().extras.state;
-    // this.reportID = this.reportID != undefined ? this.reportID.id : null;
-    // if (this.reportID == null) {
-    //   this.router.navigate(['/special']);
-    // }
+    this.reportID = this.router.getCurrentNavigation().extras.state;
+    this.reportID = this.reportID != undefined ? this.reportID.id : null;
+    if (this.reportID == null) {
+      this.router.navigate(['/special']);
+    }
   }
 
   private _filter(name: string): filterValue[] {
@@ -131,6 +139,10 @@ export class DiagnoseReportComponent implements OnInit {
   }
 
   submitVerification(){
+    this.special.diagnose(this.reportID,this.filter.Diagnosis["name"],this.filter.Reason).subscribe(data=>{
+      console.log(data);
+      
+    });
     
   }
 }
