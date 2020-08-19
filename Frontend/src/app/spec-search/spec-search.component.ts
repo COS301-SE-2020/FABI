@@ -77,8 +77,10 @@ export class SpecSearchComponent implements OnInit {
   }
   filterReports() {
     // TODO: This function is incomplete and needs location data added
-    console.log(this.affectedArea);
+    console.log(this.status);
       this.locationService.getLocation().subscribe(location => {
+        // console.log(location.coords.latitude+ ", "+ location.coords.longitude+ ", "+ this.status+ ", "+ this.diagnosis+ ", "+ this.distance+ ", "+ this.affectedArea);
+        
         this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.status, this.diagnosis, this.distance, this.affectedArea).subscribe(data => {
           console.log(data);
           

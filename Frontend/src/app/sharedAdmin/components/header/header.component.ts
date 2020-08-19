@@ -38,6 +38,6 @@ toggleSideBar() {
     this.router.navigateByUrl('')
   }
   goBasic() {
-    this.router.navigateByUrl('')
+    this.router.navigateByUrl('basic')
   }
 }
