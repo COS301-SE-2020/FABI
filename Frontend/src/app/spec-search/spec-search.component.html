@@ -48,9 +48,9 @@
             <button mat-raised-button (click)="filterReports()">Apply Filters</button>
         </div>
     </mat-drawer>
-    <mat-drawer-content fxFlex="70">
+    <mat-drawer-content fxFlex="70" >
         <h2 class="HeadofRight">{{title}}</h2><br>
-        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8" *ngIf="reports.length!=0">
+        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8" fxLayoutAlign="right" *ngIf="reports.length!=0">
 
             <ng-container matColumnDef="Plant Name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Plant Name </th>

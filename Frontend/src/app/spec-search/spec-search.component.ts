@@ -177,14 +177,12 @@ export class SpecSearchComponent implements OnInit {
           this.title = "Reports found"
           this.reports = []
           data.forEach((obj) => {
-            // let cultivar = obj["form"].substring(
-            //   obj["form"].lastIndexOf("Cultivarx2C"),
-            //   obj["form"].lastIndexOf("x2CWhere do you see the Pest")
-            // )
-            console.log(data);
-            console.log(obj);
+            let cultivar = obj.form.substring(
+              obj.form.lastIndexOf("Cultivarx2C"),
+              obj.form.lastIndexOf("x2CWhere do you see the Pest")
+            )
+            console.log(cultivar);
 
-            let cultivar = "Pie"
             let tempObject = {
               ID: obj.ID,
               pName: obj.Pname,
