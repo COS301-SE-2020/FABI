@@ -263,13 +263,14 @@ export class GetReportsService {
 
             return res;
         } else {
-            res.pop();
+            
             var resultJSON = await this.reportService.filteredReports(reqObj);
 
             if(Object.keys(resultJSON).length == 0){
                 res[0].status = 500;
                 return res;
             }
+            res.pop();
 
             for (var i = 0; i < Object.keys(resultJSON).length; i++) {
 
