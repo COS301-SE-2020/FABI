@@ -47,7 +47,7 @@
 
 <!-- Desktop layout -->
 
-<div *ngIf="DeviceType=='Desktop'" [style.color]="currentStyle=='Dark'?'white':'black'" class="unselectable">
+<div *ngIf="(DeviceType=='Desktop')||(DeviceType=='Mobile'&&specialUser)" [style.color]="currentStyle=='Dark'?'white':'black'" class="unselectable">
     <div class="flex-container" fxLayout="row" *ngIf="showMap">
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
                 diagnosis report</button></div>
@@ -243,6 +243,13 @@
               </table>
         </div>
     </div>
+    <br>
+    <div class="flex-container" fxLayout="row" *ngIf="specialUser">
+        <div fxFlex="20">
+            <button mat-raised-button color="primary" (click)="DiagnoseReport()">Diagnose this report</button>
+        </div>
+    </div>
+    <br>
 
 </div>
 

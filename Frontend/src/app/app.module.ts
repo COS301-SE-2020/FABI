@@ -77,6 +77,7 @@ import { AccessControlComponent } from './access-control/access-control.componen
 import { MatTableModule } from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { DiagnoseReportComponent } from './diagnose-report/diagnose-report.component';
 
 
 
@@ -91,6 +92,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     RegisterComponent,
     SpecSearchComponent,
     AccessControlComponent,
+    DiagnoseReportComponent,
   ],
   imports: [
     BrowserModule,

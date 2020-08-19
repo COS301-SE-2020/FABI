@@ -155,7 +155,6 @@ export class SpecSearchComponent implements OnInit {
     this.paginatorInit();
   }
   viewReport(ID) {
-    console.log(ID)
     this.router.navigate(["/basic"],{state:{id:ID}})
     
   }

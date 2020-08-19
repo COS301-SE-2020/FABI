@@ -163,6 +163,7 @@ export class HomeComponent implements AfterViewInit {
             this.DeviceType=data.text;
         });
         if(this.authenticationService.currentUserTypeValue==sha256("special")){
+            this.specialUser=true;
             if(this.router.getCurrentNavigation().extras.state!=undefined){
                 this.currentMID=this.router.getCurrentNavigation().extras.state.id;
                 localStorage.setItem("CurMID",this.currentMID);
@@ -270,13 +271,12 @@ export class HomeComponent implements AfterViewInit {
 
         });
     }
+
     
 
     ngAfterViewInit(): void {        
-        if(this.authenticationService.currentUserTypeValue==sha256("special")){
-            this.specialUser=true;
-        }
-        else if(this.DeviceType=="Desktop")this.loadMap();
+        if(this.authenticationService.currentUserTypeValue==sha256("basic")){
+            if(this.DeviceType=="Desktop")this.loadMap();
         else{
             this.location.getLocation().subscribe(rep => {
 
@@ -284,6 +284,7 @@ export class HomeComponent implements AfterViewInit {
                 this.lng = rep.coords.longitude;
                 this.paginatorInitMobile();            
             });
+        }
             
         }
     }
@@ -568,6 +569,10 @@ export class HomeComponent implements AfterViewInit {
                 styles: (this.mapStyle.Light)
             });
         }
+    }
+
+    DiagnoseReport(){
+        this.router.navigate(["/diagnose"],{state:{id:this.currentMID}});
     }
 
     
