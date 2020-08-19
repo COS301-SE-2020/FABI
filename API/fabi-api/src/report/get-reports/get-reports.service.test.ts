@@ -2,10 +2,11 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UploadRequest, GetReportsRequest, GetReportsResponse, GetSingleReportRequest } from '../../graphql.schema';
+import { UploadRequest, GetReportsRequest, GetReportsResponse, GetSingleReportRequest, GetSingleReportResponse, PopTableRequest } from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 import { GetReportsService } from './get-reports.service';
+import { PopulateTableService } from '../populate-table/populate-table.service';
 
 
 
@@ -72,12 +73,30 @@ class mockReportService{
     }
 }
 
+class mockPopulateTableService {
+  populateTableService(reqObj: PopTableRequest){
+    
+  }
+
+  calcDistance(lat1: number, long1: number, lat2: number, long2: number){
+
+  
+  }
+
+//takes value to radians
+  toRad(Value: number){
+   
+  }
+
+
+}
+
 
 describe('GetReportsService', () => {
     let getReportsService: GetReportsService
     let usersService : UsersService;
     let reportService : ReportService;
-
+    let populateTableService: PopulateTableService;
     
     beforeEach(async () => {
 
@@ -95,6 +114,10 @@ describe('GetReportsService', () => {
             provide: UsersService,
             useClass: mockUsersService,
           },
+          {
+            provide: PopulateTableService,
+            useClass: mockPopulateTableService,
+          },
         ],
       }).compile();
 
@@ -111,6 +134,25 @@ describe('GetReportsService', () => {
     describe('GetReports Function Test', ()=>{
       it('Unsuccessfull GetReports', async () => {
 
+        const testObject = Object({
+          reportID: 1234,
+          email: "test@test.com",
+          form: "testform",
+          IMG1: "testimg1",
+          IMG2: "testimg2",
+          IMG3: "testimg3",
+          Long :50.00,
+          Lat : 50.00,
+          Pname: "testPname",
+          Infliction: "testAffliction",
+          Accuracy: 1,
+          Pscore: 1,
+          date: 112233,
+          urgency: 1,
+          diagnosis: 1,
+        }
+        )
+
     
          
         const testGetReportRequest = new GetReportsRequest;
@@ -118,46 +160,100 @@ describe('GetReportsService', () => {
         testGetReportRequest.longitude= 50.00;
         testGetReportRequest.latitude= 50.00;
 
+        const spyReportService = jest
+        .spyOn(reportService, 'getReports')
+        .mockResolvedValue(testObject);
+
+
+        const spyReportService2 = jest
+        .spyOn(reportService, 'getSingleReport')
+        .mockResolvedValue(testObject);
+
         const spyUserService = jest
         .spyOn(usersService, 'validateToken')
         .mockResolvedValue(false);
 
-        let testGetReportResponse = new GetReportsResponse;
+
         
+        let testGetSingleReportResponseArray : GetSingleReportResponse[];         
+        let testGetSingleReportResponse = new GetSingleReportResponse;
   
-        testGetReportResponse = await getReportsService.getReports(testGetReportRequest);
+        testGetSingleReportResponseArray = await getReportsService.getReports(testGetReportRequest);
         
-        expect(testGetReportResponse.status).toBe(415);
+        expect(testGetSingleReportResponseArray[0].status).toBe(415);
     
       });
 
       it('Succesfull GetReports', async () => {
 
         const testObject = Object({
-          testReportObject: "testReportObjecxt"
+          reportID: 1234,
+          email: "test@test.com",
+          form: "testform",
+          IMG1: "testimg1",
+          IMG2: "testimg2",
+          IMG3: "testimg3",
+          Long :50.00,
+          Lat : 50.00,
+          Pname: "testPname",
+          Infliction: "testAffliction",
+          Accuracy: 1,
+          Pscore: 1,
+          date: 112233,
+          urgency: 1,
+          diagnosis: 1,
         }
         )
+
+
+        const testObject2 = Object([{
+          reportID: 1234,
+          email: "test@test.com",
+          form: "testform",
+          IMG1: "testimg1",
+          IMG2: "testimg2",
+          IMG3: "testimg3",
+          Long :50.00,
+          Lat : 50.00,
+          Pname: "testPname",
+          Infliction: "testAffliction",
+          Accuracy: 1,
+          Pscore: 1,
+          date: 112233,
+          urgency: 1,
+          diagnosis: 1,
+        },
+        ]
+        )
+
+    
          
         const testGetReportRequest = new GetReportsRequest;
         testGetReportRequest.token = "testtokentrue";
         testGetReportRequest.longitude= 50.00;
         testGetReportRequest.latitude= 50.00;
 
-        let testGetReportResponse = new GetReportsResponse;
-
         const spyReportService = jest
         .spyOn(reportService, 'getReports')
+        .mockResolvedValue(testObject2);
+
+        const spyReportService2 = jest
+        .spyOn(reportService, 'getSingleReport')
         .mockResolvedValue(testObject);
+
 
         const spyUserService = jest
         .spyOn(usersService, 'validateToken')
         .mockResolvedValue(true);
+
+
         
+        let testGetSingleReportResponseArray : GetSingleReportResponse[];         
+        let testGetSingleReportResponse = new GetSingleReportResponse;
   
-        testGetReportResponse = await getReportsService.getReports(testGetReportRequest);
+        testGetSingleReportResponseArray = await getReportsService.getReports(testGetReportRequest);
         
-        expect(testGetReportResponse.status).toBe(201);
-    
+        expect(testGetSingleReportResponseArray[0].status).toBe(201);
       });
 
       
@@ -176,7 +272,7 @@ describe('GetReportsService', () => {
         testGetSingleReportRequest.reportID = 1111;
     
 
-        let testGetReportResponse = new GetReportsResponse;
+        let testGetSingleReportResponse = new GetSingleReportResponse;
 
         const spyReportService = jest
         .spyOn(reportService, 'getSingleReport')
@@ -187,9 +283,9 @@ describe('GetReportsService', () => {
         .mockResolvedValue(false);
         
   
-        testGetReportResponse = await getReportsService.getSingleReports(testGetSingleReportRequest);
+        testGetSingleReportResponse = await getReportsService.getSingleReports(testGetSingleReportRequest);
         
-        expect(testGetReportResponse.status).toBe(415);
+        expect(testGetSingleReportResponse.status).toBe(415);
     
     
       });
@@ -197,29 +293,74 @@ describe('GetReportsService', () => {
       it('Succesfull GetSingleReports', async () => {
 
         const testObject = Object({
-          testReportObject: "testReportObjecxt"
+          reportID: 1234,
+          email: "test@test.com",
+          form: "testform",
+          IMG1: "testimg1",
+          IMG2: "testimg2",
+          IMG3: "testimg3",
+          Long :50.00,
+          Lat : 50.00,
+          Pname: "testPname",
+          Infliction: "testAffliction",
+          Accuracy: 1,
+          Pscore: 1,
+          date: 112233,
+          urgency: 1,
+          diagnosis: 1,
         }
         )
+
+
+        const testObject2 = Object([{
+          reportID: 1234,
+          email: "test@test.com",
+          form: "testform",
+          IMG1: "testimg1",
+          IMG2: "testimg2",
+          IMG3: "testimg3",
+          Long :50.00,
+          Lat : 50.00,
+          Pname: "testPname",
+          Infliction: "testAffliction",
+          Accuracy: 1,
+          Pscore: 1,
+          date: 112233,
+          urgency: 1,
+          diagnosis: 1,
+        },
+        ]
+        )
+
+    
          
         const testGetSingleReportRequest = new GetSingleReportRequest;
         testGetSingleReportRequest.token = "testtokentrue";
-        testGetSingleReportRequest.reportID = 1111;
-    
-
-        let testGetReportResponse = new GetReportsResponse;
+        testGetSingleReportRequest.reportID = 11;
+      
 
         const spyReportService = jest
+        .spyOn(reportService, 'getReports')
+        .mockResolvedValue(testObject2);
+
+        const spyReportService2 = jest
         .spyOn(reportService, 'getSingleReport')
-        .mockResolvedValue(testObject);
+        .mockResolvedValue(testObject2);
+
 
         const spyUserService = jest
         .spyOn(usersService, 'validateToken')
         .mockResolvedValue(true);
+
+
         
+        let testGetSingleReportResponseArray : GetSingleReportResponse[];         
+        let testGetSingleReportResponse = new GetSingleReportResponse;
   
-        testGetReportResponse = await getReportsService.getSingleReports(testGetSingleReportRequest);
+        testGetSingleReportResponse = await getReportsService.getSingleReports(testGetSingleReportRequest);
         
-        expect(testGetReportResponse.status).toBe(201);
+        expect(testGetSingleReportResponse.status).toBe(201);
+     
     
       });
 

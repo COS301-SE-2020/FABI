@@ -16,6 +16,21 @@ class mockUsersService {
   
   }
 
+  validateToken(token:string) {
+    if(token === "testtokenfalse"){
+      return false;
+    }
+    if(token === "testtokentrue"){
+      return true;
+    }
+
+  }
+
+  getEmail(token:string){
+
+  }
+
+
 }
 
 
@@ -89,6 +104,7 @@ describe('GetAfflictionService', () => {
     it('should be defined', () => {   //TEST 1 SHALLOW TEST SEE IF IT IS DEFINED
       expect(getAfflictionsService).toBeDefined();
     });
+
   
 
 });
