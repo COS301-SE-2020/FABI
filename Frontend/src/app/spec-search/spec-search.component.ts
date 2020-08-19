@@ -5,21 +5,33 @@ import { AlertService } from '@/_services/alert.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { report } from 'process';
+
+export interface filterModel{
+  Diagnosis:string;
+  RepStatus:string;
+  Distance:number;
+  AffectedArea:string;
+}
+
 @Component({
   selector: 'app-spec-search',
   templateUrl: './spec-search.component.html',
   styleUrls: ['./spec-search.component.css']
 })
 export class SpecSearchComponent implements OnInit {
-  displayedColumns: string[] = ["Plant Name", "Cultivar", "Date", "Actions"]
-  reports = []
-  dataSource
-  @ViewChild(MatSort, { static: true }) sort: MatSort
+  displayedColumns: string[] = ["Plant Name", "Cultivar", "Date", "Actions"];
+  reports = [];
+  dataSource;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   // Filter values
-  distance = 10;
-  diagnosis = "";
-  status
-  affectedArea
+
+  filter: filterModel={
+    Diagnosis:"",
+    RepStatus:"",
+    Distance:5,
+    AffectedArea:""
+  }
   title = "Reports will appear here"
 
 
@@ -62,7 +74,7 @@ export class SpecSearchComponent implements OnInit {
   filterReports() {
     // TODO: This function is incomplete and needs location data added
     this.locationService.getLocation().subscribe(location => {
-      this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.status, this.diagnosis, this.distance, this.affectedArea).subscribe(data => {
+      this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis, this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
         if (data[0]["status"] == 500) {
           this.title = "No Reports found"
         }

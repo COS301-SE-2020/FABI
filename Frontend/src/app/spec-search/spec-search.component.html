@@ -13,25 +13,25 @@
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Diagnosis</mat-label>
-                <input matInput [(ngModel)]="diagnosis">
+                <input matInput [(ngModel)]="filter.Diagnosis">
             </mat-form-field><br>
             <label>Report Status</label><br>
             <mat-form-field appearance="fill">
                 <mat-label>Choose your option</mat-label>
-                <mat-select [(value)]="status">
+                <mat-select [(value)]="filter.RepStatus">
                     <mat-option *ngFor="let option of options" [value]="option.viewValue">
                         {{option.viewValue}}
                     </mat-option>
                 </mat-select>
             </mat-form-field><br>
-            <label>Distance from position</label><br>
-            <mat-slider min="5" max="50" [(value)]="distance"></mat-slider><br>
+            <label>Distance from position</label><br><br>
+            <mat-slider min="5" max="50" thumbLabel [(value)]="filter.Distance"></mat-slider><br>
             <label for="sleft" class="pull-left">5km</label>
             <label for="sright" class="pull-right">50km</label><br>
             <br>
             <mat-form-field>
                 <label>Affected Area</label><br>
-                <mat-select [(value)]="affectedArea">
+                <mat-select [(value)]="filter.AffectedArea">
                     <mat-option *ngFor="let area of areas" [value]="area.viewValue">
                         {{area.viewValue}}
                     </mat-option>
