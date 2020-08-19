@@ -35,7 +35,7 @@ import { Component, OnInit } from '@angular/core';
 import { Affliction } from '@/_models/affliction';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfflictionService } from '@/_components/affliction.service';
-import { AlertService } from "../../../_services/alert.service";
+import { AlertService } from "@/_services/alert.service";
 import { FormsModule } from '@angular/forms'
 @Component({
   selector: 'app-update-pathogen',

@@ -48,6 +48,24 @@ export class UsersService {
     return User.Email;
   }
 
+  async getSpecialUsers(): Promise<Users[]>{
+    return await this.UsersRepository.find({userType:"special"});
+  }
+
+  async getBasicUsers(): Promise<Users[]>{
+    return await this.UsersRepository.find({userType:"basic"});
+  }
+
+  async updateUser(email:string,userType:string): Promise<boolean>{
+    try {
+      await this.UsersRepository.query("update users set \"userType\"=\'"+userType+"\' where \"Email\" = \'"+email+"\';");
+      return true;
+    } catch (error) {
+      return false;
+    }
+
+  }
+
   async createUser(obj: Request): Promise<Users> {
     //create token
     let hashtoken = createHmac("sha256", (obj.email + this.makeid())).digest('base64');

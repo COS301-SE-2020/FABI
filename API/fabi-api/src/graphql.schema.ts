@@ -105,6 +105,12 @@ export class Update_afflictions_request {
     img3?: string;
 }
 
+export class UpdateUserRequest {
+    token: string;
+    email: string;
+    newUserType: string;
+}
+
 export class UpdateVerificationStatus {
     token: string;
     reportID: number;
@@ -224,6 +230,12 @@ export abstract class IMutation {
 
     abstract getUserType(request?: AuthUserRequest): AuthUserResponse | Promise<AuthUserResponse>;
 
+    abstract getSpecialUsers(request?: AuthUserRequest): UsersResponse[] | Promise<UsersResponse[]>;
+
+    abstract getBasicUsers(request?: AuthUserRequest): UsersResponse[] | Promise<UsersResponse[]>;
+
+    abstract updateUserType(request?: UpdateUserRequest): UpdateUserResponse | Promise<UpdateUserResponse>;
+
     abstract get_GraphInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
 
     abstract get_TableInfo(request?: Admin_Dashboard_request): Admin_Dashboard_response | Promise<Admin_Dashboard_response>;
@@ -301,6 +313,18 @@ export class Update_afflictions_response {
     status?: number;
 }
 
+export class UpdateUserResponse {
+    status: number;
+}
+
 export class UploadResponse {
     status: number;
+}
+
+export class UsersResponse {
+    status: number;
+    name: string;
+    surname: string;
+    email: string;
+    userType: string;
 }
