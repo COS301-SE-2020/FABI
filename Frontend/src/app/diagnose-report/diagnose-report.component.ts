@@ -140,7 +140,7 @@ export class DiagnoseReportComponent implements OnInit {
 
   submitVerification(){
     this.special.diagnose(this.reportID,this.filter.Diagnosis["name"],this.filter.Reason).subscribe(data=>{
-      console.log(data);
+      this.router.navigate(["/special"]);
       
     });
     
