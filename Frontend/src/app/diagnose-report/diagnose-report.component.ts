@@ -16,7 +16,7 @@ export interface filterValue{
   styleUrls: ['./diagnose-report.component.css']
 })
 export class DiagnoseReportComponent implements OnInit {
-  reportID:any = 91;//null; 91 unverified
+  reportID:any = 90;//null; 91 unverified
   verified=false;
   filteredOptions: Observable<any>;
   myControl = new FormControl();
@@ -77,44 +77,50 @@ export class DiagnoseReportComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter(name) : this.Foptions.slice())
         );
-        Highcharts.chart('container', {
-          chart: {
-            type: 'bar'
-          },
-          title: {
-            text: 'Diagnostic Suggestions from Diagbot'
-          },
-          xAxis: {
-            categories: ['Army Ant', 'Pest 1', 'Pest 2', 'Pathogen 1'],
-            title: {
-              text: null
-            }
-          }, credits: {
-            enabled: false
-          },
-          yAxis: {
-            min: 0,
-            max: 100,
-            title: {
-              text: 'Percentage Certainty',
-              align: 'high'
+        this.special.getNNData(this.reportID).subscribe(nnData => {
+          let xValues = nnData["preDiagnosisNames"].split(',');
+          let yValues = nnData["preDiagnosisProbabilities"].split`,`.map(x=>+x*100);
+
+          Highcharts.chart('container', {
+            chart: {
+              type: 'bar'
             },
-            labels: {
-              overflow: 'justify'
-            }
-          },
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                enabled: true
+            title: {
+              text: 'Diagnostic Suggestions from Diagbot'
+            },
+            xAxis: {
+              categories: xValues,
+              title: {
+                text: null
               }
-            }
-          },
-          series: [{
-            type: 'bar',
-            data: [30, 45, 34, 23]
-          }]
-        });
+            }, credits: {
+              enabled: false
+            },
+            yAxis: {
+              min: 0,
+              max: 100,
+              title: {
+                text: 'Percentage Certainty',
+                align: 'high'
+              },
+              labels: {
+                overflow: 'justify'
+              }
+            },
+            plotOptions: {
+              bar: {
+                dataLabels: {
+                  enabled: true
+                }
+              }
+            },
+            series: [{
+              type: 'bar',
+              data: yValues
+            }]
+          });
+        })
+
       }
       else if(data["data"]["getDiagnosis_Reason"]["status"]==201){
         this.verified=true;
