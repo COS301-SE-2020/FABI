@@ -126,7 +126,7 @@ const routes: Routes = [
         }],
         canActivate: ([AuthGuard]),
         data:{
-            expectedRole:"basic"
+            expectedRole:["basic",'special','admin']
         }
     },
     {
@@ -138,7 +138,7 @@ const routes: Routes = [
         }],
         canActivate: ([AuthGuard]),
         data:{
-            expectedRole:"special"
+            expectedRole:["special",'admin']
         }
     },
     {
