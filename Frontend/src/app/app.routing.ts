@@ -37,7 +37,6 @@
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 // User Management imports
-import { AuthGuardService } from '@/_UMservices/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
@@ -46,6 +45,7 @@ import { AdminComponent } from './_layouts/admin/admin.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
 import { PestInfoComponent } from './_components/pest-info/pest-info.component';
 import { UpdatePestComponent } from './_components/pest-info/update-pest/update-pest.component';
+import {AuthGuard} from "@/_helpers/auth.guard"
 
 // Basic User imports
 import { BasicComponent } from './_layouts/basic/basic.component';
@@ -97,7 +97,11 @@ const routes: Routes = [
         {
             path: 'users',
             component: UsersComponent
-        }]
+        }],
+        canActivate: ([AuthGuard]),
+        data:{
+            expectedRole:"admin"
+        }
     },
     {
         path: 'basic',
@@ -114,7 +118,10 @@ const routes: Routes = [
             path: 'MapReport',
             component: MapReportComponent
         }],
-        // canActivate: [AuthGuard]
+        canActivate: ([AuthGuard]),
+        data:{
+            expectedRole:"basic"
+        }
     },
     {
         path: 'special',
@@ -122,7 +129,11 @@ const routes: Routes = [
         children: [{
             path: 'specialist',
             component: SpecSearchComponent
-        }]
+        }],
+        canActivate: ([AuthGuard]),
+        data:{
+            expectedRole:"special"
+        }
     },
         
         {

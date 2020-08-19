@@ -34,7 +34,7 @@
 
 // Angular specific imports
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // Models
@@ -44,18 +44,29 @@ import { User } from '@/_models/user';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
+// encoding
+import { sha256 } from 'js-sha256';
+
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
+    private currentUserTypeSubject: BehaviorSubject<any>;
     public currentUser: Observable<User>;
+    public currentUserType: Observable<any>;
 
     constructor(private apollo: Apollo) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+        this.currentUserTypeSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('0')));
+        this.currentUser = this.currentUserTypeSubject.asObservable();
     }
 
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
+    }
+    
+    public get currentUserTypeValue(): String {
+        return this.currentUserTypeSubject.value;
     }
 
     login(username, password) {
@@ -96,7 +107,9 @@ export class AuthenticationService {
                     }
               }`
         }).pipe(map(data => {
-            return data["data"]["getUserType"]["UserType"];
-        }))
+            var hash:string=JSON.stringify(sha256(data["data"]["getUserType"]["UserType"]));
+            localStorage.setItem("0",hash);
+            return (data["data"]["getUserType"]["UserType"]);
+        }));
     }
 }

@@ -5,7 +5,6 @@ import { first } from 'rxjs/operators';
 
 import { AlertService } from '@/_services/alert.service';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
-import { BasicComponent } from '@/_layouts/basic/basic.component';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {

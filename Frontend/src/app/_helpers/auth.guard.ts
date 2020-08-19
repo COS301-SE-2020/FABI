@@ -37,6 +37,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 
 // Service imports
 import { AuthenticationService } from '@/_UMservices/authentication.service';
+import { sha256 } from 'js-sha256';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -47,10 +48,24 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
-        if (currentUser) {
+        const currentUserType = this.authenticationService.currentUserTypeValue;
+
+        if(currentUserType!=null){
+            if (currentUser&&currentUserType==sha256(route.data.expectedRole)) {
+                // Authorised so return true
+                return true;
+            }
+            else {
+                this.router.navigate(['/']);
+                return false;
+            }
+        }
+        else if (currentUser) {
             // Authorised so return true
             return true;
         }
+        
+
 
         // Not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
