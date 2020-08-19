@@ -16,9 +16,15 @@ export class UsersService {
   updateRole(userID, role) {
     return this.apollo.mutate({
       mutation: gql `mutation {
-        
+        updateUserType(request: {
+          token: "${this.authentication.currentUserValue}",
+          email: "${userID}",
+          newUserType: "${role}"
+        }) {status}
       }`
-    })
+    }).pipe(map(data => {
+      return data["data"]["updateUserType"];
+    }))
   }
 
   getBasic() {
@@ -26,15 +32,13 @@ export class UsersService {
       mutation: gql `mutation {
         getBasicUsers(request: {token: "${this.authentication.currentUserValue}"})
         {
-          status,
           name,
           surname,
-          email,
-          userType
+          email
         }
       }`
     }).pipe(map(data => {
-      return data["data"]["getBasicUser"];
+      return data["data"]["getBasicUsers"];
     }))
   }
 
