@@ -17,14 +17,12 @@ export class AccessControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.getUserType(this.auth.currentUserValue).subscribe(data=>{
-      this.userType=data;
+      this.returnTo(data);
     });
   }
 
-  returnTo(){
-    this.auth.getUserType(this.auth.currentUserValue).subscribe(data=>{
-      this.router.navigate(["/"+data]);    
-    });
+  returnTo(data){
+      this.router.navigate(["/"+data]); 
   }
 
 }

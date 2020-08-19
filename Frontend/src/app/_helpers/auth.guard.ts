@@ -38,12 +38,14 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 // Service imports
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { sha256 } from 'js-sha256';
+import { AlertService } from '@/_services/alert.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private alertService: AlertService
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -52,7 +54,6 @@ export class AuthGuard implements CanActivate {
         var login = this.router.getCurrentNavigation().extras.state;
         
         if(login!=undefined)if(login["login"]){
-            console.log("hello");
             if (currentUser) {
                 return true;
             }
@@ -65,7 +66,7 @@ export class AuthGuard implements CanActivate {
             }
             }
             
-            
+            this.alertService.error("You dont have access to there!",true)
             this.router.navigate(['/noaccess']);
             return false;
             
