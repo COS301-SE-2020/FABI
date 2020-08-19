@@ -275,7 +275,7 @@ export class HomeComponent implements AfterViewInit {
     
 
     ngAfterViewInit(): void {        
-        if(this.authenticationService.currentUserTypeValue==sha256("basic")){
+        if(this.authenticationService.currentUserTypeValue!=sha256("special")){
             if(this.DeviceType=="Desktop")this.loadMap();
         else{
             this.location.getLocation().subscribe(rep => {
