@@ -248,8 +248,9 @@
 
 <div *ngIf="DeviceType=='Mobile'" class="unselectable">
     <div class="flex-container" fxLayout="row" *ngIf="showMap">
-        <div fxFlex fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
-                diagnosis report</button></div>
+        <div fxFlex fxLayoutAlign="center">
+            <button mat-raised-button color="primary" (click)="diagreport()">Submit diagnosis report</button>
+        </div>
     </div>
     <br>
     <div fxLayout="row" fxLayoutAlign="space-between"

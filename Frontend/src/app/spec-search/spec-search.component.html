@@ -102,7 +102,7 @@
                 <mat-header-row *matHeaderRowDef="ITdisplayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: ITdisplayedColumns;"></mat-row>
             </mat-table>
-            <mat-paginator [length]="dataLength"  (page)="getNearbyReports($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
+            <mat-paginator [length]="datalength"  (page)="getNearbyReports($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
     </mat-drawer-content>
     
 </mat-drawer-container>

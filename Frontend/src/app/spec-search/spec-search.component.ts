@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {FormControl} from '@angular/forms';
 import { report } from 'process';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
+import { Router } from '@angular/router';
 
 // Filter
 import { Observable, Subject } from 'rxjs';
@@ -123,7 +124,8 @@ export class SpecSearchComponent implements OnInit {
     private specialistService: SpecialistService, 
     private locationService: LocationService, 
     private repServe:ReportDataService,
-    private auth:AuthenticationService
+    private auth:AuthenticationService,
+    private router:Router
     ) { }
 
     paginatorInit(){
@@ -152,8 +154,10 @@ export class SpecSearchComponent implements OnInit {
 
     this.paginatorInit();
   }
-  viewReport(id) {
-    console.log(id)
+  viewReport(ID) {
+    console.log(ID)
+    this.router.navigate(["/basic"],{state:{id:ID}})
+    
   }
 
 
@@ -190,7 +194,6 @@ export class SpecSearchComponent implements OnInit {
             }
             this.reports.push(tempObject)
           })
-          console.log(this.reports);
 
           this.dataSource = new MatTableDataSource(this.reports)
         }
