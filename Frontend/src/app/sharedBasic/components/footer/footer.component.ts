@@ -25,8 +25,9 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
   }
   toggleDevice() {
-    sessionStorage.setItem("DeviceType", (this.DeviceType == "Desktop" ? "Mobile" : "Desktop"));
-    this.router.navigate(["/basic"]);
+    this.DeviceType = this.DeviceType=="Desktop" ? "Mobile" : "Desktop";
+    sessionStorage.setItem("DeviceType", this.DeviceType);
+    location.reload();
   }
 
 }

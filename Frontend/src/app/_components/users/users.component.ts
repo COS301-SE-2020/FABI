@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'apollo-link';
 import { Affliction } from '@/_models/affliction';
 import { Router, ActivatedRoute } from '@angular/router'
-import { UserService } from '@/_services/user.service';
+import { UserService } from '@/_UMservices/user.service';
 import { User } from '@/_models/user';
 import { UsersService } from './users.service';
 import { MatPaginator } from '@angular/material/paginator';

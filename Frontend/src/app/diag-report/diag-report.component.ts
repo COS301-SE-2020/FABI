@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 
-import { AuthenticationService } from '@/_services/authentication.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { ReportDataService } from '@/_services/report-data.service'
 
 import {Report_Questions} from "@/_models/Questions"
@@ -288,9 +288,6 @@ export class DiagReportComponent implements OnInit {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
   ngOnInit(): void {
-    window.onbeforeunload = function() {
-      return "Dude, are you sure you want to leave? Think of the kittens!";
-    }
 
     WebcamUtil.getAvailableVideoInputs()
     .then((mediaDevices: MediaDeviceInfo[]) => {

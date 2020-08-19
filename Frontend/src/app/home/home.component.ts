@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
-import { UserService } from '@/_services/user.service';
-import { AuthenticationService } from '@/_services/authentication.service';
+import { UserService } from '@/_UMservices/user.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { LocationService } from '@/_services/location.service';
 
 import { Report } from '@/_models/report'
@@ -142,8 +142,7 @@ export class HomeComponent implements AfterViewInit {
         private currentMarkServ: ReportDataService,
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
-    ) {console.log(this.MobileWidth);
-        
+    ) {
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
             this.currentStyle = data.text;
