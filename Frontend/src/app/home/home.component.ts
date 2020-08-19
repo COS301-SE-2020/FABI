@@ -501,7 +501,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     openMap() {
-        if(this.specialUser){
+        if(JSON.parse(localStorage.getItem("0"))==sha256("special")){
             this.router.navigate(["/special"]);
         }
         else{
