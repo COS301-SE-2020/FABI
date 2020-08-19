@@ -35,7 +35,7 @@ import { Component, OnInit } from '@angular/core';
 import { Affliction } from '@/_models/affliction';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfflictionService } from '@/_components/affliction.service';
-import { AlertService } from "../../../_services/alert.service";
+import { AlertService } from "@/_services/alert.service";
 @Component({
   selector: 'app-update-pest',
   templateUrl: './update-pest.component.html',

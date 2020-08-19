@@ -34,18 +34,19 @@
 
 
 // Angular specific imports
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 // User Management imports
-import { AuthGuard } from './_helpers/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AccessControlComponent } from '@/access-control/access-control.component';
 
 // Admin User imports
 import { AdminComponent } from './_layouts/admin/admin.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
 import { PestInfoComponent } from './_components/pest-info/pest-info.component';
 import { UpdatePestComponent } from './_components/pest-info/update-pest/update-pest.component';
+import {AuthGuard} from "@/_helpers/auth.guard"
 
 // Basic User imports
 import { BasicComponent } from './_layouts/basic/basic.component';
@@ -58,6 +59,7 @@ import { UpdatePathogenComponent } from './_components/pathogen-info/update-path
 // Specialist User imports
 import { SpecSearchComponent } from './spec-search/spec-search.component';
 import { UsersComponent } from './_components/users/users.component';
+import { AutomatedComponent } from './_components/automated/automated.component';
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -97,8 +99,15 @@ const routes: Routes = [
         {
             path: 'users',
             component: UsersComponent
+        },
+        {
+            path: 'auto',
+            component: AutomatedComponent
         }],
-        canActivate: [AuthGuard]
+        canActivate: ([AuthGuard]),
+        data:{
+            expectedRole:"admin"
+        }
     },
     {
         path: 'basic',
@@ -115,17 +124,33 @@ const routes: Routes = [
             path: 'MapReport',
             component: MapReportComponent
         }],
-        // canActivate: [AuthGuard]
+        canActivate: ([AuthGuard]),
+        data:{
+            expectedRole:"basic"
+        }
     },
     {
-        path: 'specialist',
-        component: SpecSearchComponent
+        path: 'special',
+        component: BasicComponent,
+        children: [{
+            path: 'specialist',
+            component: SpecSearchComponent
+        }],
+        canActivate: ([AuthGuard]),
+        data:{
+            expectedRole:"special"
+        }
     },
-    // otherwise redirect to home
     {
-        path: '**',
-        redirectTo: 'basic'
-    }
+        path: 'noaccess',
+        component: AccessControlComponent
+    },
+        
+        {
+            path: '**',
+            redirectTo: 'login'
+        }
+    
 ];
 
 export const appRoutingModule = RouterModule.forRoot(routes);

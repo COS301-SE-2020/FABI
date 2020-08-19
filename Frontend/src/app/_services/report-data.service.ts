@@ -49,7 +49,6 @@ export class ReportDataService {
                   }
               }`
     }).pipe(map(data => {
-      console.log(data);
       return (data["data"]["getReports"]);
 
     }))
@@ -138,7 +137,6 @@ export class ReportDataService {
   }
 
   requestNearbyReportsMobile(token,latitude,longitude) {
-    console.log(latitude,longitude,token);
     return this.apollo.mutate({
       mutation: gql`mutation{
                   getReportsMobile(getReportsRequest:{token:"${token}",latitude:${latitude},longitude:${longitude}}){
@@ -150,7 +148,6 @@ export class ReportDataService {
                       }
                   }`
     }).pipe(map(data => {
-      console.log(JSON.stringify(data["data"]["getReportsMobile"]));
       localStorage.setItem("nearbyReportsMobile", JSON.stringify(data["data"]["getReportsMobile"]))
 
     }))

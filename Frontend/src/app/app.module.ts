@@ -73,6 +73,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { AccessControlComponent } from './access-control/access-control.component';
 
 
 
@@ -86,6 +87,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     LoginComponent,
     RegisterComponent,
     SpecSearchComponent,
+    AccessControlComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,6 +115,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatToolbarModule,
     FlexLayoutModule,
     MatSidenavModule,
+    
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

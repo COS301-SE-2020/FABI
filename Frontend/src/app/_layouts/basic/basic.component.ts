@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@/_services/authentication.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { User } from '@/_models/user';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ButtonListenerService } from "@/_services/buttonListener.service";
@@ -41,7 +41,7 @@ export class BasicComponent implements OnInit {
       if (this.deviceService.isDesktop()) {
         sessionStorage.setItem("DeviceType", "Desktop");
       }
-      else if (this.deviceService.isMobile()||this.deviceService.isTablet()) {
+      else if (this.deviceService.isMobile()) {
         sessionStorage.setItem("DeviceType", "Mobile");
       }
       else {
