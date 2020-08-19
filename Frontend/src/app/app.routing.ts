@@ -39,6 +39,7 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 // User Management imports
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AccessControlComponent } from '@/access-control/access-control.component';
 
 // Admin User imports
 import { AdminComponent } from './_layouts/admin/admin.component';
@@ -134,6 +135,10 @@ const routes: Routes = [
         data:{
             expectedRole:"special"
         }
+    },
+    {
+        path: 'noaccess',
+        component: AccessControlComponent
     },
         
         {
