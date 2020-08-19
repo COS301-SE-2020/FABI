@@ -124,11 +124,7 @@ const routes: Routes = [
         {
             path: 'MapReport',
             component: MapReportComponent
-        }],
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:["basic",'special','admin']
-        }
+        }]
     },
     {
         path: 'special',
