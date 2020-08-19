@@ -38,8 +38,11 @@ export class SpecSearchComponent implements OnInit {
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  showFiltered() {
+    return this.filtered;
+  }
   // Initial table
-
+  filtered;
   ITdatasource;
   ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
   displayReady=false;
@@ -142,7 +145,7 @@ export class SpecSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.filtered = 1;
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -161,15 +164,19 @@ export class SpecSearchComponent implements OnInit {
 
 
   filterReports() {
+    console.log(this.filter.Diagnosis["name"]);
+    
     // TODO: This function is incomplete and needs location data added
     this.locationService.getLocation().subscribe(location => {
-      this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis, this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
+      this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis["name"], this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
         console.log(data);
         
         if (data[0]["status"] == 500) {
           this.title = "No Reports found, showing all unfiltered reports"
+          this.filtered = 1;
         }
         else {
+          this.filtered = 0;
           data = data.filter(props => {
             delete props["__typename"]
             return true
@@ -178,7 +185,7 @@ export class SpecSearchComponent implements OnInit {
           this.reports = []
           data.forEach((obj) => {
             let cultivar = obj.form.substring(
-              obj.form.lastIndexOf("Cultivarx2C"),
+              obj.form.lastIndexOf("Cultivarx2C")+11,
               obj.form.lastIndexOf("x2CWhere do you see the Pest")
             )
             console.log(cultivar);

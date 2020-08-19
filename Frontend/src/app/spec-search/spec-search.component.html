@@ -50,7 +50,7 @@
     </mat-drawer>
     <mat-drawer-content fxFlex="70" >
         <h2 class="HeadofRight">{{title}}</h2><br>
-        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8" fxLayoutAlign="right" *ngIf="reports.length!=0">
+        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8" *ngIf="showFiltered() == 0">
 
             <ng-container matColumnDef="Plant Name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Plant Name </th>
@@ -72,14 +72,16 @@
                 Actions
               </th>
               <td mat-cell *matCellDef="let element">
-                <button type="button" mat-button>View Report</button>
+                <button type="button" (click)="viewReport(element.ID)" mat-button>View Report</button>
               </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          <mat-table [dataSource]="ITdatasource" class="mat-elevation-z8">
+
+
+          <mat-table [dataSource]="ITdatasource" *ngIf="showFiltered() == 1" class="mat-elevation-z8">
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="Pname">
