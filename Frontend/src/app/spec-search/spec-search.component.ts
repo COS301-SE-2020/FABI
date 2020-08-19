@@ -10,7 +10,7 @@ import { LocationService } from '@/_services/location.service';
 export class SpecSearchComponent implements OnInit {
   // Filter values
   distance = 10;
-  plant = "";
+  diagnosis = "";
   status
   affectedArea
 
@@ -73,16 +73,13 @@ export class SpecSearchComponent implements OnInit {
   constructor(private specialistService: SpecialistService, private locationService: LocationService) { }
 
   ngOnInit(): void {
-    // this.specialistService.filterReports(-25.877847437584027, 28.230844648390754,"Verified","Wattle rust",40, "Leaf / Leaves").subscribe(data => {
-    //   console.log(data);
-      
-    // })
+
   }
   filterReports() {
     // TODO: This function is incomplete and needs location data added
-    console.log(this.options[this.status-1]["viewValue"]);
+    console.log(this.affectedArea);
       this.locationService.getLocation().subscribe(location => {
-        this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.options[this.status-1]["viewValue"], this.plant, this.distance, this.areas[this.affectedArea-1]["viewValue"]).subscribe(data => {
+        this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.status, this.diagnosis, this.distance, this.affectedArea).subscribe(data => {
           console.log(data);
           
         })

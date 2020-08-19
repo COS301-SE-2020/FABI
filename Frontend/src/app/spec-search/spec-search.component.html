@@ -13,14 +13,14 @@
         <h2 class="specChild">Filter Reports</h2>
         <div>
             <mat-form-field appearance="fill">
-                <mat-label>Plant Name</mat-label>
-                <input matInput [(ngModel)]="plant">
+                <mat-label>Diagnosis</mat-label>
+                <input matInput [(ngModel)]="diagnosis">
             </mat-form-field><br>
             <label>Report Status</label><br>
             <mat-form-field appearance="fill">
                 <mat-label>Choose your option</mat-label>
                 <mat-select [(value)]="status">
-                    <mat-option *ngFor="let option of options" [value]="option.value">
+                    <mat-option *ngFor="let option of options" [value]="option.viewValue">
                         {{option.viewValue}}
                     </mat-option>
                 </mat-select>
@@ -33,7 +33,7 @@
             <mat-form-field>
                 <label>Affected Area</label><br>
                 <mat-select [(value)]="affectedArea">
-                    <mat-option *ngFor="let area of areas" [value]="area.value">
+                    <mat-option *ngFor="let area of areas" [value]="area.viewValue">
                         {{area.viewValue}}
                     </mat-option>
                 </mat-select>
