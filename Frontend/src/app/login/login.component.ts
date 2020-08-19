@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '@/_services/alert.service';
-import { AuthenticationService } from '@/_services/authentication.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        localStorage.clear();
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -55,7 +56,20 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.authenticationService.getUserType(data).subscribe(data=>{
+                        switch(data){
+                            case "special":
+                                this.router.navigate(["/special"],{ state:  { login:true }});
+                            break;
+                            case "basic":
+                                this.router.navigate(["/basic"],{ state:  { login:true }});
+                            break;
+                            case "admin":
+                                this.router.navigate(["/admin"],{ state:  { login:true }});
+                            break;
+                        }
+                        
+                    });
                 },
                 error => {
                     this.alertService.error(error);

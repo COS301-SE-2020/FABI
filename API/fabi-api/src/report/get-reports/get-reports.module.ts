@@ -39,9 +39,10 @@ import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 import { UsersModule } from '../../database/Users/Users.module';
 import { ReportModule } from '../../database/Report/report.module';
+import { PopulateTableService } from '../populate-table/populate-table.service';
 
 @Module({
-  providers: [GetReportsService, GetReportsResolver,UsersService,ReportService],
+  providers: [GetReportsService, GetReportsResolver,UsersService,ReportService,PopulateTableService],
   imports: [UsersModule,ReportModule, GetReportsModule]
 })
 export class GetReportsModule {}

@@ -30,10 +30,16 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { Delete_Affliction_Response, Delete_Affliction_Request } from 'src/graphql.schema';
+<<<<<<< HEAD
+import { Delete_Affliction_Response, Delete_Affliction_Request } from '../../graphql.schema';
 import  {UsersService}  from  '../../database/Users/users.service';
 import { AfflictionService } from '../../database/Afflictions/affliction.service';
 
+=======
+import { Delete_Affliction_Response, Delete_Affliction_Request } from '../../graphql.schema';
+import { UsersService } from '../../database/Users/users.service';
+import { AfflictionService } from '../../database/Afflictions/affliction.service';
+>>>>>>> develop
 
 @Injectable()
 export class DeleteAfflictionsService {

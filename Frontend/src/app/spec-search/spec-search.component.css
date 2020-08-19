@@ -1,0 +1,118 @@
+#container {
+  display: flex;
+  width: 100%;
+  margin-left: 0%;
+  margin-right: 0%;
+  overflow: hidden;
+}
+
+button {
+    background-color: forestgreen;
+    color: white
+}
+
+mat-toolbar {
+    background-color: forestgreen;
+}
+
+
+
+.example-container {
+  height: 90%;
+}
+
+table {
+    width: 100%;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  width: 50%;
+}
+
+.Title {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 110%;
+  display: inline-block;
+  font-size: 2rem;
+  line-height: 110%;
+}
+
+label {
+    margin: 3px;
+}
+
+textarea {
+    margin: 5px;
+    width: 90%;
+}
+
+#distance {
+    position: absolute;
+    height: auto;
+    margin: 1em;
+    width: 18%;
+}
+.pull-right {
+    margin-right: 2.5%;
+}
+
+.report {
+    float: left;
+    width: 150px;
+    height: 15em;
+    margin: 1em 1em 1em 1em;
+    border: 2px solid black;
+    border-radius: 25px;
+    text-align: left;
+}
+
+.header {
+  float: left;
+  text-align: center;
+  background-color: #228b22;
+  width: 100%;
+  display: flex;
+}
+
+footer {
+  padding: 20px;
+  width: 100%;
+  position: fixed;
+  height: 5%;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.btn:hover {
+  background-color: #3e8e41;  
+  margin-left: 5px;
+}
+
+mat-slider {
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-toolbar {
+  width: 100%;
+}
+

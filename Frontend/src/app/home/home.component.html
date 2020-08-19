@@ -1,4 +1,4 @@
-
+<!-- <div class="container">
 <div class="row">
     <div class="col">
         <a class="btn btn-success" (click)="diagreport()" style="color: white;">Submit diagnosis report</a>
@@ -24,22 +24,6 @@
 <div class="container" style="background-image: url(https://wallpaperplay.com/walls/full/1/6/f/141477.jpg);color: white;opacity: 90%;" [style.visibility]="Active !== 1"
     *ngIf="displayReady">
     <div class="row">
-        <div class="col-sm-4">
-            <h2 class="unselectable">Plant:</h2>
-        </div>
-        <div class="col-sm-8">
-            <h3 class="unselectable"><b>{{currentMark["Pname"]}}</b></h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <!-- <h2 class="unselectable">{{currentMark["Infliction"]}} Name:</h2> -->
-        </div>
-        <div class="col-sm-8">
-            <!-- <h3 class="unselectable"><b>{{currentMark["Infliction name"]}}</b></h3>  for later-->
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm">
             <h2 class="unselectable">Images:</h2>
         </div>
@@ -58,4 +42,326 @@
     <button class="btn btn-primary btn-lg btn-block" (click)="navReport()"
         [disabled]="Active !== 1">{{currentMark["Infliction"]}} Information</button>
     <br>
+</div>
+</div> -->
+
+<!-- Desktop layout -->
+
+<div *ngIf="DeviceType=='Desktop'" [style.color]="currentStyle=='Dark'?'white':'black'" class="unselectable">
+    <div class="flex-container" fxLayout="row" *ngIf="showMap">
+        <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
+                diagnosis report</button></div>
+        <div fxFlex="60" fxLayoutAlign="center">
+            <h1>Welcome to FABI-Surveillance</h1>
+        </div>
+        <div fxFlex="20" fxLayoutAlign="end">
+
+        </div>
+    </div>
+    <br>
+    <div fxLayout="row" *ngIf="!showMap&&currentMark!=undefined">
+        <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="openMap()">Close
+                report view</button></div>
+        <div fxFlex="60" fxLayoutAlign="center">
+            <h1>Report No. {{currentMark.ID}} details</h1>
+        </div>
+        <div fxFlex="20" fxLayoutAlign="end">
+
+        </div>
+    </div>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="showMap" style="color: black;">
+        <div fxFlex="100" fxLayoutAlign="center">
+            <div #mapContainer id="desktopmap" [style.height]="DmapHeight"></div>
+            <div id="legend"></div>
+            <img id="centering" (click)="centreLoc()" src="https://image.flaticon.com/icons/svg/106/106447.svg"
+                style="width:50px;height:auto;cursor: pointer;background-color: lightgray;">
+        </div>
+    </div>
+    <br>
+    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMap&&currentMark!=undefined" fxLayout.xl="row">
+        <div fxFlex="40">
+            <mat-card>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Plant Name:
+                        </div>
+                        <div class="col">
+                            {{currentMark.Pname}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Infliction type:
+                        </div>
+                        <div class="col">
+                            {{currentMark.Infliction}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Accuracy of marker:
+                        </div>
+                        <div class="col">
+                            {{currentMark.Accuracy}}m
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Image accuracy score:
+                        </div>
+                        <div class="col">
+                            {{currentMark.NeuralNet}}
+                        </div>
+                    </div>
+                </mat-card-title>                
+            </mat-card>
+                <br><br>
+            <mat-card>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Specialist diagnosis:
+                        </div>
+                        <div class="col" *ngIf="Diagnosis">
+                            {{Diagnose.diagnosis}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" *ngIf="!Diagnosis">
+                        <div class="col">
+                            Awaiting review
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="Diagnosis">
+                        <div class="col">
+                            Reason:
+                        </div>
+                        <div class="col">
+                            {{Diagnose.reason}}
+                        </div>
+                    </div>
+
+                    
+                </mat-card-title>
+                <mat-card-content>
+                    
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="40" *ngIf="displayReady">
+            <ngb-carousel style="background-color: dar;height: 650px;outline: none;">
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{currentMark['Img1']}}" alt="Random first slide" style="max-height: 650px;">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{currentMark['Img2']}}" alt="Random second slide" style="max-height: 650px;">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{currentMark['Img3']}}" alt="Random third slide" style="max-height: 650px;">
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!showMap"
+        [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
+        <div fxFlex>
+            <h2 style="color: black;">Similar reports</h2>
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
+                <!-- Position Column -->
+                <ng-container matColumnDef="ID" >
+                    <mat-header-cell *matHeaderCellDef> Report ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.ID}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Pname">
+                    <mat-header-cell *matHeaderCellDef> Plant Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.Pname}} </mat-cell>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="distance">
+                    <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.distance}} </mat-cell>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getReportByID(element.ID)" style="cursor: pointer;"> {{element.date}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [length]="dataLength"  (page)="getNearbyReports($event)" [pageSize]="5" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+    <br>
+    <div class="flex-container" fxLayout="row" *ngIf="!showMap">
+        <div fxFlex fxLayoutAlign="center">
+            <h1>Report Comparison</h1>
+        </div>
+    </div>
+    <div class="flex-container" fxLayout="row" *ngIf="!showMap" [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
+        <div fxFlex fxLayoutAlign="center">
+            <table class="table table-striped table-light" *ngIf="comparisonMarker!=undefined&&currentMark!=undefined">
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="2">Questions</th>
+                    <th scope="col">Selected report ({{currentMID}})</th>
+                    <th scope="col">Comparison Report ({{comparisonMID}})</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let MD of markerDetails; let i=index">
+                    <th scope="row" colspan="2">{{MD["Question"]}}</th>
+                    <td>{{MD["Answer"]}}</td>
+                    <td *ngIf="comparisonMarker[i]!=undefined">{{comparisonMarker[i]["Answer"]}}</td>
+                    <td *ngIf="comparisonMarker[i]==undefined">Select a report to compare</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="DeviceType=='Mobile'" class="unselectable">
+    <div class="flex-container" fxLayout="row" *ngIf="showMap">
+        <div fxFlex fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
+                diagnosis report</button></div>
+    </div>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between"
+        [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'" *ngIf="showMobileTable">
+        <div fxFlex>
+            <h2 style="color: black;">Nearby reports</h2>
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                [style.background-color]="currentStyle=='Dark'?'lightgrey':'white'">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Pname">
+                    <mat-header-cell *matHeaderCellDef> Plant Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.Pname}} </mat-cell>
+                </ng-container>
+
+                <!-- Distance Column -->
+                <ng-container matColumnDef="distance">
+                    <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.distance}} </mat-cell>
+                </ng-container>
+
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="getSelectedReport(element.ID)" style="cursor: pointer;"> {{element.date}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsMobile"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsMobile;"></mat-row>
+            </mat-table>
+            <mat-paginator [length]="dataLength"  (page)="getNearbyReportsMobile($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="!showMobileTable&&currentMark!=undefined">
+        <div fxFlex>
+            <mat-card >
+                <mat-card-title>
+                    <div class="row" style="font-size:small;">
+                        <div class="col-8">
+                            Plant Name:
+                        </div>
+                        <div class="col-4">
+                            {{currentMark.Pname}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row" style="font-size:small;">
+                        <div class="col-8">
+                            Infliction type:
+                        </div>
+                        <div class="col-4">
+                            {{currentMark.Infliction}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row" style="font-size:small;">
+                        <div class="col-8">
+                            Accuracy of marker:
+                        </div>
+                        <div class="col-4">
+                            {{currentMark.Accuracy}}m
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row" style="font-size:small;">
+                        <div class="col-8">
+                            Image accuracy score:
+                        </div>
+                        <div class="col-4">
+                            {{currentMark.NeuralNet}}
+                        </div>
+                    </div>
+                </mat-card-title>                
+            </mat-card>
+                <br><br>
+            <mat-card>
+                <mat-card-title>
+                    <div class="row">
+                        Specialist diagnosis:
+                    </div>
+                    <br>
+                    <div class="row" style="font-size:small;">
+                        <p>{{Diagnosis}}</p>
+                    </div>
+                </mat-card-title>
+                <mat-card-content>
+                    
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <br>
+        <div fxFlex *ngIf="!showMobileTable&&Browser!='Safari'">
+            <ng-image-slider 
+            [images]="imageObject" 
+            [infinite]="true"
+            [imagePopup]="true"
+            [imageSize]="{width:'60%',height:'50%'}"
+            #nav></ng-image-slider>
+        </div>
+        <div fxFlex *ngIf="!showMobileTable&&Browser=='Safari'">
+            <p style="color: white;">Images cannot show on Safari!</p>
+        </div>
+    </div>
+    <br>
+    <div class="flex-container" fxLayout="row" *ngIf="!showMobileTable">
+        <div fxFlex fxLayoutAlign="center"><button mat-raised-button color="error" (click)="showMobileTable=!showMobileTable">Back</button></div>
+    </div>
 </div>

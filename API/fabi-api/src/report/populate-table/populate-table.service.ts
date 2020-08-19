@@ -37,7 +37,7 @@ import { ReportService } from '../../database/Report/report.service';
 @Injectable()
 export class PopulateTableService {
 
-    res: PopTableResponse[] = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID:-1 }];
+    res: PopTableResponse[] = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID: -1 }];
 
     //Define the External services used in this service
     constructor(
@@ -64,13 +64,12 @@ export class PopulateTableService {
 
         } else {
             //clear response object
+            this.res = [{ status: -1, Pname: "test data", date: "", distance: 0.0, ID: -1 }];
             this.res.pop();
 
-            //make call to db and get individual report
-            let singleReport: String = await this.reportService.getSingleReport(reqObj.reportID);
 
-            //convert string to JSON
-            let singleReportJSON = JSON.parse(singleReport.toString());
+            //make call to db and get individual report
+            let singleReportJSON = await this.reportService.getSingleReport(reqObj.reportID);
 
             //create variables that store given lat,long
             let long: number = singleReportJSON[0].Long;
@@ -79,20 +78,26 @@ export class PopulateTableService {
             //get all similar
             let result = await this.reportService.getReports(lat, long);
 
-            //create JSON obj
-            let resultJson = JSON.parse(result.toString());
+            //this so retard but the sort function doesn't work if i dont do this.
+            let resultString = JSON.stringify(result);
+            let resultJson = JSON.parse(resultString.toString());
+
+            //sort results by reportID
+            let sortedResults = resultJson.sort(function (a, b) {
+                return parseFloat(a.reportID) - parseFloat(b.reportID);
+            });
 
             //Loop through each key in the JSON obj
-            for (var i = 0; i < Object.keys(resultJson).length; i++) {
+            for (var i = 0; i < Object.keys(sortedResults).length; i++) {
                 //variables created for response object
                 let distance: number;
                 let date: string;
                 let Pname: string;
-                let ID:number;
+                let ID: number;
 
                 //report lat/long
-                let reportLat: number = resultJson[i].Lat;
-                let reportLong: number = resultJson[i].Long;
+                let reportLat: number = sortedResults[i].Lat;
+                let reportLong: number = sortedResults[i].Long;
 
                 //calcualate the distance between the reports
                 distance = this.calcDistance(lat, long, reportLat, reportLong);
@@ -105,13 +110,13 @@ export class PopulateTableService {
                 date = date + "-" + temp.toString().substr(6, 2);
 
                 //create the Pname
-                Pname = resultJson[i].Pname;
+                Pname = sortedResults[i].Pname;
 
                 //set the ID
-                ID = resultJson[i].reportID;
+                ID = sortedResults[i].reportID;
 
                 //add object to list
-                this.res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID:ID });
+                this.res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID: ID });
             }
 
             //response
@@ -144,27 +149,3 @@ export class PopulateTableService {
     }
 
 }
-
-/*
-This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
-    function calcCrow(lat1, lon1, lat2, lon2)
-    {
-      var R = 6371; // km
-      var dLat = toRad(lat2-lat1);
-      var dLon = toRad(lon2-lon1);
-      var lat1 = toRad(lat1);
-      var lat2 = toRad(lat2);
-
-      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      var d = R * c;
-      return d;
-    }
-
-     Converts numeric degrees to radians
-    function toRad(Value)
-    {
-        return Value * Math.PI / 180;
-    }
-*/

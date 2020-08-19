@@ -32,9 +32,10 @@
 
 
 import { Injectable } from '@nestjs/common';
-import {Admin_Dashboard_request,Admin_Dashboard_response}  from '../../graphql.schema';
+import {Admin_Dashboard_request,Admin_Dashboard_response, Admin_Piechart_response, Admin_Cards_request, Admin_Cards_response}  from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { GetAdminDashService } from '../../database/admin-dashboard/get-admin-dash.service';
+import { number } from '@hapi/joi';
 
 
 
@@ -97,6 +98,111 @@ export class AdminDashboardService {
 
         }
 
+    }
+
+    async getPiechartInfo_Service(reqObj:Admin_Dashboard_request): Promise<Admin_Piechart_response[]>{
+
+        //Define our response data-type
+        var res: Admin_Piechart_response[] = [{name:"abc",y:45, status:-1}];
+
+        //here we validate our token
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+
+        //here we return the return the respective object based 
+        if (result == false) {
+            res[0].status = 415;
+            return res;
+            
+        } else {
+            //set default
+            res = [{name:"abc",y:45, status:-1}];
+            //pop mochdata
+            res.pop();
+
+            //total pests
+            let num:number = 0;
+            //call other service.
+            var resultJson = await this.getAdminDashService.getPieChartInfo(reqObj);
+
+            //loop to add all couts
+            for(var i = 0 ; Object.keys(resultJson).length > i ; i++ ){
+                num = num + parseInt(resultJson[i].count);
+            }
+
+            //loop to create res Object
+            for(var i = 0 ; Object.keys(resultJson).length > i ; i++ ){
+                //variable to hold percenatge
+                let percentage:number;
+                //calculate percentage
+                percentage = Math.round(parseInt(resultJson[i].count) / num * 100) ;
+
+                //create return object
+                res.push({name:resultJson[i].CommName,y:percentage,status:201});
+            
+            }
+
+            return res;
+
+        }
+    }
+
+    async get_CardsInfo_Service(reqObj:Admin_Cards_request): Promise<Admin_Cards_response[]>{
+
+        //response Object
+        var res: Admin_Cards_response[] = [{status:500,thisWeek:-1,lastWeek:-1,twoWeeksAgo:-1,name:"abc"}];
+
+         //here we validate our token
+         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+
+        //here we return the return the respective object based 
+        if (result == false) {
+            res[0].status = 415;
+            return res;    
+        } else {
+            //set default 
+            res = [{status:500,thisWeek:-1,lastWeek:-1,twoWeeksAgo:-1,name:"abc"}];
+            //pop
+            res.pop();
+
+            //array with label names
+            let names:string[] = ["New Reports","New Pests","New Pathogens","Total Undiagnosed Reports"];
+
+            //loop to get cardInfo
+            for(var i = 0 ; i<4 ; i++){
+                var resultJson = await this.getAdminDashService.get_CardsInfo(reqObj,i);
+                res.push({
+                thisWeek:resultJson[0].count,
+                lastWeek:resultJson[1].count,
+                twoWeeksAgo:resultJson[2].count,
+                name:names[i],
+                status:201
+                })
+
+            }
+            
+            //return object
+            return res;
+
+
+
+           /* var resultJson = await this.getAdminDashService.get_CardsInfo(reqObj);
+            //this week
+            res.thisWeek = resultJson[0].count;
+            //last week
+            res.lastWeek = resultJson[1].count;
+            //2 weeks ago
+            res.twoWeeksAgo = resultJson[2].count;
+            
+            //set response code
+            res.status = 201;
+
+            //return object
+            return res;*/
+        }
     }
 
 

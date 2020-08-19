@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../_services/authentication.service';
-import { User } from '../../_models/user';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
+import { User } from '@/_models/user';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { ButtonListenerService } from "@/_services/buttonListener.service";
+import { Subscription } from 'rxjs';
+import { Body } from '@angular/http/src/body';
+
+
 
 @Component({
   selector: 'app-basic',
@@ -11,16 +17,39 @@ import { User } from '../../_models/user';
 export class BasicComponent implements OnInit {
 
   currentUser: User;
+  currentStyle="Dark";
+  styleSub: Subscription;
+  deviceSub:Subscription;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    ) {
-      this.authenticationService.currentUser.subscribe(x => this.currentUser = x); }
+    private deviceService: DeviceDetectorService,
+    private styleSwitch: ButtonListenerService
+  ) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
+      this.currentStyle = data.text;
+    });
+  }
 
   ngOnInit(): void {
+    sessionStorage.setItem("StyleMode", "Dark");
+    sessionStorage.setItem("Browser",this.deviceService.browser);
+
+    if (sessionStorage.getItem("DeviceType") == null) {
+      if (this.deviceService.isDesktop()) {
+        sessionStorage.setItem("DeviceType", "Desktop");
+      }
+      else if (this.deviceService.isMobile()) {
+        sessionStorage.setItem("DeviceType", "Mobile");
+      }
+      else {
+        sessionStorage.setItem("DeviceType", "Desktop");
+      }
+    }
   }
-  
+
 
   logout() {
     this.authenticationService.logout();

@@ -46,7 +46,8 @@ export class CardComponent implements OnInit {
   @Input() label: string
   @Input() total: string
   @Input() percentage: string
-  @Input() data: []
+  @Input() data
+  refinedData
   Highcharts = Highcharts
   chartOptions = {}
 
@@ -58,6 +59,8 @@ export class CardComponent implements OnInit {
    * @memberof CardComponent
    */
   ngOnInit(): void {
+    this.refinedData = this.data.split(",").map(Number).filter(x => x != "")
+    
     this.chartOptions = {
       chart: {
         type: 'spline',
@@ -108,7 +111,7 @@ export class CardComponent implements OnInit {
         enabled: false
       },
       series: [{
-        data: this.data
+        data: this.refinedData
       }]
     }
     HC_exporting(Highcharts)

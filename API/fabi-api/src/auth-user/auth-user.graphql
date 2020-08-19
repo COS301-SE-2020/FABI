@@ -1,0 +1,34 @@
+input AuthUserRequest{
+    token:String!
+}
+
+input UpdateUserRequest{
+    token:String!
+    email:String!
+    newUserType:String!
+}
+
+type UpdateUserResponse{
+    status:Int!
+}
+
+type AuthUserResponse{
+    status:Int!
+    UserType:String!
+
+}
+
+type UsersResponse{
+    status:Int!
+    name:String!
+    surname:String!
+    email:String!
+    userType:String!
+}
+
+type Mutation{
+    getUserType(request:AuthUserRequest):AuthUserResponse!
+    getSpecialUsers(request:AuthUserRequest):[UsersResponse]!
+    getBasicUsers(request:AuthUserRequest):[UsersResponse]!
+    updateUserType(request:UpdateUserRequest):UpdateUserResponse
+}

@@ -1,4 +1,4 @@
-{"NightMode":
+{"Dark":
 [
     {"elementType": "geometry", "stylers": [{"color": "#242f3e"}]},
     {"elementType": "labels.text.stroke", "stylers": [{"color": "#242f3e"}]},
@@ -69,7 +69,7 @@
       "stylers": [{"color": "#17263c"}]
     }
 ],
-"Normal":[
+"Light":[
     {
         "featureType": "poi",
         "elementType": "labels",
