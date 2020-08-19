@@ -219,7 +219,7 @@ export class HomeComponent implements AfterViewInit {
                 mapTypeControl: true,
                 zoomControl: true
             };
-
+            if(this.gmap==undefined)return;
             this.map = new google.maps.Map(this.gmap.nativeElement,
                 this.mapOptions);
 

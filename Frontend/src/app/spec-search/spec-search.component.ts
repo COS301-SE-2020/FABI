@@ -150,7 +150,7 @@ export class SpecSearchComponent implements OnInit {
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice())
+        map(name => name ? this._filter(name) : this.Foptions.slice())
       );
     this.dataSource = new MatTableDataSource(this.reports)
     this.dataSource.sort = this.sort

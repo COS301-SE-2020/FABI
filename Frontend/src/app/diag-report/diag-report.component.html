@@ -17,7 +17,7 @@
         [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
         [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
         [videoOptions]="videoOptions"
-        [imageQuality]="1"
+        [imageQuality]="0.7"
         (cameraSwitched)="cameraWasSwitched($event)"
         (initError)="handleInitError($event)">
         </webcam></div>
