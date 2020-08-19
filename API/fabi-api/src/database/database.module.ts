@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './Users/users.service';
 import {UsersModule} from '../database/Users/Users.module'
@@ -13,6 +13,7 @@ import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
     ReportModule,
     TypeOrmModule.forRoot(),
     AdminDashboardModule,
+    HttpModule
   ],
   providers: [UsersService,ReportService],
  

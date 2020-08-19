@@ -93,8 +93,8 @@ diagnose(reportID, diagnosis, reason) {
         uploadDiagnosis_Reason(upload: {
           token: "${this.authentication.currentUserValue}",
           reportID: ${reportID},
-          diagnosis: ${diagnosis},
-          reason: ${reason}
+          diagnosis: "${diagnosis}",
+          reason: "${reason}"
         })
         {
           status
@@ -146,5 +146,21 @@ verify(reportID, verification, comment) {
         }
       }`
     })
-  } 
+  }
+  getNNData(id) {
+    return this.apollo.mutate({
+      mutation: gql `mutation {
+        getSingleReport(getSingleReportRequest:{
+          token: "${this.authentication.currentUserValue}",
+          reportID: ${id}
+        })
+        {
+          preDiagnosisProbabilities,
+          preDiagnosisNames
+        }
+      }`
+    }).pipe(map(data => {
+      return data["data"]["getSingleReport"]
+    }))
+  }
 }

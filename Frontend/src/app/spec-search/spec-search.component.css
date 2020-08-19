@@ -116,3 +116,7 @@ mat-toolbar {
   width: 100%;
 }
 
+.mat-row:hover {
+  background-color: lightgrey;
+}
+

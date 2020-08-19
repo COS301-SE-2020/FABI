@@ -75,7 +75,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AccessControlComponent } from './access-control/access-control.component';
 import { MatTableModule } from '@angular/material/table';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { DiagnoseReportComponent } from './diagnose-report/diagnose-report.component';
+import { MatIconModule } from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 
 
 
@@ -89,6 +93,7 @@ import { MatTableModule } from '@angular/material/table';
     RegisterComponent,
     SpecSearchComponent,
     AccessControlComponent,
+    DiagnoseReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +109,7 @@ import { MatTableModule } from '@angular/material/table';
     MatTooltipModule,
     MatButtonModule,
     MatGridListModule,
+    MatListModule,
     HttpModule,
     MatCardModule,
     FormsModule,
@@ -117,7 +123,9 @@ import { MatTableModule } from '@angular/material/table';
     MatToolbarModule,
     FlexLayoutModule,
     MatSidenavModule,
-    
+    MatAutocompleteModule,
+    MatPaginatorModule,
+    MatIconModule,   
 
     // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
     DeviceDetectorModule,

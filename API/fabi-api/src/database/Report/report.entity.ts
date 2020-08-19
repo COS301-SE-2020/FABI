@@ -1,4 +1,5 @@
 import {Column, Entity, PrimaryColumn, Generated} from 'typeorm';
+import { json } from 'sequelize';
 
 @Entity({database:"Reports"})
 class Reports {
@@ -63,6 +64,8 @@ class Reports {
     @Column({nullable:true})
     public comment:string
 
+    @Column({nullable:true})
+    public prediagnosis:string
 
 }
 

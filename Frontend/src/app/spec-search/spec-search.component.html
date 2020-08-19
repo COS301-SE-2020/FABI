@@ -1,6 +1,6 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <div><button mat-button>Back</button></div>
+        <div><button mat-button routerLink="/login">Logout</button></div>
         <h2 class="Title">Diagnostic Reports</h2>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -13,25 +13,33 @@
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Diagnosis</mat-label>
-                <input matInput [(ngModel)]="diagnosis">
+
+                <input type="text" matInput [(ngModel)]="filter.Diagnosis" [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    Suggested option
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
+
             </mat-form-field><br>
             <label>Report Status</label><br>
             <mat-form-field appearance="fill">
                 <mat-label>Choose your option</mat-label>
-                <mat-select [(value)]="status">
+                <mat-select [(value)]="filter.RepStatus">
                     <mat-option *ngFor="let option of options" [value]="option.viewValue">
                         {{option.viewValue}}
                     </mat-option>
                 </mat-select>
             </mat-form-field><br>
-            <label>Distance from position</label><br>
-            <mat-slider min="5" max="50" [(value)]="distance"></mat-slider><br>
+            <label>Distance from position</label><br><br>
+            <mat-slider min="5" max="50" thumbLabel [(value)]="filter.Distance"></mat-slider><br>
             <label for="sleft" class="pull-left">5km</label>
             <label for="sright" class="pull-right">50km</label><br>
             <br>
             <mat-form-field>
                 <label>Affected Area</label><br>
-                <mat-select [(value)]="affectedArea">
+                <mat-select [(value)]="filter.AffectedArea">
                     <mat-option *ngFor="let area of areas" [value]="area.viewValue">
                         {{area.viewValue}}
                     </mat-option>
@@ -42,7 +50,7 @@
     </mat-drawer>
     <mat-drawer-content fxFlex="70" >
         <h2 class="HeadofRight">{{title}}</h2><br>
-        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8">
+        <table mat-table [dataSource]="reports" matSort class="mat-elevation-z8" *ngIf="showFiltered() == 0">
 
             <ng-container matColumnDef="Plant Name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Plant Name </th>
@@ -64,14 +72,41 @@
                 Actions
               </th>
               <td mat-cell *matCellDef="let element">
-                <button type="button" mat-button (click)="viewReport(element.id)">View Report</button>
+                <button type="button" (click)="viewReport(element.ID)" mat-button>View Report</button>
               </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+
+
+          <mat-table [dataSource]="ITdatasource" *ngIf="showFiltered() == 1" class="mat-elevation-z8">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Pname">
+                    <mat-header-cell *matHeaderCellDef> Plant Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="viewReport(element.ID)" style="cursor: pointer;"> {{element.Pname}} </mat-cell>
+                </ng-container>
+
+                <!-- Distance Column -->
+                <ng-container matColumnDef="distance">
+                    <mat-header-cell *matHeaderCellDef> Distance (Km) </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="viewReport(element.ID)" style="cursor: pointer;"> {{element.distance}} </mat-cell>
+                </ng-container>
+
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="viewReport(element.ID)" style="cursor: pointer;"> {{element.date}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="ITdisplayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ITdisplayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [length]="datalength"  (page)="getNearbyReports($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
     </mat-drawer-content>
+    
 </mat-drawer-container>
 
 <mat-divider></mat-divider>

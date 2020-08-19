@@ -58,6 +58,8 @@ type GetSingleReportResponse{
     diagnoser: String
     status: Int!
     date: String
+    preDiagnosisNames:String
+    preDiagnosisProbabilities:String
 }
 
 type Mutation{

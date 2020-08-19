@@ -112,7 +112,7 @@ export class UploadService {
             var bool = await this.reportService.updateVerification(reqObj);
 
             //check if it uploaded correctly
-            if (bool != true) {
+            if (bool == false) {
                 this.res.status = 500;
                 return this.res;
             }

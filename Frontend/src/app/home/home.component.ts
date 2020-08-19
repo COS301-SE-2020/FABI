@@ -5,7 +5,6 @@ import { UserService } from '@/_UMservices/user.service';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { LocationService } from '@/_services/location.service';
 
-import { Report } from '@/_models/report'
 import { ReportDataService } from '@/_services/report-data.service'
 
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -14,6 +13,7 @@ import { Subscription } from 'rxjs';
 
 import * as Styles from '@/MapStyles.json';
 import {PageEvent} from '@angular/material/paginator';
+import { sha256 } from 'js-sha256';
 
 // Material Imports
 
@@ -96,6 +96,7 @@ export class HomeComponent implements AfterViewInit {
 
     DeviceType: String;
     overlaySwitch="none";
+    specialUser=false;
 
     showMobileTable=true;
 
@@ -153,6 +154,7 @@ export class HomeComponent implements AfterViewInit {
         private deviceService: DeviceDetectorService,
         private styleSwitch: ButtonListenerService
     ) {
+        
         this.currentUser = this.authenticationService.currentUserValue;
         this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
             this.currentStyle = data.text;
@@ -160,6 +162,23 @@ export class HomeComponent implements AfterViewInit {
         this.deviceSub = this.styleSwitch.getDevice().subscribe(data => {
             this.DeviceType=data.text;
         });
+        if(JSON.parse(localStorage.getItem("0"))==sha256("special")){
+            this.specialUser=true;
+            if(this.router.getCurrentNavigation().extras.state!=undefined){
+                this.currentMID=this.router.getCurrentNavigation().extras.state.id;
+                localStorage.setItem("CurMID",this.currentMID);
+            }
+            else {
+                this.currentMID=localStorage.getItem("CurMID");
+            }
+            this.showMap=false;
+            
+            this.openDisplay();
+            this.setDisplay(this.currentMID);
+            if(this.DeviceType=="Mobile")this.overlaySwitch="none";
+            this.currentMID=this.currentMID;
+            this.paginatorInit();
+        }
     }
 
     toggleMap(){
@@ -200,7 +219,7 @@ export class HomeComponent implements AfterViewInit {
                 mapTypeControl: true,
                 zoomControl: true
             };
-
+            if(this.gmap==undefined)return;
             this.map = new google.maps.Map(this.gmap.nativeElement,
                 this.mapOptions);
 
@@ -252,10 +271,12 @@ export class HomeComponent implements AfterViewInit {
 
         });
     }
+
     
 
-    ngAfterViewInit(): void {
-        if(this.DeviceType=="Desktop")this.loadMap();
+    ngAfterViewInit(): void {        
+        if(this.authenticationService.currentUserTypeValue==sha256("basic")){
+            if(this.DeviceType=="Desktop")this.loadMap();
         else{
             this.location.getLocation().subscribe(rep => {
 
@@ -263,6 +284,7 @@ export class HomeComponent implements AfterViewInit {
                 this.lng = rep.coords.longitude;
                 this.paginatorInitMobile();            
             });
+        }
             
         }
     }
@@ -460,16 +482,32 @@ export class HomeComponent implements AfterViewInit {
                 thumbImage: this.currentMark['Img3'],
                 title: "Image 3"
             }
-            ]
+            ];
+            this.currentMarkServ.getDiagnosis(this.currentUser,ID).subscribe(data=>{
+                if(data["status"]==201){
+                    this.Diagnosis=true;
+                    this.Diagnose={
+                        diagnosis:data["diagnosis"],
+                        reason:data["reason"]
+                    }
+                }
+                else {
+                    this.Diagnosis=false;
+                }
+            });
 
 
         });
     }
 
     openMap() {
+        if(this.specialUser){
+            this.router.navigate(["/special"]);
+        }
+        else{
         sessionStorage.removeItem("currentMarker");
         this.showMap = true;
-        this.loadMap();
+        this.loadMap();}
     }
     openDisplay() {
         this.showMap = false;
@@ -502,7 +540,6 @@ export class HomeComponent implements AfterViewInit {
             this.markerDetails=this.getCurrentInfo(this.currentMark.form);
 
             this.currentMarkServ.getDiagnosis(this.currentUser,markerID).subscribe(data=>{
-                console.log(data["status"]==201);
                 if(data["status"]==201){
                     this.Diagnosis=true;
                     this.Diagnose={
@@ -532,6 +569,10 @@ export class HomeComponent implements AfterViewInit {
                 styles: (this.mapStyle.Light)
             });
         }
+    }
+
+    DiagnoseReport(){
+        this.router.navigate(["/diagnose"],{state:{id:this.currentMID}});
     }
 
     

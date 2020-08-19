@@ -60,6 +60,7 @@ import { UpdatePathogenComponent } from './_components/pathogen-info/update-path
 import { SpecSearchComponent } from './spec-search/spec-search.component';
 import { UsersComponent } from './_components/users/users.component';
 import { AutomatedComponent } from './_components/automated/automated.component';
+import {DiagnoseReportComponent} from '@/diagnose-report/diagnose-report.component'
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -123,11 +124,7 @@ const routes: Routes = [
         {
             path: 'MapReport',
             component: MapReportComponent
-        }],
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:["basic",'special','admin']
-        }
+        }]
     },
     {
         path: 'special',
@@ -136,6 +133,14 @@ const routes: Routes = [
         data:{
             expectedRole:["special",'admin']
         }
+    },
+    {
+        path: 'diagnose',
+        component: DiagnoseReportComponent,
+        // canActivate: ([AuthGuard]),
+        // data:{
+        //     expectedRole:["special",'admin']
+        // }
     },
     {
         path: 'noaccess',

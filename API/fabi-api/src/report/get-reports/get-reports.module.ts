@@ -32,7 +32,7 @@
 
 
 
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { GetReportsService } from './get-reports.service';
 import { GetReportsResolver } from './get-reports.resolver';
 import { UsersService } from '../../database/Users/users.service';
@@ -43,6 +43,6 @@ import { PopulateTableService } from '../populate-table/populate-table.service';
 
 @Module({
   providers: [GetReportsService, GetReportsResolver,UsersService,ReportService,PopulateTableService],
-  imports: [UsersModule,ReportModule, GetReportsModule]
+  imports: [UsersModule,ReportModule, GetReportsModule,HttpModule]
 })
 export class GetReportsModule {}
