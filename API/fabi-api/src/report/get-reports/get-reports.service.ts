@@ -30,41 +30,359 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { GetReportsResponse, GetReportsRequest } from '../../graphql.schema';
+import { GetReportsResponse, GetReportsRequest, GetSingleReportRequest, GetSingleReportResponse, GetDiagnosis_ReasonResponse, PopTableMobileResponse, GetFilteredReportsRequest } from '../../graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
+import { PopulateTableService } from '../populate-table/populate-table.service';
+import { log } from 'console';
 
 @Injectable()
 export class GetReportsService {
-    // create the return variable
-    res: GetReportsResponse = { reports: "", status: 0 }
+
 
     //define services used within this file
     constructor(
         private userService: UsersService,
         private reportService: ReportService,
+        private populateTableService: PopulateTableService
     ) { }
 
-    async getReports(reqObj: GetReportsRequest): Promise<GetReportsResponse> {
+    async getReports(reqObj: GetReportsRequest): Promise<GetSingleReportResponse[]> {
+
+        // create the return variable
+        var res: GetSingleReportResponse[] = [{ status: 201 }]
+
         const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
         if (result == false) {
             //error code
-            this.res.status = 415;
-
-            return this.res;
+            res[0].status = 415;
+            return res;
         } else {
+
+            //clear array
+            res.pop();
+
             //this will pass upload object to report service that will interact with db
-            let reportString = await this.reportService.getReports(reqObj.latitude, reqObj.longitude);
+            let reportJSON = await this.reportService.getReports(reqObj.latitude, reqObj.longitude);
+
+            //buid diagnosis names
+            var diagnosis = JSON.parse(reportJSON[0].prediagnosis);
+            var diagnosisNames = Object.keys(diagnosis);
+            var diagnosisProbs = Object.values(diagnosis);
+
+            
+            var swapp;
+            var n = diagnosisProbs.length-1;
+
+            //bubble sort cause im dumb
+            do{
+                swapp = false;
+                for (var i=0; i < n; i++)
+                {
+                    if (diagnosisProbs[i] < diagnosisProbs[i+1])
+                    {
+                       var temp2 = diagnosisNames[i]
+                       var temp = diagnosisProbs[i];
+                       diagnosisProbs[i] = diagnosisProbs[i+1];
+                       diagnosisNames[i] = diagnosisNames[i+1];
+                       diagnosisProbs[i+1] = temp;
+                       diagnosisNames[i+1] = temp2;
+                       swapp = true;
+                    }
+                }
+                n--;
+            } while (swapp);
+
+  
+
+            if (Object.keys(reportJSON).length == 0) {
+                return res;
+            }
 
             //Build response object
-            this.res.reports = await reportString.toString();
-            this.res.status = 201;
+
+            for (var i = 0; i < Object.keys(reportJSON).length; i++) {
+                res.push({
+                    status: 201,
+                    Accuracy: reportJSON[i].Accuracy,
+                    Img1: reportJSON[i].IMG1,
+                    Img2: reportJSON[i].IMG2,
+                    Img3: reportJSON[i].IMG3,
+                    ID: reportJSON[i].reportID,
+                    Infliction: reportJSON[i].Infliction,
+                    Lat: reportJSON[i].Lat,
+                    Long: reportJSON[i].Long,
+                    Pname: reportJSON[i].Pname,
+                    NeuralNetRating: reportJSON[i].Pscore,
+                    form: reportJSON[i].form,
+                    userType: reportJSON[i].userType,
+                    preDiagnosisNames:diagnosisNames.toString(),
+                    preDiagnosisProbabilities:diagnosisProbs.toString()
+                })
+            }
 
             //return response Object
-            return this.res;
+            return res;
 
+        }
+    }
+
+    async getDiagnosis_ReasonService(reqObj: GetSingleReportRequest): Promise<GetDiagnosis_ReasonResponse> {
+        var response: GetDiagnosis_ReasonResponse = { status: 500, diagnosis: "a", reason: "a" };
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            response.status = 415;
+
+            return response;
+        } else {
+
+            //this will pass upload object to report service that will interact with db
+            var resFromDb = await this.reportService.getDiagnosisAndReason(reqObj);
+            if (Object.keys(resFromDb).length == 0) {
+                return response;
+            }
+            response.diagnosis = resFromDb[0].CommName;
+            response.reason = resFromDb[0].reason;
+            response.comment = resFromDb[0].comment;
+            response.status = 201;
+
+            return response;
+
+        }
+
+    }
+
+    async getSingleReports(reqObj: GetSingleReportRequest): Promise<GetSingleReportResponse> {
+
+        var response: GetSingleReportResponse = { status: 500 };
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            response.status = 415;
+
+            return response;
+        } else {
+            //this will pass upload object to report service that will interact with db
+            let report = await this.reportService.getSingleReport(reqObj.reportID);
+            
+            //buid diagnosis names
+            var diagnosis = JSON.parse(report[0].prediagnosis);
+            var diagnosisNames = Object.keys(diagnosis);
+            var diagnosisProbs = Object.values(diagnosis);
+
+            
+            var swapp;
+            var n = diagnosisProbs.length-1;
+
+            //bubble sort cause im dumb
+            do {
+                swapp = false;
+                for (var i=0; i < n; i++)
+                {
+                    if (diagnosisProbs[i] < diagnosisProbs[i+1])
+                    {
+                       var temp2 = diagnosisNames[i]
+                       var temp = diagnosisProbs[i];
+                       diagnosisProbs[i] = diagnosisProbs[i+1];
+                       diagnosisNames[i] = diagnosisNames[i+1];
+                       diagnosisProbs[i+1] = temp;
+                       diagnosisNames[i+1] = temp2;
+                       swapp = true;
+                    }
+                }
+                n--;
+            } while (swapp);
+
+
+
+            if (Object.keys(report).length == 0) {
+                return response;
+            }
+
+            //Build response object
+            response.Accuracy = report[0].Accuracy;
+            response.Img1 = report[0].IMG1;
+            response.Img2 = report[0].IMG2;
+            response.Img3 = report[0].IMG3;
+            response.Infliction = report[0].Infliction;
+            response.Lat = report[0].Lat;
+            response.Long = report[0].Long;
+            response.Pname = report[0].Pname;
+            response.NeuralNetRating = report[0].Pscore;
+            response.ID = report[0].reportID;
+            response.userType = report[0].userType;
+            response.form = report[0].form;
+            response.tags = report[0].tags;
+            response.verification = report[0].verification;
+            response.diagnoser = report[0].diagnoser;
+            response.status = 201;
+            response.preDiagnosisNames = diagnosisNames.toString();
+            response.preDiagnosisProbabilities = diagnosisProbs.toString();
+
+            //return response Object
+            return response;
+
+        }
+    }
+
+    //this function handels the mobile GetReports
+    async getReportsMobileService(reqObj: GetReportsRequest): Promise<PopTableMobileResponse[]> {
+        //response object
+        var res: PopTableMobileResponse[] = [{ status: -1, Pname: "/", date: "/", distance: 0.0, ID: -1 }];
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            res[0].status = 415;
+
+            return res;
+        } else {
+            res.pop();
+            //lat 
+            let lat: number = reqObj.latitude;
+
+            //long
+            let long: number = reqObj.longitude;
+
+
+            //get all similar
+            let result = await this.reportService.getReports(lat, long);
+
+            if (Object.keys(result).length == 0) {
+                res[0].status = 500;
+                return res;
+            }
+
+            //create JSON obj
+            // let resultJson = JSON.parse(result.toString());
+
+            //not needed
+            let sortedResults = result;
+
+            //Loop through each key in the JSON obj
+            for (var i = 0; i < Object.keys(sortedResults).length; i++) {
+                //variables created for response object
+                let distance: number;
+                let date: string;
+                let Pname: string;
+                let ID: number;
+
+                //report lat/long
+                let reportLat: number = sortedResults[i].Lat;
+                let reportLong: number = sortedResults[i].Long;
+
+                //calcualate the distance between the reports
+                distance = this.populateTableService.calcDistance(lat, long, reportLat, reportLong);
+                distance = Math.round(distance * 100) / 100
+
+                //create the date as string
+                var temp = result[i].date;
+                date = temp.toString().substr(0, 4);
+                date = date + "-" + temp.toString().substr(4, 2);
+                date = date + "-" + temp.toString().substr(6, 2);
+
+                //create the Pname
+                Pname = sortedResults[i].Pname;
+
+                //set the ID
+                ID = sortedResults[i].reportID;
+
+                //add object to list
+                res.push({ Pname: Pname, date: date, distance: distance, status: 201, ID: ID });
+
+            }
+            //sort result by distance
+            res = res.sort(function (a, b) {
+                return (a.distance) - (b.distance);
+            });
+
+
+
+            //response
+            return res;
+        }
+    }
+
+    async getFilteredReportsService(reqObj: GetFilteredReportsRequest): Promise<GetSingleReportResponse[]> {
+
+        //response object
+        var res: GetSingleReportResponse[] = [{ status: 201 }];
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            //error code
+            res[0].status = 415;
+
+            return res;
+        } else {
+            
+            var resultJSON = await this.reportService.filteredReports(reqObj);
+
+            if(Object.keys(resultJSON).length == 0){
+                res[0].status = 500;
+                return res;
+            }
+            res.pop();
+
+            for (var i = 0; i < Object.keys(resultJSON).length; i++) {
+
+                //variables created for response object
+                let distance: number;
+                let Pname: string;
+                let date: string;
+
+                //report lat/long
+                let reportLat: number = resultJSON[i].Lat;
+                let reportLong: number = resultJSON[i].Long;
+
+                //calcualate the distance between the reports
+                distance = this.populateTableService.calcDistance(reqObj.latitude, reqObj.longitude, reportLat, reportLong);
+                distance = Math.round(distance * 100) / 100;
+
+                //create the date as string
+                var temp = resultJSON[i].date;
+                date = temp.toString().substr(0, 4);
+                date = date + "-" + temp.toString().substr(4, 2);
+                date = date + "-" + temp.toString().substr(6, 2);
+
+                //create the Pname
+                Pname = resultJSON[i].Pname;
+
+                if (distance <= reqObj.distance) {
+                    //add object to list
+                    res.push({
+                        status: 201,
+                        Accuracy: resultJSON[i].Accuracy,
+                        Img1: resultJSON[i].IMG1,
+                        Img2: resultJSON[i].IMG2,
+                        Img3: resultJSON[i].IMG3,
+                        ID: resultJSON[i].reportID,
+                        Infliction: resultJSON[i].Infliction,
+                        Lat: resultJSON[i].Lat,
+                        Long: resultJSON[i].Long,
+                        Pname: resultJSON[i].Pname,
+                        NeuralNetRating: resultJSON[i].Pscore,
+                        form: resultJSON[i].form,
+                        date: date
+                    });
+                }
+
+            }
+
+            return res;
         }
     }
 }

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Reports from './report.entity';
-import { UploadRequest } from '../../graphql.schema';
+import { UploadRequest, PopTableRequest, Upload_Diagnosis_Reason, GetSingleReportRequest, GetDiagnosis_ReasonResponse, UpdateVerificationStatus, GetFilteredReportsRequest } from '../../graphql.schema';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 import { writeFile, unlinkSync } from 'fs';
@@ -13,7 +13,7 @@ import Users from '../Users/Users.entity';
 //Classifications
 const labelsAccepted =
   'Agave,azul,Aloe,Annual plant,Arecales,Banana,Banana family,Borassus,flabellifer,Botany,Cycad,Desert Palm,Fern,Flower,Flowering plant,Flowerpot,Garden,Georgia pine,Grass,Grass family,Groundcover,Herb,Houseplant,Ice plant family,Landscape,Leaf,Palm tree,Paurotis Palm,Paurotis Palm,Perennial plant,Pine,Pine family,Plant,Plant community,red pine,Sabal minor,Sabal palmetto,Saw palmetto,Sedge family,shortstraw pine,Shrub,Subshrub,Sweet grass,Taro,Terrestrial plant,Ti plant,Tree,Vascular plant,White pine,Woody plant,Xanthosoma,Yucca,Zingiberales';
-
+let neuralNetTags:string[] = [];
 //google cloud storage
 const gc = new Storage({
   keyFilename: join(__dirname, '../../../fabi-surveillance-d9f5f1321793.json'),
@@ -38,10 +38,11 @@ export class ReportService {
     @InjectRepository(Reports)
     private ReportsRepository: Repository<Reports>,
     private userService: UsersService,
+    private httpService: HttpService
   ) { }
 
   //Function To get Reports from DB based on location
-  async getReports(lat: number, long: number): Promise<String> {
+  async getReports(lat: number, long: number): Promise<JSON> {
 
   //values for distance calculations (for 50km radius)
     //long +-0,5057
@@ -57,12 +58,18 @@ export class ReportService {
 
 
 
-    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\" FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"date\",prediagnosis FROM public.reports,public.users WHERE \"Long\" BETWEEN " + longRangeNegative + " AND " + longRangePositive +
       " AND " + "\"Lat\" BETWEEN " + latRangeNegative + " AND " + latRangePositive + " AND " + "reports.email = users.\"Email\";");
 
-    console.log(results);
+      return results;
+  }
 
-    return JSON.stringify(results);
+  //Function To get Single report from the DB when given an ID
+  async getSingleReport(ID:number): Promise<JSON>{
+
+    var results = await this.ReportsRepository.query("SELECT \"reportID\",\"IMG1\",\"IMG2\",\"IMG3\",form,\"userType\",\"Long\",\"Lat\",\"Pname\",\"Infliction\",\"Accuracy\",\"Pscore\",\"tags\",\"verification\",\"diagnoser\",prediagnosis FROM public.reports,public.users WHERE reports.email = users.\"Email\" AND \"reportID\" = " + ID +";");
+
+    return results;
   }
 
   //function to Insert a new report into the DB
@@ -152,6 +159,8 @@ export class ReportService {
     const classNum2 = this.classify(img2Name + '.' + img2Format);
     const classNum3 = this.classify(img3Name + '.' + img3Format);
 
+    
+
 
     //value that determines if the images are correct
     let certainty = 0;
@@ -205,7 +214,26 @@ export class ReportService {
     let todayInt: number = parseInt(year + mm + dd);
     console.log("bonfire1");
 
-    //
+    //here im going to create an object that will be sent to neural net 
+    var sendData = {
+      "form": obj.report,
+      "long": obj.Longitude,
+      "lat":obj.Latitude
+    }
+
+    //local neural network 
+    var diag = this.httpService.post("https://neuralnet-hzg6vf4a2a-ez.a.run.app/",sendData);
+
+    diag.subscribe(data =>{
+
+    //neural net response
+    var netResponse = data.data;  
+    netResponse = JSON.stringify(netResponse);
+      
+    //set variables
+    var tags = neuralNetTags.join(",");
+    var diagnoser = "/";// default values for now
+    var verification = "Unverified";// default values for now
     var report = obj.report;
     var long = obj.Longitude;
     var lat = obj.Latitude;
@@ -215,25 +243,106 @@ export class ReportService {
 
 
     //Add to database
-    await this.ReportsRepository.insert({
-      email: email,
-      form: report,
-      IMG1: url1,
-      IMG2: url2,
-      IMG3: url3,
-      Long: long, //must get from obj.report
-      Lat: lat, //must get from obj.report
-      Pscore: certainty,
-      Accuracy: accuracy,
-      Pname: pname, //must get from obj.report
-      Infliction: infliction, //must get from obj.report
-      date:todayInt,
-      diagnosis:2,
-      urgency:10
+    try {
+      this.ReportsRepository.insert({
+        email: email,
+        form: report,
+        IMG1: url1,
+        IMG2: url2,
+        IMG3: url3,
+        Long: long, //must get from obj.report
+        Lat: lat, //must get from obj.report
+        Pscore: certainty,
+        Accuracy: accuracy,
+        Pname: pname, //must get from obj.report
+        Infliction: infliction, //must get from obj.report
+        date:todayInt,
+        diagnosis:-1,
+        urgency:10,
+        tags:tags,
+        verification:verification,
+        diagnoser:diagnoser,
+        prediagnosis:netResponse
+      });
+      return true;
+      
+    } catch (error) {
+      return false;
+      
+    }
     });
 
-    return true;
+    
+    
+
+   
   }
+  //this function will add diagnosis and reason to report in db
+  async update_diagnosis_reason(obj: Upload_Diagnosis_Reason):Promise<boolean>{
+
+    try{
+      //Ouery
+      this.ReportsRepository.query("update reports set diagnosis = (select id from \"Afflictions\" where \"SciName\" like \'"+obj.diagnosis+"\' or \"CommName\" like \'"+obj.diagnosis+"\'), reason = \'"+obj.reason+"\', diagnoser = (select \"Email\" from users where token = \'"+obj.token+"\') where \"reportID\" = "+obj.reportID+" ;");
+      return true;
+    } catch(error){
+      return false;
+      }
+
+    
+  }
+
+  async getDiagnosisAndReason(obj: GetSingleReportRequest): Promise<JSON>{
+
+    var res = "{}";
+
+    try {
+      //Query
+     var result = await this.ReportsRepository.query("select \"CommName\", reason , comment from reports, \"Afflictions\" where id = diagnosis and \"reportID\" = "+obj.reportID+";");  
+     return result;
+    } catch (error) {
+      return JSON.parse(res);
+    }
+  }
+
+  async updateVerification(obj:UpdateVerificationStatus): Promise<boolean>{
+
+    try {
+      //Query
+      this.ReportsRepository.query("update reports set verification = \'"+obj.verification+"\' , comment = \'"+obj.comment+"' where \"reportID\" = "+obj.reportID+" ;");
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async filteredReports(obj:GetFilteredReportsRequest): Promise<JSON>{
+    try {
+    //values for distance calculations (for 50km radius)
+    //long +-0,5057
+    //lat  +-0,453
+
+    let lat:number = obj.latitude;
+    let long:number = obj.longitude;
+
+
+    //Lat ranges
+    let latRangePositive = (lat + 0.453);
+    let latRangeNegative = (lat - 0.453);
+
+    //Long ranges
+    let longRangePositive = (long + 0.5057);
+    let longRangeNegative = (long - 0.5057);
+      //Query
+      var result = this.ReportsRepository.query("select * from reports, \"Afflictions\" where diagnosis = id and (\"CommName\" = \'"+obj.diagnosis+"\' or \"SciName\" = \'"+obj.diagnosis+"\') and verification = \'"+obj.verification+"\' and \"Long\" between "+longRangeNegative+" and "+longRangePositive+" and \"Lat\" between "+latRangeNegative+" and "+latRangePositive+" and form like \'%"+obj.formSearch+"%\';");
+      return result;
+    } catch (error) {
+      var empty = "{}";
+      return JSON.parse(empty);
+    }
+  }
+
+ 
+
 
   //Helper function to generate random salt for token
   makeid(): string {
@@ -247,6 +356,8 @@ export class ReportService {
     return text;
   }
 
+  
+
   //fucntion that Requests google vision API
   async classify(imageName: string): Promise<number> {
     let matchValue = 0;
@@ -254,13 +365,21 @@ export class ReportService {
     const [result] = await client.labelDetection(imageName);
     const labels = result.labelAnnotations;
     labels.forEach((label: { description: string; score: string }) =>
-      values.push(label.description),
+      values.push(label.description)
     );
+
+    
+    
 
     for (let i = 0; i < values.length; i++) {
       if (labelsAccepted.indexOf(values[i]) != -1) {
         matchValue++;
       }
+      //ensure no duplicate tags
+      if(neuralNetTags.indexOf(values[i]) == -1){
+        neuralNetTags.push(values[i]);
+      }
+      
     }
 
     return matchValue;

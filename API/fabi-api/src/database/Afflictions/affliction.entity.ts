@@ -80,3 +80,14 @@ class Afflictions {
 }
 
 export default Afflictions;
+
+
+export class AfflictionsRepositoryFake {
+    public create(): void {}
+    public async save(): Promise<void> {}
+    public async insert(): Promise<void> {}
+    public async remove(): Promise<void> {}
+    public async findOne(): Promise<void> {}
+    public async update(): Promise<void> {}
+    public async query(): Promise<void> {}
+  }

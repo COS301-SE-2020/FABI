@@ -31,7 +31,7 @@
 
 
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import {Admin_Dashboard_request,Admin_Dashboard_response}  from '../../graphql.schema';
+import {Admin_Dashboard_request,Admin_Dashboard_response, Admin_Piechart_response, Admin_Cards_request, Admin_Cards_response}  from '../../graphql.schema';
 import { AdminDashboardService } from './admin-dashboard.service';
 
 @Resolver('AdminDashboard')
@@ -60,4 +60,23 @@ export class AdminDashboardResolver {
 
         return this.getAdminDashboardService.getTableInfo_Service(reqObj);
     }
+
+    //This is the mutation that is exposed to the front-end 
+    @Mutation('get_PieChartInfo')
+    async get_PieChartInfo(@Args('request') reqObj: Admin_Dashboard_request) : Promise<Admin_Piechart_response[]>{
+        
+        
+        //Pass our request to service which will validate token and build response
+        return this.getAdminDashboardService.getPiechartInfo_Service(reqObj);
+    }
+
+    //This is the mutation that is exposed to the front-end 
+    @Mutation('get_CardsInfo')
+    async get_CardsInfo(@Args('request') reqObj: Admin_Cards_request) : Promise<Admin_Cards_response[]>{
+        
+        //Pass our request to service which will validate token and build response
+        return this.getAdminDashboardService.get_CardsInfo_Service(reqObj);
+    }
+
+
 }

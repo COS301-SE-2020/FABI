@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { AdminDashboardService } from './admin-dashboard/admin-dashboard.service';
 import { UsersService } from '../database/Users/users.service';
 import { UsersModule } from '../database/Users/Users.module';
@@ -9,6 +9,6 @@ import { AdminDashboardResolver } from './admin-dashboard/admin-dashboard.resolv
 
 @Module({
   providers: [AdminDashboardService,UsersService,GetAdminDashService,ReportService,AdminDashboardResolver],
-  imports: [UsersModule,AdminDashboardModule]
+  imports: [UsersModule,AdminDashboardModule,HttpModule]
 })
 export class DashboardModule {}

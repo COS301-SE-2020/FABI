@@ -32,7 +32,7 @@
 
 
 
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { UploadService } from './upload.service';
 import { UsersModule } from '../../database/Users/Users.module';
 import { UploadResolver } from './upload.resolver';
@@ -44,6 +44,6 @@ import { GetReportsModule } from '../get-reports/get-reports.module';
 
 @Module({
   providers: [UploadService,UploadResolver,UsersService,ReportService],
-  imports: [UsersModule,ReportModule, GetReportsModule]
+  imports: [UsersModule,ReportModule, GetReportsModule,HttpModule]
 })
 export class UploadModule {}

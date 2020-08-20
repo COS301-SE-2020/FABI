@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from '../src/database/Users/users.service';
+import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import Users, { UsersRepositoryFake } from '../src/database/Users/Users.entity';
+import Users, { UsersRepositoryFake } from './Users.entity';
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 
@@ -83,7 +83,7 @@ describe('UsersService', () => {
 
   });
 
-  describe('Create User', () => {
+ describe('Create User', () => {
     it('Create User Correctly', async () => {
 
       const testEmail = "test@test.com";
@@ -94,7 +94,7 @@ describe('UsersService', () => {
         userType: "testType",
         surname: "testSur",
         token:   "testToken",
-        assword: "testpw",
+        password: "testpw",
       });
 
 

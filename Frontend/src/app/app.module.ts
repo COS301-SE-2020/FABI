@@ -34,38 +34,66 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BasicModule } from './_layouts/basic/basic.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/fake-backend';
-import { WebcamModule } from 'ngx-webcam';
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
 import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
-import { FormsModule } from '@angular/forms';
 import { Http, HttpModule, Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './_layouts/admin/admin.module';
-import { BasicModule } from './_layouts/basic/basic.module';
+import { SpecSearchComponent } from './spec-search/spec-search.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {HomeModule} from './home/home.module';
+
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from "@angular/material/button";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatCardModule } from "@angular/material/card";
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { AccessControlComponent } from './access-control/access-control.component';
+import { MatTableModule } from '@angular/material/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { DiagnoseReportComponent } from './diagnose-report/diagnose-report.component';
+import { MatIconModule } from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+
+
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     RegisterComponent,
-    DiagReportComponent,
-    MapReportComponent,
+    SpecSearchComponent,
+    AccessControlComponent,
+    DiagnoseReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,12 +101,36 @@ import { BasicModule } from './_layouts/basic/basic.module';
     BasicModule,
     HttpClientModule,
     appRoutingModule,
-    FormsModule,
     GraphQLModule,
-    WebcamModule,
     HttpModule,
     BrowserAnimationsModule,
-    AdminModule
+    AdminModule,
+    HomeModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatListModule,
+    HttpModule,
+    MatCardModule,
+    FormsModule,
+    RouterModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatTableModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatToolbarModule,
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatAutocompleteModule,
+    MatPaginatorModule,
+    MatIconModule,   
+
+    // Used to find what device is being used. Found: https://www.npmjs.com/package/ngx-device-detector
+    DeviceDetectorModule,
+
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

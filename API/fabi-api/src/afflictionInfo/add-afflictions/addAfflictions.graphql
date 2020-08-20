@@ -1,0 +1,23 @@
+input Add_Affliction_Request {
+    type: String!
+    commName: String!
+    scienceName: String!
+    plant: String!
+    distribution: String!
+    status: String!  
+    description: String!
+    symptoms: String!
+    management: String!
+    img1: String!
+    img2: String!
+    img3: String!
+    token: String!
+}
+
+type Add_Affliction_Response{
+    status: Int
+}
+
+type Mutation{
+    addAffliction(request:Add_Affliction_Request):Add_Affliction_Response
+}

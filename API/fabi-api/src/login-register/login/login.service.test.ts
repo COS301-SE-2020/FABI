@@ -2,10 +2,12 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import  Users, {UsersRepositoryFake } from '../src/database/Users/Users.entity';
-import { LoginService } from '../src/login-register/login/login.service';
-import { LoginRequest, LoginResponse } from '../src/graphql.schema';
-import { UsersService } from '../src/database/Users/users.service';
+import  Users, {UsersRepositoryFake } from '../../database/Users/Users.entity';
+import { LoginService } from './login.service';
+import { LoginRequest, LoginResponse } from '../../graphql.schema';
+import { UsersService } from '../../database/Users/users.service';
+import { create } from 'domain';
+import { createHmac } from 'crypto';
 
 
 
@@ -71,7 +73,7 @@ describe('LoginService', () => {
         testLoginReq.password = "";
 
         let testLoginRes = new LoginResponse;
-  
+        
 
         const UserServiceGetByEmailSpy = jest
         .spyOn(usersService, 'getUsersbyEmail')
@@ -87,10 +89,10 @@ describe('LoginService', () => {
       it(' Right Login', async () => {
 
         const testEmail = "test@test.com";
-
+        const testPassword = createHmac("sha512",("1234")).digest('hex');
         const testObject = Object({
           Email: testEmail,
-          Password:  "1234",
+          Password:  testPassword,
           userType: "testUser",
         }
         )

@@ -1,4 +1,5 @@
 import {Column, Entity, PrimaryColumn, Generated} from 'typeorm';
+import { json } from 'sequelize';
 
 @Entity({database:"Reports"})
 class Reports {
@@ -48,7 +49,34 @@ class Reports {
     @Column({nullable:true})
     public diagnosis: number;
 
+    @Column({nullable:true})
+    public diagnoser:string
+
+    @Column({nullable:true})
+    public verification:string
+
+    @Column({nullable:true})
+    public tags:string
+
+    @Column({nullable:true})
+    public reason:string
+
+    @Column({nullable:true})
+    public comment:string
+
+    @Column({nullable:true})
+    public prediagnosis:string
 
 }
 
 export default Reports;
+
+export class ReportRepositoryFake {
+    public create(): void {}
+    public async save(): Promise<void> {}
+    public async insert(): Promise<void> {}
+    public async remove(): Promise<void> {}
+    public async findOne(): Promise<void> {}
+    public async update(): Promise<void> {}
+    public async query(): Promise<void> {}
+  }

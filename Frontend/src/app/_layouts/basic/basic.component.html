@@ -1,14 +1,8 @@
-<div style="background-image: url(https://wallpaperplay.com/walls/full/1/6/f/141477.jpg);height: 100%;">
-    <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-        <div class="navbar-nav ">
-            <a class="nav-item nav-link" routerLink="/basic">Home</a>
-            <a class="nav-item nav-link" (click)="logout()">Logout</a>
-        </div>
-    </nav>
+<div fxFlexFill fxLayout="column">
+    <app-header></app-header>
+    <div fxFlex [style.background-color]="currentStyle=='Dark'?'#1d1d47':'#66a6ff'">
     <br>
-    <div class="container" style="align-self: center;background-color: darkgray;">
-        <br>
         <router-outlet></router-outlet>
-        <br><br>
     </div>
+    <app-footer class="unselectable" *ngIf="basicUser"></app-footer>
 </div>

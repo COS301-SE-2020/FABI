@@ -33,35 +33,94 @@
 
 
 import { Injectable } from '@nestjs/common';
-import { UploadResponse, UploadRequest } from 'src/graphql.schema';
+import { UploadResponse, UploadRequest, Upload_Diagnosis_Reason, UpdateVerificationStatus } from 'src/graphql.schema';
 import { UsersService } from '../../database/Users/users.service';
 import { ReportService } from '../../database/Report/report.service';
 
 @Injectable()
 export class UploadService {
     //Define the return object
-    res: UploadResponse = {status:0}
+    res: UploadResponse = { status: 0 }
 
     //define services used in this service
     constructor(
         private userService: UsersService,
-        private reportService : ReportService,
-    ){}
+        private reportService: ReportService,
+    ) { }
 
     //This function will validate our token and send data to the respective service
-    async upload(reqObj:UploadRequest):Promise<UploadResponse>{
-        const result = await this.userService.validateToken(reqObj.token).then(function(result){
+    async upload(reqObj: UploadRequest): Promise<UploadResponse> {
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
             return result;
         })
-        if(result==false){
+        if (result == false) {
             this.res.status = 415;
             return this.res;
-        }else{
+        } else {
             //this will pass upload object to report service that will interact with db
-            this.reportService.InsertReport(reqObj);
+            var bool = await this.reportService.InsertReport(reqObj);
+
+            //check if it uploaded correctly
+            if (bool != true) {
+                this.res.status = 500;
+                return this.res;
+            }
+
             this.res.status = 201;
             return this.res;
+
+
+
         }
-        
+
+    }
+    //This function will validate our token and send data to the respective service
+    async upload_Diagnosis_Reason(reqObj: Upload_Diagnosis_Reason): Promise<UploadResponse> {
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            this.res.status = 415;
+            return this.res;
+        } else {
+            //this will pass upload object to report service that will interact with db
+            var bool = await this.reportService.update_diagnosis_reason(reqObj)
+
+            //check if it uploaded correctly
+            if (bool != true) {
+                this.res.status = 500;
+                return this.res;
+            }
+
+            this.res.status = 201;
+            return this.res;
+
+        }
+    }
+    //This function will validate our token and send data to the respective service
+    async updateVerificationStatusService(reqObj: UpdateVerificationStatus): Promise<UploadResponse> {
+
+        const result = await this.userService.validateToken(reqObj.token).then(function (result) {
+            return result;
+        })
+        if (result == false) {
+            this.res.status = 415;
+            return this.res;
+        } else {
+            //this will pass upload object to report service that will interact with db
+            var bool = await this.reportService.updateVerification(reqObj);
+
+            //check if it uploaded correctly
+            if (bool == false) {
+                this.res.status = 500;
+                return this.res;
+            }
+
+            this.res.status = 201;
+            return this.res;
+
+        }
+
     }
 }

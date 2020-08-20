@@ -1,16 +1,23 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject, Observable} from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '@/_models/user';
+import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 
-import { AuthenticationService } from '@/_services/authentication.service';
+import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { ReportDataService } from '@/_services/report-data.service'
 
 import {Report_Questions} from "@/_models/Questions"
-
 import { LocationService } from '@/_services/location.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+
+
+
+export interface Questions{
+  Question: string;
+  Answer: string;
+}
 
 @Component({
   selector: 'app-diag-report',
@@ -20,41 +27,90 @@ import { LocationService } from '@/_services/location.service';
 export class DiagReportComponent implements OnInit {
 
   // Model
+  // Steven Debug stuff
+  public submitButtonText: string = "Submit";
+  public submitButtonPressed: Boolean = false;
 
   Answers=new Report_Questions;
-  
-
-  // TODO: Cleanup
   public enterImage:Boolean=false;
   public currentUser: User;
   public submitted = false;
   public today : number = Date.now();
-  public Lat:any;
-  public Long:any;
-  public Acc:any;
-
   public Images:Array<any>=[];
   public ImageDataCount:number=0;
+  public device=sessionStorage.getItem("DeviceType");
 
   public selectedValue: string = '';
 
   constructor(
     private authenticationService: AuthenticationService,
+    public deviceService: DeviceDetectorService,
     private formBuilder: FormBuilder, 
     private location : LocationService, 
-    private router: Router,    
+    private router: Router,
     private Report: ReportDataService) {
       this.currentUser = this.authenticationService.currentUserValue;
     
    }
-   // new 01/07/2020
+   
+  //  Answers
+  responses : Array<Questions>=[
+    {
+      Question:"Common name",
+      Answer:""
+    },
+    {
+      Question:"Scientific Name",
+      Answer:""
+    },
+    {
+      Question:"Cultivar",
+      Answer:""
+    },
+    {
+      Question:"Where do you see the Pest/Disease on the plant?",
+      Answer:""
+    },
+    {
+      Question:"Do you know what Pest/Disease is affecting the plant?",
+      Answer:""
+    },
+    {
+      Question:"What is its scientific or common name?",
+      Answer:""
+    },
+    {
+      Question:"How many plants are affected?",
+      Answer:""
+    },
+    {
+      Question:"What percentage of this plant type is affected?",
+      Answer:""
+    },
+    {
+      Question:"Are you experiencing a drought?",
+      Answer:""
+    },
+    {
+      Question:"Have you experienced above average precipitation?",
+      Answer:""
+    },
+    {
+      Question:"Any other climatic conditions worth specifying?",
+      Answer:""
+    },
+    {
+      Question:"Other climatic conditions",
+      Answer:""
+    },
+  ];
 
    ImageData = new FormGroup({
         Description:new FormControl('')
    });
 
    setImageData(){
-      this.Answers.Images["Image"+this.Images.length]=this.Images[this.Images.length-1].src;
+      this.Answers["Img"+(this.Images.length)]=this.Images[this.Images.length-1].src;
       this.enterImage=false;
       this.ImageData.reset();
       this.ImageDataCount++;
@@ -62,111 +118,149 @@ export class DiagReportComponent implements OnInit {
 
    clearImages(){
      this.ImageDataCount=0;
-     this.Answers.Images={};
+     this.Answers.Img1="";
+     this.Answers.Img2="";
+     this.Answers.Img3="";
      this.Images=[];
    }
    
 
+   
    PorD_Selected:Boolean;
    PorD_Options: Array<string> = ["Pest","Disease"];
    YNOptions: any=["Yes","No"];
    MultiOptions: any=["One","More than one"];
-    PestOrDiseases = new FormGroup({
-      PorD : new FormControl('')
+   PlantOptions= ["Common name","Scientific name"];
+
+    
+
+    Questionnaire = this.formBuilder.group({
+      knownNames:[''],
+      Question1: ['Unknown',Validators.required],
+      Question2: ['Unknown',Validators.required],
+      Question3: ['Unknown'],
+      PestOrDiseases:['',Validators.required],
+      Question4: ['',Validators.required],
+      Question5: ['',Validators.required],
+      Question6: ['Unknown',Validators.required],
+      Question7: ['Unknown',Validators.required],
+      Question8: ['Unknown',Validators.required],
+      Question9: ['',Validators.required],
+      Question10: ['',Validators.required],
+      Question11: ['',Validators.required],
+      Question12: ['Unknown'],
     });
+    
 
-  Plant = new FormGroup({
-    Question1: new FormControl(''),
-    Question2: new FormControl(''),
-    Question3: new FormControl(''),
-  });
+    Question4_Options: any = ["Root","Stem","Branch","Leaf / Leaves","Flowers"];
+    Question5_Options: any={
+      Pests:[
+        "Deodar weevil",
+        "Bronze bug",
+        "Eucalyptus weevil/snout beetle",
+        "Wattle bagworm",
+        "Sirex woodwasp",
+        "Bluegum chalcid",
+        "Wattle mirid",
+        "Cossid moth/Quince borer",
+        "Shell lerp psyllid",
+        "Eucalyptus gall wasp",
+        "Red gum lerp psyllid",
+        "Other"
+      ],
+      Diseases:[
+        "Eucalyptus/guava/myrtle rust pathogen",
+        "Chrysoporthe canker",
+        "Kirramyces stem canker ",
+        "Leaf blotch",
+        "Pitch canker",
+        "Wattle rust",
+        "Ceratocystis wattle wilt",
+        "Botryosphaeriaceae canker",
+        "Armillaria root rot",
+        "Phytophthora root rot",
+        "Other"
+      ]
+    }
 
-  PorD_Questions = new FormGroup({
-    Question4: new FormControl(''),
-    Question5: new FormControl(''),
-    Question6: new FormControl(''),
-    Question7: new FormControl(''),
-    Question8: new FormControl(''),
-  });
-  Question4_Options: any = ["Root","Stem","Branch","Leaf / Leaves","Flowers"];
-
-  Climate_Questions = new FormGroup({
-    Question9: new FormControl(''),
-    Question10: new FormControl(''),
-    Question11_a: new FormControl(''),
-    Question11_b: new FormControl(''),
-  });
-
-  QuestionDesc : Array<string> = [
-    "Common name",
-    "Scientific Name",
-    "Cultivar",
-    "Where do you see the Pest/Disease on the plant?",
-    "Do you know what Pest/Disease is affecting the plant?",
-    "What is its scientific or common name?",
-    "How many plants are affected?",
-    "What percentage of plants are affected?",
-    "Are you experiencing a drought?",
-    "Have you experienced above average precipitation?",
-    "Any other climatic conditions worth specifying?",
-    "Other climatic conditions",
-    ];
-
-  changeType(){
-    this.PorD_Selected=true;
-    this.Answers.Questions["Pest Or Disease"]=this.PestOrDiseases.value["PorD"];
+  getErrorMessage(Question){
+    switch (Question) {
+      case "Question1":
+        return "Unselect 'Common name' if you don\'t know this."
+      case "Question2":
+        return "Unselect 'Scientific name' if you don\'t know this."
+      case "Question3":
+        return "."
+    }
   }
-  change(question,e){
-    this.Answers.Questions[this.QuestionDesc[question-1]]=e.target.value;
+
+  getSelected(options,option){
+    for(var i=0;i<options.length;i++){
+      if(options[i].value==option)return true;
+    }
+    return false;
   }
-  toStr(object){
-    var string:String="";
-    this.QuestionDesc.forEach(element => {
-      string+=element+","+object[element]+",";
+
+  isSelected(Qnumber,option){
+    let response = this.Questionnaire.controls["Question"+Qnumber].value;
+    if(response==option)return true;
+    return false;
+  }
+
+ 
+  onSubmit(){
+    // TEMPORARY VALUE FOR TESTING
+    this.submitButtonPressed = true;
+    this.submitButtonText = "Processing";
+    // Add error checking on bootstrap (Empty fields etc)
+    var i=1;
+    this.responses.forEach(element=>{
+      element.Answer=this.Questionnaire.controls["Question"+(i++)].value
     });
+    this.Answers.infliction=this.Questionnaire.controls["PestOrDiseases"].value;
+    if(this.Questionnaire.controls["Question1"].value!="Unknown"){
+      this.Answers.plant=this.Questionnaire.controls["Question1"].value;
+    }
+    else {
+      this.Answers.plant=this.Questionnaire.controls["Question2"].value;
+    }
+    this.Answers.report=this.createJSONstring(this.responses);
+    this.Report.sendReport(
+      this.currentUser,
+      this.Answers.report,
+      this.Answers.Img1,
+      this.Answers.Img2,
+      this.Answers.Img3,
+      this.Answers.long,
+      this.Answers.lat,
+      this.Answers.acc,
+      this.Answers.plant,
+      this.Answers.infliction).subscribe(data => {
+        console.log(data);
+        this.submitted = true;
+        if (data["upload"]["status"] != 201)
+          this.submitButtonText = "Failed";
+          
+        this.router.navigate(["/basic"]);
+
+        // MOBILE debugging
+        //this.downloadString(JSON.stringify(data)+"\n"+JSON.stringify(this.Answers));
+      });
+
+      
+
+    
+  }
+
+  createJSONstring(arr:Array<Questions>){
+    var string="";
+    arr.forEach(element => {
+      string+=element.Question+"x2C"+element.Answer+"x2C";
+    });
+    string.substring(0,string.length-3);
     return string;
   }
-  
-  onSubmit(){
-    this.Answers.UserToken=this.currentUser;
-    if(this.Plant.get("Question1").value!="")this.Answers.Questions["Common name"]=this.Plant.get("Question1").value;
-    if(this.Plant.get("Question2").value!="")this.Answers.Questions["Scientific Name"]=this.Plant.get("Question2").value;
-    if(this.Plant.get("Question3").value!="")this.Answers.Questions["Cultivar"]=this.Plant.get("Question3").value;
-    if(this.Answers.Questions["Do you know what Pest/Disease is affecting the plant?"]=="Yes"){
-      this.Answers.Questions["What is its scientific or common name?"]=this.PorD_Questions.get("Question6").value;
-    }
-    if(this.Answers.Questions["How many plants are affected?"]=="Yes"){
-      this.Answers.Questions["What percentage of plants are affected?"]=this.PorD_Questions.get("Question8").value;
-    }
-    if(this.Answers.Questions["Any other climatic conditions worth specifying?"]=="Yes"){
-      this.Answers.Questions["Other climatic conditions"]=this.Climate_Questions.get("Question11_b").value;
-    }
 
-    this.Answers.Questions["UserToken"]=this.Answers.UserToken;
-    this.Report.sendReport(this.Answers.UserToken,this.toStr(this.Answers.Questions),this.Answers.Images["Image1"],this.Answers.Images["Image2"],this.Answers.Images["Image3"],this.Answers.Questions["Longitude"],
-    this.Answers.Questions["Latitude"],this.Answers.Questions["Accuracy"],this.Answers.Questions["Common name"],this.Answers.Questions["Pest Or Disease"],).subscribe(data=>{
-      console.log(data);
-    });
-
-
-
-    // Debug - Download the JSON file
-    //this.download(this.toJSON(this.Answers));
-
-    this.submitted = true;
-    this.router.navigate(["/basic"]);
-  }
-
-  
-
-  toJSON(object){
-      return {
-        "Location":object.Location,
-        "UserToken":object.UserToken,
-        "Questions":object.Questions,
-        "Images":object.Images
-      };
-  }
 
   onCancel(){
     this.submitted = false;
@@ -175,7 +269,7 @@ export class DiagReportComponent implements OnInit {
 
   // toggle webcam on/off
   public toggleImageData=false;
-  public showWebcam = false;
+  public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
   public deviceId: string;
@@ -194,30 +288,33 @@ export class DiagReportComponent implements OnInit {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
   ngOnInit(): void {
+
     WebcamUtil.getAvailableVideoInputs()
     .then((mediaDevices: MediaDeviceInfo[]) => {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
     });
     this.location.getLocation().subscribe(rep=>{
-      this.Answers.Questions["Latitude"]=rep.coords.latitude;
-      this.Answers.Questions["Longitude"]=rep.coords.longitude;
-      this.Answers.Questions["Accuracy"]=rep.coords.accuracy;
-
-      this.Lat=(rep.coords.latitude).toPrecision(4);
-      this.Long=(rep.coords.longitude).toPrecision(4);
-      this.Lat=(this.Lat<0?0-this.Lat+" S":this.Lat+" N")
-      this.Long=(this.Long<0?0-this.Long+" E":this.Long+" W")
+      this.Answers.lat=rep.coords.latitude;
+      this.Answers.long=rep.coords.longitude;
+      this.Answers.acc=rep.coords.accuracy;
     });
 }
+
+setImage(ev){
+  var reader = new FileReader();
+   reader.readAsDataURL(ev.target.files[ev.target.files.length-1]);
+    this.Images.push(reader.result);
+}
+
+
 
 
 public triggerSnapshot(): void {
   this.trigger.next();
+  
 }
 
-public toggleWebcam(): void {
-  this.showWebcam = !this.showWebcam;
-}
+
 
 public handleInitError(error: WebcamInitError): void {
   this.errors.push(error);
@@ -234,6 +331,7 @@ public handleImage(webcamImage: WebcamImage): void {
   var image = new Image();
   image.src = webcamImage.imageAsDataUrl;
   this.Images.push(image);
+  
 
   this.webcamImage = webcamImage;
 }
@@ -248,6 +346,20 @@ public get triggerObservable(): Observable<void> {
 
 public get nextWebcamObservable(): Observable<boolean|string> {
   return this.nextWebcam.asObservable();
+}
+
+downloadString(text) {
+  var blob = new Blob([text], { type: "text/plain" });
+
+  var a = document.createElement('a');
+  a.download = "Stuff";
+  a.href = URL.createObjectURL(blob);
+  a.dataset.downloadurl = ["text/plain", a.download, a.href].join(':');
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);
 }
 
 }

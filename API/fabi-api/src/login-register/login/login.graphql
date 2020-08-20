@@ -1,8 +1,6 @@
 type LoginResponse {
-    email: String!
     token: String!
     status: Int!
-    Usertype: String!
 }
 
 input LoginRequest {
@@ -12,8 +10,4 @@ input LoginRequest {
 
 type Mutation{
     login(request:LoginRequest):LoginResponse!
-}
-
-type Query {
-  dummy: String
 }

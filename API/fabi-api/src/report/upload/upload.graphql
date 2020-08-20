@@ -1,23 +1,44 @@
 input UploadRequest {
     token:String!
+    Urgency: Int
     report:String
-    Latitude: Float!
-    Longitude: Float!
-    Accuracy: Int!
-    Pname: String!
-    Infliction:String!
-    Img1:String!
-    Img2:String!
-    Img3:String!
+    Latitude: Float
+    Longitude: Float
+    Accuracy: Int
+    Pname: String
+    Infliction:String
+    Img1:String
+    Img2:String
+    Img3:String
+    
 }
+
+input Upload_Diagnosis_Reason{
+    token: String!
+    reportID: Int!
+    diagnosis: String!
+    reason: String!
+}
+
+input UpdateVerificationStatus{
+    token: String!
+    reportID:Int!
+    verification: String!
+    comment: String!
+}
+
+
 type UploadResponse{
     status: Int!
 }
 
 type Mutation{
     upload(upload:UploadRequest):UploadResponse!
+    uploadDiagnosis_Reason(upload:Upload_Diagnosis_Reason):UploadResponse!
+    updateVerificationStatus(upload:UpdateVerificationStatus):UploadResponse!
 }
 
 type Query {
   dummy: String
 }
+
