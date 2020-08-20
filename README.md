@@ -94,6 +94,8 @@ Please find all appropriate documentation below
 
 - [User Manual](https://drive.google.com/file/d/1xjXP-E-hgNv_y6v0DLQFvcEbPjD--MJk/view?usp=sharing)
 
+- [Technical Installation Document](https://drive.google.com/file/d/1Sx0zdwrcnh7YFlgIP1iM9_UTM5XJdi0m/view?usp=sharing)
+
 ## Project Management Tool
 
 Our team is using [Notion](https://www.notion.so/runtimeterrors/aca58d2e5d20454fafed42295c2c58dd?v=dde4028656ba4818b7682ed048cd425c) and GitHub Projects to monitor and manage our development. In future we would like to integrate our PM Tool with GitHub for easier access.
