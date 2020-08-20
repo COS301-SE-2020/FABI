@@ -27,7 +27,7 @@ export class FooterComponent implements OnInit {
   toggleDevice() {
     this.DeviceType = this.DeviceType=="Desktop" ? "Mobile" : "Desktop";
     sessionStorage.setItem("DeviceType", this.DeviceType);
-    location.reload();
+    this.router.navigate(["/basic"]);
   }
 
 }

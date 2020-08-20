@@ -21,7 +21,7 @@ export class BasicComponent implements OnInit {
   currentStyle="Dark";
   styleSub: Subscription;
   deviceSub:Subscription;
-  specialUser:boolean;
+  basicUser:boolean;
 
   constructor(
     private router: Router,
@@ -29,7 +29,7 @@ export class BasicComponent implements OnInit {
     private deviceService: DeviceDetectorService,
     private styleSwitch: ButtonListenerService
   ) {
-    this.specialUser=this.authenticationService.currentUserTypeValue==sha256("special");
+    this.basicUser=this.authenticationService.currentUserTypeValue==sha256("basic");
     
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.styleSub = this.styleSwitch.getStyle().subscribe(data => {
