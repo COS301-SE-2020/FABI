@@ -92,7 +92,7 @@ Please find all appropriate documentation below
 
 - [Coding Standards](https://www.overleaf.com/read/yrpxbnszxygv)
 
-- [User Manual]()
+- [User Manual](https://drive.google.com/file/d/1xjXP-E-hgNv_y6v0DLQFvcEbPjD--MJk/view?usp=sharing)
 
 ## Project Management Tool
 
@@ -105,7 +105,7 @@ Our team is using [Notion](https://www.notion.so/runtimeterrors/aca58d2e5d20454f
 | [Steven Jordaan]() | [Bradley Mapstone]() | [Shaun Naude]() | [Matthew Kershaw]() | [Daniel Nel]() |
 | :---: |:---:| :---:| :---:| :---:|
 | [![Steven Jordaan](https://avatars2.githubusercontent.com/u/50364770?s=400&u=fc71708e5f1b450bbc8895c133d9ac50ae5c3838&v=4&s=200)]()    | [![Bradley Mapstone](https://avatars1.githubusercontent.com/u/56454573?s=400&u=b3edd9887578d8a29dcb467cc296f3ac05d43d05&v=4&s=200)]() | [![Shaun Naude](https://avatars1.githubusercontent.com/u/44646417?s=400&u=988e26f57a2785a279c93e992838db03382c7d7e&v=4&s=200)](http://fvcproductions.com)  | [![Matthew Kershaw](https://avatars1.githubusercontent.com/u/54933104?s=400&v=4&s=200)]()  | [![Daniel Nel](https://avatars0.githubusercontent.com/u/40039774?s=400&u=dfacc43e5d1cb9a50ccd5493008f41d1cca5ea65&v=4&s=200)]()  |
-| [Portfolio](https://sj-jordaan.github.io/) | [Portfolio](https://bradez-of-map-n-stone.github.io/) | [Portfolio](https://shaunnaude.github.io/) | [Portfolio](https://mattyk-dev.github.io/) | [Portfolio](https://danienel21.github.io/) |
+| [Portfolio](https://sj-jordaan.github.io/) | [Portfolio](https://bradez-of-map-n-stone.github.io/) | [Portfolio](https://shaunnaude.github.io/) | [Portfolio](https://mattyk-dev.github.io/) | [Portfolio](https://mdnel.tech/) |
 
 ### Steven Jordaan
 
