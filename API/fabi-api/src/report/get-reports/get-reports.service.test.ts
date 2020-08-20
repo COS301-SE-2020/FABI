@@ -150,6 +150,7 @@ describe('GetReportsService', () => {
           date: 112233,
           urgency: 1,
           diagnosis: 1,
+          prediagnosis: "awe",
         }
         )
 
@@ -202,6 +203,7 @@ describe('GetReportsService', () => {
           date: 112233,
           urgency: 1,
           diagnosis: 1,
+          prediagnosis: "awe",
         }
         )
 
@@ -222,7 +224,8 @@ describe('GetReportsService', () => {
           date: 112233,
           urgency: 1,
           diagnosis: 1,
-        },
+          prediagnosis: '{ "test":"test"}',
+        }
         ]
         )
 
@@ -239,7 +242,7 @@ describe('GetReportsService', () => {
 
         const spyReportService2 = jest
         .spyOn(reportService, 'getSingleReport')
-        .mockResolvedValue(testObject);
+        .mockResolvedValue(testObject2);
 
 
         const spyUserService = jest
@@ -328,7 +331,8 @@ describe('GetReportsService', () => {
           date: 112233,
           urgency: 1,
           diagnosis: 1,
-        },
+          prediagnosis: '{ "test":"test"}',
+        }
         ]
         )
 
