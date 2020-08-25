@@ -59,6 +59,10 @@ export class AuthGuard implements CanActivate {
             }
         }
 
+        else {
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        }
+
         if(currentUserType!=null){
             for(var i=0;i<route.data.expectedRole.length;i++){
                 if (currentUser&&currentUserType==sha256(route.data.expectedRole[i])) {
@@ -71,11 +75,13 @@ export class AuthGuard implements CanActivate {
             return false;
             
         }
+        else{
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        }
         
 
 
         // Not logged in so redirect to login page with the return url
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        
         return false;
-    }
 }
