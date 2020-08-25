@@ -161,6 +161,7 @@ export class HomeComponent implements AfterViewInit {
         });
         this.deviceSub = this.styleSwitch.getDevice().subscribe(data => {
             this.DeviceType=data.text;
+            this.ngAfterViewInit();            
         });
         if(JSON.parse(localStorage.getItem("0"))==sha256("special")){
             this.specialUser=true;
