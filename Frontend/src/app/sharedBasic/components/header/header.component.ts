@@ -13,7 +13,7 @@ import { style } from '@angular/animations';
 export class HeaderComponent implements OnInit {
 
   currentUser: User;
-  DeviceType = sessionStorage.getItem("DeviceType");
+  userType = "Undecided"
   curStyle = "Dark";
   colour=this.curStyle=="Dark"?"white":"black";
   navStyles={"Dark":"navbar-dark bg-dark","Light":"navbar-light bg-light"};
@@ -31,6 +31,10 @@ export class HeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
+      this.userType=data;
+    });
+    
   }
 
   logout() {
@@ -39,9 +43,8 @@ export class HeaderComponent implements OnInit {
   }
 
   home(){
-    this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
-      this.router.navigate(["/"+data]);
-    });
+    if(this.userType=="Undecided")this.router.navigate(["/basic"]);
+    this.router.navigate(["/"+this.userType]);
   }
 
 
