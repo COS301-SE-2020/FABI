@@ -37,7 +37,6 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 
 // Service imports
 import { AuthenticationService } from '@/_UMservices/authentication.service';
-import { sha256 } from 'js-sha256';
 import { AlertService } from '@/_services/alert.service';
 
 @Injectable({ providedIn: 'root' })
@@ -50,39 +49,37 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
-        const currentUserType = this.authenticationService.currentUserTypeValue;
         var login = this.router.getCurrentNavigation().extras.state;
+        if(login!=undefined)login = login.login;
         
-        if(login!=undefined)if(login["login"]){
-            if (currentUser) {
-                return true;
-            }
+        var user="Undecided";
+        if(login){
+            user = this.router.getCurrentNavigation().extras.state.userType;
+            console.log(user);
         }
 
-        else {
+        if (!currentUser) {
             this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            return false;
         }
 
-        if(currentUserType!=null){
+        if(user!="Undecided"){
             for(var i=0;i<route.data.expectedRole.length;i++){
-                if (currentUser&&currentUserType==sha256(route.data.expectedRole[i])) {
+                if (currentUser&&user==route.data.expectedRole[i]) {
                 return true;
             }
             }
             
             this.alertService.error("You dont have access to there!",true)
-            this.router.navigate(['/noaccess']);
+            this.router.navigate(['/basic']);
             return false;
             
         }
         else{
+            console.log("undecided")
             this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            return false;
         }
         
-
-
-        // Not logged in so redirect to login page with the return url
-        
-        return false;
     }
 }
