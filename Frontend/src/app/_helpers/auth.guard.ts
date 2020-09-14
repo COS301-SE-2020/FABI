@@ -41,21 +41,28 @@ import { AlertService } from '@/_services/alert.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
+    user="Undecided";
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService
-    ) { }
+    ) { 
+        
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
+        
+        this.authenticationService.getUserType(currentUser).subscribe(data=>{
+            this.user = data;
+        });
         var login = this.router.getCurrentNavigation().extras.state;
         if(login!=undefined)login = login.login;
         
-        var user="Undecided";
+        
         if(login){
-            user = this.router.getCurrentNavigation().extras.state.userType;
-            console.log(user);
+            this.user = this.router.getCurrentNavigation().extras.state.userType;
+            console.log(this.user);
         }
 
         if (!currentUser) {
@@ -63,9 +70,9 @@ export class AuthGuard implements CanActivate {
             return false;
         }
 
-        if(user!="Undecided"){
+        if(this.user!="Undecided"){
             for(var i=0;i<route.data.expectedRole.length;i++){
-                if (currentUser&&user==route.data.expectedRole[i]) {
+                if (currentUser&&this.user==route.data.expectedRole[i]) {
                 return true;
             }
             }
@@ -76,8 +83,8 @@ export class AuthGuard implements CanActivate {
             
         }
         else{
-            console.log("undecided")
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            console.log("Authguard",this.user)
+            this.router.navigate(['/basic']);
             return false;
         }
         
