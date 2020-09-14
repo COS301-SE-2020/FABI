@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { User } from '@/_models/user';
@@ -10,10 +10,10 @@ import { style } from '@angular/animations';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements AfterViewInit {
 
   currentUser: User;
-  DeviceType = sessionStorage.getItem("DeviceType");
+  userType = "Undecided"
   curStyle = "Dark";
   colour=this.curStyle=="Dark"?"white":"black";
   navStyles={"Dark":"navbar-dark bg-dark","Light":"navbar-light bg-light"};
@@ -24,13 +24,17 @@ export class HeaderComponent implements OnInit {
     private styleSwitch : ButtonListenerService,
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
+      this.userType=data;
+      
+    });
   }
 
 
 
 
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void { 
   }
 
   logout() {
@@ -39,9 +43,13 @@ export class HeaderComponent implements OnInit {
   }
 
   home(){
-    this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
-      this.router.navigate(["/"+data]);
-    });
+    console.log("What",this.userType)
+    if(this.userType=="Undecided"){
+      this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
+        this.userType=data;
+      });
+    }
+    this.router.navigate(["/"+this.userType]);
   }
 
 

@@ -105,10 +105,10 @@ const routes: Routes = [
             path: 'auto',
             component: AutomatedComponent
         }],
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:"admin"
-        }
+        // canActivate: ([AuthGuard]),
+        // data:{
+        //     expectedRole:"admin"
+        // }
     },
     {
         path: 'basic',
@@ -141,10 +141,6 @@ const routes: Routes = [
         // data:{
         //     expectedRole:["special",'admin']
         // }
-    },
-    {
-        path: 'noaccess',
-        component: AccessControlComponent
     },
         
         {

@@ -1,6 +1,6 @@
 <!-- Desktop layout -->
 
-<div *ngIf="(DeviceType=='Desktop')||(DeviceType=='Mobile'&&specialUser)" [style.color]="currentStyle=='Dark'?'white':'black'" class="unselectable">
+<div *ngIf="(DeviceType=='Desktop')||(DeviceType=='Mobile')" [style.color]="currentStyle=='Dark'?'white':'black'" class="unselectable">
     <div class="flex-container" fxLayout="row" *ngIf="showMap">
         <div fxFlex="20" fxLayoutAlign="center"><button mat-raised-button color="primary" (click)="diagreport()">Submit
                 diagnosis report</button></div>
@@ -197,9 +197,9 @@
         </div>
     </div>
     <br>
-    <div class="flex-container" fxLayout="row" *ngIf="specialUser">
+    <div class="flex-container" fxLayout="row">
         <div fxFlex="20">
-            <button mat-raised-button color="primary" (click)="DiagnoseReport()">Diagnose this report</button>
+            <button mat-raised-button color="primary" (click)="DiagnoseReport()" *ngIf="usertype=='special'&&!showMap">Diagnose this report</button>
         </div>
     </div>
     <br>
