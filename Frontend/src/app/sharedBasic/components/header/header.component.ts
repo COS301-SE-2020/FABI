@@ -43,7 +43,6 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   home(){
-    console.log("What",this.userType)
     if(this.userType=="Undecided"){
       this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
         this.userType=data;

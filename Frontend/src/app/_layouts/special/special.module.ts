@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasicComponent } from './basic.component';
+import { SpecialComponent } from './special.component';
 import { RouterModule } from '@angular/router';
-import { DiagReportComponent } from '@/diag-report/diag-report.component';
 
 import { WebcamModule } from 'ngx-webcam';
 
@@ -23,14 +22,14 @@ import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { MapReportComponent } from '@/map-report/map-report.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from "@angular/material/card";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
-    BasicComponent,
-    DiagReportComponent
+    SpecialComponent
   ],
   imports: [
     CommonModule,
@@ -50,8 +49,10 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
     MatTooltipModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    NgbModule
     
   ],
 })
-export class BasicModule { }
+export class SpecialModule { }

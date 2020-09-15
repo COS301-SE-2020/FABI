@@ -62,6 +62,11 @@ export interface DiagnosisReport{
 })
 export class HomeComponent implements AfterViewInit {
 
+    // Loading
+
+    LoadingMarkers:Boolean=false;
+    LoadingTable:Boolean=false;
+
     // Device
 
     Browser=this.deviceService.browser;
