@@ -43,12 +43,13 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   home(){
-    if(this.userType=="Undecided"){
+    
       this.authenticationService.getUserType(this.authenticationService.currentUserValue).subscribe(data=>{
         this.userType=data;
+        this.router.navigate(["/"+this.userType]);
       });
-    }
-    this.router.navigate(["/"+this.userType]);
+    
+    
   }
 
 
