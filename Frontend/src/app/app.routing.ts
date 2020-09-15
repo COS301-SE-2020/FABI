@@ -108,7 +108,7 @@ const routes: Routes = [
         }],
         canActivate: ([AuthGuard]),
         data:{
-            expectedRole:"admin"
+            expectedRole:["admin"]
         }
     },
     {
