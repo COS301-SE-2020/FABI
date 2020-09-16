@@ -5,7 +5,8 @@
  <div class="col-sm" *ngIf="ImageDataCount<3&&!enterImage">
   <div class="row justify-content-sm-center" [style.visibility]="showWebcam?'visible':'hidden'">
     <div class="col-sm-2" >
-        <webcam 
+  <alert></alert>
+  <webcam 
         [width]="350"
         [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
         [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"

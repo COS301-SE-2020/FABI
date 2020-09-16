@@ -25,12 +25,13 @@ import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MapReportComponent } from '@/map-report/map-report.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-
+import {AlertModule} from '@/_components/alert.module';
 
 @NgModule({
   declarations: [
     BasicComponent,
-    DiagReportComponent
+    DiagReportComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -50,8 +51,8 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
     MatTooltipModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    AlertModule
   ],
 })
 export class BasicModule { }

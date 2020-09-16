@@ -38,6 +38,7 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 // Material specific imports
+import { AlertModule } from '@/_components/alert.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
@@ -58,7 +59,7 @@ import { UpdatePestComponent } from '../../_components/pest-info/update-pest/upd
 // Shared module
 import { SharedModule } from '@/sharedAdmin/shared.module';
 import { AlertService } from '@/_services/alert.service';
-import { AlertComponent } from '@/_components/alert.component';
+// import { AlertComponent } from '@/_components/alert.component';
 import { PathogenInfoComponent } from '../../_components/pathogen-info/pathogen-info.component';
 import { UpdatePathogenComponent } from '../../_components/pathogen-info/update-pathogen/update-pathogen.component';
 import { UsersComponent } from '../../_components/users/users.component';
@@ -71,7 +72,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     DashboardComponent,
     PestInfoComponent,
     UpdatePestComponent,
-    AlertComponent,
+    // AlertComponent,
     PathogenInfoComponent,
     UpdatePathogenComponent,
     UsersComponent,
@@ -80,6 +81,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
   imports: [
     CommonModule,
     RouterModule,
+    AlertModule,
     SharedModule,
     MatSidenavModule,
     MatDividerModule,

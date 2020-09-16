@@ -11,7 +11,7 @@ import { ReportDataService } from '@/_services/report-data.service'
 import {Report_Questions} from "@/_models/Questions"
 import { LocationService } from '@/_services/location.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
-
+import {AlertService} from '@/_services/alert.service';
 
 
 export interface Questions{
@@ -30,7 +30,6 @@ export class DiagReportComponent implements OnInit {
   // Steven Debug stuff
   public submitButtonText: string = "Submit";
   public submitButtonPressed: Boolean = false;
-
   Answers=new Report_Questions;
   public enterImage:Boolean=false;
   public currentUser: User;
@@ -44,6 +43,7 @@ export class DiagReportComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
+    private alert: AlertService,
     public deviceService: DeviceDetectorService,
     private formBuilder: FormBuilder, 
     private location : LocationService, 
@@ -332,6 +332,7 @@ public handleImage(webcamImage: WebcamImage): void {
   var image = new Image();
   image.src = webcamImage.imageAsDataUrl;
   this.Images.push(image);
+  this.alert.success(`Image ${this.Images.length} taken Successfully`, false)
   
 
   this.webcamImage = webcamImage;
