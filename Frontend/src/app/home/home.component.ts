@@ -99,7 +99,9 @@ export class HomeComponent implements AfterViewInit {
     currentMark: currentReport;
     comparisonMarker:Array<Questions>=this.blankQuestionnaire;
 
-    DeviceType: String = this.deviceService.isDesktop?"Desktop":"Mobile";
+    
+
+    DeviceType: String = this.deviceService.isDesktop()?"Desktop":"Mobile";
     overlaySwitch="none";
     specialUser=false;
 
@@ -270,6 +272,14 @@ export class HomeComponent implements AfterViewInit {
     ngAfterViewInit(): void {        
         
         if(this.DeviceType=="Desktop")this.loadMap();
+        else {
+            this.location.getLocation().subscribe(rep => {
+                this.lat=rep.coords.latitude;
+                this.lng=rep.coords.longitude;
+                this.paginatorInitMobile();
+            });
+        
+        }
         
             
         
@@ -350,6 +360,7 @@ export class HomeComponent implements AfterViewInit {
     // Mobile
 
     getNearbyReportsMobile(event){
+        
         this.dataSource=(this.currentMarkServ.getNearbyReportsMobile(event.pageIndex));
     }
 

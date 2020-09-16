@@ -97,9 +97,9 @@ export class AuthGuard implements CanActivate {
 
         // Removing the expected roles. The deployed version doesnt allow the user to type in the url, they would be redirected to the /basic page.
         
-        
         if(this.authenticationService.isLoggedIn())return true;
         else{
+            
             this.router.navigate['/login']
             return false;
         } 
