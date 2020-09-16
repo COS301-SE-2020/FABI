@@ -3,13 +3,6 @@
 </div><br> -->
   <!-- Testing camera functionality -->
  <div class="col-sm" *ngIf="ImageDataCount<3&&!enterImage">
-  <div class="row justify-content-sm-center" >
-    <div class="col-sm-2" [style.visibility]="showWebcam?'visible':'hidden'"><button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;setImageData();"><i class="fa fa-camera"></i> Take photo</button></div>
-    <div class="col-sm-2" ><button type="button" class="btn btn-danger"  (click)="onCancel()">Cancel</button></div>
-    
-  </div><br>
-  
-  
   <div class="row justify-content-sm-center" [style.visibility]="showWebcam?'visible':'hidden'">
     <div class="col-sm-2" >
         <webcam 
@@ -23,6 +16,16 @@
         </webcam></div>
   <br/>
 </div>
+<div class="row justify-content-sm-center">
+  <div class="col-sm-2">
+    <div class="col-sm-2" [style.visibility]="showWebcam?'visible':'hidden'">
+      <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-success" (click)="triggerSnapshot();enterImage=true;setImageData();" style="float: right;">
+        <i class="fa fa-camera"></i> Take photo
+      </button>
+    </div>
+  </div>
+</div><br>
 <br>
 <div class="row">
   <div class="col-3" *ngIf="multipleWebcamsAvailable">
