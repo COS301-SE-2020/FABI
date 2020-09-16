@@ -30,7 +30,7 @@ a {
     cursor: pointer;
 }
 body {
-    background: url(assets/cool-background.png) no-repeat fixed;
+    background-color: lightslategray;
     background-size: cover;
 }
 .picsum-img-wrapper{

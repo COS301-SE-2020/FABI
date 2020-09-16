@@ -1,3 +1,4 @@
+<h1 *ngIf="loading">Loading table data...</h1>
 <mat-table [dataSource]="ITdatasource" class="mat-elevation-z8" *ngIf="!filtered">
 
 <!-- Name Column -->
@@ -23,7 +24,7 @@
 </mat-table>
 <mat-paginator [length]="datalength"  *ngIf="!filtered" (page)="getNearbyReports($event)" [pageSize]="8" showFirstLastButtons></mat-paginator>
 
-<mat-table [dataSource]="ITdatasource" class="mat-elevation-z8" *ngIf="filtered">
+<mat-table [dataSource]="ITdatasource" class="mat-elevation-z8" *ngIf="filtered" style="min-height: 250px;">
 
 <!-- Name Column -->
 <ng-container matColumnDef="Pname">

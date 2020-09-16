@@ -46,6 +46,7 @@ export class SearchReportsComponent implements OnInit {
   datasource:nearbyReport[];
   displayedColumns: string[]=['Pname', 'distance', 'date']
 
+  loading=false;
   constructor(
     
     
@@ -57,8 +58,11 @@ export class SearchReportsComponent implements OnInit {
     
     private router:Router
   ) { 
+    
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd)if (this.route.snapshot.queryParamMap.get("Filter") != null) {
+        this.loading=true;
+        this.filtered=false;
 
         var filterQuery = JSON.parse(this.route.snapshot.queryParamMap.get("Filter"));
           this.filter={
@@ -78,6 +82,7 @@ export class SearchReportsComponent implements OnInit {
               this.datalength=list.length;
               this.ITdisplayedColumns=['Pname', 'Infliction','NeuralNetRating', 'date']
               this.filtered=true;
+              this.loading=false;
               
             }
             else{
@@ -95,6 +100,12 @@ export class SearchReportsComponent implements OnInit {
         
 
       }
+      else {
+        this.filtered=false;
+        this.loading=false;
+        this.ITdisplayedColumns=this.displayedColumns;
+        this.paginatorInit();
+      }
     });
     
   }
@@ -106,8 +117,11 @@ export class SearchReportsComponent implements OnInit {
   
 
   paginatorInit(){
+    this.loading=true;
     this.locationService.getLocation().subscribe(location => {
     this.repServe.requestNearbyReportsMobile(this.auth.currentUserValue,location.coords.latitude,location.coords.longitude).subscribe(rep=>{
+      this.loading=false;
+      this.filtered=false;
       this.ITdatasource=(this.repServe.getNearbyReportsMobile(0));
       this.datalength=this.repServe.reportsLength;
   });})
@@ -123,6 +137,7 @@ viewReport(ID) {
 }
 
   ngOnInit(): void {
+    
     this.paginatorInit();
   }
 

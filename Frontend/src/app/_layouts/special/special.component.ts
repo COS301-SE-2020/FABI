@@ -15,6 +15,7 @@ export class SpecialComponent implements OnInit {
   filterClicked=false;
 
   ngOnInit(): void {
+    this.clearFilters();
   }
 
   filterButton(){
