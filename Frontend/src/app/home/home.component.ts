@@ -277,7 +277,7 @@ export class HomeComponent implements AfterViewInit {
 
 
     diagreport() {
-        this.router.navigate(["./basic/DiagReport"]);
+        this.router.navigate(["/basic/DiagReport"], { queryParams: { returnUrl: "basic" }});
     }
 
     navReport() {

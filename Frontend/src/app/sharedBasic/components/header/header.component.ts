@@ -51,6 +51,9 @@ export class HeaderComponent implements AfterViewInit {
     
     
   }
+  submitReport(){
+    this.router.navigate(["/basic/DiagReport"], { queryParams: { returnUrl: this.userType }});
+  }
 
 
 

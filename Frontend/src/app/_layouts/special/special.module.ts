@@ -27,6 +27,11 @@ import { MatCardModule } from "@angular/material/card";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 // Special helpers
 import {SearchReportsComponent} from '@/sharedSpecial/Search/search-reports.component'
@@ -42,6 +47,10 @@ import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
     FilterComponent
   ],
   imports: [
+    MatSliderModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatIconModule,
     CommonModule,
     RouterModule,   
     MatGridListModule,
@@ -63,7 +72,9 @@ import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
     MatCardModule,
     NgbModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatAutocompleteModule,
+    FormsModule
     
   ],
 })
