@@ -15,7 +15,7 @@
 
 .register-box {
     text-align: center;
-    width: 400px;
+    width: 60%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 20%);
