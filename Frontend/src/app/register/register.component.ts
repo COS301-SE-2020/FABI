@@ -7,7 +7,7 @@ import { UserService } from '@/_UMservices/user.service';
 import { AlertService } from '@/_services/alert.service';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({ templateUrl: 'register.component.html', styleUrls: ['register.component.css'] })
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
