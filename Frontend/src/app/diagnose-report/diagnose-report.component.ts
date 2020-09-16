@@ -22,6 +22,7 @@ export interface filterModel{
 })
 export class DiagnoseReportComponent implements OnInit {
   reportID:any = null; 
+  loadingNN=true;
   verified=false;
   filteredOptions: Observable<any>;
   myControl = new FormControl();
@@ -76,7 +77,6 @@ export class DiagnoseReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.special.getDiagnosis(this.reportID).subscribe(data=>{
-      console.log(data["data"]["getDiagnosis_Reason"]["status"]);
       if(data["data"]["getDiagnosis_Reason"]["status"]==500){
         this.verified=false;
         this.filteredOptions = this.myControl.valueChanges
@@ -86,6 +86,7 @@ export class DiagnoseReportComponent implements OnInit {
           map(name => name ? this._filter(name) : this.Foptions.slice())
         );
         this.special.getNNData(this.reportID).subscribe(nnData => {
+          this.loadingNN=false;
           let xValues = nnData["preDiagnosisNames"].split(',');
           let yValues = nnData["preDiagnosisProbabilities"].split`,`.map(x=>+x*100);
 
