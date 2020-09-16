@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {SpecialistService} from '@/spec-search/specialist.service'
+import {SpecialistService} from '@/sharedSpecial/specialist.service'
 import * as Highcharts from 'highcharts';
 import { Observable, Subject } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';

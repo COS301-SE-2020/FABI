@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="space-evenly" *ngIf="dataLoaded">
+<div fxLayout="row" fxLayoutAlign="space-evenly" *ngIf="dataLoaded&&ID!=null">
         <div fxFlex="30">
             <ngb-carousel style="height: 450px;width:330px;outline:none;">
                 <ng-template ngbSlide>
@@ -96,6 +96,8 @@
                 </mat-card-title>
                 <mat-card-content>
                     <button mat-raised-button color="primary" (click)="Diagnose()" [disabled]="hasDiagnosis">Diagnose this report</button>
+                    <br><br>
+                    <button mat-raised-button color="secondary" (click)="downloadReport()">Download Form</button>
                 </mat-card-content>
             </mat-card>
         </div>

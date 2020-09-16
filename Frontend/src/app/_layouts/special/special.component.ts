@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router,ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-special',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpecialComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router:Router
+  ) { }
 
   filterClicked=false;
 
@@ -17,5 +20,11 @@ export class SpecialComponent implements OnInit {
   filterButton(){
     this.filterClicked=!this.filterClicked;
   }
+
+  clearFilters(){
+    this.router.navigate(["/special"]);
+  }
+
+  
 
 }

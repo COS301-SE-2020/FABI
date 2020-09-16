@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs'
-import {FormControl} from '@angular/forms';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs'
+import { FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 
-export interface filterModel{
-  Diagnosis:string;
-  RepStatus:string;
-  Distance:number;
-  AffectedArea:string;
+export interface filterModel {
+  Diagnosis: string;
+  RepStatus: string;
+  Distance: number;
+  AffectedArea: string;
 }
 
-export interface filterValue{
+export interface filterValue {
   name: string;
 }
 
@@ -21,35 +22,35 @@ export interface filterValue{
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
-  filter: filterModel={
-    Diagnosis:"",
-    RepStatus:"",
-    Distance:5,
-    AffectedArea:""
+  filter: filterModel = {
+    Diagnosis: "",
+    RepStatus: "",
+    Distance: 5,
+    AffectedArea: ""
   }
 
-  Foptions :filterValue[]= [
-    {name:"Eucalyptus/guava/myrtle rust pathogen"},
-    {name:"Chrysoporthe canker"},
-    {name:"Kirramyces stem canker "},
-    {name:"Leaf blotch"},
-    {name:"Pitch canker"},
-    {name:"Wattle rust"},
-    {name:"Ceratocystis wattle wilt"},
-    {name:"Botryosphaeriaceae canker"},
-    {name:"Armillaria root rot"},
-    {name:"Phytophthora root rot"},
-    {name:"Deodar weevil"},
-    {name:"Bronze bug"},
-    {name:"Eucalyptus weevil/snout beetle"},
-    {name:"Wattle bagworm"},
-    {name:"Sirex woodwasp"},
-    {name:"Bluegum chalcid"},
-    {name:"Wattle mirid"},
-    {name:"Cossid moth/Quince borer"},
-    {name:"Shell lerp psyllid"},
-    {name:"Eucalyptus gall wasp"},
-    {name:"Red gum lerp psyllid"},
+  Foptions: filterValue[] = [
+    { name: "Eucalyptus/guava/myrtle rust pathogen" },
+    { name: "Chrysoporthe canker" },
+    { name: "Kirramyces stem canker " },
+    { name: "Leaf blotch" },
+    { name: "Pitch canker" },
+    { name: "Wattle rust" },
+    { name: "Ceratocystis wattle wilt" },
+    { name: "Botryosphaeriaceae canker" },
+    { name: "Armillaria root rot" },
+    { name: "Phytophthora root rot" },
+    { name: "Deodar weevil" },
+    { name: "Bronze bug" },
+    { name: "Eucalyptus weevil/snout beetle" },
+    { name: "Wattle bagworm" },
+    { name: "Sirex woodwasp" },
+    { name: "Bluegum chalcid" },
+    { name: "Wattle mirid" },
+    { name: "Cossid moth/Quince borer" },
+    { name: "Shell lerp psyllid" },
+    { name: "Eucalyptus gall wasp" },
+    { name: "Red gum lerp psyllid" },
   ];
 
   options = [
@@ -80,7 +81,12 @@ export class FilterComponent implements OnInit {
   ];
 
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    
+  }
 
   filteredOptions: Observable<any>;
   myControl = new FormControl();
@@ -104,6 +110,12 @@ export class FilterComponent implements OnInit {
       );
   }
 
-  filterReports() {}
+  filterReports() {
+    this.router.navigate(["/special"], {
+      queryParams: { Filter: JSON.stringify({ "Diagnosis": this.filter.Diagnosis, "RepStatus": this.filter.RepStatus, "AffectedArea": this.filter.AffectedArea, "Distance": this.filter.Distance }) }
+    })
+  }
+
+
 
 }

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpecialistService } from './specialist.service';
+import { SpecialistService } from '@/sharedSpecial/specialist.service';
 
 describe('SpecialistService', () => {
   let service: SpecialistService;
