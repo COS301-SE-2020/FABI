@@ -1,11 +1,35 @@
-<div style="background-color:lightslategray;height:100%">
-<app-header></app-header>
-<br>
-<app-filter ></app-filter>
-<br>
-<div fxLayout="row" fxLayoutAlign="space-evenly">
-    <div fxFlex="45"><app-search-reports class="unselectable"></app-search-reports></div>
-    <div fxFlex="45"><app-view-report></app-view-report></div>
-</div>
+<div style="background-color:lightgray;height:auto;min-height:100%">
+    <app-header></app-header>
+    <br>
+    <mat-drawer-container class="drawer-container" style="background-color:lightgray;width:100%;height:100%;">
+        <mat-drawer #drawer mode="side" style="width: 15%;background-color:lightgray;">
+            <app-filter style="background-color:lightgray;"></app-filter>
+        </mat-drawer>
 
+        <button mat-raised-button color="primary" mat-button (click)="drawer.toggle()" style="margin: 1%;">
+            Filter
+        </button>
+        <br>
+        <button mat-raised-button color="primary" mat-button (click)="clearFilters()" style="margin: 1%;">
+            Clear filters
+        </button>
+        <br>
+        <div fxLayout="column" fxLayoutAlign="space-evenly" style="margin: 1%;">
+            
+            <div fxFlex="45">
+                <app-view-report></app-view-report>
+            </div>
+            <div fxFlex="5"></div>
+            <div fxFlex="45">
+
+                <app-search-reports class="unselectable"></app-search-reports>
+            </div>
+        </div>
+    </mat-drawer-container>
+
+    <br><br>
+
+    <br>
+
+    <br>
 </div>

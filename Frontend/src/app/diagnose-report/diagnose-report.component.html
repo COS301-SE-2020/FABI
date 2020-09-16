@@ -1,20 +1,39 @@
-<mat-sidenav-container>
-  <mat-sidenav #sidenav role="navigation">
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <div fxHide.gt-xs>
-        <button mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </div>
-      <div>
-        <a routerLink="/special">
-          Back
-        </a>
-      </div>
-    </mat-toolbar>
-    <main *ngIf="!verified">
+<div style="background-color:lightgray;height:auto;min-height:100%">
+  <app-header></app-header>
+  <br>
+  <h1 *ngIf="loadingNN">Loading Diagnostic Predictions...</h1>
+  <div fxLayout="row" *ngIf="!verified" fxLayoutAlign="space-evenly" style="margin: 1%;">
+    <div fxFlex="45">
+      <mat-card class="card">
+        <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Diagnosis</mat-label>
+        <input type="text" matInput [(ngModel)]="filter.Diagnosis" [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          Suggested option
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Reason for this diagnosis</mat-label>
+        <textarea matInput [(ngModel)]="filter.Reason" placeholder="Ex. Pigment of the leaves indicates..."></textarea>
+      </mat-form-field><br><br><button mat-raised-button color="primary" (click)="submitVerification()">Submit
+        diagnosis</button>
+
+      </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="45">
+      <figure class="highcharts-figure">
+        <div id="container"></div>
+      </figure>
+    </div>
+  </div>
+  <!-- <main *ngIf="!verified">
+        <h1 *ngIf="loadingNN">Loading Diagnostic Predictions...</h1>
         <br>
               <mat-card class="card">
                 <mat-card-content>
@@ -41,18 +60,17 @@
                   </mat-form-field><br><br><button mat-raised-button color="primary" (click)="submitVerification()">Submit diagnosis</button>
                 </mat-card>
               </mat-card>
-    </main>
-    <main *ngIf="verified">
-      <br>
-        <div class="container">
-          <div fxLayout="row" fxLayoutAlign="center center" class="content">
-            <mat-card class="card">
-              <mat-card-content>
-                This report has been verified. 
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </div>
+    </main> -->
+  <main *ngIf="verified">
+    <br>
+    <div class="container">
+      <div fxLayout="column" fxLayoutAlign="center center" class="content">
+        <mat-card class="card">
+          <mat-card-content>
+            This report has been verified.
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+</div>

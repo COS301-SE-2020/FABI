@@ -51,7 +51,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
-import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
 import { Http, HttpModule, Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
@@ -80,7 +79,6 @@ import { AccessControlComponent } from './access-control/access-control.componen
 import { MatTableModule } from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { DiagnoseReportComponent } from './diagnose-report/diagnose-report.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 
@@ -96,7 +94,6 @@ import {MatListModule} from '@angular/material/list';
     RegisterComponent,
     SpecSearchComponent,
     AccessControlComponent,
-    DiagnoseReportComponent,
     MapReportComponent
   ],
   imports: [

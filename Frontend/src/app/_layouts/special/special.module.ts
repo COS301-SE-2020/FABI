@@ -33,10 +33,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 
+
 // Special helpers
 import {SearchReportsComponent} from '@/sharedSpecial/Search/search-reports.component'
 import {ViewReportComponent} from '@/sharedSpecial/View/view-report.component'
 import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
+import { DiagnoseReportComponent } from '@/diagnose-report/diagnose-report.component';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
     SpecialComponent,
     SearchReportsComponent,
     ViewReportComponent,
-    FilterComponent
+    FilterComponent,
+    DiagnoseReportComponent
   ],
   imports: [
     MatSliderModule,
@@ -74,7 +77,8 @@ import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
     MatPaginatorModule,
     MatTableModule,
     MatAutocompleteModule,
-    FormsModule
+    FormsModule,
+
     
   ],
 })

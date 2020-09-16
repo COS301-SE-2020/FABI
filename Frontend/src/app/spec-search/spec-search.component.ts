@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SpecialistService } from './specialist.service';
+import { SpecialistService } from '@/sharedSpecial/specialist.service';
 import { LocationService } from '@/_services/location.service';
 import { AlertService } from '@/_services/alert.service';
 import { MatSort } from '@angular/material/sort';

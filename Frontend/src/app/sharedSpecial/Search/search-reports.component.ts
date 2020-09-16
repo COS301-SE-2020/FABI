@@ -1,18 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from '@/_services/location.service';
-import { AlertService } from '@/_services/alert.service';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {FormControl} from '@angular/forms';
-import { report } from 'process';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
-import { Router,ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router,ActivatedRoute, NavigationEnd } from '@angular/router';
+import { SpecialistService } from '@/sharedSpecial/specialist.service';
 
 // Filter
-import { Observable, Subject } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import { ReportDataService } from '@/_services/report-data.service'
 import {PageEvent} from '@angular/material/paginator';
+
+export interface filterModel {
+  Diagnosis: string;
+  RepStatus: string;
+  Distance: number;
+  AffectedArea: string;
+}
+
+export interface nearbyReport {
+  ID: number;
+  Pname: string;
+  Infliction:string;
+  NeuralNetRating:string;
+  preDiagnosisNames:string;
+  date: string;
+}
 
 @Component({
   selector: 'app-search-reports',
@@ -20,6 +31,20 @@ import {PageEvent} from '@angular/material/paginator';
   styleUrls: ['./search-reports.component.css']
 })
 export class SearchReportsComponent implements OnInit {
+  filter: filterModel = {
+    Diagnosis: "",
+    RepStatus: "",
+    Distance: 5,
+    AffectedArea: ""
+  }
+
+
+  
+  filtered=false;
+  ITdatasource;
+  ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
+  datasource:nearbyReport[];
+  displayedColumns: string[]=['Pname', 'distance', 'date']
 
   constructor(
     
@@ -27,21 +52,58 @@ export class SearchReportsComponent implements OnInit {
     private locationService: LocationService, 
     private repServe:ReportDataService,
     private auth:AuthenticationService,
+    private route: ActivatedRoute,
+    private specialistService: SpecialistService, 
     
     private router:Router
   ) { 
+    this.router.events.subscribe(data => {
+      if (data instanceof NavigationEnd)if (this.route.snapshot.queryParamMap.get("Filter") != null) {
+
+        var filterQuery = JSON.parse(this.route.snapshot.queryParamMap.get("Filter"));
+          this.filter={
+            Diagnosis:filterQuery["Diagnosis"],
+            RepStatus:filterQuery["RepStatus"],
+            Distance:filterQuery["Distance"],
+            AffectedArea:filterQuery["AffectedArea"],
+          }
+        this.locationService.getLocation().subscribe(data=>{
+          
+          
+          this.specialistService.filterReports(data.coords.latitude, data.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis["name"], this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
+            if(data.length>1){
+              
+              var list: Array<nearbyReport> =data;
+              this.ITdatasource=list;
+              this.datalength=list.length;
+              this.ITdisplayedColumns=['Pname', 'Infliction','NeuralNetRating', 'date']
+              this.filtered=true;
+              
+            }
+            else{
+              this.filtered=false;
+              this.ITdisplayedColumns=this.displayedColumns;
+              this.paginatorInit();
+
+            }
+            
+            
+          });
+        })
+        
+
+        
+
+      }
+    });
     
   }
   // Initial table
-  filtered;
-  ITdatasource;
-  ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
   displayReady=false;
   datalength;
   pageEvent: PageEvent;
 
-  reports = [];
-  dataSource = new MatTableDataSource(this.reports)
+  
 
   paginatorInit(){
     this.locationService.getLocation().subscribe(location => {
@@ -63,5 +125,7 @@ viewReport(ID) {
   ngOnInit(): void {
     this.paginatorInit();
   }
+
+  
 
 }
