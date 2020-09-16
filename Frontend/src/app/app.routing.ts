@@ -61,10 +61,7 @@ import { SpecSearchComponent } from './spec-search/spec-search.component';
 import { UsersComponent } from './_components/users/users.component';
 import { AutomatedComponent } from './_components/automated/automated.component';
 import {DiagnoseReportComponent} from '@/diagnose-report/diagnose-report.component'
-import {SpecialComponent} from '@/_layouts/special/special.component'
-import {SearchReportsComponent} from '@/sharedSpecial/Search/search-reports.component'
-import {ViewReportComponent} from '@/sharedSpecial/View/view-report.component'
-import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
+import {SpecialComponent} from './_layouts/special/special.component'
 
 /*
 *   Comment out AuthGuard during development for easier testing
