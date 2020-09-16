@@ -37,6 +37,8 @@ import { NgModule } from '@angular/core';
 import { BasicModule } from './_layouts/basic/basic.module';
 import {SpecialModule} from '@/_layouts/special/special.module'
 
+import { LocationStrategy } from '@angular/common';
+import { HashLocationStrategy } from "@angular/common";
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -137,7 +139,7 @@ import {MatListModule} from '@angular/material/list';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide : LocationStrategy , useClass: HashLocationStrategy},
     // provider used to create fake backend
     fakeBackendProvider
   ],
