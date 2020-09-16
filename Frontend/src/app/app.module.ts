@@ -35,6 +35,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BasicModule } from './_layouts/basic/basic.module';
+import {SpecialModule} from '@/_layouts/special/special.module'
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -94,6 +95,7 @@ import {MatListModule} from '@angular/material/list';
     SpecSearchComponent,
     AccessControlComponent,
     DiagnoseReportComponent,
+    MapReportComponent
   ],
   imports: [
     BrowserModule,

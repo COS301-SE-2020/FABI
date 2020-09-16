@@ -110,4 +110,9 @@ export class AuthenticationService {
             return (data["data"]["getUserType"]["UserType"]);
         }));
     }
+
+    isLoggedIn(){
+        if(this.currentUserValue)return true;
+        else return false;
+    }
 }

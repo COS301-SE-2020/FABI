@@ -47,6 +47,7 @@ export class DiagReportComponent implements OnInit {
     public deviceService: DeviceDetectorService,
     private formBuilder: FormBuilder, 
     private location : LocationService, 
+    private route: ActivatedRoute,
     private router: Router,
     private Report: ReportDataService) {
       this.currentUser = this.authenticationService.currentUserValue;
@@ -263,8 +264,8 @@ export class DiagReportComponent implements OnInit {
 
 
   onCancel(){
-    this.submitted = false;
-    this.router.navigate(["/basic"]);
+    this.submitted = false;    
+    this.router.navigate(["/"+this.route.snapshot.queryParamMap.get('returnUrl')]);
   }
 
   // toggle webcam on/off
