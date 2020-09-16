@@ -34,10 +34,14 @@
 // Angular specific imports
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {map, catchError} from 'rxjs/operators'
+import {Observable} from 'rxjs'
+import {UrlTree}  from '@angular/router'
 
 // Service imports
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 import { AlertService } from '@/_services/alert.service';
+// import { Observable } from 'apollo-link';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -50,43 +54,53 @@ export class AuthGuard implements CanActivate {
         
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser = this.authenticationService.currentUserValue;
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        // const currentUser = this.authenticationService.currentUserValue;
+        // console.log(currentUser);
         
-        this.authenticationService.getUserType(currentUser).subscribe(data=>{
-            this.user = data;
-        });
-        var login = this.router.getCurrentNavigation().extras.state;
-        if(login!=undefined)login = login.login;
+        // this.authenticationService.getUserType(currentUser).subscribe(data=>{
+        //     this.user = data;
+        
+        // var login = this.router.getCurrentNavigation().extras.state;
+        // if(login!=undefined)login = login.login;
         
         
-        if(login){
-            this.user = this.router.getCurrentNavigation().extras.state.userType;
-            console.log(this.user);
-        }
+        // if(login){
+        //     this.user = this.router.getCurrentNavigation().extras.state.userType;
+        //     console.log(this.user);
+        // }
 
-        if (!currentUser) {
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-            return false;
-        }
+        // if (!currentUser) {
+        //     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        //     return false;
+        // }
 
-        if(this.user!="Undecided"){
-            for(var i=0;i<route.data.expectedRole.length;i++){
-                if (currentUser&&this.user==route.data.expectedRole[i]) {
-                return true;
-            }
-            }
+        // if(this.user!="Undecided"){
+            // for(var i=0;i<route.data.expectedRole.length;i++){
+            //     if (currentUser&&this.user==route.data.expectedRole[i]) {
+            //     return true;
+            // }
+        //     }
             
-            this.alertService.error("You dont have access to there!",true)
-            this.router.navigate(['/basic']);
-            return false;
+        //     this.alertService.error("You dont have access to there!",true)
+        //     this.router.navigate(['/basic']);
+        //     return false;
             
-        }
-        else{
-            console.log("Authguard",this.user)
-            this.router.navigate(['/basic']);
-            return false;
-        }
+        // }
+        // else{
+        //     console.log("Authguard",this.user)
+        //     this.router.navigate(['/basic']);
+        //     return false;
+        // }
+
+        // });
+
+        // Removing the expected roles. The deployed version doesnt allow the user to type in the url, they would be redirected to the /basic page.
         
+        
+        if(this.authenticationService.isLoggedIn())return true;
+        else return false;
+        
+      
     }
 }

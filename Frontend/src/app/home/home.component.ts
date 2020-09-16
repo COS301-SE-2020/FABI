@@ -62,6 +62,11 @@ export interface DiagnosisReport{
 })
 export class HomeComponent implements AfterViewInit {
 
+    // Loading
+
+    LoadingMarkers:Boolean=false;
+    LoadingTable:Boolean=false;
+
     // Device
 
     Browser=this.deviceService.browser;
@@ -272,7 +277,7 @@ export class HomeComponent implements AfterViewInit {
 
 
     diagreport() {
-        this.router.navigate(["./basic/DiagReport"]);
+        this.router.navigate(["/basic/DiagReport"], { queryParams: { returnUrl: "basic" }});
     }
 
     navReport() {

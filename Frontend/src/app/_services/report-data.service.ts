@@ -151,7 +151,6 @@ export class ReportDataService {
                   }`
     }).pipe(map(data => {
       localStorage.setItem("nearbyReportsMobile", JSON.stringify(data["data"]["getReportsMobile"]))
-      
 
     }))
   }
