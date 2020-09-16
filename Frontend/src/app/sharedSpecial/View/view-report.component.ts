@@ -84,6 +84,12 @@ export class ViewReportComponent implements OnInit {
             }
             this.hasDiagnosis = true;
           }
+          else{
+            this.diagnosis = {
+              diagnosis: "Awaiting review",
+              reason: ""
+            }
+          }
 
         })
       }
