@@ -9,7 +9,13 @@ export class SpecialComponent implements OnInit {
 
   constructor() { }
 
+  filterClicked=false;
+
   ngOnInit(): void {
+  }
+
+  filterButton(){
+    this.filterClicked=!this.filterClicked;
   }
 
 }
