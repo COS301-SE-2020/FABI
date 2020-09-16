@@ -106,14 +106,7 @@ const routes: Routes = [
             path: 'auto',
             component: AutomatedComponent
         }],
-<<<<<<< HEAD
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:["admin"]
-        }
-=======
         canActivate: ([AuthGuard])
->>>>>>> User/Special-layout
     },
     {
         path: 'basic',
@@ -140,12 +133,6 @@ const routes: Routes = [
         path: 'diagnose',
         component: DiagnoseReportComponent,
         canActivate: ([AuthGuard]),
-<<<<<<< HEAD
-        data:{
-            expectedRole:["special",'admin']
-        }
-=======
->>>>>>> User/Special-layout
     },
         
         {
