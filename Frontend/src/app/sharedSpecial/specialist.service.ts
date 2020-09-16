@@ -72,6 +72,9 @@ export class SpecialistService {
           form,
           Pname,
           status,
+          preDiagnosisNames,
+          NeuralNetRating,
+          Infliction,
           date,
           ID
         }

@@ -16,6 +16,15 @@ export interface filterModel {
   AffectedArea: string;
 }
 
+export interface nearbyReport {
+  ID: number;
+  Pname: string;
+  Infliction:string;
+  NeuralNetRating:string;
+  preDiagnosisNames:string;
+  date: string;
+}
+
 @Component({
   selector: 'app-search-reports',
   templateUrl: './search-reports.component.html',
@@ -28,6 +37,14 @@ export class SearchReportsComponent implements OnInit {
     Distance: 5,
     AffectedArea: ""
   }
+
+
+  
+  filtered=false;
+  ITdatasource;
+  ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
+  datasource:nearbyReport[];
+  displayedColumns: string[]=['Pname', 'distance', 'date']
 
   constructor(
     
@@ -54,28 +71,39 @@ export class SearchReportsComponent implements OnInit {
           
           
           this.specialistService.filterReports(data.coords.latitude, data.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis["name"], this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
-            console.log(data);
+            if(data.length>1){
+              
+              var list: Array<nearbyReport> =data;
+              this.ITdatasource=list;
+              this.datalength=list.length;
+              this.ITdisplayedColumns=['Pname', 'Infliction','NeuralNetRating', 'date']
+              this.filtered=true;
+              
+            }
+            else{
+              this.filtered=false;
+              this.ITdisplayedColumns=this.displayedColumns;
+              this.paginatorInit();
+
+            }
+            
             
           });
         })
         
 
-        // this.specialistService.filterReports(location.coords.latitude, location.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis["name"], this.filter.Distance, this.filter.AffectedArea).subscribe(data => {});
+        
 
       }
     });
     
   }
   // Initial table
-  filtered;
-  ITdatasource;
-  ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
   displayReady=false;
   datalength;
   pageEvent: PageEvent;
 
-  reports = [];
-  dataSource = new MatTableDataSource(this.reports)
+  
 
   paginatorInit(){
     this.locationService.getLocation().subscribe(location => {
