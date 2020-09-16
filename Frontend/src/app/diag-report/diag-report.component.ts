@@ -237,7 +237,6 @@ export class DiagReportComponent implements OnInit {
       this.Answers.acc,
       this.Answers.plant,
       this.Answers.infliction).subscribe(data => {
-        console.log(data);
         this.submitted = true;
         if (data["upload"]["status"] != 201)
           this.submitButtonText = "Failed";

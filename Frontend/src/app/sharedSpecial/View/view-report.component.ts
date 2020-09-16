@@ -75,7 +75,6 @@ export class ViewReportComponent implements OnInit {
         })
         this.reportService.getDiagnosis(this.AuthServ.currentUserValue, this.ID).subscribe(data => {
           this.hasDiagnosis = false;
-          console.log(data["diagnosis"]);
           
           if (data["diagnosis"] != 'a') {
             this.diagnosis = {
