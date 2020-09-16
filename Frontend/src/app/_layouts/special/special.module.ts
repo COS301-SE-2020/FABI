@@ -25,11 +25,21 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from "@angular/material/card";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+
+// Special helpers
+import {SearchReportsComponent} from '@/sharedSpecial/Search/search-reports.component'
+import {ViewReportComponent} from '@/sharedSpecial/View/view-report.component'
+import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
 
 
 @NgModule({
   declarations: [
-    SpecialComponent
+    SpecialComponent,
+    SearchReportsComponent,
+    ViewReportComponent,
+    FilterComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +61,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
-    NgbModule
+    NgbModule,
+    MatPaginatorModule,
+    MatTableModule
     
   ],
 })

@@ -95,7 +95,7 @@ import {MatListModule} from '@angular/material/list';
     SpecSearchComponent,
     AccessControlComponent,
     DiagnoseReportComponent,
-    MapReportComponent,
+    MapReportComponent
   ],
   imports: [
     BrowserModule,
