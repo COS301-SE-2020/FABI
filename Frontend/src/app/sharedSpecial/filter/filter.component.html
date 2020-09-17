@@ -1,0 +1,48 @@
+<div fxLayoutAlign="spaced-evenly" fxLayout="column" style="margin: 5%;">
+
+    <div fxFlex="25">
+        <mat-form-field appearance="fill">
+            <mat-label>Diagnosis</mat-label>
+
+            <input type="text" matInput [(ngModel)]="filter.Diagnosis" [formControl]="myControl"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                Suggested option
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+
+        </mat-form-field>
+    </div>
+    <div fxFlex="25">
+        <mat-form-field appearance="fill">
+            <mat-label>Report Status</mat-label>
+            <mat-select [(value)]="filter.RepStatus">
+                <mat-option *ngFor="let option of options" [value]="option.viewValue">
+                    {{option.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="25">
+        <mat-form-field>
+            <label>Affected Area</label>
+            <mat-select [(value)]="filter.AffectedArea">
+                <mat-option *ngFor="let area of areas" [value]="area.viewValue">
+                    {{area.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="25">
+        <label>Distance from position</label><br>
+        <mat-slider min="5" max="50" thumbLabel [(value)]="filter.Distance"></mat-slider>
+        <label for="sleft" class="pull-left">5km</label>
+        <label for="sright" class="pull-right">50km</label>
+    </div>
+
+
+
+
+</div><br><button mat-raised-button color="primary" (click)="filterReports()"  style="margin: 5%;">Apply Filters</button><br>

@@ -107,9 +107,12 @@ export class AuthenticationService {
                     }
               }`
         }).pipe(map(data => {
-            var hash:string=JSON.stringify(sha256(data["data"]["getUserType"]["UserType"]));
-            localStorage.setItem("0",hash);
             return (data["data"]["getUserType"]["UserType"]);
         }));
+    }
+
+    isLoggedIn(){
+        if(this.currentUserValue)return true;
+        else return false;
     }
 }

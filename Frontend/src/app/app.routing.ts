@@ -61,6 +61,7 @@ import { SpecSearchComponent } from './spec-search/spec-search.component';
 import { UsersComponent } from './_components/users/users.component';
 import { AutomatedComponent } from './_components/automated/automated.component';
 import {DiagnoseReportComponent} from '@/diagnose-report/diagnose-report.component'
+import {SpecialComponent} from './_layouts/special/special.component'
 
 /*
 *   Comment out AuthGuard during development for easier testing
@@ -105,10 +106,7 @@ const routes: Routes = [
             path: 'auto',
             component: AutomatedComponent
         }],
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:"admin"
-        }
+        canActivate: ([AuthGuard])
     },
     {
         path: 'basic',
@@ -128,23 +126,13 @@ const routes: Routes = [
     },
     {
         path: 'special',
-        component: SpecSearchComponent,
-        canActivate: ([AuthGuard]),
-        data:{
-            expectedRole:["special",'admin']
-        }
+        component: SpecialComponent,
+        canActivate: ([AuthGuard])
     },
     {
         path: 'diagnose',
         component: DiagnoseReportComponent,
-        // canActivate: ([AuthGuard]),
-        // data:{
-        //     expectedRole:["special",'admin']
-        // }
-    },
-    {
-        path: 'noaccess',
-        component: AccessControlComponent
+        canActivate: ([AuthGuard]),
     },
         
         {

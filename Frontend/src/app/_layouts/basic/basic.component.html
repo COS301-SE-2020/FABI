@@ -2,7 +2,8 @@
     <app-header></app-header>
     <div fxFlex [style.background-color]="currentStyle=='Dark'?'#1d1d47':'#66a6ff'">
     <br>
+    
         <router-outlet></router-outlet>
     </div>
-    <app-footer class="unselectable" *ngIf="basicUser"></app-footer>
+    <!-- <app-footer class="unselectable"></app-footer> -->
 </div>

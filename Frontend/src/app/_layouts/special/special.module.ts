@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasicComponent } from './basic.component';
+import { SpecialComponent } from './special.component';
 import { RouterModule } from '@angular/router';
-import { DiagReportComponent } from '@/diag-report/diag-report.component';
 
 import { WebcamModule } from 'ngx-webcam';
 
@@ -23,17 +22,38 @@ import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { MapReportComponent } from '@/map-report/map-report.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import {AlertModule} from '@/_components/alert.module';
+import { MatCardModule } from "@angular/material/card";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+
+
+// Special helpers
+import {SearchReportsComponent} from '@/sharedSpecial/Search/search-reports.component'
+import {ViewReportComponent} from '@/sharedSpecial/View/view-report.component'
+import { FilterComponent } from '@/sharedSpecial/filter/filter.component';
+import { DiagnoseReportComponent } from '@/diagnose-report/diagnose-report.component';
+
 
 @NgModule({
   declarations: [
-    BasicComponent,
-    DiagReportComponent,
-    
+    SpecialComponent,
+    SearchReportsComponent,
+    ViewReportComponent,
+    FilterComponent,
+    DiagnoseReportComponent
   ],
   imports: [
+    MatSliderModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatIconModule,
     CommonModule,
     RouterModule,   
     MatGridListModule,
@@ -52,7 +72,14 @@ import {AlertModule} from '@/_components/alert.module';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    AlertModule
+    MatCardModule,
+    NgbModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatAutocompleteModule,
+    FormsModule,
+
+    
   ],
 })
-export class BasicModule { }
+export class SpecialModule { }

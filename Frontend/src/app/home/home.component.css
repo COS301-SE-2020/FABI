@@ -2,6 +2,9 @@
     width: 100%;
     margin-bottom: 10px;
    }
+button {
+    display: inline-block;
+}
 #legend {
     font-family: Arial, sans-serif;
     background: #fff;
@@ -27,7 +30,7 @@ a {
     cursor: pointer;
 }
 body {
-    background: url(assets/cool-background.png) no-repeat fixed;
+    background-color: lightslategray;
     background-size: cover;
 }
 .picsum-img-wrapper{

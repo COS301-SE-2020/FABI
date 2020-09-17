@@ -62,9 +62,14 @@ export interface DiagnosisReport{
 })
 export class HomeComponent implements AfterViewInit {
 
+    // Loading
+
+    LoadingMarkers:Boolean=false;
+    LoadingTable:Boolean=false;
+
     // Device
 
-    Browser=sessionStorage.getItem("Browser");
+    Browser=this.deviceService.browser;
     
     
 
@@ -94,7 +99,9 @@ export class HomeComponent implements AfterViewInit {
     currentMark: currentReport;
     comparisonMarker:Array<Questions>=this.blankQuestionnaire;
 
-    DeviceType: String;
+    
+
+    DeviceType: String = this.deviceService.isDesktop()?"Desktop":"Mobile";
     overlaySwitch="none";
     specialUser=false;
 
@@ -130,6 +137,7 @@ export class HomeComponent implements AfterViewInit {
     marker = [];
 
     currentUser: User;
+    usertype ="Unspecified";
     users = [];
     currentMID = null;
     comparisonMID=null;
@@ -161,24 +169,9 @@ export class HomeComponent implements AfterViewInit {
         });
         this.deviceSub = this.styleSwitch.getDevice().subscribe(data => {
             this.DeviceType=data.text;
+            this.ngAfterViewInit();            
         });
-        if(JSON.parse(localStorage.getItem("0"))==sha256("special")){
-            this.specialUser=true;
-            if(this.router.getCurrentNavigation().extras.state!=undefined){
-                this.currentMID=this.router.getCurrentNavigation().extras.state.id;
-                localStorage.setItem("CurMID",this.currentMID);
-            }
-            else {
-                this.currentMID=localStorage.getItem("CurMID");
-            }
-            this.showMap=false;
-            
-            this.openDisplay();
-            this.setDisplay(this.currentMID);
-            if(this.DeviceType=="Mobile")this.overlaySwitch="none";
-            this.currentMID=this.currentMID;
-            this.paginatorInit();
-        }
+        
     }
 
     toggleMap(){
@@ -191,7 +184,9 @@ export class HomeComponent implements AfterViewInit {
 
     ngOnInit(): void {
         this.Active = 0;
-        this.DeviceType = sessionStorage.getItem("DeviceType");
+        this.authenticationService.getUserType(this.currentUser).subscribe(data=>{
+            this.usertype=data;
+        })
     }
 
     loadMap() {
@@ -275,23 +270,24 @@ export class HomeComponent implements AfterViewInit {
     
 
     ngAfterViewInit(): void {        
-        if(this.authenticationService.currentUserTypeValue!=sha256("special")){
-            if(this.DeviceType=="Desktop")this.loadMap();
-        else{
+        
+        if(this.DeviceType=="Desktop")this.loadMap();
+        else {
             this.location.getLocation().subscribe(rep => {
-
-                this.lat = rep.coords.latitude;
-                this.lng = rep.coords.longitude;
-                this.paginatorInitMobile();            
+                this.lat=rep.coords.latitude;
+                this.lng=rep.coords.longitude;
+                this.paginatorInitMobile();
             });
+        
         }
+        
             
-        }
+        
     }
 
 
     diagreport() {
-        this.router.navigate(["./basic/DiagReport"]);
+        this.router.navigate(["/basic/DiagReport"], { queryParams: { returnUrl: "basic" }});
     }
 
     navReport() {
@@ -364,6 +360,7 @@ export class HomeComponent implements AfterViewInit {
     // Mobile
 
     getNearbyReportsMobile(event){
+        
         this.dataSource=(this.currentMarkServ.getNearbyReportsMobile(event.pageIndex));
     }
 
@@ -501,13 +498,10 @@ export class HomeComponent implements AfterViewInit {
     }
 
     openMap() {
-        if(JSON.parse(localStorage.getItem("0"))==sha256("special")){
-            this.router.navigate(["/special"]);
-        }
-        else{
+        
         sessionStorage.removeItem("currentMarker");
         this.showMap = true;
-        this.loadMap();}
+        this.loadMap();
     }
     openDisplay() {
         this.showMap = false;

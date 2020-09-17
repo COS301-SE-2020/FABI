@@ -40,4 +40,7 @@ toggleSideBar() {
   goBasic() {
     this.router.navigateByUrl('basic')
   }
+  goSpecial() {
+    this.router.navigateByUrl('special')
+  }
 }

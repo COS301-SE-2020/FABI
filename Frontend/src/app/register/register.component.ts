@@ -7,7 +7,7 @@ import { UserService } from '@/_UMservices/user.service';
 import { AlertService } from '@/_services/alert.service';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({ templateUrl: 'register.component.html', styleUrls: ['register.component.css'] })
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit {
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             company: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            username: ['', Validators.required, Validators.email],
+            password: ['', [Validators.required, Validators.minLength(8)]]
         });
     }
 

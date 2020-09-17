@@ -1,0 +1,102 @@
+<div fxLayout="column" fxLayoutAlign="space-evenly" *ngIf="dataLoaded&&ID!=null" fxLayout.lg="row" fxLayout.xl="row">
+        <div fxFlex="30">
+            <ngb-carousel style="height: 450px;width:330px;outline:none;">
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{Reports['Img1']}}" alt="Random first slide" style="max-height: 450px;max-width: 330px;">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{Reports['Img2']}}" alt="Random second slide" style="max-height: 450px;">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{Reports['Img3']}}" alt="Random third slide" style="max-height: 450px;">
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+        <br>
+        <div fxFlex="50">
+            <mat-card>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Name:
+                        </div>
+                        <div class="col">
+                            {{Reports.Pname}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Infliction:
+                        </div>
+                        <div class="col">
+                            {{Reports.Infliction}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Location Accuracy:
+                        </div>
+                        <div class="col">
+                            {{Reports.Accuracy}}m
+                        </div>
+                    </div>
+                </mat-card-title>
+                <br>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Image accuracy:
+                        </div>
+                        <div class="col">
+                            {{Reports.NeuralNet}}
+                        </div>
+                    </div>
+                </mat-card-title>                
+            </mat-card>
+                <br><br>
+            <mat-card>
+                <mat-card-title>
+                    <div class="row">
+                        <div class="col">
+                            Specialist diagnosis:
+                        </div>
+                        <div class="col">
+                            {{diagnosis.diagnosis}}
+                        </div>
+                    </div>
+                    <br>
+                    <br><br>
+                    <div class="row">
+                        <div class="col" *ngIf="hasDiagnosis">
+                            Reason:
+                        </div>
+                        <div class="col">
+                            {{diagnosis.reason}}
+                        </div>
+                    </div>
+
+                    
+                </mat-card-title>
+                <mat-card-content>
+                    <button mat-raised-button color="primary" (click)="Diagnose()" [disabled]="hasDiagnosis">Diagnose this report</button>
+                    <br><br>
+                    <button mat-raised-button color="secondary" (click)="downloadReport()">Download Form</button>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        
+    </div>
+    <h1 *ngIf="!dataLoaded&&ID!=null">Loading info page...</h1>
+    <h1 *ngIf="ID==null">Select a report to view its details</h1>

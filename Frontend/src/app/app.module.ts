@@ -35,7 +35,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BasicModule } from './_layouts/basic/basic.module';
+import {SpecialModule} from '@/_layouts/special/special.module'
 
+import { LocationStrategy } from '@angular/common';
+import { HashLocationStrategy } from "@angular/common";
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -48,7 +51,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components/alert.component';
-import { DiagReportComponent } from './diag-report/diag-report.component';
 import { GraphQLModule } from './graphql.module';
 import { Http, HttpModule, Response } from '@angular/http';
 import { MapReportComponent } from './map-report/map-report.component';
@@ -77,7 +79,6 @@ import { AccessControlComponent } from './access-control/access-control.componen
 import { MatTableModule } from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { DiagnoseReportComponent } from './diagnose-report/diagnose-report.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 
@@ -93,7 +94,7 @@ import {MatListModule} from '@angular/material/list';
     RegisterComponent,
     SpecSearchComponent,
     AccessControlComponent,
-    DiagnoseReportComponent,
+    MapReportComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +136,7 @@ import {MatListModule} from '@angular/material/list';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide : LocationStrategy , useClass: HashLocationStrategy},
     // provider used to create fake backend
     fakeBackendProvider
   ],

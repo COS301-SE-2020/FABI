@@ -6,7 +6,10 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '@/_services/alert.service';
 import { AuthenticationService } from '@/_UMservices/authentication.service';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+    templateUrl: 'login.component.html',
+    styleUrls: ['login.component.css'] 
+})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
@@ -58,17 +61,9 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     this.authenticationService.getUserType(data).subscribe(data=>{
-                        switch(data){
-                            case "special":
-                                this.router.navigate(["/special"],{ state:  { login:true }});
-                            break;
-                            case "basic":
-                                this.router.navigate(["/basic"],{ state:  { login:true }});
-                            break;
-                            case "admin":
-                                this.router.navigate(["/admin"],{ state:  { login:true }});
-                            break;
-                        }
+                        
+                        this.router.navigate(["/"+data],{ state:  { login:true,userType:data }});
+                            
                         
                     });
                 },
