@@ -26,9 +26,10 @@ Please find all appropriate documentation below
 
 - [Coding Standards](https://www.overleaf.com/read/yrpxbnszxygv)
 
-- [User Manual](https://drive.google.com/file/d/1xjXP-E-hgNv_y6v0DLQFvcEbPjD--MJk/view?usp=sharing)
+- [User Manual](https://drive.google.com/file/d/1Y9T1zCIPhf2cxpufws0VBhOwBi6YaKwF/view?usp=sharing)
 
 - [Technical Installation Document](https://drive.google.com/file/d/1Sx0zdwrcnh7YFlgIP1iM9_UTM5XJdi0m/view?usp=sharing)
+
 
 ## Project Management Tool
 
