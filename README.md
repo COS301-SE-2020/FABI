@@ -30,7 +30,7 @@ Please find all appropriate documentation below
 
 - [Technical Installation Document](https://drive.google.com/file/d/1Sx0zdwrcnh7YFlgIP1iM9_UTM5XJdi0m/view?usp=sharing)
 
-- [Testing Policy](https://drive.google.com/file/d/1RTojF_Y4kGI5K7TVBmzbWl8Zxaba92s3/view?usp=sharing)
+- [Testing Policy](https://drive.google.com/file/d/1xDcOfNpYH34Mtn8w4BR00uMyu4T2Kt8q/view?usp=sharing)
 
 
 ## Project Management Tool
