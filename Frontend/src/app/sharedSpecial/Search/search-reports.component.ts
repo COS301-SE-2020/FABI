@@ -61,8 +61,17 @@ export class SearchReportsComponent implements OnInit {
   ) { 
     
     this.router.events.subscribe(data => {
+      if(this.filtered){
+        this.filtered=false;
+        this.ITdisplayedColumns=['Pname', 'distance', 'date'];
+        
+        this.paginatorInit();
+      }
       if (data instanceof NavigationEnd)if (this.route.snapshot.queryParamMap.get("Filter") != null) {
         this.loading=true;
+
+        
+
         this.filtered=false;
 
         var filterQuery = JSON.parse(this.route.snapshot.queryParamMap.get("Filter"));
@@ -73,15 +82,27 @@ export class SearchReportsComponent implements OnInit {
             AffectedArea:filterQuery["AffectedArea"],
           }
         this.locationService.getLocation().subscribe(data=>{
+          var diagnosis =(this.filter.Diagnosis["name"]==undefined?this.filter.Diagnosis:this.filter.Diagnosis["name"]);
           
           
-          this.specialistService.filterReports(data.coords.latitude, data.coords.longitude, this.filter.RepStatus, this.filter.Diagnosis["name"], this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
-            if(data.length>1){
+          this.specialistService.filterReports(data.coords.latitude, data.coords.longitude, this.filter.RepStatus, diagnosis, this.filter.Distance, this.filter.AffectedArea).subscribe(data => {
+            
+            
+            
+            
+            if(data.length==1)if(data[0]["ID"]==null){
+              this.filtered=false;
+              this.ITdisplayedColumns=this.displayedColumns;
               
+              
+              this.paginatorInit();
+            }
+            else if(data.length>=1){
+              this.ITdisplayedColumns=['Pname', 'Infliction','NeuralNetRating', 'date']
               var list: Array<nearbyReport> =data;
               this.ITdatasource=list;
               this.datalength=list.length;
-              this.ITdisplayedColumns=['Pname', 'Infliction','NeuralNetRating', 'date']
+              
               this.filtered=true;
               this.loading=false;
               
@@ -126,6 +147,8 @@ export class SearchReportsComponent implements OnInit {
 
   paginatorInit(){
     this.loading=true;
+    this.filtered=false;
+    this.ITdisplayedColumns=['Pname', 'distance', 'date'];
     this.locationService.getLocation().subscribe(location => {
     this.repServe.requestNearbyReportsMobile(this.auth.currentUserValue,location.coords.latitude,location.coords.longitude).subscribe(rep=>{
       this.loading=false;
@@ -146,6 +169,8 @@ viewReport(ID) {
 }
 
 ngOnInit(): void {
+  this.filtered=false;
+  this.ITdisplayedColumns=['Pname', 'distance', 'date'];
   
   this.paginatorInit();
 }
