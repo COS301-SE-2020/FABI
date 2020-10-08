@@ -41,6 +41,7 @@ export class SearchReportsComponent implements OnInit {
 
   
   filtered=false;
+  currentPage=0;
   ITdatasource;
   ITdisplayedColumns: string[]=['Pname', 'distance', 'date']
   datasource:nearbyReport[];
@@ -88,6 +89,8 @@ export class SearchReportsComponent implements OnInit {
             else{
               this.filtered=false;
               this.ITdisplayedColumns=this.displayedColumns;
+              
+              
               this.paginatorInit();
 
             }
@@ -104,6 +107,11 @@ export class SearchReportsComponent implements OnInit {
         this.filtered=false;
         this.loading=false;
         this.ITdisplayedColumns=this.displayedColumns;
+
+        var checkPage=(this.route.snapshot.queryParamMap["params"]["page"]);
+        if(checkPage!=undefined){
+          this.currentPage=checkPage;
+        }
         this.paginatorInit();
       }
     });
@@ -122,24 +130,25 @@ export class SearchReportsComponent implements OnInit {
     this.repServe.requestNearbyReportsMobile(this.auth.currentUserValue,location.coords.latitude,location.coords.longitude).subscribe(rep=>{
       this.loading=false;
       this.filtered=false;
-      this.ITdatasource=(this.repServe.getNearbyReportsMobile(0));
+      this.ITdatasource=(this.repServe.getNearbyReportsMobile(this.currentPage));
       this.datalength=this.repServe.reportsLength;
   });})
 }
 
 getNearbyReports(event){
+  this.currentPage=event.pageIndex;
   this.ITdatasource=(this.repServe.getNearbyReportsMobile(event.pageIndex));
 }
 
 viewReport(ID) {
-  this.router.navigate(["/special"],{queryParams:{ID:ID}})
+  this.router.navigate(["/special"],{queryParams:{ID:ID,page:this.currentPage}})
   
 }
 
-  ngOnInit(): void {
-    
-    this.paginatorInit();
-  }
+ngOnInit(): void {
+  
+  this.paginatorInit();
+}
 
   
 
