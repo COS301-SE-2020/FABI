@@ -18,7 +18,7 @@ This proposed system is the TPCP database analytics and interface for data captu
 
 Please find all appropriate documentation below
 
-- [System Requirements Specification](https://www.overleaf.com/read/kwbmcxbbfrtj) (Currently version 2)
+- [System Requirements Specification](https://www.overleaf.com/read/kwbmcxbbfrtj) (Currently version 4)
 
   > SRS Documentation is regularly updated due to Agile Methodology
 
@@ -48,7 +48,7 @@ Our team is using [Notion](https://www.notion.so/runtimeterrors/aca58d2e5d20454f
 
 ### Steven Jordaan
 
-I am currently studying BSc Information and Knowledge Systems with my elective group dipping into software developement. I have many interests in the IT field such as Interaction Design, Web Developement, App Developement, Alogorithms, Theoretical Computer Science etc. but I am not only interested in IT, I also find many other fields such as Biology, Engineering, and even Psychology to be fascinating.
+I am currently studying BSc Information and Knowledge Systems with my elective group dipping into software developement. I have many interests in the IT field such as Interaction Design, Web Developement, App Developement, Algorithms, Theoretical Computer Science etc. but I am not only interested in IT, I also find many other fields such as Biology, Engineering, and even Psychology to be fascinating.
 
 ### Bradley Mapstone
 
