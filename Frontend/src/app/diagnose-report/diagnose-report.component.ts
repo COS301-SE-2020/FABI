@@ -140,7 +140,13 @@ export class DiagnoseReportComponent implements OnInit {
   }
 
   submitVerification(){
-    this.special.diagnose(this.reportID,this.filter.Diagnosis["name"],this.filter.Reason).subscribe(data=>{
+    var Diag = (this.filter.Diagnosis["name"]==undefined)?this.filter.Diagnosis:this.filter.Diagnosis["name"];
+
+    this.special.diagnose(this.reportID,Diag,this.filter.Reason).subscribe(data=>{
+      
+      
+      console.log(data);
+      
       this.router.navigate(["/special"]);
       
     });
